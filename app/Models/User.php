@@ -8,6 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable;
+    
+    // add this before the class declaration
+    use AstritZeqiri\Metadata\Traits\HasManyMetaDataTrait;
+
+    // after the class declaration add this code snippet:
+    use HasManyMetaDataTrait;
 
     /**
      * The attributes that are mass assignable.
