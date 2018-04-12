@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<contenu>
+
+	<accueil>
+		<titre1>COMMUNAUTE FRANCOPHONE</titre1>
+		<paragraphe1>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur ac sagittis                                   neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi sollicitudin                                    massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci. Pellentesque                                      fermentum nisl purus, et iaculis lectus pharetra sit amet.&#xD;
+                            &lt;p&gt;&lt;br&gt;&lt;/p&gt; Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur                                   ac sagittis neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi s                                   ollicitudin massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci.                                       P   ellentesque                                         fermentum nisl purus, et iaculis lectus pharetra sit amet.</paragraphe1>
+		<titre2>COMMENT FONCTIONNE LE SITE INVESTIR EN AUSTRALIE</titre2>
+		<paragraphe2>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur ac sagittis neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi sollicitudin massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci. Pellentesque fermentum nisl purus, et iaculis lectus pharetra sit amet.</paragraphe2>
+		<iframe>https://www.youtube.com/embed/dzHw2RRyk68</iframe>
+		<titre3>NOTRE MISSION / NOTRE VISION</titre3>
+		<etape1>Parmi tous les produits affich&#xE9;s sur le site. s&#xE9;l&#xE9;ctionnez celui ou ceux qui vous interessent</etape1>
+		<etape2>Obtenez de l'agence les informations que vous souhaitez sur le ou les biens s&#xE9;l&#xE9;ctionn&#xE9;s</etape2>
+		<etape3>Apr&#xE8;s avoir fait votre choix, faites connaitre votre d&#xE9;cision d'achat &#xE0; l'agence francophone australienne charg&#xE9;e de la vente</etape3>
+		<etape4>l'agence phrancophone australienne se charge des formalit&#xE9;s juridiquesde transfert de propri&#xE9;t&#xE9;</etape4>
+		<description1>&lt;label class="entry-title"&gt;Etape 1&lt;/label&gt; : Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur ac sagittis neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi sollicitudin massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci. Pellentesque fermentum nisl purus, et iaculis lectus pharetra sit amet.</description1>
+		<description2>&lt;label class="entry-title"&gt;Etape 2&lt;/label&gt; : Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur ac sagittis neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi sollicitudin massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci. Pellentesque fermentum nisl purus, et iaculis lectus pharetra sit amet.</description2>
+		<description3>&lt;label class="entry-title"&gt;Etape 3&lt;/label&gt; : Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur ac sagittis neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi sollicitudin massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci. Pellentesque fermentum nisl purus, et iaculis lectus pharetra sit amet.</description3>
+		<description4>&lt;label class="entry-title"&gt;Etape 4&lt;/label&gt; : Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur ac sagittis neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi sollicitudin massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci. Pellentesque fermentum nisl purus, et iaculis lectus pharetra sit amet.</description4>
+	</accueil>
+
+	<membre>
+		<message>
+			Merci de votre intention de vous inscrire en qualit&#xE9; de Membre sur le site "Investir en Australie". En plus de pouvoir, comme tout Visiteur, voir dans le d&#xE9;tail les produits et op&#xE9;rer des s&#xE9;lections multicrit&#xE8;res, votre inscription vous permettra d'enregistrer vos recherches multicrit&#xE8;res, d'enregistrer les produits qui vous int&#xE9;ressent dans vos "favoris", de partager des produits avec vos amis par emails et sur les r&#xE9;seaux sociaux, d'&#xE9;changer avec une Agence Francophone Australienne situ&#xE9;e &#xE0; proximit&#xE9; du bien qui vous int&#xE9;resse. Lorsque vous aurez pris la d&#xE9;cision d'acheter vous pourrez lancer la proc&#xE9;dure d'acquisition en ligne. Au cours de cette proc&#xE9;dure il vous sera propos&#xE9; les services de certains de nos partenaires australiens francophones auxquels vous pourriez faire appel si vous en aviez besoin.
+		</message>
+	</membre>
+
+	<vendeur>
+		<message>
+			The Seller must accept The Terms and Conditions of Use of "Investir en Australie" website and make the commitment to display only products that can be sold to non-resident foreigners in accordance with Australian law and the rules applicable by the Foreign Investment Review Board (FIRB).
+		</message>
+	</vendeur>
+
+	<afa>
+		<message>
+			The Australian Francophone Agents are Australian agents who are partners with "Investir en Australie" website. They are the essential link in the material realization of the sale of the products posted on the site, but they can also sell their own products. The Australian Francophone Agent must make the commitment to provide prospective or actual purchasers with a service in French during preliminary sales and during sales transactions. They must also accept that a clientele introductory fee ("Commission de Pr&#xE9;sentation de Client&#xE8;le" - CPC) will be due to the company managing IEA website in case of actual sale of products, accept and respect the Terms and Conditions of Use of the site, and make the commitment to verify and guarantee that the products for the sale of which they are the operating agent are effectively residential, land, industrial or commercial properties which may be sold to non-resident foreigners in accordance with the Australian law and the rules applicable to foreign investment by the Foreign Investment Review Board (FIRB).
+		</message>
+		<etape1>
+			 STEP 1 &#x2013; Francophone service
+		</etape1>
+		<paragraphe1>
+			The Australian francophone Agent commits to providing a service in french to prospectice or actual purchasers. 
+		</paragraphe1>
+		<etape2>
+			STEP 2 &#x2013; Clientele Introductory Fee
+		</etape2>
+		<paragraphe2>
+			The Australian Francophone Agent accepts that a clientele introductory fee ("Commission de Pr&#xE9;sentation de Client&#xE8;le" - CPC) will be due to the company managing IEA website in case of actual sale of products. Therefore they commit to have the buyer pay that fee at the same time they sign the sale contract, and to pay it back to IEA website managing company without delay .
+		</paragraphe2>
+		<etape3>
+			 STEP 3 &#x2013; Terms and Conditions of Use
+		</etape3>
+		<paragraphe3>
+			The Australian Francophone Agent acknowledges having read the Terms and Conditions of Use of the site "Investir en Australie" and declares to accept them without any reservation. 
+		</paragraphe3>
+		<etape4>
+			STEP 4 - Legal compliance of products
+		</etape4>
+		<paragraphe4>
+			The Australian francophone Agent makes the commitment to verify and guarantee that the products for the sale of which they are the operating agent are effectively residential, land, industrial or commercial properties which may be sold to non-resident foreigners in accordance with the Australian law and the rules applicable to foreign investment by the Foreign Investment Review Board (FIRB).
+		</paragraphe4>
+	</afa>
+
+	<apl>
+		<message>
+			Les Agences Partenaires Locales (APL) sont des agences immobili&#xE8;res et d'affaires op&#xE9;rant dans des pays et territoires francophones qui souhaitent participer au courant d'investissement que d&#xE9;veloppe le projet "Investir en Australie" (IEA). Dans ce cadre, l'APL est charg&#xE9;e d'une Mission d'Information, d'Orientation et de Promotion (MIOP) en direction des Membres du site IEA. Les Membres qui souhaitent une assistance locale pour leur d&#xE9;marche d'investissement en Australie souscrivent une relation exclusive de 180 jours avec une APL pr&#xE8;s de chez eux. En cas d'achat par le Membre inscrit aupr&#xE8;s d'une APL, celle-ci per&#xE7;oit une "Commission de Contribution aux Ventes (CCV) &#xE9;gale &#xE0; un pourcentage du prix de vente du bien. Le montant de cette CCV peut &#xEA;tre doubl&#xE9; si l'APL a &#xE9;t&#xE9; &#xE0; l'origine d'un certain montant de chiffre d'affaires au cours de l'ann&#xE9;e pr&#xE9;c&#xE9;dente.
+		</message>
+		<etape1>
+			 POINT 1 &#x2013; Mission d'Information, d'Orientation et de Promotion (MIOP)
+		</etape1>
+		<paragraphe1>
+			L'Agence Partenaire Locale accepte la Mission d'Information, d'Orientation et de Promotion qui consiste d'une part &#xE0; informer et orienter les Membres du site IEA qui sont engag&#xE9;s dans une relation exclusive avec elles, et d'autre part d'assurer le placement des produits affich&#xE9;s par des initiatives promotionnelles cibl&#xE9;es propres. 
+		</paragraphe1>
+		<etape2>
+			POINT 2 - S&#xE9;curisation du march&#xE9; des APL
+		</etape2>
+		<paragraphe2>
+			L'Agence Partenaire Locale accepte la s&#xE9;curisation du lien que des Membres ont &#xE9;tabli en choisissant d'&#xE9;tablir une relation d'exclusivit&#xE9; avec elle. Ceci sera d&#xE9;taill&#xE9; dans le contrat qui lui sera propos&#xE9; dans la suite de la proc&#xE9;dure. 
+		</paragraphe2>
+		<etape3>
+			POINT 3 - S&#xE9;curisation de la relation d'affaires entre IEA et l'APL
+		</etape3>
+		<paragraphe3>
+			L'Agence Partenaire Locale accepte la s&#xE9;curisation de la relation d'affaires entre IEA et elle-m&#xEA;me qui comporte des clauses de non concurrence et de loyaut&#xE9; n&#xE9;cessaires et essentielles dans un march&#xE9; virtuel. Ceci sera d&#xE9;taill&#xE9; dans le contrat qui lui sera propos&#xE9; dans la suite de la proc&#xE9;dure. 
+		</paragraphe3>
+		<etape4>
+			POINT 4 &#x2013; R&#xE9;mun&#xE9;ration de l'APL
+		</etape4>
+		<paragraphe4>
+			L'Agence Partenaire Locale accepte les montants et la proc&#xE9;dure de la r&#xE9;mun&#xE9;ration &#xE9;tablis par IEA. En cas d'achat d'un bien par un des Membres qui lui est li&#xE9; par une relation d'exclusivit&#xE9;, le taux de r&#xE9;mun&#xE9;ration normal de l'APL est de 0,5% du prix de vente du bien exprim&#xE9; en dollars australiens. Si l'APL a &#xE9;t&#xE9; &#xE0; l'origine d'un volume d'affaires &#xE9;gal ou sup&#xE9;rieur &#xE0; 2 500 000 dollars australiens au cours d'un exercice, le taux de sa r&#xE9;mun&#xE9;ration est port&#xE9; &#xE0; 1% du prix de vente du bien exprim&#xE9; en dollars australiens. Le versement de la r&#xE9;mun&#xE9;ration s'effectue par une proc&#xE9;dure automatis&#xE9;e &#xE0; 30 jours fin de mois apr&#xE8;s la perception par IEA de sa propre r&#xE9;mun&#xE9;ration. 
+		</paragraphe4>
+		<etape5>
+			 POINT 5
+		</etape5>
+		<paragraphe5>
+			L'Agence Partenaire Locale reconna&#xEE;t avoir pris connaissance des Termes et Conditions d'Utilisation du site "Investir en Australie" et d&#xE9;clare les accepter sans aucune r&#xE9;serve. 
+		</paragraphe5>
+	</apl>
+
+	<services>
+		<titre>LES PARTENAIRES PROFESSIONNELLES DE L'I.E.A</titre>
+		<section1>CONSEIL JURIDIQUE</section1>
+		<paragraphe1>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur ac sagittis                                   neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi sollicitudin                                    massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci. Pellentesque                                      fermentum nisl purus, et iaculis lectus pharetra sit amet.&#xD;
+                            &lt;p&gt;&lt;br&gt;&lt;/p&gt; Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur                                   ac sagittis neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi s                                   ollicitudin massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci.                                       P   ellentesque</paragraphe1>
+		<section2>IMMIGRATION</section2>
+		<paragraphe2>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur ac sagittis                                   neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi sollicitudin                                    massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci. Pellentesque                                      fermentum nisl purus, et iaculis lectus pharetra sit amet.&#xD;
+                            &lt;p&gt;&lt;br&gt;&lt;/p&gt; Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur                                   ac sagittis neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi s                                   ollicitudin massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci.                                       P   ellentesque                                         fermentum nisl purus, et iaculis lectus pharetra sit amet.&lt;/br&gt;&lt;/br&gt;</paragraphe2>
+		<section3>CONSEIL FINANCIER ET BANCAIRE</section3>
+		<paragraphe3>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur ac sagittis                                   neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi sollicitudin                                    massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci. Pellentesque                                      fermentum nisl purus, et iaculis lectus pharetra sit amet.&#xD;
+                            &lt;p&gt;&lt;br&gt;&lt;/p&gt; Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur                                   ac sagittis neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi s                                   ollicitudin massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci.                                       P   ellentesque                                         fermentum nisl purus, et iaculis lectus pharetra sit amet.</paragraphe3>
+		<section4>CONSEIL COMPTABLE ET FISCAL</section4>
+		<paragraphe4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur ac sagittis                                   neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi sollicitudin                                    massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci. Pellentesque                                      fermentum nisl purus, et iaculis lectus pharetra sit amet.&#xD;
+                            &lt;p&gt;&lt;br&gt;&lt;/p&gt; Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur                                   ac sagittis neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi s                                   ollicitudin massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci.                                       P   ellentesque                                         fermentum nisl purus, et iaculis lectus pharetra sit amet.&lt;/br&gt;&lt;/br&gt;</paragraphe4>
+		<section5>AGENCE DE TRADUCTION ET INTERPR&#xC9;TARIAT</section5>
+		<paragraphe5>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur ac sagittis                                   neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi sollicitudin                                    massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci. Pellentesque                                      fermentum nisl purus, et iaculis lectus pharetra sit amet.&#xD;
+                            &lt;p&gt;&lt;br&gt;&lt;/p&gt; Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur                                   ac sagittis neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi s                                   ollicitudin massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci.                                       P   ellentesque                                         fermentum nisl purus, et iaculis lectus pharetra sit amet.</paragraphe5>
+		<section6>AGENCE PARTENAIRE LOCAL</section6>
+		<paragraphe6>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur ac sagittis                                   neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi sollicitudin                                    massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci. Pellentesque                                      fermentum nisl purus, et iaculis lectus pharetra sit amet.&#xD;
+                            &lt;p&gt;&lt;br&gt;&lt;/p&gt; Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur                                   ac sagittis neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi s                                   ollicitudin massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci.                                       P   ellentesque                                         fermentum nisl purus, et iaculis lectus pharetra sit amet.</paragraphe6>
+		<section7>CONSEIL EN &#xC9;VALUATION D&#x2019;AFFAIRES INDUSTRIELLES ET COMMERCIALES</section7>
+		<paragraphe7>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur ac sagittis                                   neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi sollicitudin                                    massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci. Pellentesque                                      fermentum nisl purus, et iaculis lectus pharetra sit amet.&#xD;
+                            &lt;p&gt;&lt;br&gt;&lt;/p&gt; Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur                                   ac sagittis neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi s                                   ollicitudin massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci.                                       P   ellentesque                                         fermentum nisl purus, et iaculis lectus pharetra sit amet.&lt;/br&gt;&lt;/br&gt;</paragraphe7>
+	</services>
+
+</contenu>

@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+	<listes>
+		<etat>Territoire de la capitale australienne</etat>
+			<ville id="1">Belconnen</ville>
+				<suburb id="1">Aranda</suburb>
+				<suburb id="2">Belconnen</suburb>
+				<suburb id="3">Bruce</suburb>
+				<suburb id="4">Charnwood</suburb>
+				<suburb id="5">Cook</suburb>
+				<suburb id="6">Dunlop</suburb>
+				<suburb id="7">Evatt</suburb>
+				<suburb id="8">Florey</suburb>
+				<suburb id="9">Flynn</suburb>
+				<suburb id="10">Fraser</suburb>
+				<suburb id="11">Giralang</suburb>
+				<suburb id="12">Hawker</suburb>
+				<suburb id="13">Higgins</suburb>
+				<suburb id="14">Holt</suburb>
+				<suburb id="15">Kaleen</suburb>
+				<suburb id="16">Latham</suburb>
+				<suburb id="17">Lawson</suburb>
+				<suburb id="18">Macgregor</suburb>
+				<suburb id="19">Macnamara</suburb>
+				<suburb id="20">Macquarie</suburb>
+				<suburb id="21">McKellar</suburb>
+				<suburb id="22">Melba</suburb>
+				<suburb id="23">Page</suburb>
+				<suburb id="24">Scullin</suburb>
+				<suburb id="25">Spence</suburb>
+				<suburb id="26">Strathnairn</suburb>
+				<suburb id="27">Weetangera</suburb>
+
+			<ville id="2">Canberra</ville>
+				<suburb>Acton</suburb>
+				<suburb>Ainslie</suburb>
+				<suburb>Barton </suburb>
+				<suburb>Braddon</suburb>
+				<suburb>Campbell - Duntroon </suburb>
+				<suburb>Capital Hill</suburb>
+				<suburb>City</suburb>
+				<suburb>Deakin</suburb>
+				<suburb>Dickson - Dickson Centre</suburb>
+				<suburb>Downer </suburb>
+				<suburb>Forrest</suburb>
+				<suburb>Fyshwick </suburb>
+				<suburb>Griffith - Manuka </suburb>
+				<suburb>Hackett </suburb>
+				<suburb>Kingston</suburb>
+				<suburb>Lyneham - North Lyneham</suburb>
+				<suburb>Narrabundah</suburb>
+				<suburb>O'Connor</suburb>
+				<suburb>Parkes</suburb>
+				<suburb>Red Hill </suburb>
+				<suburb>Reid</suburb>
+				<suburb>Russell</suburb>
+				<suburb>Turner</suburb>
+				<suburb>Watson </suburb>
+				<suburb>Yarralumla </suburb>
+
+			<ville id="3"> </ville>
+			<ville id="4">Fyshwick</ville>
+			<ville id="5">Gibraltar</ville>
+			<ville id="6">Ginninderra</ville>
+			<ville id="7">Gudgenby</ville>
+			<ville id="8">Hall</ville>
+			<ville id="9">Harman</ville>
+			<ville id="10">Jervis Bay</ville>
+			<ville id="11">Majura</ville>
+			<ville id="12">Molonglo</ville>
+			<ville id="13">Tharwa</ville>
+			<ville id="14">Tuggeranong</ville>
+			<ville id="15">Weetangerra</ville>
+			<ville id="16">Weston Creek</ville>
+	</listes>

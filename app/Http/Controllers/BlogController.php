@@ -17,13 +17,13 @@ class BlogController extends Controller
     }
 
     /**
-     * Show the blog page.
+     * Show the blog page by slug.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($slug)
     {
-        return view('home');
+        return view('blog.index');
     }
 
     /**
@@ -33,6 +33,6 @@ class BlogController extends Controller
      */
     public function all()
     {
-        return view('home');
+        return view('blog.all');
     }
 }

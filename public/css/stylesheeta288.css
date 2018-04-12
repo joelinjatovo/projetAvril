@@ -1,0 +1,80 @@
+.zoowidget-form ol {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.zoowidget-form li {
+	clear: both;
+	padding: 0 0 8px 0;
+}
+
+.zoowidget-form legend {
+	font-size: 1.8em;
+	padding: 16px 0 0 0;
+}
+
+.zoowidget-form label {
+	display: block;
+	width: 200px;
+	float: left;
+	padding: 8px 0 0 0;
+}
+
+.zoowidget-form input {
+	width: 300px;
+	float: left;
+}
+
+.zoowidget-form input[type=submit] {
+	width: auto;
+	float: none;
+	margin: 16px 0 8px 200px;
+	padding: 4px 8px;
+	text-align: center;
+}
+
+ .zoowidget-form textarea {
+	display: block;
+	width: 100%;
+	height: 64px;
+	float: left;
+}
+
+.zoowidget_captcha {
+	padding: 8px 0 0 84px;
+	border: 0;
+}
+
+.zoowidget-error {
+	line-height: 1.2em;
+}
+
+.zoowidget-error ul {
+	padding: 6px 0 0 0;
+	margin: 0 0 0 16px;
+}
+
+.formgen_small .zoowidget-form label {
+	width: 76px;
+	font-weight: bold;
+}
+
+.formgen_small .zoowidget-form input {
+	width: 170px;
+	float: right;
+}
+
+.formgen_small .zoowidget-form input[type=submit] {
+	margin: 8px auto;
+	padding: 2px 4px;
+}
+
+.formgen_small  .zoowidget-error {
+	font-size: 12px !important;
+}
+
+.formgen_small  .zoowidget-error ul {
+	font-size: 12px !important;
+	padding: 4px 0 8px 0 !important;
+}

@@ -23,16 +23,56 @@ class IndexController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('index.index');
     }
 
     /**
-     * Show the service page.
+     * Show the service's page.
      *
      * @return \Illuminate\Http\Response
      */
     public function service()
     {
-        return view('home');
+        return view('index.service');
+    }
+
+    /**
+     * Show the term and condition page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function terms()
+    {
+        return view('index.service');
+    }
+
+    /**
+     * Show the help's page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function help()
+    {
+        return view('index.service');
+    }
+
+    /**
+     * Show the publicity's page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function publicities()
+    {
+        return view('index.service');
+    }
+
+    /**
+     * Show the confidentiality's page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function confidentialities()
+    {
+        return view('index.service');
     }
 }

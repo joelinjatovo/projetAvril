@@ -68,4 +68,14 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+    
+    /**
+     * Show form registration switch $role
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index($role)
+    {
+        return view('index.index');
+    }
 }

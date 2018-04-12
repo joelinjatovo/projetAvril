@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<parametres>
+	<config>
+		<identifiant>admin@investirenaustralie.com</identifiant>
+		<nom>Investir en Australie</nom>
+		<titre>Investir en Australie</titre>
+		<email>admin@investirenaustralie.com</email>
+		<latitude>-33.885557</latitude>
+		<longitude>151.140673</longitude>
+	</config>
+
+	<socialmedia>
+		<facebook>
+			<value>https://www.facebook.com/investirenaustralie</value>
+			<font>fa fa-facebook</font>
+		</facebook>
+		<twitter>
+			<value>https://www.twitter.com</value>
+			<font>fa fa-twitter</font>
+		</twitter>
+		<googleplus>
+			<value>#</value>
+			<font>fa fa-google-plus</font>
+		</googleplus>
+		<linkedin>
+			<value>#</value>
+			<font>fa fa-linkedin</font>
+		</linkedin>
+		<tumblr>
+			<value>#</value>
+			<font>fa fa-tumblr</font>
+		</tumblr>
+		<youtube>
+			<value>#</value>
+			<font>fa fa-youtube</font>
+		</youtube>
+		<pinterest>
+			<value>#</value>
+			<font>fa fa-pinterest</font>
+		</pinterest>
+		<vimeo>
+			<value>#</value>
+			<font>fa fa-vimeo</font>
+		</vimeo>
+	</socialmedia>
+</parametres>

@@ -1,0 +1,220 @@
+<?xml version="1.0"?>
+<contenu>
+	<accueil>
+		<sidebar1>
+			<lienImage>images/publicite2-gformat.jpg</lienImage>
+			<description>Cinque Terre</description>
+			<class>...</class>
+			<width>604</width>
+			<height>236</height>
+		</sidebar1>
+
+		<sidebar2>
+			<lienImage>images/1521289903.png</lienImage>
+			<description>Envie de vacance en Australie</description>
+			<class>...</class>
+			<width>800</width>
+			<height>451</height>
+		</sidebar2>
+		<sidebar3>
+			<lienImage>images/1521289903.png</lienImage>
+			<description>Envie de vacance en Australie</description>
+			<class>...</class>
+			<width>800</width>
+			<height>451</height>
+		</sidebar3>
+
+		<sidebar4>
+			<lienImage>images/1521284915.jpg</lienImage>
+			<description>publicite coca-cola </description>
+			<class>...</class>
+			<width>800</width>
+			<height>450</height>
+		</sidebar4>
+
+		<placement1>
+			<lienImage>images/1522680792.JPG</lienImage>
+			<description>Publicite arriere de bus</description>
+			<class>...</class>
+			<width>800</width>
+			<height>450</height>
+		</placement1>
+
+		<placement2>
+			<lienImage>images/announcement-bg.jpg</lienImage>
+			<description>image placement 2 announcement </description>
+			<class>...</class>
+			<width>800</width>
+			<height>451</height>
+		</placement2>
+
+	</accueil>
+
+	<residentiel>
+		<sidebar1>
+			<lienImage>images/publicite3-gformat.jpg</lienImage>
+			<description>Cinque Terre</description>
+			<class>img-rounded</class>
+			<width>604</width>
+			<height>236</height>
+		</sidebar1>
+
+		<sidebar2>
+			<lienImage>images/1521289903.png</lienImage>
+			<description>Envie de vacance australie</description>
+			<class>...</class>
+			<width>800</width>
+			<height>451</height>
+		</sidebar2>
+
+		<sidebar3>
+			<lienImage>images/announcement-bg.jpg</lienImage>
+			<description>Cinque Terre</description>
+			<class>img-rounded</class>
+			<width>604</width>
+			<height>236</height>
+		</sidebar3>
+	</residentiel>
+
+	<foncier>
+		<sidebar1>
+			<lienImage>images/publicite3-gformat.jpg</lienImage>
+			<description>Cinque Terre</description>
+			<class>img-rounded</class>
+			<width>604</width>
+			<height>236</height>
+		</sidebar1>
+
+		<sidebar2>
+			<lienImage>images/1521284915.jpg</lienImage>
+			<description>publicite coca-cola </description>
+			<class>...</class>
+			<width>800</width>
+			<height>450</height>
+		</sidebar2>
+
+		<sidebar3>
+			<lienImage>images/1521289903.png</lienImage>
+			<description>Envie de vacance australie</description>
+			<class>...</class>
+			<width>800</width>
+			<height>451</height>
+		</sidebar3>
+	</foncier>
+
+	<industriel>
+		<sidebar1>
+			<lienImage>images/publicite2-gformat.jpg</lienImage>
+			<description>Cinque Terre</description>
+			<class>img-rounded</class>
+			<width>604</width>
+			<height>236</height>
+		</sidebar1>
+
+		<sidebar2>
+			<lienImage>images/announcement-bg.jpg</lienImage>
+			<description>Cinque Terre</description>
+			<class>img-rounded</class>
+			<width>604</width>
+			<height>236</height>
+		</sidebar2>
+
+		<sidebar3>
+			<lienImage>images/publicite3-gformat.jpg</lienImage>
+			<description>Cinque Terre</description>
+			<class>img-rounded</class>
+			<width>604</width>
+			<height>236</height>
+		</sidebar3>
+	</industriel>
+
+	<commercial>
+		<sidebar1>
+			<lienImage>images/publicite2-gformat.jpg</lienImage>
+			<description>Cinque Terre</description>
+			<class>img-rounded</class>
+			<width>604</width>
+			<height>236</height>
+		</sidebar1>
+
+		<sidebar2>
+			<lienImage>images/announcement-bg.jpg</lienImage>
+			<description>Cinque Terre</description>
+			<class>img-rounded</class>
+			<width>604</width>
+			<height>236</height>
+		</sidebar2>
+
+		<sidebar3>
+			<lienImage>images/publicite3-gformat.jpg</lienImage>
+			<description>Cinque Terre</description>
+			<class>img-rounded</class>
+			<width>604</width>
+			<height>236</height>
+		</sidebar3>
+	</commercial>
+
+	<services>
+		<placement1>
+			<lienImage>images/publicite2-gformat.jpg</lienImage>
+			<lien>#</lien>
+			<description>Cinque Terre</description>
+			<class>...</class>
+			<width>400</width>
+			<height>...</height>
+		</placement1>
+
+		<placement2>
+			<lienImage>images/1521289903.png</lienImage>
+			<lien>#</lien>
+			<description>Envie de vacance australie</description>
+			<class>...</class>
+			<width>800</width>
+			<height>451</height>
+		</placement2>
+
+		<placement3>
+			<lienImage>images/publicite2-gformat.jpg</lienImage>
+			<lien>#</lien>
+			<description>Cinque Terre</description>
+			<class>...</class>
+			<width>400</width>
+			<height>...</height>
+		</placement3>
+
+		<placement4>
+			<lienImage>images/publicite2-gformat.jpg</lienImage>
+			<lien>#</lien>
+			<description>Cinque Terre</description>
+			<class>...</class>
+			<width>400</width>
+			<height>...</height>
+		</placement4>
+	</services>
+
+	<blog>
+		<sidebar1>
+			<lienImage>images/publicite3-gformat.jpg</lienImage>
+			<description>Cinque Terre</description>
+			<class>...</class>
+			<width>604</width>
+			<height>236</height>
+		</sidebar1>
+
+		<sidebar2>
+			<lienImage>images/publicite3-gformat.jpg</lienImage>
+			<description>Cinque Terre</description>
+			<class>...</class>
+			<width>604</width>
+			<height>236</height>
+		</sidebar2>
+
+		<sidebar3>
+			<lienImage>images/publicite3-gformat.jpg</lienImage>
+			<description>basket publicite</description>
+			<class>...</class>
+			<width>604</width>
+			<height>236</height>
+		</sidebar3>
+	</blog>
+</contenu>

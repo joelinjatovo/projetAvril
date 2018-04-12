@@ -1,0 +1,187 @@
+#page.page-home #header .links a.item { color:#fff; }
+#page.page-home #header .links a.item:hover { color:#ec1853; }
+
+#page.team .overview { margin-bottom:35px; }
+#page.team .overview h2,
+#page.team .overview p { margin-bottom:20px; }
+#page.team #agents { padding-bottom:20px; margin-bottom:40px; border-bottom:1px solid #dcdcdc; }
+
+#zooagents.agent-account {}
+#zooagents.agent-account form { margin-bottom:20px; }
+#zooagents.agent-account .fields {}
+#zooagents.agent-account .field { margin-bottom:10px; }
+#zooagents.agent-account .section { margin-bottom:20px; }
+#zooagents.agent-account h3.title { font-size:1.25em; font-weight:400; }
+#zooagents.agent-account .suburbs-dropdown { position:relative; }
+#zooagents.agent-account .suggestionsBoxSuburb { box-sizing:border-box; position:absolute; z-index:1; width:100%; max-height:200px; padding:10px; margin-top:-1px; background:#fff; border:1px solid #dcdcdc; overflow:auto; }
+#zooagents.agent-account .suggestionsBoxSuburb .autoSuggestionsListSuburb {}
+#zooagents.agent-account .suggestionsBoxSuburb ul { margin:0; list-style:none; }
+#zooagents.agent-account .suggestionsBoxSuburb li:hover { color:#ec1853; cursor:pointer; }
+#zooagents.agent-account .captcha { position:relative; }
+#zooagents.agent-account .captcha .code { position:absolute; top:2px; right:2px; }
+#zooagents.agent-account .captcha img#captcha-image {}
+#zooagents.agent-account .captcha a.reload { width:34px; height:34px; background:#eee; text-align:center; }
+#zooagents.agent-account .captcha .icon { display:block; line-height:34px; }
+#zooagents.agent-account form[action*="forgot_password"] { line-height:38px; }
+#zooagents.agent-account .validation { padding:20px; margin-bottom:40px; border-style:solid; border-width:1px; }
+	#zooagents.agent-account .validation.success { background:#dbffab; border-color:rgba(0, 0, 0, 0.15); }
+	#zooagents.agent-account .validation.fail { background:#ffa; border-color:#fc0; }
+
+form.zoowidget-form {}
+form.zoowidget-form .fieldset {}
+form.zoowidget-form legend { display:block; padding-bottom:15px; font-size:1.25em; font-weight:400; }
+form.zoowidget-form ol { margin:0 -10px !important; list-style:none !important; }
+	form.zoowidget-form ol:after { display:table; content:""; clear:both; }
+form.zoowidget-form li { box-sizing:border-box; float:left; width:33.3333%; padding:0 10px 20px; clear:none; }
+form.zoowidget-form label { display:none; }
+form.zoowidget-form input[type="text"] { width:100%; padding:0; border-width:0 0 1px; transition-duration:.2s; }
+form.zoowidget-form input[type="submit"] { float:right; min-width:50%; padding:0; margin:0; }
+
+	.page-list-with-us form.zoowidget-form input[type="text"] { padding:0 10px; border-width:1px; }
+	.page-list-with-us form.zoowidget-form .input-file { position:relative; }
+	.page-list-with-us form.zoowidget-form .input-file label { box-sizing:border-box; display:block; width:100%; height:38px; line-height:38px; padding:0 10px; border:1px solid #dcdcdc; color:#aaa; }
+	.page-list-with-us form.zoowidget-form .input-file label:after { display:block; position:absolute; top:0; right:20px; font-family:'FontAwesome'; content:"\f0ee"; }
+	.page-list-with-us form.zoowidget-form .input-file input[type="file"] { position:absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor:pointer; }
+
+#zooagents.profile form label { display:block; font-size:0.785714em; color:#ec1853; }
+#zooagents.profile form .file { position:relative; border:1px solid #dcdcdc; }
+#zooagents.profile form .file input[name="image"] { position:relative; z-index:1; width:100%; height:38px; opacity:0; cursor:pointer; }
+#zooagents.profile form .file .text { display:block; position:absolute; z-index:0; bottom:0; left:10px; right:37px; line-height:38px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+#zooagents.profile form .file .icon { display:block; position:absolute; bottom:0; right:10px; line-height:38px; font-size:1.14286em; color:#aaa; }
+	#zooagents.profile form .file:hover .icon { color:#ec1853; }
+#zooagents.profile form .photo { max-width:100px; margin-top:20px; }
+#zooagents.profile .links { padding-top:20px; border-top:1px solid #dcdcdc; }
+#zooagents.profile .links .fav { display:inline-block; line-height:26px; }
+#zooagents.profile .links .fav .icon { float:left; width:26px; height:26px; line-height:26px; margin-right:5px; font-size:1.125em; text-align:center; background:#ec1853; border-radius:100%; color:#fff; }
+
+.page-about-us .teams,
+.page-about-us .forms-container { padding-top:30px; margin-top:40px; border-top:1px solid #dcdcdc; }
+.page-about-us .teams > p { margin-bottom:20px; }
+
+body #at20mc #at15s.atm { margin-top:10px; }
+.page-sign-up #entry p.error { padding:20px; margin-bottom:40px; background:#ffa; border:1px solid #fc0; }
+.page-list-with-us .forms-container { padding-top:30px; margin-top:40px; border-top:1px solid #dcdcdc; }
+.page-contact-us .forms .gform-contact .gform_body textarea { height:154px; }
+
+#page.team .forms .panel-items,
+.page-list-with-us .forms .panel-items,
+.page-about-us .forms .panel-items { margin-bottom:30px; }
+
+#page.team .forms .panel-items a.item,
+.page-list-with-us .forms .panel-items a.item,
+.page-about-us .forms .panel-items a.item { margin:0 10px; }
+
+#page.team .forms .panel-items a.item.active,
+.page-list-with-us .forms .panel-items a.item.active,
+.page-about-us .forms .panel-items a.item.active { background:#414141; }
+
+#page.team .forms .gform-manual-list,
+.page-list-with-us .forms .gform-manual-list,
+.page-about-us .forms .gform-manual-list,
+.page-contact-us .forms .gform-contact { position:relative; }
+
+#page.team .forms .gform-manual-list .gform_footer,
+.page-list-with-us .forms .gform-manual-list .gform_footer,
+.page-about-us .forms .gform-manual-list .gform_footer,
+.page-contact-us .forms .gform-contact .gform_footer { position:absolute; bottom:20px; right:0; width:calc(50% - 10px); }
+
+#page.team .forms .gform-manual-list .gform_footer input[type="submit"],
+.page-list-with-us .forms .gform-manual-list .gform_footer input[type="submit"],
+.page-about-us .forms .gform-manual-list .gform_footer input[type="submit"],
+.page-contact-us .forms .gform-contact .gform_footer input[type="submit"] { width:100%; }
+
+#page.team .forms .gform-auto-list .gform_footer,
+.page-list-with-us .forms .gform-auto-list .gform_footer,
+.page-about-us .forms .gform-auto-list .gform_footer { text-align:right; }
+
+#page.team .forms .gform-auto-list .gform_footer input[type="submit"],
+.page-list-with-us .forms .gform-auto-list .gform_footer input[type="submit"],
+.page-about-us .forms .gform-auto-list .gform_footer input[type="submit"] { width:calc(50% - 10px); }
+
+#page.team .forms .gform_wrapper .validation_error,
+.page-list-with-us .forms .gform_wrapper .validation_error,
+.page-list-with-us .forms .gform_confirmation_message,
+.page-about-us .forms .gform_wrapper .validation_error,
+.page-about-us .forms .gform_confirmation_message,
+.page-contact-us .forms .gform_wrapper .validation_error { text-align:center; }
+
+@media screen and (min-width:1890px) {
+.page-contact-us .forms .gform-contact .gform_body textarea { height:199px; }
+}
+
+@media screen and (min-width:1024px) {
+#zooagents.login { max-width:60%; margin:0 auto; }
+}
+
+@media screen and (max-width:567px) {
+#page.team .forms .panel-items a.item,
+.page-list-with-us .forms .panel-items a.item,
+.page-about-us .forms .panel-items a.item { width:100%; margin:0 0 10px; }
+
+#page.team .forms .gform-manual-list .gform_footer,
+.page-list-with-us .forms .gform-manual-list .gform_footer,
+.page-about-us .forms .gform-manual-list .gform_footer,
+.page-contact-us .forms .gform-contact .gform_footer { position:static; width:100%; }
+
+#page.team .forms .gform-auto-list .gform_footer input[type="submit"],
+.page-list-with-us .forms .gform-auto-list .gform_footer input[type="submit"],
+.page-about-us .forms .gform-auto-list .gform_footer input[type="submit"] { width:100%; }
+
+#zooagents.profile form input[type="submit"] { width:100%; }
+}
+
+/* -IE HACKS- */
+/* hide the default arrow in ie10 and ie11 */
+select::-ms-expand {
+	display:none;
+}
+/* target Internet Explorer 9 to undo the custom arrow */
+@media screen and (min-width:0\0) {
+    select {
+        background-image:none\9;
+        padding: 5px\9;
+    }
+}
+.property #property-action .summary > p {
+    margin-bottom: 5px;
+}
+.property .property-table ul.summary >ul.details li {
+    margin-bottom: 10px;
+}
+.property .property-table ul.summary >ul.details li span.value {
+    display: inline-block;
+    width: calc(100% - 180px);
+}
+.property .property-table ul.summary >ul.details li span.field {
+    min-width: 175px;
+    display: inline-block;
+}
+.widget-box .property-features  h3, .widget-box .property-features  .onsite-wrapper {
+    margin-bottom: 10px;
+}
+
+.widget-box .property-features h3 {
+    font-size: 1.25em;
+		margin-bottom: 5px;
+}
+
+.widget-box .property-features h4 {
+    font-size: 1.1em;
+		margin-bottom: 5px;
+}
+.widget-box .property-features li {
+    margin-bottom: 5px;
+}
+#search-results .heading h1 {
+    margin-top: 5px;
+    font-size: 1em;
+    font-weight: 600;
+    color: #ec1853;
+}
+
+#search-results .heading h2 {
+    margin-top: 5px;
+    font-size: .875em;
+    font-weight: 600;
+    text-align: justify;
+}
