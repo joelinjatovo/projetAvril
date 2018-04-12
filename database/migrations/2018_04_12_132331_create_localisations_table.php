@@ -13,7 +13,7 @@ class CreateLocalisationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('localisations', function (Blueprint $table) {
+        Schema::create('localizations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('address');
             $table->string('country');
@@ -36,6 +36,6 @@ class CreateLocalisationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('localisations');
+        Schema::dropIfExists('localizations');
     }
 }
