@@ -1,0 +1,4 @@
+@yield('header')
+
+
+@yield('footer')
