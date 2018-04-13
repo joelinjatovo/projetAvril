@@ -13,7 +13,7 @@ class LocalizationController extends Controller
      */
     public function index($locale)
     {
-        return view('index.index');
+        return back()->with('success', 'Langue modifié');
     }
 
 }

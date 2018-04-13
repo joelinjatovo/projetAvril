@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Models\ChatMessage;
 
 Auth::routes();
 
@@ -53,3 +54,13 @@ Route::get('admin/pub/{title}', 'PubController@index')->name('pub.index');
 Route::get('admin/pubs', 'PubController@all')->name('pub.all');
 
 Route::get('admin/pages', 'PageController@all')->name('page.all');
+
+// Send a message by Javascript.
+Route::post('message', function(Request $request) {
+    $user = Auth::user();
+    $message = ChatMessage::create([
+        'user_id' => $user->id,
+        'message' => $request->input('message')
+    ]);
+    event(new ChatMessageWasReceived($message, $user));
+});

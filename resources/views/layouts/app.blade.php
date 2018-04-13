@@ -96,7 +96,7 @@
         <div class="row">
             <div class="col-md-3" >
                 <figure id="site-logo" class="logo">
-                    <a href="">
+                    <a href="{{route('home')}}">
                         <img src="{{asset('images/logo.png')}}" alt="Logo">
                     </a>
                 </figure>

@@ -31,7 +31,7 @@ class IndexController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function service()
+    public function services()
     {
         return view('index.service');
     }
