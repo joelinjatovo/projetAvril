@@ -10,19 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use App\Models\ChatMessage;
 
 Auth::routes();
 
-Route::get('session', function(){
-    $data = Session::all();
-    echo var_dump($data);
-});
-
 // Not authentified routes
-Route::get('register/{role}', 'Auth\RegisterController@index')->name('register');
+Route::get('register/{role}', 'Auth\RegisterController@index')->name('register')->middleware('guest');
 
-// Guest routes
+// Public routes
 Route::get('/', 'IndexController@index')->name('home');
 Route::get('localization/{locale}', 'LocalizationController@index')->name('localization');
 Route::get('search', 'SearchController@index')->name('search');
@@ -31,13 +25,14 @@ Route::get('terms', 'IndexController@terms')->name('terms');
 Route::get('help', 'IndexController@help')->name('help');
 Route::get('publicities', 'IndexController@publicities')->name('publicities');
 Route::get('confidentialities', 'IndexController@confidentialities')->name('confidentialities');
-
 Route::get('products', 'ProductController@all')->name('product.all');
 Route::get('blogs', 'BlogController@all')->name('blog.all');
 Route::get('blog/{slug}', 'BlogController@index')->name('blog.index');
 
 // Authentified routes
-Route::get('admin/dashboard', 'AdminController@dashboard')->name('admin.dashboard');
+Route::get('profile', 'UserController@profile')->name('profile')->middleware('auth');
+
+Route::get('/admin/dashboard', 'AdminController@dashboard')->name('admin.dashboard');
 Route::get('admin/card', 'AdminController@card')->name('admin.card');
 
 Route::get('admin/blogs/list', 'BlogController@listAdmin')->name('admin.blog.list');
@@ -61,15 +56,6 @@ Route::get('admin/pubs', 'PubController@all')->name('pub.all');
 Route::get('admin/pages', 'PageController@all')->name('page.all');
 
 // Send a message by Javascript.
-Route::post('message', function(Request $request) {
-    $user = Auth::user();
-    $message = ChatMessage::create([
-        'user_id' => $user->id,
-        'message' => $request->input('message')
-    ]);
-    event(new ChatMessageWasReceived($message, $user));
-});
-
 Route::get('chat', 'ChatController@index');
 Route::get('chat/messages', 'ChatController@fetchMessages');
 Route::post('chat/messages', 'ChatController@sendMessage');

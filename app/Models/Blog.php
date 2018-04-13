@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Models\User;
+use App\Models\Comment;
+
 // Eloquent Model to manage Blog
 class Blog extends Model
 {
@@ -40,5 +43,23 @@ class Blog extends Model
 	{
 		return "artcl".$id."-".Str::slug($titre);
 	}
+    
+    /**
+     * A blog can have many comments
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+      return $this->hasMany(Comment::class, 'blog_id', 'id');
+    }
+    
+    /**
+     * Get the author record associated with the blog.
+     */
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 
 }

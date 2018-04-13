@@ -26,4 +26,14 @@ class UserController extends Controller
         return view('home');
     }
 
+    /**
+     * Show the user profile.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function profile()
+    {
+        return view('user.profile');
+    }
+
 }

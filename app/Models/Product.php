@@ -4,6 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Models\Product;
+use App\Models\User;
+
+
 // Eloquent\Model to manage Product and Service to sell
 class Product extends Model
 {
@@ -13,4 +17,21 @@ class Product extends Model
      * @var string
      */
     protected $table = 'products';
+    
+    /**
+     * A user can have many categories from products_categories table
+     */
+    public function rowProducts()
+    {
+      return $this->belongsToMany(Product::class, 'products_categories', 'product_id', 'category_id');
+    }
+    
+    /**
+     * Get the author record associated with the blog.
+     */
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+    
 }
