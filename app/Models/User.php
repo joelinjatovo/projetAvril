@@ -4,13 +4,12 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use AstritZeqiri\Metadata\Traits\HasManyMetaDataTrait;
 
 class User extends Authenticatable
 {
     use Notifiable;
     
-    // add this before the class declaration
-    use AstritZeqiri\Metadata\Traits\HasManyMetaDataTrait;
 
     // after the class declaration add this code snippet:
     use HasManyMetaDataTrait;
@@ -32,4 +31,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    
+    /**
+     * A user can have many messages
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function messages()
+    {
+      return $this->hasMany(ChatMessage::class);
+    }
 }

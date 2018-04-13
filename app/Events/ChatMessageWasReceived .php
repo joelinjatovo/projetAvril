@@ -1,9 +1,21 @@
 <?php
 
 namespace App\Events;
+
+use Illuminate\Broadcasting\Channel;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Broadcasting\PresenceChannel;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+
+use App\Models\User;
+use App\Models\ChatMessage;
+
 class ChatMessageWasReceived implements ShouldBroadcast  
 {
-    use InteractsWithSockets, SerializesModels;
+    use  Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $chatMessage;
     public $user;
@@ -27,7 +39,7 @@ class ChatMessageWasReceived implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('public-test-channel');
+        return new PrivateChannel('chat');
     }
 }
 

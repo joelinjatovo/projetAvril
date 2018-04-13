@@ -14,6 +14,11 @@ use App\Models\ChatMessage;
 
 Auth::routes();
 
+Route::get('session', function(){
+    $data = Session::all();
+    echo var_dump($data);
+});
+
 // Not authentified routes
 Route::get('register/{role}', 'Auth\RegisterController@index')->name('register');
 
@@ -64,3 +69,7 @@ Route::post('message', function(Request $request) {
     ]);
     event(new ChatMessageWasReceived($message, $user));
 });
+
+Route::get('chat', 'ChatController@index');
+Route::get('chat/messages', 'ChatController@fetchMessages');
+Route::post('chat/messages', 'ChatController@sendMessage');

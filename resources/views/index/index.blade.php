@@ -3,8 +3,6 @@
 @section('content')
 
 @include('includes.slider')
-
-<!-- property area -->
 <div class="container">
       <div class="row">
           <div class="col-lg-8 col-md-7">
