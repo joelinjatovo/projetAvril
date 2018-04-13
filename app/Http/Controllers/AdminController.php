@@ -23,7 +23,17 @@ class AdminController extends Controller
      */
     public function dashboard()
     {
-        return view('home');
+        return view('admin.dashboard');
+    }
+
+    /**
+     * Show the card config.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function card()
+    {
+        return view('admin.card');
     }
 
 }

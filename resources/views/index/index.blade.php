@@ -29,10 +29,10 @@
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut <br>
                             labore et dolore magna aliquan ut enim ad minim veniam.</p>
                     <a class="btn" href="#">
-                        <img src="http://localhost/iea/public/assets/images/iso-btn.png" alt="ISO Button">
+                        <img src="{{asset('images/iso-btn.png')}}" alt="ISO Button">
                     </a>
                     <a class="btn" href="#">
-                        <img src="http://localhost/iea/public/assets/images/playstore-btn.png" alt="Play Store Button">
+                        <img src="{{asset('images/playstore-btn.png')}}" alt="Play Store Button">
                     </a>
                 </div>
               </section>
@@ -58,28 +58,28 @@
                   <div class="row">
                       <div class="col-md-3 col-xs-6">
                           <div class="feature clearfix">
-                              <i class="icon"><img src="http://localhost/iea/public/assets/images/features/1.png" alt="Feature Icon"></i>
+                              <i class="icon"><img src="{{asset('images/features/1.png')}}" alt="Feature Icon"></i>
                               <h6 class="">Etape 1</h6>
                               <p> Parmi tous les produits affichés sur le site. séléctionnez celui ou ceux qui vous interessent </p>
                           </div>
                       </div>
                       <div class="col-md-3 col-xs-6">
                           <div class="feature clearfix">
-                              <i class="icon"><img src="http://localhost/iea/public/assets/images/features/2.png" alt="Feature Icon"></i>
+                              <i class="icon"><img src="{{asset('images/features/2.png')}}" alt="Feature Icon"></i>
                               <h6 class="">Etape 2</h6>
                               <p> Obtenez de l'agence les informations que vous souhaitez sur le ou les biens séléctionnés </p>
                           </div>
                       </div>
                       <div class="col-md-3 col-xs-6">
                           <div class="feature clearfix">
-                              <i class="icon"><img src="http://localhost/iea/public/assets/images/features/3.png" alt="Feature Icon"></i>
+                              <i class="icon"><img src="{{asset('images/features/3.png')}}" alt="Feature Icon"></i>
                               <h6 class="">Etape 3</h6>
                               <p> Après avoir fait votre choix, faites connaitre votre décision d'achat à l'agence francophone australienne chargée de la vente </p>
                           </div>
                       </div>
                       <div class="col-md-3 col-xs-6">
                           <div class="feature clearfix">
-                              <i class="icon"><img src="http://localhost/iea/public/assets/images/features/4.png" alt="Feature Icon"></i>
+                              <i class="icon"><img src="{{asset('images/features/4.png')}}" alt="Feature Icon"></i>
                               <h6 class="">Etape 4</h6>
                               <p> l'agence phrancophone australienne se charge des formalités juridiquesde transfert de propriété </p>
                           </div>
@@ -130,7 +130,7 @@
                     <article class="property layout-item clearfix">
                         <figure class="feature-image">
                             <a class="clearfix zoom" href="single-property.html">
-                                <img data-action="zoom" src="http://localhost/iea/images/Melbourne-appartement-loft-vendre.jpg" alt="..." width="600" height="450">
+                                <img data-action="zoom" src="{{asset('images/Melbourne-appartement-loft-vendre.jpg')}}" alt="..." width="600" height="450">
                             </a>
                         </figure>
                         <div class="property-contents clearfix">
@@ -161,7 +161,7 @@
                     <article class="property layout-item clearfix">
                         <figure class="feature-image">
                             <a class="clearfix zoom" href="single-property.html">
-                                <img data-action="zoom" src="http://localhost/iea/images/Melbourne_AUSTRALIE_Appartement.jpg" alt="..." width="600" height="450">
+                                <img data-action="zoom" src="{{asset('images/Melbourne_AUSTRALIE_Appartement.jpg')}}" alt="..." width="600" height="450">
                             </a>
                         </figure>
                         <div class="property-contents clearfix">
@@ -193,7 +193,7 @@ Ce développement résidentiel exclusif à Melbourne CBD atteste de l&#039;engag
                     <article class="property layout-item clearfix">
                         <figure class="feature-image">
                             <a class="clearfix zoom" href="single-property.html">
-                                <img data-action="zoom" src="http://localhost/iea/images/Newport-Bureau.jpg" alt="..." width="600" height="450">
+                                <img data-action="zoom" src="{{asset('images/Newport-Bureau.jpg')}}" alt="..." width="600" height="450">
                             </a>
                         </figure>
                         <div class="property-contents clearfix">
@@ -224,7 +224,7 @@ Ce développement résidentiel exclusif à Melbourne CBD atteste de l&#039;engag
                     <article class="property layout-item clearfix">
                         <figure class="feature-image">
                             <a class="clearfix zoom" href="single-property.html">
-                                <img data-action="zoom" src="http://localhost/iea/images/Australie-Entrepôt.jpg" alt="..." width="600" height="450">
+                                <img data-action="zoom" src="{{asset('images/Australie-Entrepôt.jpg')}}" alt="..." width="600" height="450">
                             </a>
                         </figure>
                         <div class="property-contents clearfix">
@@ -255,7 +255,7 @@ Ce développement résidentiel exclusif à Melbourne CBD atteste de l&#039;engag
                     <article class="property layout-item clearfix">
                         <figure class="feature-image">
                             <a class="clearfix zoom" href="single-property.html">
-                                <img data-action="zoom" src="http://localhost/iea/images/Bangholme-Bureau-commercial.jpg" alt="..." width="600" height="450">
+                                <img data-action="zoom" src="{{asset('images/Bangholme-Bureau-commercial.jpg')}}" alt="..." width="600" height="450">
                             </a>
                         </figure>
                         <div class="property-contents clearfix">
@@ -287,7 +287,7 @@ Une chance rare de posséder cette usine / entrepôt, il conviendra à une vari�
                     <article class="property layout-item clearfix">
                         <figure class="feature-image">
                             <a class="clearfix zoom" href="single-property.html">
-                                <img data-action="zoom" src="http://localhost/iea/images/Bridgewater-Terrain.jpg" alt="..." width="600" height="450">
+                                <img data-action="zoom" src="{{asset('images/Bridgewater-Terrain.jpg')}}" alt="..." width="600" height="450">
                             </a>
                         </figure>
                         <div class="property-contents clearfix">
@@ -327,10 +327,10 @@ Ce bloc de construction serait l&#039;un des meilleurs blocs à gauche dans la r
                          labore et dolore magna aliquan ut enim ad minim veniam.
              </p>
              <a class="btn" href="#">
-                 <img src="http://localhost/iea/public/assets/images/iso-btn.png" alt="ISO Button">
+                 <img src="{{asset('images/iso-btn.png')}}" alt="ISO Button">
              </a>
              <a class="btn" href="#">
-                 <img src="http://localhost/iea/public/assets/images/playstore-btn.png" alt="Play Store Button">
+                 <img src="{{asset('images/playstore-btn.png')}}" alt="Play Store Button">
              </a><br><br>
            </section>
 
@@ -364,7 +364,7 @@ Ce bloc de construction serait l&#039;un des meilleurs blocs à gauche dans la r
                      <article class="property layout-item clearfix">
                          <figure class="feature-image">
                              <a href="single.html" class="clearfix zoom">
-                               <img data-action="zoom" src="http://localhost/iea/images/1521219325.jpg" alt="..." width="600" height="450">
+                               <img data-action="zoom" src="{{asset('images/1521219325.jpg')}}" alt="..." width="600" height="450">
                              </a>
                          </figure>
                          <div class="property-contents clearfix">
@@ -391,7 +391,7 @@ Ce bloc de construction serait l&#039;un des meilleurs blocs à gauche dans la r
                      <article class="property layout-item clearfix">
                          <figure class="feature-image">
                              <a href="single.html" class="clearfix zoom">
-                               <img data-action="zoom" src="http://localhost/iea/images/construire-pour-revendre.jpg" alt="..." width="600" height="450">
+                               <img data-action="zoom" src="{{asset('images/construire-pour-revendre.jpg')}}" alt="..." width="600" height="450">
                              </a>
                          </figure>
                          <div class="property-contents clearfix">
@@ -418,7 +418,7 @@ Ce bloc de construction serait l&#039;un des meilleurs blocs à gauche dans la r
                      <article class="property layout-item clearfix">
                          <figure class="feature-image">
                              <a href="single.html" class="clearfix zoom">
-                               <img data-action="zoom" src="http://localhost/iea/images/promotteur-immo.jpg" alt="..." width="600" height="450">
+                               <img data-action="zoom" src="{{asset('images/promotteur-immo.jpg')}}" alt="..." width="600" height="450">
                              </a>
                          </figure>
                          <div class="property-contents clearfix">
@@ -445,7 +445,7 @@ Ce bloc de construction serait l&#039;un des meilleurs blocs à gauche dans la r
                      <article class="property layout-item clearfix">
                          <figure class="feature-image">
                              <a href="single.html" class="clearfix zoom">
-                               <img data-action="zoom" src="http://localhost/iea/images/tout-savoir-contrat.jpg" alt="..." width="600" height="450">
+                               <img data-action="zoom" src="{{asset('images/tout-savoir-contrat.jpg')}}" alt="..." width="600" height="450">
                              </a>
                          </figure>
                          <div class="property-contents clearfix">
@@ -472,7 +472,7 @@ Ce bloc de construction serait l&#039;un des meilleurs blocs à gauche dans la r
                  <article class="property layout-item clearfix">
                      <figure class="feature-image">
                          <a href="single.html" class="clearfix zoom">
-                           <img data-action="zoom" src="http://localhost/iea/images/louer-abordable.jpg" alt="..." width="600" height="450">
+                           <img data-action="zoom" src="{{asset('images/louer-abordable.jpg')}}" alt="..." width="600" height="450">
                          </a>
                      </figure>
                      <div class="property-contents clearfix">
@@ -499,7 +499,7 @@ Ce bloc de construction serait l&#039;un des meilleurs blocs à gauche dans la r
                  <article class="property layout-item clearfix">
                      <figure class="feature-image">
                          <a href="single.html" class="clearfix zoom">
-                           <img data-action="zoom" src="http://localhost/iea/images/engagement-immobilier.jpg" alt="..." width="600" height="450">
+                           <img data-action="zoom" src="{{asset('images/engagement-immobilier.jpg')}}" alt="..." width="600" height="450">
                          </a>
                      </figure>
                      <div class="property-contents clearfix">
