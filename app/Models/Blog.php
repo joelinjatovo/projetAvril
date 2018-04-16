@@ -27,6 +27,16 @@ class Blog extends Model
     ];
     
     /**
+     * Create a new model instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->author_id = (Auth::check()?Auth::user()->id:0);
+    }
+    
+    /**
      * A blog can have many comments
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

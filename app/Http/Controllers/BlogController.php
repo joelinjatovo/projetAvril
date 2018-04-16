@@ -59,8 +59,7 @@ class BlogController extends Controller
                         ]);
         
         if ($validator->fails()) {
-            return redirect()->route('admin.blog.create')
-                        ->withErrors($validator)
+            return back()->withErrors($validator)
                         ->withInput();
         }
         
@@ -116,8 +115,7 @@ class BlogController extends Controller
                         ]);
         
         if ($validator->fails()) {
-            return redirect()->route('admin.blog.edit', ['blog'=>$blog])
-                        ->withErrors($validator)
+            return back()->withErrors($validator)
                         ->withInput();
         }
         

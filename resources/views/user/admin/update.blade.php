@@ -25,7 +25,7 @@
                                                     <div class="well well-nice inline">
                                                         <div class="fileupload fileupload-new" data-provides="fileupload">
                                                             <div class="fileupload-preview thumbnail" style="width: 96px; height: 96px;">
-                                                                <img src="{{storage($item->get_meta('image')->value)}}">
+                                                                <img src="{{storage($item->get_meta('image')?$item->get_meta('image')->value:'')}}">
                                                             </div>
                                                             <div> <span class="btn btn-file"> <span class="fileupload-new">Select image</span> <span class="fileupload-exists">Changer</span>
                                                                 <input type="file" name="image" id="file">
@@ -59,13 +59,13 @@
                                                     <li class="control-group">
                                                         <label for="accountLastName" class="control-label">Nom</label>
                                                         <div class="controls">
-                                                            <input id="email" class="span11" type="text" name="firstname" value="{{ $item->get_meta('firstname')->value }}" >
+                                                            <input id="email" class="span11" type="text" name="firstname" value="{{ $item->get_meta('firstname')?$item->get_meta('firstname')->value:'' }}" >
                                                         </div>
                                                     </li>
                                                     <li class="control-group">
                                                         <label for="accountLastName" class="control-label">Prenom</label>
                                                         <div class="controls">
-                                                            <input id="email" class="span11" type="text" name="lastname" value="{{ $item->get_meta('lastname')->value }}" >
+                                                            <input id="email" class="span11" type="text" name="lastname" value="{{ $item->get_meta('lastname')?$item->get_meta('lastname')->value:'' }}" >
                                                         </div>
                                                     </li>
                                                     <li class="control-group">
@@ -97,7 +97,7 @@
                                                             <span class="required">*</span>
                                                         </label>
                                                         <div class="controls controls-row">
-                                                            <input id="telephone" class="span6" type="tel" name="phone" value="{{$item->get_meta('phone')->value }}" >
+                                                            <input id="telephone" class="span6" type="tel" name="phone" value="{{$item->get_meta('phone')?$item->get_meta('phone')->value:'' }}" >
                                                         </div>
                                                     </li>
                                                     <!-- // form item -->

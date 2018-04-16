@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use Validator;
+
 use App\Models\User;
+use App\Models\Config;
 
 class ConfigController extends Controller
 {
@@ -25,37 +28,38 @@ class ConfigController extends Controller
      */
     public function site(Request $request)
     {
-        if (!$request->isMethod('post')) {
-            $datas = [
-                'identifiant' => 'admin@iea.com', //Auth::user()->email,
-                'nomSite' => param('nom'),
-                'titre' => param('titre'),
-                'email' => param('email'), 
-                'latitude' => param('latitude'),
-                'longitude' =>  param('longitude')
-                ];
-            $donnees = json_decode(json_encode($datas),false);
-            return view('config.site',compact('donnees'));
+        $item = Config::findOrFail(1);
+        $keys = ["identifiant", "app_name", "app_email", "meta_title", "latitude", "longitude"];
+        
+        if ($request->isMethod('post')) {
+            
+            // Validate request
+            $datas = $request->all();
+            $validator = Validator::make($datas,[
+                            'identifiant' => 'required|max:100',
+                            'app_name' => 'required|max:100',
+                            'app_email' => 'required|max:100',
+                            'meta_title' => 'required|max:100',
+                            'latitude' => 'required|max:100',
+                            'longitude' => 'required|max:100',
+                        ]);
+            
+            // Check validation
+            if ($validator->fails()) {
+                return back()->withErrors($validator)
+                            ->withInput();
+            }
+            
+            // Save Config into MetaData
+            foreach($keys as $key){
+                if($value = $request->input($key)) $item->update_meta($key, $value);
+            }
+            
+            // Go back with notification
+            return back()->with('success','La configuration a été modifiée avec succés ! ');
         }
         
-        // Request is POST
-        $compteur = false;
-        $inputs = $request->input();
-        unset($inputs['_token']);
-        $configs = param();
-        foreach ($inputs as $key => $value) {
-            foreach ($configs['app'] as $cle => $valeur) {
-                if( $key == $cle )
-                    if( $value != $valeur){
-                        $compteur = true;
-                        param($key,$value);
-                    }
-            }
-        }
-        if( $compteur )
-            return back()->with('success','La configuration a été modifiée avec succés ! ');
-        else
-            return back()->with('error','Aucune modification n\'a été enregistrée ! ');
+        return view('config.site',compact('item', 'keys'));
     }
 
     /**

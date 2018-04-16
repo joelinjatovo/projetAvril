@@ -114,8 +114,8 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function () {
     Route::prefix('config')->group(function () {
         Route::get('site', 'ConfigController@site')->name('config.site');
         Route::post('site', 'ConfigController@site')->name('config.site.update');
-        Route::get('site', 'ConfigController@social')->name('config.social');
-        Route::post('site', 'ConfigController@social')->name('config.social.update');
+        Route::get('social', 'ConfigController@social')->name('config.social');
+        Route::post('social', 'ConfigController@social')->name('config.social.update');
         Route::get('fontawesome', 'ConfigController@fontawesome')->name('config.fontawesome');
     });
 });
