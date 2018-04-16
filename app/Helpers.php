@@ -15,6 +15,7 @@ if ( ! function_exists('helper_css'))
 	  return '<link href="'. asset('assets/css/'. $url_css .'.css').'" rel="stylesheet">' ;
 	}  
 }
+
 /**
 * creer le lien image vers le dashboard ADMIN en ligne  
 * @param $url_img string : lien de l'image en local
@@ -26,6 +27,30 @@ if( ! function_exists('link_img'))
 		return asset($url_img) ;
 	}
 }
+/**
+* Alias to acces to storage image path
+* @param String $path : Local storage path
+*/
+if( ! function_exists('storage'))
+{
+	function storage($path)
+	{
+		return asset('storage/'.$path) ;
+	}
+}
+
+/**
+* Alias to acces to storage thumbnail image path
+* @param String $path : Local storage path
+*/
+if( ! function_exists('thumbnail'))
+{
+	function thumbnail($path)
+	{
+		return asset('storage/thumbnail/'.$path) ;
+	}
+}
+
 /**
 * creer le lien javascript vers le dashboard ADMIN en ligne  
 * @param $url_js string : lien de l'image en local

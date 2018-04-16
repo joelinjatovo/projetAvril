@@ -1,7 +1,17 @@
 @extends('layouts.app')
 
+@section('style')
+<style type="text/css">
+    .ajax-load{
+        background: #e1e1e1;
+        padding: 10px 0px;
+        width: 100%;
+    }
+</style>
+@endsection
+
 @section('content')
-<div class="main-slider-wrapper clearfix content corps">
+<div id="breadcrumb" class="main-slider-wrapper clearfix content corps">
     @include('includes.breadcrumb')
 </div>     
 
@@ -25,146 +35,65 @@
 
     <div class="container">
         <div class="col-lg-9 col-md-8">
-            <div class="row"> 
-                <div id="filter-container">
-
-                    <div class="col-md-6 layout-item-wrap mix a1">
-                        <article class="blog-post clearfix layout-item"> 
-                            <figure class="feature-image"> 
-                                <a href="#" class="clearfix zoom">
-                                    <img data-action="zoom" src="http://localhost/iea/images/1521219325.jpg" alt="Blog Image">
-                                </a>                                         
-                                <time class="updated btn btn-warning" datetime="2017-02-01T13:58Z">12 April</time>            
-                            </figure>                                     
-                            <div class="post-contents clearfix">
-                                <h4 class="entry-title"><a href="http://localhost/iea/blog/detail/artcl4-nos-conseils-pour-mettre-en-valeur-sa-maison-pour-mieux-la-vendre">Nos conseils pour mettre en valeur sa maison pour mieux la vendre</a></h4> 
-                                <div class="contents clearfix"> 
-                                    Vendre une maison n’est pas une mince à faire, surtout si vous ne souhaitez pas avoir recours aux services d’une agence immobilière. Il faut ass...
-                                </div>                                         
-                                <footer class="post-footer post-meta clearfix"> 
-                                    <span class="author">Posté par <a href="#"> Admin</a> </span> 
-                                    <span>Comment <a href="#"> 23</a> </span> 
-                                    <a href="http://localhost/iea/blog/detail/artcl4-nos-conseils-pour-mettre-en-valeur-sa-maison-pour-mieux-la-vendre" class="more">Continuer la lecture <i class="fa fa-angle-double-right"></i></a> 
-                                </footer>
-                            </div>                                     
-                        </article>
-                    </div>
-                                                <div class="col-md-6 layout-item-wrap mix a1">
-                        <article class="blog-post clearfix layout-item"> 
-                            <figure class="feature-image"> 
-                                <a href="#" class="clearfix zoom">
-                                    <img data-action="zoom" src="http://localhost/iea/images/construire-pour-revendre.jpg" alt="Blog Image">
-                                </a>                                         
-                                <time class="updated btn btn-warning" datetime="2017-02-01T13:58Z">12 April</time>            
-                            </figure>                                     
-                            <div class="post-contents clearfix">
-                                <h4 class="entry-title"><a href="http://localhost/iea/blog/detail/artcl5-construire-pour-revendre-ce-quil-faut-savoir">Construire pour revendre : ce qu’il faut savoir</a></h4> 
-                                <div class="contents clearfix"> 
-                                    <p>L’immobilier est et sera toujours une valeur sûre. Surtout que depuis peu, les crédits immobiliers sont plus accessibles pour tous les ménages...
-                                </div>                                         
-                                <footer class="post-footer post-meta clearfix"> 
-                                    <span class="author">Posté par <a href="#"> Admin</a> </span> 
-                                    <span>Comment <a href="#"> 23</a> </span> 
-                                    <a href="http://localhost/iea/blog/detail/artcl5-construire-pour-revendre-ce-quil-faut-savoir" class="more">Continuer la lecture <i class="fa fa-angle-double-right"></i></a> 
-                                </footer>
-                            </div>                                     
-                        </article>
-                    </div>
-                                                <div class="col-md-6 layout-item-wrap mix a1">
-                        <article class="blog-post clearfix layout-item"> 
-                            <figure class="feature-image"> 
-                                <a href="#" class="clearfix zoom">
-                                    <img data-action="zoom" src="http://localhost/iea/images/promotteur-immo.jpg" alt="Blog Image">
-                                </a>                                         
-                                <time class="updated btn btn-warning" datetime="2017-02-01T13:58Z">12 April</time>            
-                            </figure>                                     
-                            <div class="post-contents clearfix">
-                                <h4 class="entry-title"><a href="http://localhost/iea/blog/detail/artcl6-zoom-sur-le-metier-de-promoteur-immobilier">Zoom sur le métier de promoteur immobilier</a></h4> 
-                                <div class="contents clearfix"> 
-                                    <p> L’immobilier est un secteur très vaste et pris en charge par de nombreuses personnes qui présentent des fonctions différentes à des responsa...
-                                </div>                                         
-                                <footer class="post-footer post-meta clearfix"> 
-                                    <span class="author">Posté par <a href="#"> Admin</a> </span> 
-                                    <span>Comment <a href="#"> 23</a> </span> 
-                                    <a href="http://localhost/iea/blog/detail/artcl6-zoom-sur-le-metier-de-promoteur-immobilier" class="more">Continuer la lecture <i class="fa fa-angle-double-right"></i></a> 
-                                </footer>
-                            </div>                                     
-                        </article>
-                    </div>
-                                                <div class="col-md-6 layout-item-wrap mix a1">
-                        <article class="blog-post clearfix layout-item"> 
-                            <figure class="feature-image"> 
-                                <a href="#" class="clearfix zoom">
-                                    <img data-action="zoom" src="http://localhost/iea/images/tout-savoir-contrat.jpg" alt="Blog Image">
-                                </a>                                         
-                                <time class="updated btn btn-warning" datetime="2017-02-01T13:58Z">12 April</time>            
-                            </figure>                                     
-                            <div class="post-contents clearfix">
-                                <h4 class="entry-title"><a href="http://localhost/iea/blog/detail/artcl7-tout-savoir-sur-lassurance-pour-un-pret-immobilier">Tout savoir sur l’assurance pour un prêt immobilier</a></h4> 
-                                <div class="contents clearfix"> 
-                                    <p>Lorsque vous prenez un crédit immobilier, votre banquier vous parlera surement de l’assurance prêt immobilier. Votre banquier peut vous le réc...
-                                </div>                                         
-                                <footer class="post-footer post-meta clearfix"> 
-                                    <span class="author">Posté par <a href="#"> Admin</a> </span> 
-                                    <span>Comment <a href="#"> 23</a> </span> 
-                                    <a href="http://localhost/iea/blog/detail/artcl7-tout-savoir-sur-lassurance-pour-un-pret-immobilier" class="more">Continuer la lecture <i class="fa fa-angle-double-right"></i></a> 
-                                </footer>
-                            </div>                                     
-                        </article>
-                    </div>
-                                                <div class="col-md-6 layout-item-wrap mix a1">
-                        <article class="blog-post clearfix layout-item"> 
-                            <figure class="feature-image"> 
-                                <a href="#" class="clearfix zoom">
-                                    <img data-action="zoom" src="http://localhost/iea/images/louer-abordable.jpg" alt="Blog Image">
-                                </a>                                         
-                                <time class="updated btn btn-warning" datetime="2017-02-01T13:58Z">12 April</time>            
-                            </figure>                                     
-                            <div class="post-contents clearfix">
-                                <h4 class="entry-title"><a href="http://localhost/iea/blog/detail/artcl1-nos-conseils-pour-mettre-en-valeur-sa-maison-pour-mieux-la-vendre">Nos conseils pour mettre en valeur sa maison pour mieux la vendre</a></h4> 
-                                <div class="contents clearfix"> 
-                                    Vendre une maison n’est pas une mince à faire, surtout si vous ne souhaitez pas avoir recours aux services d’une agence immobilière. Il faut ass...
-                                </div>                                         
-                                <footer class="post-footer post-meta clearfix"> 
-                                    <span class="author">Posté par <a href="#"> Admin</a> </span> 
-                                    <span>Comment <a href="#"> 23</a> </span> 
-                                    <a href="http://localhost/iea/blog/detail/artcl1-nos-conseils-pour-mettre-en-valeur-sa-maison-pour-mieux-la-vendre" class="more">Continuer la lecture <i class="fa fa-angle-double-right"></i></a> 
-                                </footer>
-                            </div>                                     
-                        </article>
-                    </div>
-                                                <div class="col-md-6 layout-item-wrap mix a1">
-                        <article class="blog-post clearfix layout-item"> 
-                            <figure class="feature-image"> 
-                                <a href="#" class="clearfix zoom">
-                                    <img data-action="zoom" src="http://localhost/iea/images/engagement-immobilier.jpg" alt="Blog Image">
-                                </a>                                         
-                                <time class="updated btn btn-warning" datetime="2017-02-01T13:58Z">12 April</time>            
-                            </figure>                                     
-                            <div class="post-contents clearfix">
-                                <h4 class="entry-title"><a href="http://localhost/iea/blog/detail/artcl2-quel-est-le-premier-investissement-immobilier-ideal-pour-un-jeune-couple">Quel est le premier investissement immobilier idéal pour un jeune couple ?</a></h4> 
-                                <div class="contents clearfix"> 
-                                    <p>Que ce soit pour y vivre, ou pour en faire un complément de revenu, investir dans l’immobilier reste une valeur sûre. Pour un jeune couple, le ...
-                                </div>                                         
-                                <footer class="post-footer post-meta clearfix"> 
-                                    <span class="author">Posté par <a href="#"> Admin</a> </span> 
-                                    <span>Comment <a href="#"> 23</a> </span> 
-                                    <a href="http://localhost/iea/blog/detail/artcl2-quel-est-le-premier-investissement-immobilier-ideal-pour-un-jeune-couple" class="more">Continuer la lecture <i class="fa fa-angle-double-right"></i></a> 
-                                </footer>
-                            </div>                                     
-                        </article>
-                    </div>
-
-                </div>                         
-            </div>                     
-
+            <div id="infinite-scroll" class="row"> 
+                <div id="filter-container" class="blog-data">
+                    @foreach($items as $item)
+                        @include('blog.ajax.all',['item'=>$item])
+                    @endforeach
+                </div> 
+            </div>  
+            <div class="row">
+                <div class="ajax-load text-center" style="display:none">
+                    <p><img src="{{asset('images/loader.gif')}}">Loading More post</p>
+                </div>  
+            </div> 
         </div>
         <div class="col-lg-3 col-md-4"> 
             @include('includes.sidebar')
         </div>
     </div>             
 </div> 
-
-
-
 @endsection
+
+@section('script')
+<script type="text/javascript">
+var page = {{$page}};
+var norecord = false;
+$(window).scroll(function() {
+    console.log("infinite heigth="+$('#infinite-scroll').height());
+    console.log("breadcrumb heigth="+$('#breadcrumb').height());
+    if($(window).scrollTop() + $(window).height() >= 
+       $('#infinite-scroll').height()+$('#breadcrumb').height()) {
+        if(!norecord){
+            page++;
+            loadMoreData(page);
+        }else{
+            $('.ajax-load').show();
+        }
+    }
+});
+function loadMoreData(page){
+    $.ajax({
+        url: '<?php echo route('blog.all', ['filter'=>$filter]); ?>?page='+page,
+        type: "get",
+        beforeSend: function()
+        {
+            $('.ajax-load').show();
+        }
+    }).done(function(data)
+    {
+        if(data.html == ""){
+            norecord = true;
+            $('.ajax-load').html("No more records found");
+            return;
+        }
+        $('.ajax-load').hide();
+        $(".blog-data").append(data.html);
+    }).fail(function(jqXHR, ajaxOptions, thrownError)
+    {
+        $('.ajax-load').html("Server not responding....");
+    });
+}
+</script>
+@endsection
+

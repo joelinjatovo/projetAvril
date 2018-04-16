@@ -15,16 +15,16 @@ class CreateLocalisationsTable extends Migration
     {
         Schema::create('localizations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('address');
-            $table->string('country');
-            $table->string('state');
-            $table->string('city');
-            $table->string('postalCode');
-            $table->string('locality');
-            $table->string('longitude');
-            $table->string('latitude');
-            $table->string('altitude');
-            $table->bigInteger('user_id');
+            $table->string('address')->nullable();
+            $table->string('country')->nullable();
+            $table->string('state')->nullable();
+            $table->string('city')->nullable();
+            $table->string('postalCode')->nullable();
+            $table->string('locality')->nullable();
+            $table->string('longitude')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('altitude')->nullable();
+            $table->bigInteger('author_id')->default(0);
             $table->timestamps();
         });
     }

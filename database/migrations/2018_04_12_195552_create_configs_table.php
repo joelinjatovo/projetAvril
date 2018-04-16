@@ -15,10 +15,9 @@ class CreateConfigsTable extends Migration
     {
         Schema::create('configs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name', 150)->index();
-            $table->longText('content');
-            $table->string('object_type');
-            $table->bigInteger('object_id');
+            $table->string('name', 150)->index(); // site social_network etc...
+            $table->longText('content')->nullable();
+            $table->bigInteger('author_id')->default("0");
             $table->timestamps();
         });
     }

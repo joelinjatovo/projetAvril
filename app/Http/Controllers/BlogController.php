@@ -3,195 +3,281 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Blog;    
+use Validator;
+use Auth;
+
+use App\Models\Blog;
 
 class BlogController extends Controller
 {
+    
     /**
-     * Create a new controller instance.
+     * Type of Blog in database
      *
-     * @return void
      */
-    public function __construct()
-    {
-        //$this->middleware('auth');
-    }
-
+    protected $post_type = 'post';
+    
     /**
-     * Show the blog page by slug.
+     * Render form to create a blog
      *
+     * @param  Illuminate\Http\Request  $request
+     * @return Illuminate\Http\Response
+     */
+    public function create(Request $request)
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        $blog = new Blog();
+        if($title = $request->old('title')){
+            $blog->title = $title;
+        }
+        if($content = $request->old('content')){
+            $blog->content = $content;
+        }
+        $action = route('admin.blog.store');
+        return view('blog.admin.update', ['item'=>$blog, 'action'=>$action]);
+    }
+    
+    /**
+     * Store a blog
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @return Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        // Validate request
+        $datas = $request->all();
+        $validator = Validator::make($datas,[
+                            'title' => 'required|max:100',
+                            'content' => 'required',
+                            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                        ]);
+        
+        if ($validator->fails()) {
+            return redirect()->route('admin.blog.create')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+        
+        if($file=$request->file('image')){
+            $image = $file->store('uploads');
+            $datas["image"] = $image;
+        }
+        $datas["author_id"] = Auth::user()->id;
+        $datas["post_type"] = $this->post_type;
+        Blog::create($datas);
+        return back()->with('success',"L'article a été bien enregistré.");
+    }
+    
+    /**
+     * Render form to edit a blog
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @param  App\Models\Blog  $blog
+     * @return Illuminate\Http\Response
+     */
+    public function edit(Request $request, Blog $blog)
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        if($title = $request->old('title')){
+            $blog->title = $title;
+        }
+        if($content = $request->old('content')){
+            $blog->content = $content;
+        }
+        
+        $action = route('admin.blog.update', ['blog'=>$blog]);
+        return view('blog.admin.update', ['item'=>$blog, 'action'=>$action]);
+    }
+    
+    /**
+     * Update User
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function index($slug)
+    public function update(Request $request, Blog $blog)
     {
-        return view('blog.index');
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        // Validate request
+        $validator = Validator::make($request->all(),[
+                            'title' => 'required|max:100',
+                            'content' => 'required',
+                            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                        ]);
+        
+        if ($validator->fails()) {
+            return redirect()->route('admin.blog.edit', ['blog'=>$blog])
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+        
+        $blog->title = $request->input('title');
+        $blog->content = $request->input('content');
+        if($file=$request->file('image')){
+            $image = $file->store('uploads');
+            $blog->image = $image;
+        }
+        $blog->save();
+        
+        return back()->with('success',"L'utilisateur a été bien modifié.");
     }
-
+    
     /**
      * Show the list of blog.
+     * Public Acces
      *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  String $filter
      * @return \Illuminate\Http\Response
      */
-    public function all()
+    public function all(Request $request, $filter='all')
     {
-        return view('blog.all');
-    }
-
-    /**
-     * Show the list of blog as grid.
-     *
-     */
-    public function allAdmin()
-    {
-        $items = Blog::all();
-        foreach($items as $item)
-        {
-            $item->slug = Blog::slugBlog($item->title,$item->id);
-            $item->contenu = Blog::trunque($item->content,70);
+        $page = $request->get('page');
+        if(!$page){
+            $page =1;
         }
-        return view('blog.admin.all',compact('items')); 
-    }
-
-    /**
-     * Show the list of blog as table.   
-     *
-     * @return \Illuminate\Http\Response
-    */
-    public function listAdmin()
-    {
-       $items = Blog::all();
-        return view('blog.admin.list',compact('items'));
-    }
-    
-    public function add(Request $request)
-    {
-        $item = new Blog();
-        $action = 'blog.add';
-        return view('blog.admin.update', compact('item'));
-    }
-    
-    
-    /**
-    * Function View update Un Blog 
-    * @param string Slug du produit
-    * @return Object Collection Blog 
-    */
-    public function edit(Request $request, $id)
-    {
-        $item = Blog::findOrFail($id);
-        $action = 'blog.add';
-        return view('blog.admin.update', compact('item'));
-    }
-    
-    /**
-    * Function View update Un Blog 
-    * @param string Slug du produit
-    * @return Object Collection Blog 
-    */
-    public function update(Request $request, $id)
-    {
-        //get Request::all() && get blog with Query
-        $blog_updated = $request->input();//array
-
-        $last_blogObj = Blog::find($request->input('article'))->firstOrFail();//Object
-        $last_blog = json_decode(json_encode($last_blogObj),true);//array
-        //parcourir tableau et comparer avec Request::post()
-        unset($blog_updated['_token'] , $blog_updated['_wysihtml5_mode'],$blog_updated['article']);
-        //verifier si une image a été uploadé
-        if($request->file('file'))
-        {
-            $this->validate($request, ['file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048']);
-            $image = $request->file('file');
-            $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/images');
-
-            //redimensionner Image
-            $image_resize = Resize::make($image->getRealPath());              
-            $resultat = $image_resize->resize(1600, 1000);
-            $path = $destinationPath . '/' . $input['imagename'];
-            $image_resize->save($path);
-            //enregistrement image dans destinationPath
-            //$image->move($destinationPath, $input['imagename']); 
-
-            //supprimer ancienne image
-            $image_blog = Image::where('blog_id',$request->input('article'))->first(['urlimage1']);
-            unlink( public_path() . '/images/' . $image_blog->urlimage1 );
-            //insertion image 
-            Image::where('blog_id',$request->input('article'))->update(['urlimage1' => $input['imagename']]);
-        }
-
-        //renommer les keys
-        $blog_updated = [
-            'titre' => $blog_updated['blog_titre'],
-            'contenu' => $blog_updated['blog_paragraphe'],
-            'tag' => $blog_updated['metaArticleKeywords']
-        ];
-
-        $modification = array_diff($blog_updated,$last_blog);
         
-
-       //if $modification NOT NULL : require update
-        if(!empty($modification))
-        {  
-            foreach ($modification as $key => $value) 
-            {
-               Blog::where('id',$last_blog['id'])->update([$key => $value]);
-            }
-            //message flash
-            return back()->with('success',"La modification a été enregistrée");
+        switch($filter){
+            case 'starred':
+                $items = Blog::where('starred','=', 1)
+                    ->where('post_type','=', $this->post_type)
+                    ->paginate($this->pageSize);
+                break;
+            case 'archive':
+                $items = Blog::where('status','=', 'archived')
+                    ->where('post_type','=', $this->post_type)
+                    ->paginate($this->pageSize);
+                break;
+            default:
+            case 'all':
+                $items = Blog::where('post_type','=', $this->post_type)
+                        ->paginate($this->pageSize);
+                break;
         }
-        else
-        {
-         //if Request::post() FALSE
-                // message flash 'Aucun modifiacation'
-           return back()->with('success',"Aucune modification n'a été effectuée");
+        
+        return view('blog.all', compact('items', 'filter', 'page')); 
+    }
+    
+    /**
+     * Show the list of blog.
+     * Admin Only
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  String $filter
+     * @return \Illuminate\Http\Response
+     */
+    public function allAdmin(Request $request, $filter='all')
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        $page = $request->get('page');
+        if(!$page){
+            $page =1;
         }
-
+        
+        switch($filter){
+            case 'starred':
+                $items = Blog::where('starred','=', 1)
+                    ->where('post_type','=', $this->post_type)
+                    ->paginate($this->pageSize);
+                break;
+            case 'archive':
+                $items = Blog::where('status','=', 'archived')
+                    ->where('post_type','=', $this->post_type)
+                    ->paginate($this->pageSize);
+                break;
+            default:
+            case 'all':
+                $items = Blog::where('post_type','=', $this->post_type)
+                        ->paginate($this->pageSize);
+                break;
+        }
+        
+        return view('blog.admin.all', compact('items', 'filter', 'page')); 
     }
     
     
     /**
-    * Soft Delete Blog Item by Id
+    * Mark as starred the Blog
     *
-    * @param Object Request
-    *
-    * @return null 
+    * @param  \Illuminate\Http\Request  $request
+    * @param  \App\Models\Blog  $blog
+    * @return \Illuminate\Http\Response
     */
-    public function softDelete(Request $request, $id)
+    public function star(Request $request,Blog $blog)
     {
-        $delete = Blog::find($id);
-        $delete->state = 1;
-        $delete->save();
-        return back()->with('success',"L'article a été archivé avec succés");
-    }
-    
-    /**
-    * Resotre Blog Item by Id
-    *
-    * @param Object Request
-    *
-    * @return null 
-    */
-    public function restore(Request $request, $id)
-    {
-        $delete = Blog::find($id);
-        $delete->state = 1;
-        $delete->save();
-        return back()->with('success',"L'article a été restoré avec succés");
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        $blog->starred = 1;
+        $blog->save();
+        return redirect()->route('admin.dashboard')
+            ->with('success',"L'article a été supprimé avec succés");
     }
     
     
     /**
-    * Soft Delete Blog Item by Id
+    * Archive Blog
     *
-    * @param Object Request
-    *
-    * @return null 
+    * @param  \Illuminate\Http\Request  $request
+    * @param  \App\Models\Blog  $blog
+    * @return \Illuminate\Http\Response
     */
-    public function delete(Request $request, $id)
+    public function archive(Request $request,Blog $blog)
     {
-        $delete = Blog::find($id);
-        $delete->delete();
-        return back()->with('success',"L'article a été supprimé avec succés");
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        $blog->status = "archived";
+        $blog->save();
+        return redirect()->route('admin.dashboard')
+            ->with('success',"L'article a été supprimé avec succés");
+    }
+    
+    
+    /**
+    * Restore Blog
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  \App\Models\Blog  $blog
+    * @return \Illuminate\Http\Response
+    */
+    public function restore(Request $request,Blog $blog)
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        $blog->status = "published";
+        $blog->save();
+        return redirect()->route('admin.dashboard')
+            ->with('success',"L'article a été supprimé avec succés");
+    }
+    
+    
+    /**
+    * Delete Blog
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  \App\Models\Blog  $blog
+    * @return \Illuminate\Http\Response
+    */
+    public function delete(Request $request,Blog $blog)
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        $blog->delete();
+        return redirect()->route('admin.dashboard')
+            ->with('success',"L'article a été supprimé avec succés");
     }
 }

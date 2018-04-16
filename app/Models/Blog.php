@@ -17,32 +17,14 @@ class Blog extends Model
      */
     protected $table = 'blogs';
     
-    
-    /** 
-    *Fonction Truncage de texte
-    * @return texte...
-    */
-    public static function trunque($str, $nb = 150)
-    {
-		if (strlen($str) > $nb) 
-		{
-			$str = substr($str, 0, $nb);
-			$position_espace = strrpos($str, " ");
-			$texte = substr($str, 0, $position_espace); 
-			$str = $str."...";
-		}
-	    return $str;
-	}
-    
-    /** 
-	*Fonction generer un slug personnalisé pour Bloh
-	* @param titre
-	* @return char Slug
-	*/
-	public static function slugBlog($titre,$id)
-	{
-		return "artcl".$id."-".Str::slug($titre);
-	}
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'title', 'content', 'status', 'image', 'post_type', 'author_id',
+    ];
     
     /**
      * A blog can have many comments
@@ -59,7 +41,7 @@ class Blog extends Model
      */
     public function author()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'author_id', 'id');
     }
 
 }

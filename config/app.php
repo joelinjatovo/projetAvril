@@ -179,6 +179,9 @@ return [
 		
 		// MetaData Class
 		AstritZeqiri\Metadata\LaravelMetaDataServiceProvider::class,
+        
+        // Image Resizing
+        Intervention\Image\ImageServiceProvider::class,
 
     ],
 
@@ -229,6 +232,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 		'MetaData' => AstritZeqiri\Metadata\Models\MetaDada::class,
+        'InterventionImage' => Intervention\Image\Facades\Image::class
 
     ],
 

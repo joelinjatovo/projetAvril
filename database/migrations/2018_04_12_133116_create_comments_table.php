@@ -15,10 +15,10 @@ class CreateCommentsTable extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->longText('content');
-            $table->bigInteger('blog_id');
-            $table->bigInteger('user_id');
-            $table->string('state');
+            $table->longText('content')->nullable();
+            $table->bigInteger('blog_id')->default(0);
+            $table->bigInteger('author_id')->default(0);
+            $table->string('status', 20)->default('pinged'); // pinged published blocked drafted trashed archived
             $table->timestamps();
         });
     }

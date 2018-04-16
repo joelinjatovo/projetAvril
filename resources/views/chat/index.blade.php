@@ -23,6 +23,5 @@
 @endsection
 
 @section('script')
-    <script src="{{ asset('js/bootstrap.js') }}"></script>
     <script src="{{ asset('js/chat.js') }}"></script>
 @endsection

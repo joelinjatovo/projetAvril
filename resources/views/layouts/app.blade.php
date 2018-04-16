@@ -39,6 +39,8 @@
 <link href="{{asset('css/style.css')}}" rel="stylesheet">
 <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
 
+@yield('style')
+
 </head>
 <body>
 <header id="head">
@@ -68,11 +70,12 @@
                             <i class="fa fa-globe"></i>
                             <label for="language-dropdown">Langue :</label>
                             <select name="currency" id="language-dropdown" onChange="location.href=''+this.options[this.selectedIndex].value;">
-                                <option value="{{route('localization', ['locale'=>'fr'])}}"> &nbsp; Fr</option>
-                                <option value="{{route('localization', ['locale'=>'en'])}}"> &nbsp; Eng</option>
+                                <option value="{{route('localization', ['locale'=>'fr'])}}" @if('fr'==App::getLocale()) {{'selected'}} @endif>Fr</option>
+                                <option value="{{route('localization', ['locale'=>'en'])}}" @if('en'==App::getLocale()) {{'selected'}} @endif>Eng</option>
                             </select>
                         </div>
-                         <div class="currency-in-header">
+                        @if(!Auth::check())
+                        <div class="currency-in-header">
                             <i class="fa fa-sign-in"></i>
                             <label for="currency-dropdown"> S'inscrire: </label>
                             <select name="currency" id="currency-dropdown" onChange="location.href=''+this.options[this.selectedIndex].value;">
@@ -87,6 +90,11 @@
                             <i class="fa fa-mouse-pointer"></i>
                             <label for="currency-dropdown"> <a href="{{route('login')}}">Connexion</a> </label>
                         </div>
+                        @else
+                        <div class="currency-in-header">
+                            <i class="fa fa-user"></i><a href="{{route('admin.dashboard')}}">{{Auth::user()->name}}</a>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -215,12 +223,10 @@
 <script src="{{asset('plugins/zoom/zoom.js')}}"></script>
 <script src="{{asset('plugins/mixitup/mixitup.min.js')}}"></script>
 <script src="{{asset('plugins/whats-nearby/source/WhatsNearby.js')}}"></script>
+    
 <script src="{{asset('js/theme.js')}}"></script>
 <script src="{{asset('js/multirange.js')}}"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/bootstrap-slider.js"></script>
 <script src="{{asset('js/head.js')}}"></script>
-
 
 <!-- Slider Range -->
 <script type='text/javascript'>
@@ -252,6 +258,7 @@
         });
     });
 </script>
-
+@yield('script')
+    
 </body>
 </html>    

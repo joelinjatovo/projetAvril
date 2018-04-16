@@ -1,37 +1,30 @@
-
 <div id="property-sidebar">
     <section class="property-meta-wrapper common text-center bg-info">
         <div class="col-md-12">
-        <div class="content-box-header">
-            <div class="panel-title">Espaces publicitaires</div>
+            <div class="content-box-header">
+                <div class="panel-title">Espaces publicitaires</div>
+            </div>
+            <p><a href="#" class="btn btn-success btn-lg">Agences Partenaires Locales</a></p>
+
+            <!-- google maps API -->
+            <div class="content-box-large box-with-header">
+                <div id="map"></div>
+            </div>
+            <h6><img src="{{asset('images/features/bleu.png')}}" width="10" height="10"> Résidentiel </h6>
+            <h6><img src="{{asset('images/features/vert.png')}}" width="10" height="10"> Foncier </h6>
+            <h6><img src="{{asset('images/features/rouge.png')}}" width="10" height="10"> Industriel </h6>
+            <h6><img src="{{asset('images/features/jaune.png')}}" width="10" height="10"> Commercial</h6>
+            <div class="content-box-large box-with-header">
+                <img src="http://localhost/iea/public/images/publicite2-gformat.jpg" class="img-rounded" alt="Cinque Terre" width="604" height="236">
+                <br><br>
+            </div>
         </div>
-         <p>
-          <a href="APL.php" class="btn btn-success btn-lg"> Agences Partenaires Locales </a><br/>
-        </p>
-
-        <!-- google maps API -->
-        <div class="content-box-large box-with-header">
-            <div id="map"></div>
-        </div>
-
-
-         <h6><img src="http://localhost/iea/public/assets/images/features/bleu.png" width="10" height="10"> Résidentiel </h6>
-         <h6><img src="http://localhost/iea/public/assets/images/features/vert.png" width="10" height="10"> Foncier </h6>
-         <h6><img src="http://localhost/iea/public/assets/images/features/rouge.png" width="10" height="10"> Industriel </h6>
-         <h6><img src="http://localhost/iea/public/assets/images/features/jaune.png" width="10" height="10"> Commercial </h6>
-
-
-        <div class="content-box-large box-with-header">
-              <img src="http://localhost/iea/public/images/publicite2-gformat.jpg" class="img-rounded" alt="Cinque Terre" width="604" height="236">
-            <br /><br />
-        </div>
-    </div>
-</section>
+    </section>
     <section class="property-meta-wrapper common text-center bg-info">
         <h2 class="title wow slideInLeft" style="visibility: hidden; animation-name: none;">
         ESPACES PUBLICITES</h2>
         <div class="content-box-large box-with-header">
-              <img src="http://localhost/iea/public/images/announcement-bg.jpg" class="img-rounded" alt="Cinque Terre" width="604" height="236">
+              <img src="{{asset('images/announcement-bg.jpg')}}" class="img-rounded" alt="Cinque Terre" width="604" height="236">
             <br /><br />
         </div>
     </section>
@@ -39,7 +32,7 @@
         <h2 class="title wow slideInLeft" style="visibility: hidden; animation-name: none;">
         ESPACES PUBLICITES</h2>
         <div class="content-box-large box-with-header">
-              <img src="http://localhost/iea/public/images/publicite3-gformat.jpg" class="img-rounded" alt="Cinque Terre" width="604" height="236">
+              <img src="{{asset('images/publicite3-gformat.jpg')}}" class="img-rounded" alt="Cinque Terre" width="604" height="236">
             <br /><br />
         </div>
     </section>
@@ -47,7 +40,7 @@
         <h5 class="title">Récents</h5>
         <div class="property clearfix">
             <a href="#" class="feature-image zoom">
-                <img data-action="zoom" src="http://localhost/iea/public/assets/images/property/1.jpg" alt="Property Image">
+                <img data-action="zoom" src="{{asset('images/property/1.jpg')}}" alt="Property Image">
             </a>
             <div class="property-contents">
                 <h6 class="entry-title"> <a href="#">Maison familiale luxe</a></h6>
@@ -62,7 +55,7 @@
         </div>
         <div class="property clearfix">
             <a href="#" class="feature-image zoom">
-                <img data-action="zoom" src="http://localhost/iea/public/assets/images/property/2.jpg" alt="Property Image">
+                <img data-action="zoom" src="{{asset('images/property/2.jpg')}}" alt="Property Image">
             </a>
             <div class="property-contents">
                 <h6 class="entry-title"> <a href="single-property.html">Maison familiale luxe</a></h6>
@@ -77,7 +70,7 @@
         </div>
         <div class="property clearfix">
             <a href="#" class="feature-image zoom">
-                <img data-action="zoom" src="http://localhost/iea/public/assets/images/property/3.jpg" alt="Property Image">
+                <img data-action="zoom" src="{{asset('images/property/3.jpg')}}" alt="Property Image">
             </a>
             <div class="property-contents">
                 <h6 class="entry-title"> <a href="single-property.html">Maison familiale luxe</a></h6>

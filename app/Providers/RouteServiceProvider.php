@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use App\Models\User;
+use App\Models\Blog;
+use App\Models\Comment;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -26,6 +29,11 @@ class RouteServiceProvider extends ServiceProvider
         //
 
         parent::boot();
+        
+        Route::pattern('id', '[0-9]+');
+        Route::model('user', User::class);
+        Route::model('blog', Blog::class);
+        Route::model('comment', Comment::class);
     }
 
     /**

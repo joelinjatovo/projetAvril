@@ -10,36 +10,36 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'IEA') }} - Admin - @yield('title')</title>
     
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="{{asset('images/favicon.png')}}">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{asset('admin/assets/ico/apple-touch-icon-144-precomposed.png')}}">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{asset('admin/assets/ico/apple-touch-icon-114-precomposed.png')}}">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{asset('admin/assets/ico/apple-touch-icon-72-precomposed.png')}}">
-    <link rel="apple-touch-icon-precomposed" href="{{asset('admin/assets/ico/apple-touch-icon-57-precomposed.png')}}">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{asset('administrator/assets/ico/apple-touch-icon-144-precomposed.png')}}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{asset('administrator/assets/ico/apple-touch-icon-114-precomposed.png')}}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{asset('administrator/assets/ico/apple-touch-icon-72-precomposed.png')}}">
+    <link rel="apple-touch-icon-precomposed" href="{{asset('administrator/assets/ico/apple-touch-icon-57-precomposed.png')}}">
 
     
     <!-- Le styles -->
-    <link href="{{asset('admin/css/lib/bootstrap.css')}}" rel="stylesheet" type="text/css" >
-    <link href="{{asset('admin/css/lib/bootstrap-responsive.css')}}" rel="stylesheet" type="text/css" >
-    <link href="{{asset('admin/css/boo-extension.css')}}" rel="stylesheet" type="text/css" >
-    <link href="{{asset('admin/css/boo.css')}}" rel="stylesheet" type="text/css" >
-    <link href="{{asset('admin/css/style.css')}}" rel="stylesheet" type="text/css" >
-    <link href="{{asset('admin/css/boo-coloring.css')}}" rel="stylesheet" type="text/css" >
-    <link href="{{asset('admin/css/boo-utility.css')}}" rel="stylesheet" type="text/css" >
+    <link href="{{asset('administrator/css/lib/bootstrap.css')}}" rel="stylesheet" type="text/css" >
+    <link href="{{asset('administrator/css/lib/bootstrap-responsive.css')}}" rel="stylesheet" type="text/css" >
+    <link href="{{asset('administrator/css/boo-extension.css')}}" rel="stylesheet" type="text/css" >
+    <link href="{{asset('administrator/css/boo.css')}}" rel="stylesheet" type="text/css" >
+    <link href="{{asset('administrator/css/style.css')}}" rel="stylesheet" type="text/css" >
+    <link href="{{asset('administrator/css/boo-coloring.css')}}" rel="stylesheet" type="text/css" >
+    <link href="{{asset('administrator/css/boo-utility.css')}}" rel="stylesheet" type="text/css" >
     <link href="{{asset('css/font-awesome.min.css')}}" rel="stylesheet" type="text/css" >
     
     <!-- Le Script -->
-    <script src="{{asset('admin/amcharts/amcharts.js')}}"></script>
-    <script src="{{asset('admin/amcharts/xy.js')}}"></script>
-    <script src="{{asset('admin/amcharts/funnel.js')}}"></script>
-    <script src="{{asset('admin/amcharts/pie.js')}}"></script>
-    <script src="{{asset('admin/amcharts/serial.js')}}"></script>
-    <script src="{{asset('admin/amcharts/graphe.js')}}"></script>
-    <script src="{{asset('admin/amcharts/gantt.js')}}"></script>
-    <script src="{{asset('admin/amcharts/gauge.js')}}"></script>
-    <script src="{{asset('admin/amcharts/radar.js')}}"></script>
+    <script src="{{asset('administrator/amcharts/amcharts.js')}}"></script>
+    <script src="{{asset('administrator/amcharts/xy.js')}}"></script>
+    <script src="{{asset('administrator/amcharts/funnel.js')}}"></script>
+    <script src="{{asset('administrator/amcharts/pie.js')}}"></script>
+    <script src="{{asset('administrator/amcharts/serial.js')}}"></script>
+    <script src="{{asset('administrator/amcharts/graphe.js')}}"></script>
+    <script src="{{asset('administrator/amcharts/gantt.js')}}"></script>
+    <script src="{{asset('administrator/amcharts/gauge.js')}}"></script>
+    <script src="{{asset('administrator/amcharts/radar.js')}}"></script>
 
 </head>
 <body class="sidebar-left ">
@@ -54,7 +54,7 @@
                               <span class="icon-bar"></span>
                           </button> -->
                           <a class="brand" href="#">
-                              <img src="{{asset('admin/img/logo.png')}}" width="100" height="50">
+                              <img src="{{asset('administrator/img/logo.png')}}" width="100" height="50">
                           </a>
                           <div class="search-global">
                               <input id="globalSearch" class="search search-query input-medium" type="search">
@@ -79,12 +79,12 @@
         <!-- // navbar -->
         
         <div class="header-drawer">
-            <div class="mobile-nav text-center visible-phone"> <a href="javascript:void(0);" class="mobile-btn" data-toggle="collapse" data-target=".sidebar"><i class="aweso-icon-chevron-down"></i> Menu</a> </div>
+            <div class="mobile-nav text-center visible-phone"> <a href="javascript:void(0);" class="mobile-btn" data-toggle="collapse" data-target=".sidebar"><i class="aweso-icon-chevron-down"></i> @lang("Menu")</a> </div>
             <!-- // Resposive navigation -->
             <div class="breadcrumbs-nav hidden-phone">
                 <ul id="breadcrumbs" class="breadcrumb">
-                    <li><a href="javascript:void(0);"><i class="fontello-icon-home f12"></i> Dashboard</a> <span class="divider">/</span></li>
-                    <li class="active"> Profil administrateur </li>
+                    <li><a href="javascript:void(0);"><i class="fontello-icon-home f12"></i> @lang("Dashboard")</a> <span class="divider">/</span></li>
+                    <li class="active"> @lang("Profil administrateur") </li>
                 </ul>
             </div>
             <!-- // breadcrumbs -->
@@ -97,19 +97,21 @@
     
 <div id="main-container">
     <div id="main-sidebar" class="sidebar sidebar-inverse">
+          @if(Auth::check())
           <div class="sidebar-item">
               <div class="media profile">
                   <div class="media-thumb media-left thumb-bordereb">
                       <a class="img-shadow" href="">
-                          <img class="thumb" src="{{asset('admin/img/administrateur-1520608223.jpeg')}}">
+                          <img class="thumb" src="{{asset('administrator/img/administrateur-1520608223.jpeg')}}">
                       </a>
                   </div>
                   <div class="media-body">
-                      <h5 class="media-heading">Philippe Buteri de Preville</h5>
-                      <p class="data">Dernière modif : 21/03/2018</p>
+                      <h5 class="media-heading">{{Auth::user()->name}}</h5>
+                      <p class="data">Dernière modif : </p>
                   </div>
               </div>
           </div>
+          @endif
           <ul id="mainSideMenu" class="nav nav-list nav-side">
             <li class="accordion-group">
                 <div class="accordion-heading">
@@ -123,50 +125,36 @@
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="#accMembres" data-parent="#mainSideMenu"  data-toggle="collapse" class="accordion-toggle">
-                        <i class="fontello-icon-users-1"></i>
-                        <i class="chevron fontello-icon-right-open-3"></i>
-                         Parties Prenantes
-                      </a>
+                      <a href="#accMembres" data-parent="#mainSideMenu"  data-toggle="collapse" class="accordion-toggle"><i class="fontello-icon-users-1"></i><i class="chevron fontello-icon-right-open-3"></i>Parties Prenantes</a>
                   </div>
                   <ul class="accordion-content nav nav-list collapse" id="accMembres">
-                    <li>
-                        <a href=""> <i class="fontello-icon-right-dir"></i> Tous</a>
-                    </li>
-                      <li>
-                          <a href=""> <i class="fontello-icon-right-dir"></i> Vendeurs</a>
-                      </li>
-                      <li>
-                          <a href="#"> <i class="fontello-icon-right-dir"></i> AFA</a>
-                      </li>
-                      <li>
-                          <a href="#l"> <i class="fontello-icon-right-dir"></i> APL</a>
-                      </li>
-                      <li>
-                          <a href=""> <i class="fontello-icon-right-dir"></i> Visiteurs Membres</a>
-                      </li>
+                      <li><a href="{{route('admin.user.list')}}"> <i class="fontello-icon-right-dir"></i>Tous</a></li>
+                      <li><a href="{{route('admin.user.list', ['filter'=>'admin'])}}"> <i class="fontello-icon-right-dir"></i>Admin</a></li>
+                      <li><a href="{{route('admin.user.list', ['filter'=>'seller'])}}"> <i class="fontello-icon-right-dir"></i>Vendeurs</a></li>
+                      <li><a href="{{route('admin.user.list', ['filter'=>'afa'])}}"> <i class="fontello-icon-right-dir"></i> AFA</a></li>
+                      <li><a href="{{route('admin.user.list', ['filter'=>'apl'])}}"> <i class="fontello-icon-right-dir"></i> APL</a></li>
+                      <li><a href="{{route('admin.user.list', ['filter'=>'member'])}}"> <i class="fontello-icon-right-dir"></i>Membres</a></li>
                   </ul>
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
                       <a href="#accRéglages" data-parent="#mainSideMenu"  data-toggle="collapse" class="accordion-toggle">
                         <i class="fontello-icon-tools"></i>
-                        <i class="chevron fontello-icon-right-open-3"></i>
-                         Configurations
+                        <i class="chevron fontello-icon-right-open-3"></i>@lang('app.configs')
                       </a>
                   </div>
                   <ul class="accordion-content nav nav-list collapse" id="accRéglages">
                     <li>
-                        <a href=""> <i class="fontello-icon-right-dir"></i> Information du site</a>
+                        <a href=""> <i class="fontello-icon-right-dir"></i>@lang('app.config.site')</a>
                     </li>
                     <li>
-                        <a href=""> <i class="fontello-icon-right-dir"></i> Réseaux sociaux </a>
+                        <a href=""> <i class="fontello-icon-right-dir"></i>@lang('app.config.social')</a>
                     </li>
                       <li>
-                          <a href=""> <i class="fontello-icon-right-dir"></i> Paiements </a>
+                          <a href=""> <i class="fontello-icon-right-dir"></i>@lang('app.config.card')</a>
                       </li>
                       <li>
-                        <a href=""> <i class="fontello-icon-right-dir"></i> Page statique </a>
+                        <a href=""> <i class="fontello-icon-right-dir"></i>@lang('app.config.page')</a>
                       </li>
                   </ul>
               </li>
@@ -179,20 +167,12 @@
                   <div class="accordion-heading">
                       <a href="#accBlogs" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle">
                         <i class="fontello-icon-users-1"></i>
-                        <i class="chevron fontello-icon-right-open-3"></i>
-                         Blog
-                      </a>
+                        <i class="chevron fontello-icon-right-open-3"></i>@lang('app.admin.blogs')</a>
                   </div>
                   <ul class="accordion-content nav nav-list collapse" id="accBlogs">
-                      <li>
-                          <a href=""> <i class="fontello-icon-right-dir"></i> Listes des blogs</a>
-                      </li>
-                      <li>
-                          <a href=""> <i class="fontello-icon-right-dir"></i> Ajouter un article</a>
-                      </li>
-                       <li>
-                          <a href=""> <i class="fontello-icon-right-dir"></i> Registre des articles</a>
-                      </li>
+                      <li><a href="{{route('admin.blog.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.blog.list')</a></li>
+                      <li><a href="{{route('admin.blog.create')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.blog.add')</a></li>
+                       <li><a href="{{route('admin.blog.list', ['filter'=>'archive'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.blog.archive')</a></li>
                   </ul>
               </li>
               <li class="accordion-group">
@@ -299,102 +279,102 @@
 <!-- // footer-fix  -->
     
     <!-- Placed at the end of the document so the pages load faster -->
-<script src="{{asset('admin/js/lib/jquery.js')}}"></script>
-<script src="{{asset('admin/js/lib/jquery-ui.js')}}"></script>
-<script src="{{asset('admin/js/lib/jquery.cookie.js')}}"></script>
-<script src="{{asset('admin/js/lib/jquery.date.js')}}"></script>
-<script src="{{asset('admin/js/lib/jquery.mousewheel.js')}}"></script>
-<script src="{{asset('admin/js/lib/jquery.load-image.min.js')}}"></script>
-<script src="{{asset('admin/js/lib/bootstrap/bootstrap.js')}}"></script>
+<script src="{{asset('administrator/js/lib/jquery.js')}}"></script>
+<script src="{{asset('administrator/js/lib/jquery-ui.js')}}"></script>
+<script src="{{asset('administrator/js/lib/jquery.cookie.js')}}"></script>
+<script src="{{asset('administrator/js/lib/jquery.date.js')}}"></script>
+<script src="{{asset('administrator/js/lib/jquery.mousewheel.js')}}"></script>
+<script src="{{asset('administrator/js/lib/jquery.load-image.min.js')}}"></script>
+<script src="{{asset('administrator/js/lib/bootstrap/bootstrap.js')}}"></script>
 
 <!-- Plugins Bootstrap -->
-<script src="{{asset('admin/plugins/bootstrap-wysihtml5/lib/js/wysihtml5-0.3.0.min.js')}}"></script>
-<script src="{{asset('admin/plugins/bootstrap-wysihtml5/src/bootstrap-wysihtml5.js')}}"></script>
-<script src="{{asset('admin/plugins/bootstrap-fuelux/all-fuelux.min.js')}}"></script>
-<script src="{{asset('admin/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
-<script src="{{asset('admin/plugins/bootstrap-timepicker/js/bootstrap-timepicker.js')}}"></script>
-<script src="{{asset('admin/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js')}}"></script>
-<script src="{{asset('admin/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js')}}"></script>
-<script src="{{asset('admin/plugins/bootstrap-daterangepicker/js/bootstrap-daterangepicker.js')}}"></script>
-<script src="{{asset('admin/plugins/bootstrap-toggle-button/js/bootstrap-toggle-button.js')}}"></script>
-<script src="{{asset('admin/plugins/bootstrap-fileupload/js/bootstrap-fileupload.js')}}"></script>
-<script src="{{asset('admin/plugins/bootstrap-rowlink/js/bootstrap-rowlink.js')}}"></script>
-<script src="{{asset('admin/plugins/bootstrap-progressbar/js/bootstrap-progressbar.js')}}"></script>
-<script src="{{asset('admin/plugins/bootstrap-select/bootstrap-select.js')}}"></script>
-<script src="{{asset('admin/plugins/bootstrap-multiselect/js/bootstrap-multiselect.js')}}"></script>
-<script src="{{asset('admin/plugins/bootstrap-bootbox/bootbox.min.js')}}"></script>
-<script src="{{asset('admin/plugins/bootstrap-modal/js/bootstrap-modalmanager.js')}}"></script>
-<script src="{{asset('admin/plugins/bootstrap-modal/js/bootstrap-modal.js')}}"></script>
-<script src="{{asset('admin/plugins/bootstrap-wizard/js/bootstrap-wizard.min.js')}}"></script>
-<script src="{{asset('admin/plugins/bootstrap-wizard-2/js/bwizard-only.min.js')}}"></script>
-<script src="{{asset('admin/plugins/bootstrap-image-gallery/js/bootstrap-image-gallery.min.js')}}"></script>
+<script src="{{asset('administrator/plugins/bootstrap-wysihtml5/lib/js/wysihtml5-0.3.0.min.js')}}"></script>
+<script src="{{asset('administrator/plugins/bootstrap-wysihtml5/src/bootstrap-wysihtml5.js')}}"></script>
+<script src="{{asset('administrator/plugins/bootstrap-fuelux/all-fuelux.min.js')}}"></script>
+<script src="{{asset('administrator/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
+<script src="{{asset('administrator/plugins/bootstrap-timepicker/js/bootstrap-timepicker.js')}}"></script>
+<script src="{{asset('administrator/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js')}}"></script>
+<script src="{{asset('administrator/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js')}}"></script>
+<script src="{{asset('administrator/plugins/bootstrap-daterangepicker/js/bootstrap-daterangepicker.js')}}"></script>
+<script src="{{asset('administrator/plugins/bootstrap-toggle-button/js/bootstrap-toggle-button.js')}}"></script>
+<script src="{{asset('administrator/plugins/bootstrap-fileupload/js/bootstrap-fileupload.js')}}"></script>
+<script src="{{asset('administrator/plugins/bootstrap-rowlink/js/bootstrap-rowlink.js')}}"></script>
+<script src="{{asset('administrator/plugins/bootstrap-progressbar/js/bootstrap-progressbar.js')}}"></script>
+<script src="{{asset('administrator/plugins/bootstrap-select/bootstrap-select.js')}}"></script>
+<script src="{{asset('administrator/plugins/bootstrap-multiselect/js/bootstrap-multiselect.js')}}"></script>
+<script src="{{asset('administrator/plugins/bootstrap-bootbox/bootbox.min.js')}}"></script>
+<script src="{{asset('administrator/plugins/bootstrap-modal/js/bootstrap-modalmanager.js')}}"></script>
+<script src="{{asset('administrator/plugins/bootstrap-modal/js/bootstrap-modal.js')}}"></script>
+<script src="{{asset('administrator/plugins/bootstrap-wizard/js/bootstrap-wizard.min.js')}}"></script>
+<script src="{{asset('administrator/plugins/bootstrap-wizard-2/js/bwizard-only.min.js')}}"></script>
+<script src="{{asset('administrator/plugins/bootstrap-image-gallery/js/bootstrap-image-gallery.min.js')}}"></script>
 
 <!-- Plugins Custom - Only example -->
-<script src="{{asset('admin/plugins/pl-extension/google-code-prettify/prettify.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-extension/google-code-prettify/prettify.js')}}"></script>
 
 <!-- Plugins Custom - System -->
-<script src="{{asset('admin/plugins/pl-system/nicescroll/jquery.nicescroll.min.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-system/xbreadcrumbs/xbreadcrumbs.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-system/nicescroll/jquery.nicescroll.min.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-system/xbreadcrumbs/xbreadcrumbs.js')}}"></script>
 
 <!-- Plugins Custom - System info -->
-<script src="{{asset('admin/plugins/pl-system-info/qtip2/dist/jquery.qtip.min.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-system-info/gritter/js/jquery.gritter.min.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-system-info/notyfy/jquery.notyfy.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-system-info/qtip2/dist/jquery.qtip.min.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-system-info/gritter/js/jquery.gritter.min.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-system-info/notyfy/jquery.notyfy.js')}}"></script>
 
 <!-- Plugins Custom - Content -->
-<script src="{{asset('admin/plugins/pl-content/list/js/list.min.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-content/list/plugins/list.paging.min.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-content/jpages/js/jPages.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-content/list/js/list.min.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-content/list/plugins/list.paging.min.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-content/jpages/js/jPages.js')}}"></script>
 
 <!-- Plugins Custom - Component -->
-<script src="{{asset('admin/plugins/pl-component/fullcalendar/fullcalendar.min.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-component/rangeslider/jqallrangesliders.min.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-component/fullcalendar/fullcalendar.min.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-component/rangeslider/jqallrangesliders.min.js')}}"></script>
 
 <!-- Plugins Custom - Form -->
-<script src="{{asset('admin/plugins/pl-form/uniform/jquery.uniform.min.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-form/select2/select2.min.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-form/counter/jquery.counter.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-form/elastic/jquery.elastic.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-form/inputmask/jquery.inputmask.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-form/inputmask/jquery.inputmask.extensions.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-form/validate/js/jquery.validate.min.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-form/duallistbox/jquery.duallistbox.min.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-form/uniform/jquery.uniform.min.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-form/select2/select2.min.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-form/counter/jquery.counter.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-form/elastic/jquery.elastic.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-form/inputmask/jquery.inputmask.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-form/inputmask/jquery.inputmask.extensions.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-form/validate/js/jquery.validate.min.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-form/duallistbox/jquery.duallistbox.min.js')}}"></script>
 
 <!-- Plugins Custom - Gallery -->
-<script src="{{asset('admin/plugins/pl-gallery/nailthumb/jquery.nailthumb.1.1.min.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-gallery/nailthumb/showLoading/js/jquery.showLoading.min.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-gallery/wookmark/jquery.imagesloaded.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-gallery/wookmark/jquery.wookmark.min.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-gallery/nailthumb/jquery.nailthumb.1.1.min.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-gallery/nailthumb/showLoading/js/jquery.showLoading.min.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-gallery/wookmark/jquery.imagesloaded.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-gallery/wookmark/jquery.wookmark.min.js')}}"></script>
 
 <!-- Plugins Tables -->
-<script src="{{asset('admin/plugins/pl-table/datatables/media/js/jquery.dataTables.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-table/datatables/plugin/jquery.dataTables.plugins.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-table/datatables/plugin/jquery.dataTables.columnFilter.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-table/datatables/media/js/jquery.dataTables.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-table/datatables/plugin/jquery.dataTables.plugins.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-table/datatables/plugin/jquery.dataTables.columnFilter.js')}}"></script>
 
 <!-- Plugins data visualization -->
-<script src="{{asset('admin/plugins/pl-visualization/sparkline/jquery.sparkline.min.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-visualization/easy-pie-chart/jquery.easy-pie-chart.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-visualization/percentageloader/percentageloader.min.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-visualization/knob/knob.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-visualization/flot/jquery.flot.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-visualization/flot/jquery.flot.categories.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-visualization/flot/jquery.flot.grow.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-visualization/flot/jquery.flot.orderBars.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-visualization/flot/jquery.flot.pie.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-visualization/flot/jquery.flot.resize.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-visualization/flot/jquery.flot.selection.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-visualization/flot/jquery.flot.stack.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-visualization/flot/jquery.flot.stackpercent.js')}}"></script>
-<script src="{{asset('admin/plugins/pl-visualization/flot/jquery.flot.time.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-visualization/sparkline/jquery.sparkline.min.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-visualization/easy-pie-chart/jquery.easy-pie-chart.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-visualization/percentageloader/percentageloader.min.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-visualization/knob/knob.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-visualization/flot/jquery.flot.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-visualization/flot/jquery.flot.categories.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-visualization/flot/jquery.flot.grow.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-visualization/flot/jquery.flot.orderBars.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-visualization/flot/jquery.flot.pie.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-visualization/flot/jquery.flot.resize.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-visualization/flot/jquery.flot.selection.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-visualization/flot/jquery.flot.stack.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-visualization/flot/jquery.flot.stackpercent.js')}}"></script>
+<script src="{{asset('administrator/plugins/pl-visualization/flot/jquery.flot.time.js')}}"></script>
 
 
 
 
 <!-- main js -->
-<script src="{{asset('admin/js/core.js')}}"></script>
-<script src="{{asset('admin/js/application.js')}}"></script>
+<script src="{{asset('administrator/js/core.js')}}"></script>
+<script src="{{asset('administrator/js/application.js')}}"></script>
 <!-- Only This Demo Page -->
-<script src="{{asset('admin/js/demo/demo-jquery.dataTables.js')}}"></script>
+<script src="{{asset('administrator/js/demo/demo-jquery.dataTables.js')}}"></script>
 
 <!-- Only This Demo Page -->
 
@@ -524,8 +504,8 @@ $(document).ready(function () {
 
 
 <!-- Only This Demo Page -->
-<script src="{{asset('admin/js/demo/demo-wisyhtml5.js')}}"></script>
-<script src="{{asset('admin/js/demo/d3.js')}}"></script>
+<script src="{{asset('administrator/js/demo/demo-wisyhtml5.js')}}"></script>
+<script src="{{asset('administrator/js/demo/d3.js')}}"></script>
 <script>
 $(function() {
      $.configureBoxes({selectOnSubmit: false});

@@ -3,30 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Page;
+use App\Http\Controllers\BlogController;
 
-class PageController extends Controller
+class PageController extends BlogController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //$this->middleware('auth');
-    }
     
     /**
-     * Show the static page config.
+     * Type of Blog in database
      *
-     * @return \Illuminate\Http\Response
      */
-    public function all()
-    {
-    	$items = Page::get();
-        return view('page.all', compact('items'));
-    }
-
+    protected $post_type = 'page';
+    
 
 }

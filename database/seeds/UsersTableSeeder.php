@@ -13,19 +13,48 @@ class UsersTableSeeder extends Seeder
     {
         DB::table('users')->insert([
             'name' => "admin",
-            'email' => 'admin@gmail.com',
-            'role' => 'admin',
-            'state' => 'active',
+            'email' => 'admin@iea.com',
             'password' => bcrypt('admin'),
-            'parent_id' => '0',
+            'role' => 'admin',
+            'status' => 'active',
+            'author_id' => '0',
+            'created_at' => date("Y-m-d H:i:s"),
         ]);
         DB::table('users')->insert([
-            'name' => "joelinjatovo",
-            'email' => 'joelinjatovo@gmail.com',
-            'role' => 'admin',
-            'state' => 'active',
-            'password' => bcrypt('joelinjatovo'),
-            'parent_id' => '0',
+            'name' => "apl",
+            'email' => 'apl@iea.com',
+            'password' => bcrypt('apl'),
+            'role' => 'apl',
+            'status' => 'active',
+            'author_id' => '0',
+            'created_at' => date("Y-m-d H:i:s"),
+        ]);
+        DB::table('users')->insert([
+            'name' => "afa",
+            'email' => 'afa@iea.com',
+            'password' => bcrypt('afa'),
+            'role' => 'afa',
+            'status' => 'active',
+            'author_id' => '0',
+            'created_at' => date("Y-m-d H:i:s"),
+        ]);
+        DB::table('users')->insert([
+            'name' => "seller",
+            'email' => 'seller@iea.com',
+            'password' => bcrypt('seller'),
+            'role' => 'seller',
+            'status' => 'active',
+            'author_id' => '0',
+            'created_at' => date("Y-m-d H:i:s"),
+        ]);
+        DB::table('users')->insert([
+            'name' => "member",
+            'email' => 'member@iea.com',
+            'password' => bcrypt('member'),
+            'role' => 'member',
+            'status' => 'active',
+            'author_id' => '0',
+            'created_at' => date("Y-m-d H:i:s"),
         ]);
     }
 }

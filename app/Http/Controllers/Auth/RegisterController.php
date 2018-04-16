@@ -76,6 +76,42 @@ class RegisterController extends Controller
      */
     public function index($role)
     {
-        return view('index.index');
+        $pays = $this->getPaysFromCsv();
+        $tels = $this->getTelsFromCsv();
+        return view('login.'.$role,["pays"=>$pays , "tels"=>$tels]);
+    }
+
+    private function getPaysFromCsv(){
+        $ligne = 1;
+        $fic = fopen(resource_path()."/csv/country-code-fr.csv", "a+");
+        $listePays = array();
+        while($tab=fgetcsv($fic,1024))
+        {
+            $champs = count($tab);
+            $ligne ++;
+            for($i=0; $i<$champs; $i ++)
+            {
+                $pays = explode(";", $tab[$i]);
+                array_push( $listePays, $pays[1]) ;
+            }
+        }
+        return $listePays;
+    }
+
+    private function getTelsFromCsv(){
+        $ligne = 1;
+        $fic = fopen(resource_path()."/csv/tel-code-fr.csv" , "a+");
+        $listeContact = array();
+        while($tab=fgetcsv($fic,1024))
+        {
+            $champs = count($tab);
+            $ligne ++;
+            for($i=0; $i<$champs; $i ++)
+            {
+                $contact = explode(";", $tab[$i]);
+                array_push( $listeContact, $contact[0]."  ".$contact[1]) ;
+            }
+        }
+        return $listeContact;
     }
 }

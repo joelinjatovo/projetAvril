@@ -8,12 +8,14 @@ use AstritZeqiri\Metadata\Traits\HasManyMetaDataTrait;
 
 use App\Models\ChatMessage;
 use App\Models\Blog;
+use App\Models\Comment;
 use App\Models\Product;
 use App\Models\RowProduct;
 use App\Models\ProductLabel;
+use App\Models\Localization;
+
 use App\Models\Pub;
 use App\Models\Page;
-use App\Models\Comment;
 
 class User extends Authenticatable
 {
@@ -52,6 +54,26 @@ class User extends Authenticatable
     }
     
     /**
+     * A user can have one parent
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function author()
+    {
+      return $this->hasOne(User::class, 'author_id', 'id');
+    }
+    
+    /**
+     * A user can have one location
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function location()
+    {
+      return $this->hasOne(Localization::class, 'location_id', 'id');
+    }
+    
+    /**
      * A user can have many messages
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -68,7 +90,7 @@ class User extends Authenticatable
      */
     public function blogs()
     {
-      return $this->hasMany(Blog::class, 'user_id', 'id');
+      return $this->hasMany(Blog::class, 'author_id', 'id');
     }
     
     /**
@@ -78,43 +100,57 @@ class User extends Authenticatable
      */
     public function comments()
     {
-      return $this->hasMany(Comment::class, 'user_id', 'id');
+      return $this->hasMany(Comment::class, 'author_id', 'id');
     }
     
     /**
-     * A user can have many pubs
+     * An admin can have many products
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function pubs()
+    public function products()
     {
-      return $this->hasMany(Pub::class, 'user_id', 'id');
+      return $this->hasMany(Product::class, 'author_id', 'id');
     }
     
     /**
-     * A user can have many pages
+     * An admin can have many products from rows_products table
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function pages()
+    public function authorRowsProducts()
     {
-      return $this->hasMany(Page::class, 'user_id', 'id');
+      return $this->hasMany(RowProduct::class, 'author_id', 'id');
     }
     
     /**
-     * A user can have many products from product_label table
+     * An user can have many products from products_labels table
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function labeledProducts()
+    public function authorProductsLabels()
     {
-      return $this->belongsToMany(Product::class, 'product_label', 'user_id', 'product_id');
+      return $this->hasMany(ProductLabel::class, 'author_id', 'id');
     }
     
     /**
-     * A user can have many products from row_product table
+     * A seller can have many products from rows_products table
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
      */
-    public function rowProducts()
+    public function sellerProducts()
     {
-      return $this->belongsToMany(Product::class, 'row_product', 'user_id', 'product_id');
+      return $this->belongsToMany(Product::class, 'rows_products', 'seller_id', 'product_id');
+    }
+    
+    /**
+     * A user can have many products from products_labels table
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
+     */
+    public function labels()
+    {
+      return $this->belongsToMany(Product::class, 'products_labels', 'author_id', 'product_id');
     }
     
 }
