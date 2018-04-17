@@ -18,7 +18,8 @@ class ConfigController extends Controller
      */
     public function __construct()
     {
-        //$this->middleware('auth');
+        $this->middleware('auth');
+        $this->middleware('role:admin');
     }
 
     /**
@@ -29,20 +30,20 @@ class ConfigController extends Controller
     public function site(Request $request)
     {
         $item = Config::findOrFail(1);
-        $keys = ["identifiant", "app_name", "app_email", "meta_title", "latitude", "longitude"];
+        $keys = [
+                'identifiant' => 'required|max:100',
+                'app_name' => 'required|max:100',
+                'app_email' => 'required|max:100',
+                'meta_title' => 'required|max:100',
+                'latitude' => 'required|max:100',
+                'longitude' => 'required|max:100',
+            ];
         
         if ($request->isMethod('post')) {
             
             // Validate request
             $datas = $request->all();
-            $validator = Validator::make($datas,[
-                            'identifiant' => 'required|max:100',
-                            'app_name' => 'required|max:100',
-                            'app_email' => 'required|max:100',
-                            'meta_title' => 'required|max:100',
-                            'latitude' => 'required|max:100',
-                            'longitude' => 'required|max:100',
-                        ]);
+            $validator = Validator::make($datas, $keys);
             
             // Check validation
             if ($validator->fails()) {
@@ -50,8 +51,8 @@ class ConfigController extends Controller
                             ->withInput();
             }
             
-            // Save Config into MetaData
-            foreach($keys as $key){
+            // Save Config into MetaData By Validator rules key
+            foreach($keys as $key=>$val){
                 if($value = $request->input($key)) $item->update_meta($key, $value);
             }
             
@@ -69,38 +70,58 @@ class ConfigController extends Controller
      */
     public function social(Request $request)
     {
-        if (!$request->isMethod('post')) {
-            return view('config.social');
+        $item = Config::findOrFail(2);
+        $keys = [
+                'facebook' => 'max:100',
+                'font_facebook' => 'max:100',
+                'twitter' => 'max:100',
+                'font_twitter' => 'max:100',
+                'googleplus' => 'max:100',
+                'font_googleplus' => 'max:100',
+                'linkedin' => 'max:100',
+                'font_linkedin' => 'max:100',
+                'tumblr' => 'max:100',
+                'font_tumblr' => 'max:100',
+                'youtube' => 'max:100',
+                'font_youtube' => 'max:100',
+                'pinterest' => 'max:100',
+                'font_pinterest' => 'max:100',
+                'vimeo' => 'max:100',
+                'font_vimeo' => 'max:100',
+            ];
+        $titles = [
+                'facebook' => 'Facebook',
+                'twitter' => 'Twitter',
+                'googleplus' => 'Google+',
+                'linkedin' => 'LinkedIn',
+                'tumblr' => 'Tumblr',
+                'youtube' => 'YouTube',
+                'pinterest' => 'Pinterest',
+                'vimeo' => 'Vimeo',
+            ];
+        
+        if ($request->isMethod('post')) {
+            
+            // Validate request
+            $datas = $request->all();
+            $validator = Validator::make($datas, $keys);
+            
+            // Check validation
+            if ($validator->fails()) {
+                return back()->withErrors($validator)
+                            ->withInput();
+            }
+            
+            // Save Config into MetaData By Validator rules key
+            foreach($keys as $key=>$val){
+                if($value = $request->input($key)) $item->update_meta($key, $value);
+            }
+            
+            // Go back with notification
+            return back()->with('success','La configuration a été modifiée avec succés ! ');
         }
         
-        // Request is POST
-    	$updates = $request->input();
-    	unset($updates['_token']);
-    	$compteur = false;
-    	foreach ($updates as $key => $value) {
-    		$cles = explode('-',$key);
-    		if( !isset($cles[1])){
-    			$compteur = true;
-    			$indice = $key . '.value';
-                if( preg_match('@^(?:https://)@i',$value) == 1 )
-                    $new_value = $value;
-                if( $value == "#" || is_null($value))
-                    $new_value = "#";
-                elseif( preg_match('@^(?:https://)@i',$value) == 0 )
-                    $new_value = "https://" . $value;
-                
-            social($indice,$new_value);
-    		}
-    		elseif( isset($cles[1]) ){
-    			$compteur = true;
-    			$indice = $cles[1] . '.font';
-    			social($indice,$value);
-    		}
-    	}
-    	if( $compteur )
-    		return back()->with('success','Les modifications ont bien étée enregistrées !');
-    	else
-    		return back()->with('error','Aucune modification n\'a été enregistrée !');
+        return view('config.social',compact('item', 'keys', 'titles'));
     }
     
     

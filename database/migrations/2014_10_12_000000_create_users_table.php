@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('role')->default('member'); // admin afa apl member seller
             $table->string('type')->default('person'); // person organization
-            $table->string('status', 20); // active disabled blocked
+            $table->string('status', 20); // active disabled blocked pinged
             $table->dateTime('enabled_at')->nullable();
             $table->dateTime('disabled_at')->nullable();
             $table->bigInteger('author_id')->nullable();

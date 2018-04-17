@@ -46,8 +46,9 @@ Route::get('storage/thumbnail/{album}/{filename}', function ($album,$filename)
     return $response;
 });
 
-// Not authentified routes
+// Registration 
 Route::get('register/{role}', 'Auth\RegisterController@index')->name('register')->middleware('guest');
+Route::post('register/{role}', 'Auth\RegisterController@register')->name('register')->middleware('guest');
 
 // Public routes
 Route::get('/', 'IndexController@index')->name('home');
@@ -95,6 +96,19 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function () {
         Route::get('archive/{blog}', 'PageController@archive')->name('admin.page.archive');
         Route::get('restore/{blog}', 'PageController@restore')->name('admin.page.restore');
         Route::get('star/{blog}', 'PageController@star')->name('admin.page.star');
+    });
+    
+    // Product Controller Groups
+    Route::get('products/{filter?}', 'ProductController@allAdmin')->name('admin.product.list');
+    Route::prefix('product')->group(function(){
+        Route::get('/', 'ProductController@create')->name('admin.product.create');
+        Route::post('/', 'ProductController@store')->name('admin.product.store');
+        Route::get('update/{product}', 'ProductController@edit')->name('admin.product.edit');
+        Route::post('update/{product}', 'ProductController@update')->name('admin.product.update');
+        Route::get('delete/{product}', 'ProductController@delete')->name('admin.product.delete');
+        Route::get('archive/{product}', 'ProductController@archive')->name('admin.product.archive');
+        Route::get('restore/{product}', 'ProductController@restore')->name('admin.product.restore');
+        Route::get('star/{product}', 'ProductController@star')->name('admin.product.star');
     });
     
     // User Controller Groups

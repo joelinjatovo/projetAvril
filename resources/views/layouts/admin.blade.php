@@ -10,7 +10,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'IEA') }} - Admin - @yield('title')</title>
+    <title>Admin - @yield('title') - {{ config('app.name', 'IEA') }}</title>
     
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="{{asset('images/favicon.png')}}">
@@ -138,30 +138,15 @@
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="#accRéglages" data-parent="#mainSideMenu"  data-toggle="collapse" class="accordion-toggle">
-                        <i class="fontello-icon-tools"></i>
-                        <i class="chevron fontello-icon-right-open-3"></i>@lang('app.configs')
-                      </a>
+                      <a href="#accProducts" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle">
+                        <i class="fontello-icon-users-1"></i>
+                        <i class="chevron fontello-icon-right-open-3"></i>@lang('app.admin.products')</a>
                   </div>
-                  <ul class="accordion-content nav nav-list collapse" id="accRéglages">
-                    <li>
-                        <a href=""> <i class="fontello-icon-right-dir"></i>@lang('app.config.site')</a>
-                    </li>
-                    <li>
-                        <a href=""> <i class="fontello-icon-right-dir"></i>@lang('app.config.social')</a>
-                    </li>
-                      <li>
-                          <a href=""> <i class="fontello-icon-right-dir"></i>@lang('app.config.card')</a>
-                      </li>
-                      <li>
-                        <a href=""> <i class="fontello-icon-right-dir"></i>@lang('app.config.page')</a>
-                      </li>
+                  <ul class="accordion-content nav nav-list collapse" id="accProducts">
+                      <li><a href="{{route('admin.product.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.list')</a></li>
+                      <li><a href="{{route('admin.product.create')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.add')</a></li>
+                       <li><a href="{{route('admin.product.list', ['filter'=>'archive'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.archive')</a></li>
                   </ul>
-              </li>
-              <li class="accordion-group">
-                  <div class="accordion-heading">
-                      <a href="" data-parent="#mainSideMenu"  class="accordion-toggle"><i class="fontello-icon-credit-card"></i> Publicités</a>
-                  </div>
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
@@ -177,30 +162,9 @@
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="" data-parent="#mainSideMenu"  class="accordion-toggle"><i class="fontello-icon-basket-1"></i> Gestion produits en vente</a>
-                  </div>
-              </li>
-              <li class="accordion-group">
-                  <div class="accordion-heading">
-                      <a href="" data-parent="#mainSideMenu"  class="accordion-toggle"><i class="fontello-icon-basket-1"></i> Gestion produits vendus</a>
-                  </div>
-              </li>
-
-              <li class="accordion-group">
-                  <div class="accordion-heading">
-                      <a href="" data-parent="#mainSideMenu"  class="accordion-toggle"><i class="fontello-icon-mail-1"></i> Gestion des messages préenregistrés</a>
-                  </div>
-              </li>
-              <li class="accordion-group">
-                  <div class="accordion-heading">
-                      <a href="" data-parent="#mainSideMenu"  class="accordion-toggle"><i class="fontello-icon-mail-alt"></i> Gestion des emails préenregistrés</a>
-                  </div>
-              </li>
-
-
-              <li class="accordion-group">
-                  <div class="accordion-heading">
-                      <a href="" data-parent="#mainSideMenu"  class="accordion-toggle"><i class="fontello-icon-credit-card"></i> Factures</a>
+                      <a href="" data-parent="#mainSideMenu"  class="accordion-toggle">
+                          <i class="fontello-icon-credit-card"></i>
+                          Publicités/Pages</a>
                   </div>
               </li>
               <li class="accordion-group">
@@ -210,12 +174,19 @@
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="gestionDesPagesInformations.html" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fontello-icon-edit"></i> Gestion des pages d'informations</a>
+                      <a href="#accRéglages" data-parent="#mainSideMenu"  data-toggle="collapse" class="accordion-toggle">
+                        <i class="fontello-icon-tools"></i>
+                        <i class="chevron fontello-icon-right-open-3"></i>@lang('app.configs')
+                      </a>
                   </div>
+                  <ul class="accordion-content nav nav-list collapse" id="accRéglages">
+                    <li><a href="{{route('config.site')}}"> <i class="fontello-icon-right-dir"></i>@lang('app.config.site')</a></li>
+                    <li><a href="{{route('config.social')}}"> <i class="fontello-icon-right-dir"></i>@lang('app.config.social')</a></li>
+                  </ul>
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="#" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fontello-icon-left-1"></i>Se deconnecter</a>
+                      <a href="{{route('logout')}}" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fontello-icon-left-1"></i>Se deconnecter</a>
                   </div>
               </li>
           </ul>

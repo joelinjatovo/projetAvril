@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Validator;
+use Auth;
+
+use App\Models\Product;
 
 class ProductController extends Controller
 {
@@ -15,24 +19,135 @@ class ProductController extends Controller
     {
         //$this->middleware('auth');
     }
-
+    
     /**
-     * Show the product.
+     * Render form to create a product
      *
-     * @return \Illuminate\Http\Response
+     * @param  Illuminate\Http\Request  $request
+     * @return Illuminate\Http\Response
      */
-    public function index()
+    public function create(Request $request)
     {
-        return view('home');
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        $item = new Product();
+        if($title = $request->old('title')){
+            $item->title = $title;
+        }
+        if($content = $request->old('content')){
+            $item->content = $content;
+        }
+        if($reference = $request->old('reference')){
+            $item->reference = $reference;
+        }
+        $action = route('admin.product.store');
+        return view('product.admin.update', ['item'=>$item, 'action'=>$action]);
     }
-
+    
     /**
-     * Show the list of product
+     * Store a product
      *
+     * @param  Illuminate\Http\Request  $request
+     * @return Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        // Validate request
+        $datas = $request->all();
+        $validator = Validator::make($datas,[
+                            'reference' => 'required|max:100',
+                            'title' => 'required|max:100',
+                            'content' => 'required',
+                        ]);
+        
+        if ($validator->fails()) {
+            return back()->withErrors($validator)
+                        ->withInput();
+        }
+        
+        Product::create($datas);
+        return back()->with('success',"Le produit a été bien enregistré.");
+    }
+    
+    /**
+     * Render form to edit a product
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @param  App\Models\Product  $product
+     * @return Illuminate\Http\Response
+     */
+    public function edit(Request $request, Product  $product)
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        if($title = $request->old('title')){
+            $product->title = $title;
+        }
+        if($content = $request->old('content')){
+            $product->content = $content;
+        }
+        if($reference = $request->old('reference')){
+            $item->reference = $reference;
+        }
+        $action = route('admin.product.update', ['product'=>$product]);
+        return view('product.admin.update', ['item'=>$product, 'action'=>$action]);
+    }
+    
+    /**
+     * Update product
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function all()
+    public function update(Request $request, Product $product)
     {
-        return view('product.all');
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        // Validate request
+        $validator = Validator::make($request->all(),[
+                            'reference' => 'required|max:100',
+                            'title' => 'required|max:100',
+                            'content' => 'required',
+                        ]);
+        
+        if ($validator->fails()) {
+            return back()->withErrors($validator)
+                        ->withInput();
+        }
+        
+        $product->title = $request->input('title');
+        $product->content = $request->input('content');
+        $product->reference = $request->input('reference');
+        $product->save();
+        return back()->with('success',"Le produit a été bien modifié.");
+    }
+    
+    /**
+     * Show the list of product.
+     * Admin Only
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  String $filter
+     * @return \Illuminate\Http\Response
+     */
+    public function allAdmin(Request $request, $filter='all')
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        $page = $request->get('page');
+        if(!$page){
+            $page =1;
+        }
+        
+        $items = Product::paginate($this->pageSize);
+        return view('product.admin.all', compact('items', 'filter', 'page')); 
     }
 }

@@ -24,23 +24,23 @@ $(function(){
 
     $("#organisationForm").hide();
 
-    $("#typeMembre").change(function(){
-      if($(this).val() == "Particulier"){
+    $("#type").change(function(){
+      if($(this).val() == "person"){
         $("#particulierForm").show();
         $("#organisationForm").hide();
       }
-      else if($(this).val() == "Organisation"){
+      else if($(this).val() == "organization"){
         $("#particulierForm").hide();
         $("#organisationForm").show();
       }
     });
 
-    $("#newsletterPart").on('change',function(){
-        $("#newsletterPart").val($(this).is(":checked"));
+    $("#newsletter").on('change',function(){
+        $("#newsletter").val($(this).is(":checked"));
     });
 
-    $("#partageDonnePart").on('change',function(){
-        $("#partageDonnePart").val($(this).is(":checked"));
+    $("#allow_sharing").on('change',function(){
+        $("#allow_sharing").val($(this).is(":checked"));
     });
 
 });

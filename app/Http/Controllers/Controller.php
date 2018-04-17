@@ -11,5 +11,19 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     
+    /**
+     * Pagination records per page
+     */
     protected $pageSize = 10;
+    
+    /**
+     * Generate slug for the Current Model
+     *
+     * @params String $text
+     * @return String $text
+     */
+    public function generateSlug($text)
+    {
+        return $text;
+    }
 }
