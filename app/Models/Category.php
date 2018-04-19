@@ -25,7 +25,6 @@ class Category extends Model
      */
     protected $fillable = ['slug', 'title', 'content'];
     
-    
     /**
      * Create a new model instance.
      *

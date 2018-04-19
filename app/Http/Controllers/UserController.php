@@ -91,10 +91,10 @@ class UserController extends Controller
                         ->withInput();
         }
         
-        if($firstname = $request->input('firstname')) $user->update_meta("firstname", $firstname);
-        if($lastname = $request->input('lastname')) $user->update_meta("lastname", $lastname);
-        if($genre = $request->input('genre')) $user->update_meta("genre", $genre);
-        if($phone = $request->input('phone')) $user->update_meta("phone", $phone);
+        if($firstname = $request->input('firstname'))   $user->update_meta("firstname", $firstname);
+        if($lastname = $request->input('lastname'))     $user->update_meta("lastname", $lastname);
+        if($genre = $request->input('genre'))           $user->update_meta("genre", $genre);
+        if($phone = $request->input('phone'))           $user->update_meta("phone", $phone);
         
         if($file=$request->file('image')){
             $image = $file->store('uploads');

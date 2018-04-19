@@ -150,6 +150,18 @@
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
+                      <a href="#accRowProducts" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle">
+                        <i class="fontello-icon-users-1"></i>
+                        <i class="chevron fontello-icon-right-open-3"></i>@lang('app.admin.productstosell')</a>
+                  </div>
+                  <ul class="accordion-content nav nav-list collapse" id="accRowProducts">
+                      <li><a href="{{route('admin.rowproduct.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.productstosell.list')</a></li>
+                      <li><a href="{{route('admin.rowproduct.create')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.productstosell.add')</a></li>
+                       <li><a href="{{route('admin.rowproduct.list', ['filter'=>'archive'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.productstosell.archive')</a></li>
+                  </ul>
+              </li>
+              <li class="accordion-group">
+                  <div class="accordion-heading">
                       <a href="#accBlogs" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle">
                         <i class="fontello-icon-users-1"></i>
                         <i class="chevron fontello-icon-right-open-3"></i>@lang('app.admin.blogs')</a>

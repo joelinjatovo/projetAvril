@@ -15,6 +15,9 @@ class CreateRowsProductsTable extends Migration
     {
         Schema::create('rows_products', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('reference', 100)->nullable();
+            $table->string('slug')->nullable();
+            $table->string('title')->nullable();
             $table->integer('location_ray')->nullable(); // rayon de localisation 15km 20km 150km
             $table->string('location_unity', 20)->nullable(); // m km cm etc
             $table->integer('quantity')->nullable();
@@ -26,7 +29,7 @@ class CreateRowsProductsTable extends Migration
             $table->bigInteger('product_id')->default('0');
             $table->bigInteger('seller_id')->default('0');
             $table->bigInteger('author_id')->default('0');
-            $table->bigInteger('localization_id')->default('0');
+            $table->bigInteger('location_id')->default('0');
             $table->timestamps();
         });
     }

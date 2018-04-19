@@ -50,7 +50,7 @@ Route::get('storage/thumbnail/{album}/{filename}', function ($album,$filename)
 Route::get('register/{role}', 'Auth\RegisterController@index')->name('register')->middleware('guest');
 Route::post('register/{role}', 'Auth\RegisterController@register')->name('register')->middleware('guest');
 
-// Public routes
+// Static pages
 Route::get('/', 'IndexController@index')->name('home');
 Route::get('localization/{locale}', 'LocalizationController@index')->name('localization');
 Route::get('search', 'SearchController@index')->name('search');
@@ -59,15 +59,29 @@ Route::get('terms', 'IndexController@terms')->name('terms');
 Route::get('help', 'IndexController@help')->name('help');
 Route::get('publicities', 'IndexController@publicities')->name('publicities');
 Route::get('confidentialities', 'IndexController@confidentialities')->name('confidentialities');
-Route::get('products', 'ProductController@all')->name('product.all');
+
+Route::get('products/{product?}', 'RowProductController@all')->name('rowproduct.all');
+Route::get('product/{rowproduct}', 'RowProductController@index')->name('rowproduct.index');
 
 Route::get('blogs/{filter?}', 'BlogController@all')->name('blog.all');
 Route::get('blog/{blog}', 'BlogController@index')->name('blog.index');
 Route::get('blog/{blog}/comments', 'CommentController@index')->name('comment.list');
+
 Route::middleware(["auth"])->group(function () {
+    Route::get('profile', 'UserController@profile')->name('profile');
+    
+    Route::post('product/{product}/{type}', 'LabelController@storeOrUpdate')->name('label.store');
+    Route::post('labels/{type}', 'LabelController@all')->name('label.list');
+    
     Route::post('blog/{blog}/comment', 'CommentController@store')->name('comment.store');
     Route::get('blog/{blog}/comment/{comment}', 'CommentController@edit')->name('comment.edit');
     Route::post('blog/{blog}/comment/{comment}', 'CommentController@update')->name('comment.update');
+    
+    // Send a message by Javascript.
+    Route::get('/chat', 'ChatController@index');
+    Route::get('/chat/messages', 'ChatController@fetchMessages');
+    Route::post('/chat/messages', 'ChatController@sendMessage');
+    
 });
 
 Route::get('pages/{filter?}', 'PageController@all')->name('page.all');
@@ -91,19 +105,6 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function () {
         Route::get('star/{blog}', 'BlogController@star')->name('admin.blog.star');
     });
     
-    // Page Controller Groups
-    Route::get('pages/{filter?}', 'PageController@allAdmin')->name('admin.page.list');
-    Route::prefix('page')->group(function(){
-        Route::get('/', 'PageController@create')->name('admin.page.create');
-        Route::post('/', 'PageController@store')->name('admin.page.store');
-        Route::get('update/{blog}', 'PageController@edit')->name('admin.page.edit');
-        Route::post('update/{blog}', 'PageController@update')->name('admin.page.update');
-        Route::get('delete/{blog}', 'PageController@delete')->name('admin.page.delete');
-        Route::get('archive/{blog}', 'PageController@archive')->name('admin.page.archive');
-        Route::get('restore/{blog}', 'PageController@restore')->name('admin.page.restore');
-        Route::get('star/{blog}', 'PageController@star')->name('admin.page.star');
-    });
-    
     // Product Controller Groups
     Route::get('products/{filter?}', 'ProductController@allAdmin')->name('admin.product.list');
     Route::prefix('product')->group(function(){
@@ -115,6 +116,32 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function () {
         Route::get('archive/{product}', 'ProductController@archive')->name('admin.product.archive');
         Route::get('restore/{product}', 'ProductController@restore')->name('admin.product.restore');
         Route::get('star/{product}', 'ProductController@star')->name('admin.product.star');
+    });
+    
+    // RowProduct Controller Groups
+    Route::get('rowproducts/{filter?}', 'RowProductController@allAdmin')->name('admin.rowproduct.list');
+    Route::prefix('rowproduct')->group(function(){
+        Route::get('/', 'RowProductController@create')->name('admin.rowproduct.create');
+        Route::post('/', 'RowProductController@store')->name('admin.rowproduct.store');
+        Route::get('update/{rowproduct}', 'RowProductController@edit')->name('admin.rowproduct.edit');
+        Route::post('update/{rowproduct}', 'RowProductController@update')->name('admin.rowproduct.update');
+        Route::get('delete/{rowproduct}', 'RowProductController@delete')->name('admin.rowproduct.delete');
+        Route::get('archive/{rowproduct}', 'RowProductController@archive')->name('admin.rowproduct.archive');
+        Route::get('restore/{rowproduct}', 'RowProductController@restore')->name('admin.rowproduct.restore');
+        Route::get('star/{rowproduct}', 'RowProductController@star')->name('admin.rowproduct.star');
+    });
+    
+    // Category Controller Groups
+    Route::get('categories/{filter?}', 'CategoryController@allAdmin')->name('admin.category.list');
+    Route::prefix('category')->group(function(){
+        Route::get('/', 'CategoryController@create')->name('admin.category.create');
+        Route::post('/', 'CategoryController@store')->name('admin.category.store');
+        Route::get('update/{category}', 'CategoryController@edit')->name('admin.category.edit');
+        Route::post('update/{category}', 'CategoryController@update')->name('admin.category.update');
+        Route::get('active/{category}', 'CategoryController@active')->name('admin.category.active');
+        Route::get('block/{category}', 'CategoryController@block')->name('admin.category.block');
+        Route::get('disable/{category}', 'CategoryController@disable')->name('admin.category.disable');
+        Route::get('delete/{category}', 'CategoryController@delete')->name('admin.category.delete');
     });
     
     // User Controller Groups
@@ -130,6 +157,30 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function () {
         Route::get('delete/{user}', 'UserController@delete')->name('admin.user.delete');
     });
     
+    // Page Controller Groups
+    Route::get('pages/{filter?}', 'PageController@allAdmin')->name('admin.page.list');
+    Route::prefix('page')->group(function(){
+        Route::get('/', 'PageController@create')->name('admin.page.create');
+        Route::post('/', 'PageController@store')->name('admin.page.store');
+        Route::get('update/{blog}', 'PageController@edit')->name('admin.page.edit');
+        Route::post('update/{blog}', 'PageController@update')->name('admin.page.update');
+        Route::get('delete/{blog}', 'PageController@delete')->name('admin.page.delete');
+        Route::get('archive/{blog}', 'PageController@archive')->name('admin.page.archive');
+        Route::get('restore/{blog}', 'PageController@restore')->name('admin.page.restore');
+        Route::get('star/{blog}', 'PageController@star')->name('admin.page.star');
+    });
+    
+    // Pub Controller Groups
+    Route::get('pubs/{filter?}', 'PubController@allAdmin')->name('admin.pub.list');
+    Route::prefix('pub')->group(function(){
+        Route::get('/', 'PubController@create')->name('admin.pub.create');
+        Route::post('/', 'PubController@store')->name('admin.pub.store');
+        Route::get('update/{pub}', 'PubController@edit')->name('admin.pub.edit');
+        Route::post('update/{pub}', 'PubController@update')->name('admin.pub.update');
+        Route::get('delete/{pub}', 'PubController@delete')->name('admin.pub.delete');
+        Route::get('restore/{pub}', 'PubController@restore')->name('admin.pub.restore');
+    });
+    
     // Config Controller
     Route::prefix('config')->group(function () {
         Route::get('site', 'ConfigController@site')->name('config.site');
@@ -140,16 +191,3 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function () {
     });
     
 });
-
-Route::get('profile', 'UserController@profile')->name('profile')->middleware('auth');
-
-
-Route::get('/admin/pub/{title}', 'PubController@index')->name('pub.index');
-Route::get('/admin/pubs', 'PubController@all')->name('pub.all');
-
-Route::get('/admin/pages', 'PageController@all')->name('page.all');
-
-// Send a message by Javascript.
-Route::get('/chat', 'ChatController@index');
-Route::get('/chat/messages', 'ChatController@fetchMessages');
-Route::post('/chat/messages', 'ChatController@sendMessage');

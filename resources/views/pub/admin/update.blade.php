@@ -4,7 +4,7 @@
 <div id="main-content" class="main-content container-fluid">
     @include('includes.notification')
     <div class="row-fluid page-head">
-        <h2 class="page-title"><i class="aweso-icon-list-alt"></i> Gestion de Produit <small>Ajout d'un produit</small></h2>
+        <h2 class="page-title"><i class="aweso-icon-list-alt"></i> Gestion de Publicites <small>Ajout d'un publicite</small></h2>
         <div class="page-bar">
             <div class="btn-toolbar"> </div>
         </div>
@@ -23,6 +23,11 @@
                         <textarea id="wysiBooEditorBlack" class="input-block-level" style="height: 100px" name="title" placeholder="Ajouter un nouveau titre">{{$item->title}}</textarea>
                     </div>
                 </div>
+                <div class="well well-nice form-dark">
+                    <div class="control-group">
+                        <textarea id="wysiBooEditorBlack" class="input-block-level" style="height: 100px" name="links" placeholder="Ajouter un lien URL">{{$item->links}}</textarea>
+                    </div>
+                </div>
                 <div class="page-header">
                     <h3><i class="fontello-icon-article-alt opaci35"></i> Gestion des contenus <small>Ajouter un paragraphe</small></h3>
                 </div>
@@ -31,6 +36,36 @@
                         <h4 class="simple-header">Paragraphe <small>Ajouter un nouveau paragraphe</small></h4>
                         <div class="control-group">
                             <textarea id="wysiBooEditor" class="input-block-level" style="height: 560px" name="content" placeholder="Enter text ...">{{$item->content}}</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="page-header">
+                    <h3><i class="fontello-icon-article-alt opaci35"></i> Page du publicite</h3>
+                </div>
+                <div class="row-fluid">
+                    <div class="well well-nice">
+                        <select multiple name="page[]" style="width:100%;">
+                            @foreach($pages as $page)
+                                <option value="{{$page->id}}">{{$page->title}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span4">
+                        <div class="control-group no-margin-bootom">
+                            <div class="span6">
+                                <div class="well well-nice inline">
+                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                        <div class="fileupload-preview thumbnail" style="width: 96px; height: 96px;">
+                                            <img src="{{storage($item->image?$item->image:'')}}">
+                                        </div>
+                                        <div> <span class="btn btn-file"> <span class="fileupload-new">Select image</span> <span class="fileupload-exists">Changer</span>
+                                            <input type="file" name="image" id="file">
+                                            </span> <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Effacer</a> </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

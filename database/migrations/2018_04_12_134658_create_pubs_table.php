@@ -15,11 +15,11 @@ class CreatePubsTable extends Migration
     {
         Schema::create('pubs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title');
-            $table->longText('content');
-            $table->string('link');
-            $table->integer('pubs');
-            $table->bigInteger('user_id');
+            $table->string('title')->nullable();
+            $table->longText('content')->nullable();
+            $table->string('links')->nullable();
+            $table->string('image')->nullable();
+            $table->bigInteger('author_id');
             $table->timestamps();
         });
     }

@@ -5,22 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
 
-// Eloquent Model to manage Page list
-class Page extends Model
+// Eloquent Model to manage PubPage
+class PubPage extends Model
 {
+    
    /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'pages';
-	
-	/**
+    protected $table = 'pubs_pages';
+    
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['title', 'path'];
+    protected $fillable = [
+        'page_id', 'pub_id', 'author_id',
+    ];
     
     /**
      * Create a new model instance.

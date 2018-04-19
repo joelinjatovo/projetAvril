@@ -4,7 +4,7 @@
 <div id="main-content" class="main-content container-fluid">
     @include('includes.notification')
     <div class="row-fluid page-head">
-        <h2 class="page-title"><i class="aweso-icon-list-alt"></i> Gestion de Produit <small>Ajout d'un produit</small></h2>
+        <h2 class="page-title"><i class="aweso-icon-list-alt"></i> Gestion de pages <small>Ajout d'une page</small></h2>
         <div class="page-bar">
             <div class="btn-toolbar"> </div>
         </div>
@@ -16,22 +16,16 @@
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <section>
                 <div class="page-header">
-                    <h3><i class="fontello-icon-article-alt opaci35"></i> Titre <small>Ajouter un nouveau titre</small></h3>
+                    <h3><i class="fontello-icon-article-alt opaci35"></i> Titre <small>Ajouter un nouveau page</small></h3>
                 </div>
                 <div class="well well-nice form-dark">
                     <div class="control-group">
                         <textarea id="wysiBooEditorBlack" class="input-block-level" style="height: 100px" name="title" placeholder="Ajouter un nouveau titre">{{$item->title}}</textarea>
                     </div>
                 </div>
-                <div class="page-header">
-                    <h3><i class="fontello-icon-article-alt opaci35"></i> Gestion des contenus <small>Ajouter un paragraphe</small></h3>
-                </div>
-                <div class="row-fluid">
-                    <div class="well well-nice">
-                        <h4 class="simple-header">Paragraphe <small>Ajouter un nouveau paragraphe</small></h4>
-                        <div class="control-group">
-                            <textarea id="wysiBooEditor" class="input-block-level" style="height: 560px" name="content" placeholder="Enter text ...">{{$item->content}}</textarea>
-                        </div>
+                <div class="well well-nice form-dark">
+                    <div class="control-group">
+                        <textarea id="wysiBooEditorBlack" class="input-block-level" style="height: 100px" name="links" placeholder="Ajouter un path">{{$item->path}}</textarea>
                     </div>
                 </div>
             </section>

@@ -24,6 +24,12 @@ class ConfigsTableSeeder extends Seeder
             'author_id' => 1,
         ]);
         DB::table('configs')->insert([
+            'name' => "currency",
+            'content' => "Parametre du paiement en ligne",
+            'created_at' => date("Y-m-d H:i:s"),
+            'author_id' => 1,
+        ]);
+        DB::table('configs')->insert([
             'name' => "style",
             'content' => "Parametre de style CSS du site web",
             'created_at' => date("Y-m-d H:i:s"),

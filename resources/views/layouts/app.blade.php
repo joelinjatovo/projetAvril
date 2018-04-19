@@ -114,14 +114,14 @@
                     <ul class="nav navbar-nav ">
                         <li><a href="#">IMMOBILIER</a>
                             <ul>
-                                <li><a href="{{route('product.all')}}">Résidentiel</a></li>
-                                <li><a href="{{route('product.all')}}">Foncier</a></li>
+                                <li><a href="{{route('rowproduct.all')}}">Résidentiel</a></li>
+                                <li><a href="{{route('rowproduct.all')}}">Foncier</a></li>
                             </ul>
                         </li>
                         <li><a href="#">BUSINESS</a>
                             <ul>
-                                <li><a href="{{route('product.all')}}">Industriel</a></li>
-                                <li><a href="{{route('product.all')}}">Commercial</a></li>
+                                <li><a href="{{route('rowproduct.all')}}">Industriel</a></li>
+                                <li><a href="{{route('rowproduct.all')}}">Commercial</a></li>
                             </ul>
                         </li>
                         <li><a href="{{route('services')}}">NOS SERVICES</a></li>
@@ -170,11 +170,13 @@
                         <h4 class="title">acces rapide</h4>
                         <ul>
                             <li><a href="{{route('home')}}">Accueil</a></li>
-                            <li><a href="{{route('product.all')}}">Immobilier</a></li>
-                            <li><a href="{{route('product.all')}}">Business</a></li>
+                            <li><a href="{{route('rowproduct.all')}}">Immobilier</a></li>
+                            <li><a href="{{route('rowproduct.all')}}">Business</a></li>
                             <li><a href="{{route('services')}}">Nos services</a></li>
                             <li><a href="{{route('blog.all')}}">Blog</a></li>
-                            <li>Mon compte</li>
+                            @if(Auth::check())
+                            <li><a href="{{route('profile')}}">Mon Compte</a></li>
+                            @endif
                         </ul>
                     </section>
                 </div>
