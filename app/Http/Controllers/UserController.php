@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
     /**
@@ -36,6 +36,8 @@ class UserController extends Controller
      */
     public function profile()
     {
+        $this->middleware('auth');
+        
         return view('user.profile');
     }
     
@@ -50,6 +52,7 @@ class UserController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
+        
         if($name = $request->old('name')){
             $user->name = $name;
         }
@@ -71,6 +74,7 @@ class UserController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
+        
         // Validate request
         $validator = Validator::make($request->all(),[
                             'password' => 'confirmed|max:100',
@@ -153,6 +157,7 @@ class UserController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
+        
         $user->status = 'active';
         $user->delete();
         return redirect()->route('admin.dashboard')

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Auth;
 
 use App\Models\User;
 use App\Models\Comment;
@@ -23,7 +24,7 @@ class Blog extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'content', 'status', 'image', 'post_type', 'author_id',
+        'slug', 'title', 'content', 'status', 'image', 'post_type', 'author_id',
     ];
     
     /**

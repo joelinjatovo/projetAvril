@@ -111,6 +111,20 @@
             </section>
 
             <section>
+                
+                <div class="page-header">
+                    <h3><i class="fontello-icon-article-alt opaci35"></i> Categorie du produit</h3>
+                </div>
+                <div class="row-fluid">
+                    <div class="well well-nice">
+                        <select multiple name="category[]" style="width:100%;">
+                            @foreach($categories as $category)
+                                <option value="{{$category->id}}">{{$category->title}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                
                 <div class="page-header">
                     <h3><i class="fontello-icon-monitor opaci35"></i> Chargement des fichiers <small>Uploder plusieurs fichiers</small></h3>
                 </div>

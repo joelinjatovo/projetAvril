@@ -3,38 +3,28 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Auth;
 
 use App\Models\User;
 use App\Models\Category;
+use App\Models\Product;
 
-// Eloquent Model to manage Product's Category list
-class Category extends Model
+// Eloquent Model to manage Product's ObjectCategory list
+class ObjectCategory extends Model
 {
    /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'categories';
+    protected $table = 'objects_categories';
 	
 	/**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['slug', 'title', 'content'];
+    protected $fillable = ['category_id', 'object_id', 'object_type', 'author_id'];
     
-    
-    /**
-     * Create a new model instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->author_id = (Auth::check()?Auth::user()->id:0);
-    }
     
     /**
      * A category can have one author

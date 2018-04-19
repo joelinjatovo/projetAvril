@@ -7,6 +7,8 @@ use Validator;
 use Auth;
 
 use App\Models\Blog;
+use App\Models\Category;
+use App\Models\ObjectCategory;
 
 class BlogController extends Controller
 {
@@ -16,6 +18,18 @@ class BlogController extends Controller
      *
      */
     protected $post_type = 'post';
+    
+    /**
+     * Show a blog
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @param  App\Models\Blog  $blog
+     * @return Illuminate\Http\Response
+     */
+    public function index(Request $request, Blog $blog)
+    {
+        return view('blog.index', ['item'=>$blog]);
+    }
     
     /**
      * Render form to create a blog
@@ -35,8 +49,11 @@ class BlogController extends Controller
         if($content = $request->old('content')){
             $blog->content = $content;
         }
+        
+        $categories = Category::all();
+        
         $action = route('admin.blog.store');
-        return view('blog.admin.update', ['item'=>$blog, 'action'=>$action]);
+        return view('blog.admin.update', ['item'=>$blog, 'action'=>$action, 'categories'=>$categories]);
     }
     
     /**
@@ -69,7 +86,21 @@ class BlogController extends Controller
         }
         $datas["author_id"] = Auth::user()->id;
         $datas["post_type"] = $this->post_type;
-        Blog::create($datas);
+        $datas["slug"] = generateSlug($request->title);
+        
+        $blog = Blog::create($datas);
+        
+        // Add Blog to the selected category
+        if($categories = $request->category){
+            foreach($categories as $categoryId){
+                $row = new ObjectCategory();
+                $row->category_id = $categoryId;
+                $row->object_id = $blog->id;
+                $row->object_type = get_class($blog);
+                $row->author_id = Auth::user()->id;
+                $row->save();
+            }
+        }
         return back()->with('success',"L'article a été bien enregistré.");
     }
     
@@ -92,8 +123,10 @@ class BlogController extends Controller
             $blog->content = $content;
         }
         
+        $categories = Category::all();
+        
         $action = route('admin.blog.update', ['blog'=>$blog]);
-        return view('blog.admin.update', ['item'=>$blog, 'action'=>$action]);
+        return view('blog.admin.update', ['item'=>$blog, 'action'=>$action, 'categories'=>$categories]);
     }
     
     /**
@@ -121,11 +154,26 @@ class BlogController extends Controller
         
         $blog->title = $request->input('title');
         $blog->content = $request->input('content');
+        $blog->slug = generateSlug($blog->title);
         if($file=$request->file('image')){
             $image = $file->store('uploads');
             $blog->image = $image;
         }
         $blog->save();
+        
+        // TODO Remove Old Category
+        
+        // Add Blog to the selected category
+        if($categories = $request->category){
+            foreach($categories as $categoryId){
+                $row = new ObjectCategory();
+                $row->category_id = $categoryId;
+                $row->object_id = $blog->id;
+                $row->object_type = get_class($blog);
+                $row->author_id = Auth::user()->id;
+                $row->save();
+            }
+        }
         
         return back()->with('success',"L'utilisateur a été bien modifié.");
     }
@@ -162,6 +210,14 @@ class BlogController extends Controller
                         ->paginate($this->pageSize);
                 break;
         }
+        
+        /*
+        if($request->isAjax()){
+            return response()->json(array(
+                'html' => view('blog.ajax.all', compact('items'))
+            ));
+        }
+        */
         
         return view('blog.all', compact('items', 'filter', 'page')); 
     }

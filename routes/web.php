@@ -63,6 +63,12 @@ Route::get('products', 'ProductController@all')->name('product.all');
 
 Route::get('blogs/{filter?}', 'BlogController@all')->name('blog.all');
 Route::get('blog/{blog}', 'BlogController@index')->name('blog.index');
+Route::get('blog/{blog}/comments', 'CommentController@index')->name('comment.list');
+Route::middleware(["auth"])->group(function () {
+    Route::post('blog/{blog}/comment', 'CommentController@store')->name('comment.store');
+    Route::get('blog/{blog}/comment/{comment}', 'CommentController@edit')->name('comment.edit');
+    Route::post('blog/{blog}/comment/{comment}', 'CommentController@update')->name('comment.update');
+});
 
 Route::get('pages/{filter?}', 'PageController@all')->name('page.all');
 Route::get('page/{blog}', 'PageController@index')->name('page.index');
@@ -132,6 +138,7 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function () {
         Route::post('social', 'ConfigController@social')->name('config.social.update');
         Route::get('fontawesome', 'ConfigController@fontawesome')->name('config.fontawesome');
     });
+    
 });
 
 Route::get('profile', 'UserController@profile')->name('profile')->middleware('auth');

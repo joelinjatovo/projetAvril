@@ -114,6 +114,20 @@ if( ! function_exists('paginationAdmin') )
 }
 
 /**
+* Generate slug
+*
+* @param String $text
+* @return String $slug
+*/
+if( ! function_exists('generateSlug') )
+{
+    function generateSlug($text)
+    {
+        return strtolower($text);
+    }
+}
+
+/**
 * Helpers affichage Image Publicite
 * @param string $nom_image
 * @return string url image publicite

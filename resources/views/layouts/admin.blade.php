@@ -107,7 +107,7 @@
                   </div>
                   <div class="media-body">
                       <h5 class="media-heading">{{Auth::user()->name}}</h5>
-                      <p class="data">Dernière modif : </p>
+                      <p class="data">Dernière modif : {{Auth::user()->updated_at}}</p>
                   </div>
               </div>
           </div>
@@ -115,12 +115,12 @@
           <ul id="mainSideMenu" class="nav nav-list nav-side">
             <li class="accordion-group">
                 <div class="accordion-heading">
-                    <a href="" data-parent="" class="accordion-toggle"><i class="fontello-icon-user-4"></i> Mon profil</a>
+                    <a href="{{route('profile')}}" data-parent="" class="accordion-toggle"><i class="fontello-icon-user-4"></i>@lang('app.profile')</a>
                 </div>
             </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fontello-icon-chart"></i> Statistiques</a>
+                      <a href="{{route('admin.dashboard')}}" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fontello-icon-chart"></i> Statistiques</a>
                   </div>
               </li>
               <li class="accordion-group">
@@ -158,6 +158,18 @@
                       <li><a href="{{route('admin.blog.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.blog.list')</a></li>
                       <li><a href="{{route('admin.blog.create')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.blog.add')</a></li>
                        <li><a href="{{route('admin.blog.list', ['filter'=>'archive'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.blog.archive')</a></li>
+                  </ul>
+              </li>
+              <li class="accordion-group">
+                  <div class="accordion-heading">
+                      <a href="#accCategories" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle">
+                        <i class="fontello-icon-users-1"></i>
+                        <i class="chevron fontello-icon-right-open-3"></i>@lang('app.admin.categories')</a>
+                  </div>
+                  <ul class="accordion-content nav nav-list collapse" id="accCategories">
+                      <li><a href="{{route('admin.category.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.category.list')</a></li>
+                      <li><a href="{{route('admin.category.create')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.category.add')</a></li>
+                       <li><a href="{{route('admin.category.list', ['filter'=>'archive'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.category.archive')</a></li>
                   </ul>
               </li>
               <li class="accordion-group">

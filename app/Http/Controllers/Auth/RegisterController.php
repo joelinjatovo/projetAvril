@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Auth;
+use Event;
+
+use App\Events\UserRegistered;
 
 use App\Models\User;
 use App\Models\Localization;
@@ -31,7 +34,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/profile';
 
     /**
      * Create a new controller instance.
@@ -82,7 +85,7 @@ class RegisterController extends Controller
      */
     public function index(Request $request, $role)
     {
-        $action = route('register',['role'=>'member']);
+        $action = route('register',['role'=>$role]);
         switch($role){
             case "member":
                 $pays = $this->getPaysFromCsv();
@@ -90,11 +93,12 @@ class RegisterController extends Controller
                 return view('login.'.$role, ["pays"=>$pays , "tels"=>$tels, "action"=>$action]);
             break;
             case "apl":
-                $pays = $this->getPaysFromCsv();
-                return view('login.'.$role,["pays"=>$pays, "action"=>$action]);
+                $request->session()->put("step", "condition");
+                return view('login.condition.apl');
             break;
             case "afa":
-                return view('login.'.$role);
+                $request->session()->put("step", "condition");
+                return view('login.condition.apl');
             break;
             case "seller":
                 return view('login.'.$role);
@@ -116,10 +120,252 @@ class RegisterController extends Controller
                 return $this->registerMember($request);
             break;
             case "apl":
+                if($request->session()->get("step") == "condition"){
+                    $request->session()->put("step", "register");
+                    $pays = $this->getPaysFromCsv();
+                    $action = route('register',['role'=>'apl']);
+                    return view('login.apl', ["pays"=>$pays , "action"=>$action]);
+                }elseif($request->session()->get("step") == "register"){
+                    $request->session()->put("step", "");
+                    return $this->registerApl($request);
+                }else{
+                    return redirect()->route('register',['role'=>'apl']);
+                }
             break;
             case "afa":
+                if($request->session()->get("step") == "condition"){
+                    $request->session()->put("step", "register");
+                    $pays = $this->getPaysFromCsv();
+                    $action = route('register',['role'=>'afa']);
+                    return view('login.afa', ["pays"=>$pays , "action"=>$action]);
+                }elseif($request->session()->get("step") == "register"){
+                    $request->session()->put("step", "");
+                    return $this->registerAfa($request);
+                }else{
+                    return redirect()->route('register',['role'=>'afa']);
+                }
+            break;
+            case "seller":
+                if($request->session()->get("step") == "condition"){
+                    $request->session()->put("step", "register");
+                    $pays = $this->getPaysFromCsv();
+                    $action = route('register',['role'=>'seller']);
+                    return view('login.seller', ["pays"=>$pays , "action"=>$action]);
+                }elseif($request->session()->get("step") == "register"){
+                    $request->session()->put("step", "");
+                    return $this->registerSeller($request);
+                }else{
+                    return redirect()->route('register',['role'=>'seller']);
+                }
             break;
         }
+    }
+
+    /*
+    * Store Seller information into database
+    * Go back after saving data
+    *
+    * @param  Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
+    private function registerSeller(Request $request)
+    {
+        $rules = [
+            'name' => 'required|unique:users,name|max:100',
+            'email' => 'required|unique:users,email|max:100',
+            'orga_name' => 'required|max:100',
+            'orga_presentation' => 'required|max:100',
+            'address' => 'required|max:100',
+            'city' => 'required|max:100',
+            'country' => 'required|max:100',
+            'state' => 'required|max:100',
+            'postalCode' => 'required|max:100',
+            'language' => 'required|max:100',
+            'prefixPhone' => 'required|max:100',
+            'phone' => 'required|max:100',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ];
+        
+        // Validate request
+        $validator = Validator::make($datas, $rules);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)
+                        ->withInput();
+        }
+        
+        $password = '1111';
+        $datas['password'] = bcrypt($password);
+        $datas['status'] = 'pinged';
+        $datas['role'] = 'apl';
+        $datas['type'] = 'organization';
+        
+        // Create Localization
+        $location = Localization::create($datas);
+        $datas['location_id'] = $location->id;
+        
+        // Create user
+        $user = User::create($datas);
+        
+        // Update MetaData
+        if($value = $request->input('orga_name')) $user->update_meta("orga_name", $value);
+        if($value = $request->input('orga_presentation')) $user->update_meta("orga_presentation", $value);
+        if($value = $request->input('prefixPhone')) $user->update_meta("prefixPhone", $value);
+        if($value = $request->input('phone')) $user->update_meta("phone", $value);
+        
+        // Common datas
+        if($value = $request->input('language')) $user->update_meta("language", $value);
+        if($value = $request->input('newsletter')) $user->update_meta("newsletter", $value);
+        if($value = $request->input('allow_sharing')) $user->update_meta("allow_sharing", $value);
+                
+        // Store image file
+        if($user && $file=$request->file('image')){
+            $image = $file->store('uploads');
+            $user->update_meta("image", $image);
+        }
+        
+        //firing an event
+        Event::fire(new UserRegistered($user));
+        
+        // Success
+        return back()->with('success',"L'utilisateur a été bien enregistré.");
+    }
+
+    /*
+    * Store AFA information into database
+    * Go back after saving data
+    *
+    * @param  Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
+    private function registerAfa(Request $request)
+    {  
+        $rules = [
+            'name' => 'required|unique:users,name|max:100',
+            'email' => 'required|unique:users,email|max:100',
+            'orga_name' => 'required|max:100',
+            'orga_presentation' => 'required|max:100',
+            'address' => 'required|max:100',
+            'city' => 'required|max:100',
+            'country' => 'required|max:100',
+            'state' => 'required|max:100',
+            'postalCode' => 'required|max:100',
+            'language' => 'required|max:100',
+            'prefixPhone' => 'required|max:100',
+            'phone' => 'required|max:100',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ];
+        
+        // Validate request
+        $validator = Validator::make($datas, $rules);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)
+                        ->withInput();
+        }
+        
+        $password = '1111';
+        $datas['password'] = bcrypt($password);
+        $datas['status'] = 'pinged';
+        $datas['role'] = 'afa';
+        $datas['type'] = 'organization';
+        
+        // Create Localization
+        $location = Localization::create($datas);
+        $datas['location_id'] = $location->id;
+        
+        // Create user
+        $user = User::create($datas);
+        
+        // Update MetaData
+        if($value = $request->input('orga_name')) $user->update_meta("orga_name", $value);
+        if($value = $request->input('orga_presentation')) $user->update_meta("orga_presentation", $value);
+        if($value = $request->input('prefixPhone')) $user->update_meta("prefixPhone", $value);
+        if($value = $request->input('phone')) $user->update_meta("phone", $value);
+        
+        // Common datas
+        if($value = $request->input('language')) $user->update_meta("language", $value);
+        if($value = $request->input('newsletter')) $user->update_meta("newsletter", $value);
+        if($value = $request->input('allow_sharing')) $user->update_meta("allow_sharing", $value);
+                
+        // Store image file
+        if($user && $file=$request->file('image')){
+            $image = $file->store('uploads');
+            $user->update_meta("image", $image);
+        }
+        
+        //firing an event
+        Event::fire(new UserRegistered($user));
+        
+        // Success
+        return back()->with('success',"L'utilisateur a été bien enregistré.");
+    }
+
+    /*
+    * Store APL information into database
+    * Go back after saving data
+    *
+    * @param  Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
+    private function registerApl(Request $request)
+    {  
+        $rules = [
+            'name' => 'required|unique:users,name|max:100',
+            'email' => 'required|unique:users,email|max:100',
+            'orga_name' => 'required|max:100',
+            'orga_presentation' => 'required|max:100',
+            'address' => 'required|max:100',
+            'city' => 'required|max:100',
+            'country' => 'required|max:100',
+            'state' => 'required|max:100',
+            'postalCode' => 'required|max:100',
+            'language' => 'required|max:100',
+            'prefixPhone' => 'required|max:100',
+            'phone' => 'required|max:100',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ];
+        
+        // Validate request
+        $validator = Validator::make($datas, $rules);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)
+                        ->withInput();
+        }
+        
+        $password = '1111';
+        $datas['password'] = bcrypt($password);
+        $datas['status'] = 'pinged';
+        $datas['role'] = 'apl';
+        $datas['type'] = 'organization';
+        
+        // Create Localization
+        $location = Localization::create($datas);
+        $datas['location_id'] = $location->id;
+        
+        // Create user
+        $user = User::create($datas);
+        
+        // Update MetaData
+        if($value = $request->input('orga_name')) $user->update_meta("orga_name", $value);
+        if($value = $request->input('orga_presentation')) $user->update_meta("orga_presentation", $value);
+        if($value = $request->input('prefixPhone')) $user->update_meta("prefixPhone", $value);
+        if($value = $request->input('phone')) $user->update_meta("phone", $value);
+        
+        // Common datas
+        if($value = $request->input('language')) $user->update_meta("language", $value);
+        if($value = $request->input('newsletter')) $user->update_meta("newsletter", $value);
+        if($value = $request->input('allow_sharing')) $user->update_meta("allow_sharing", $value);
+                
+        // Store image file
+        if($user && $file=$request->file('image')){
+            $image = $file->store('uploads');
+            $user->update_meta("image", $image);
+        }
+        
+        //firing an event
+        Event::fire(new UserRegistered($user));
+        
+        // Success
+        return back()->with('success',"L'utilisateur a été bien enregistré.");
     }
 
     /*
@@ -210,6 +456,9 @@ class RegisterController extends Controller
                     $image = $file->store('uploads');
                     $user->update_meta("image", $image);
                 }
+        
+                //firing an event
+                Event::fire(new UserRegistered($user));
                 
                 // Success
                 return back()->with('success',"L'utilisateur a été bien enregistré.");

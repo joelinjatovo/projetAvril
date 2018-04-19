@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Validator;
 use Auth;
 
+use App\Models\ObjectCategory;
+use App\Models\Category;
 use App\Models\Product;
 
 class ProductController extends Controller
@@ -42,7 +44,8 @@ class ProductController extends Controller
             $item->reference = $reference;
         }
         $action = route('admin.product.store');
-        return view('product.admin.update', ['item'=>$item, 'action'=>$action]);
+        $categories = Category::all();
+        return view('product.admin.update', ['item'=>$item, 'action'=>$action, 'categories'=>$categories]);
     }
     
     /**
@@ -69,7 +72,22 @@ class ProductController extends Controller
                         ->withInput();
         }
         
-        Product::create($datas);
+        
+        // Create Product
+        $product = Product::create($datas);
+        
+        // Add Product to the selected category
+        if($categories = $request->category){
+            foreach($categories as $categoryId){
+                $row = new ObjectCategory();
+                $row->category_id = $categoryId;
+                $row->object_id = $product->id;
+                $row->object_type = get_class($product);
+                $row->author_id = Auth::user()->id;
+                $row->save();
+            }
+        }
+        
         return back()->with('success',"Le produit a été bien enregistré.");
     }
     
@@ -95,7 +113,7 @@ class ProductController extends Controller
             $item->reference = $reference;
         }
         $action = route('admin.product.update', ['product'=>$product]);
-        return view('product.admin.update', ['item'=>$product, 'action'=>$action]);
+        return view('product.admin.update', ['item'=>$product, 'action'=>$action, 'categories'=>$categories]);
     }
     
     /**
@@ -126,6 +144,21 @@ class ProductController extends Controller
         $product->content = $request->input('content');
         $product->reference = $request->input('reference');
         $product->save();
+        
+        // TODO remove Old Category
+        
+        // Add Product to the selected category
+        if($categories = $request->category){
+            foreach($categories as $categoryId){
+                $row = new ObjectCategory();
+                $row->category_id = $categoryId;
+                $row->object_id = $product->id;
+                $row->object_type = get_class($product);
+                $row->author_id = Auth::user()->id;
+                $row->save();
+            }
+        }
+        
         return back()->with('success',"Le produit a été bien modifié.");
     }
     
@@ -149,5 +182,24 @@ class ProductController extends Controller
         
         $items = Product::paginate($this->pageSize);
         return view('product.admin.all', compact('items', 'filter', 'page')); 
+    }
+    
+    /**
+     * Show the list of product.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  String $filter
+     * @return \Illuminate\Http\Response
+     */
+    public function all(Request $request, $filter='all')
+    {
+        $page = $request->get('page');
+        if(!$page){
+            $page =1;
+        }
+        
+        $items = Product::paginate($this->pageSize);
+        
+        return view('product.all', compact('items', 'filter', 'page')); 
     }
 }
