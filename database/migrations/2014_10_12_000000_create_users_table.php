@@ -27,6 +27,19 @@ class CreateUsersTable extends Migration
             $table->bigInteger('location_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            
+            // Cashier fields
+            $table->string('stripe_id')->nullable();
+            
+            // Baintree
+            $table->string('braintree_id')->nullable();
+            $table->string('paypal_email')->nullable();
+            
+            // Common fields Cashier & Baintree
+            $table->string('card_brand')->nullable();
+            $table->string('card_last_four')->nullable();
+            $table->timestamp('trial_ends_at')->nullable();
+            
         });
     }
 

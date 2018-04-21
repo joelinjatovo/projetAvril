@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use AstritZeqiri\Metadata\Traits\HasManyMetaDataTrait;
+use Laravel\Cashier\Billable;
 
 use App\Models\ChatMessage;
 use App\Models\Blog;
@@ -20,6 +21,7 @@ use App\Models\Page;
 class User extends Authenticatable
 {
     use Notifiable;
+    use Billable;
     
 
     // after the class declaration add this code snippet:
