@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\ProductLabel;
+use App\Models\Label;
 
 class LabelController extends Controller
 {
@@ -28,7 +28,7 @@ class LabelController extends Controller
      */
     public function storeOrUpdate(Request $request, RowProduct $product, $type)
     {
-        $label = ProductLabel::where('row_product_id','=', $product->id)
+        $label = Label::where('product_id','=', $product->id)
             ->where('label','=', $type)
             ->first();
         if($label){
@@ -48,11 +48,11 @@ class LabelController extends Controller
      * @param  String  $type
      * @return Illuminate\Http\Response
      */
-    public function storeOrUpdate(Request $request, $type)
+    public function all(Request $request, $type)
     {
         $page = $request->get('page');
         if(!$page){ $page =1; }
-        $items = ProductLabel::where('label','=', $type)
+        $items = Label::where('label','=', $type)
                         ->paginate($this->pageSize);
         return view('label.all', compact('items', 'filter', 'page')); 
     }

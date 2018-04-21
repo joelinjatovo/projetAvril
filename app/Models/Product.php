@@ -8,7 +8,6 @@ use Auth;
 use App\Models\Product;
 use App\Models\User;
 
-
 // Eloquent\Model to manage Product and Service to sell
 class Product extends Model
 {
@@ -52,11 +51,9 @@ class Product extends Model
     /**
      * Get the author record associated with the blog.
      */
-    /*
     public function author()
     {
         return $this->belongsTo(User::class, 'author_id', 'id');
     }
-    */
     
 }

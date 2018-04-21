@@ -60,7 +60,7 @@ class UserController extends Controller
             $user->email = $email;
         }
         $action = route('admin.user.update', ['user'=>$user]);
-        return view('user.admin.update', ['item'=>$user, 'action'=>$action]);
+        return view('admin.user.update', ['item'=>$user, 'action'=>$action]);
     }
     
     /**
@@ -143,7 +143,7 @@ class UserController extends Controller
                 break;
         }
         
-        return view('user.admin.all', compact('items')); 
+        return view('admin.user.all', compact('items')); 
     }
     
     /**

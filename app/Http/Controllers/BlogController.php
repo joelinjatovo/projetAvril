@@ -53,7 +53,7 @@ class BlogController extends Controller
         $categories = Category::all();
         
         $action = route('admin.blog.store');
-        return view('blog.admin.update', ['item'=>$blog, 'action'=>$action, 'categories'=>$categories]);
+        return view('admin.blog.update', ['item'=>$blog, 'action'=>$action, 'categories'=>$categories]);
     }
     
     /**
@@ -126,7 +126,7 @@ class BlogController extends Controller
         $categories = Category::all();
         
         $action = route('admin.blog.update', ['blog'=>$blog]);
-        return view('blog.admin.update', ['item'=>$blog, 'action'=>$action, 'categories'=>$categories]);
+        return view('admin.blog.update', ['item'=>$blog, 'action'=>$action, 'categories'=>$categories]);
     }
     
     /**
@@ -258,7 +258,7 @@ class BlogController extends Controller
                 break;
         }
         
-        return view('blog.admin.all', compact('items', 'filter', 'page')); 
+        return view('admin.blog.all', compact('items', 'filter', 'page')); 
     }
     
     

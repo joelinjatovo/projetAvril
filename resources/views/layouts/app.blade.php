@@ -114,14 +114,14 @@
                     <ul class="nav navbar-nav ">
                         <li><a href="#">IMMOBILIER</a>
                             <ul>
-                                <li><a href="{{route('rowproduct.all')}}">Résidentiel</a></li>
-                                <li><a href="{{route('rowproduct.all')}}">Foncier</a></li>
+                                <li><a href="{{route('shop.index')}}">Résidentiel</a></li>
+                                <li><a href="{{route('shop.index')}}">Foncier</a></li>
                             </ul>
                         </li>
                         <li><a href="#">BUSINESS</a>
                             <ul>
-                                <li><a href="{{route('rowproduct.all')}}">Industriel</a></li>
-                                <li><a href="{{route('rowproduct.all')}}">Commercial</a></li>
+                                <li><a href="{{route('shop.index')}}">Industriel</a></li>
+                                <li><a href="{{route('shop.index')}}">Commercial</a></li>
                             </ul>
                         </li>
                         <li><a href="{{route('services')}}">NOS SERVICES</a></li>
@@ -170,8 +170,8 @@
                         <h4 class="title">acces rapide</h4>
                         <ul>
                             <li><a href="{{route('home')}}">Accueil</a></li>
-                            <li><a href="{{route('rowproduct.all')}}">Immobilier</a></li>
-                            <li><a href="{{route('rowproduct.all')}}">Business</a></li>
+                            <li><a href="{{route('shop.index')}}">Immobilier</a></li>
+                            <li><a href="{{route('shop.index')}}">Business</a></li>
                             <li><a href="{{route('services')}}">Nos services</a></li>
                             <li><a href="{{route('blog.all')}}">Blog</a></li>
                             @if(Auth::check())

@@ -4,22 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Validator;
-use Auth;
 
-use App\Models\ObjectCategory;
-use App\Models\Category;
 use App\Models\Product;
 
 class ProductController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Show the row product.
      *
-     * @return void
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Product  $product
+     * @return \Illuminate\Http\Response
      */
-    public function __construct()
+    public function index(Request $request, Product $product)
     {
-        //$this->middleware('auth');
+        return view('product.index', ['item'=>$product]); 
     }
     
     /**
@@ -34,14 +33,11 @@ class ProductController extends Controller
         $this->middleware('role:admin');
         
         $item = new Product();
-        if($title = $request->old('title')){
-            $item->title = $title;
-        }
-        if($content = $request->old('content')){
-            $item->content = $content;
-        }
+        if($title = $request->old('title')) $item->title = $title; 
+        if($content = $request->old('content')) $item->content = $content; 
+        
         $action = route('admin.product.store');
-        return view('product.admin.update', ['item'=>$item, 'action'=>$action]);
+        return view('admin.product.update', ['item'=>$item, 'action'=>$action]);
     }
     
     /**
@@ -75,13 +71,13 @@ class ProductController extends Controller
     }
     
     /**
-     * Render form to edit a product
+     * Render form to edit a product category
      *
      * @param  Illuminate\Http\Request  $request
      * @param  App\Models\Product  $product
      * @return Illuminate\Http\Response
      */
-    public function edit(Request $request, Product  $product)
+    public function edit(Request $request, Product $product)
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
@@ -93,7 +89,7 @@ class ProductController extends Controller
             $product->content = $content;
         }
         $action = route('admin.product.update', ['product'=>$product]);
-        return view('product.admin.update', ['item'=>$product, 'action'=>$action, 'categories'=>$categories]);
+        return view('admin.product.update', ['item'=>$product, 'action'=>$action, 'categories'=>$categories]);
     }
     
     /**
@@ -145,7 +141,7 @@ class ProductController extends Controller
         }
         
         $items = Product::paginate($this->pageSize);
-        return view('product.admin.all', compact('items', 'filter', 'page')); 
+        return view('admin.product.all', compact('items', 'filter', 'page')); 
     }
 
 }

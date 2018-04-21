@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 use APp\Models\User;
-use APp\Models\RowProduct;
+use APp\Models\Product;
 
 // Eloquent\Model to manage product saved and starred
-class ProductLabel extends Model
+class Label extends Model
 {
    /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'products_labels';
+    protected $table = 'labels';
     
     /**
      * Create a new model instance.
@@ -30,9 +30,9 @@ class ProductLabel extends Model
     /**
      * Get the product record associated.
      */
-    public function rowProduct()
+    public function product()
     {
-        return $this->belongsTo(RowProduct::class, 'row_product_id', 'id');
+        return $this->belongsTo(RowProduct::class, 'product_id', 'id');
     }
     
     /**

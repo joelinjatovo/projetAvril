@@ -34,10 +34,9 @@ class CategoryController extends Controller
         $item = new Category();
         if($value = $request->old('title'))     $item->title = $value;
         if($value = $request->old('content'))   $item->content = $value;
-        if($value = $request->old('slug'))      $item->slug = $value;
         
         $action = route('admin.category.store');
-        return view('category.admin.update', ['item'=>$item, 'action'=>$action]);
+        return view('admin.category.update', ['item'=>$item, 'action'=>$action]);
     }
     
     /**
@@ -85,7 +84,7 @@ class CategoryController extends Controller
         if($value = $request->old('content'))   $item->content = $value;
         
         $action = route('admin.category.update', ['category'=>$category]);
-        return view('category.admin.update', ['item'=>$category, 'action'=>$action]);
+        return view('admin.category.update', ['item'=>$category, 'action'=>$action]);
     }
     
     /**
@@ -114,7 +113,7 @@ class CategoryController extends Controller
         $category->title = $request->input('title');
         $category->content = $request->input('content');
         $category->slug = generateSlug($category->title);
-        $product->save();
+        $category->save();
         return back()->with('success',"Le produit a été bien modifié.");
     }
     
@@ -132,11 +131,9 @@ class CategoryController extends Controller
         $this->middleware('role:admin');
         
         $page = $request->get('page');
-        if(!$page){
-            $page =1;
-        }
+        if(!$page) $page =1;
         
         $items = Category::paginate($this->pageSize);
-        return view('category.admin.all', compact('items', 'filter', 'page')); 
+        return view('admin.category.all', compact('items', 'filter', 'page')); 
     }
 }

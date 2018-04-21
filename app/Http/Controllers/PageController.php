@@ -26,7 +26,7 @@ class PageController extends Controller
         if($value = $request->old('path'))      $item->content = $value;
         
         $action = route('admin.page.store');
-        return view('page.admin.update', ['item'=>$item, 'action'=>$action]);
+        return view('admin.page.update', ['item'=>$item, 'action'=>$action]);
     }
     
     /**
@@ -74,7 +74,7 @@ class PageController extends Controller
         if($value = $request->old('path'))      $pub->content = $value;
         
         $action = route('admin.page.update', ['page'=>$page]);
-        return view('page.admin.update', ['item'=>$pub, 'action'=>$action]);
+        return view('admin.page.update', ['item'=>$pub, 'action'=>$action]);
     }
     
     /**
@@ -126,6 +126,6 @@ class PageController extends Controller
         }
         
         $items = Page::paginate($this->pageSize);
-        return view('pub.admin.all', compact('items', 'filter', 'page')); 
+        return view('admin.page.all', compact('items', 'filter', 'page')); 
     }
 }

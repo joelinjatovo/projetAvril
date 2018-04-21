@@ -31,7 +31,7 @@ class PubController extends Controller
         
         $action = route('admin.pub.store');
         $pages = Page::all();
-        return view('pub.admin.update', ['item'=>$item, 'action'=>$action, 'pages'=>$pages]);
+        return view('admin.pub.update', ['item'=>$item, 'action'=>$action, 'pages'=>$pages]);
     }
     
     /**
@@ -101,7 +101,7 @@ class PubController extends Controller
         
         $action = route('admin.pub.update', ['pub'=>$pub]);
         $pages = Page::all();
-        return view('pub.admin.update', ['item'=>$pub, 'action'=>$action, 'pages'=>$pages]);
+        return view('admin.pub.update', ['item'=>$pub, 'action'=>$action, 'pages'=>$pages]);
     }
     
     /**
@@ -173,6 +173,6 @@ class PubController extends Controller
         }
         
         $items = Pub::paginate($this->pageSize);
-        return view('pub.admin.all', compact('items', 'filter', 'page')); 
+        return view('admin.pub.all', compact('items', 'filter', 'page')); 
     }
 }

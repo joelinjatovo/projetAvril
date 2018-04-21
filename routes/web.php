@@ -60,8 +60,14 @@ Route::get('help', 'IndexController@help')->name('help');
 Route::get('publicities', 'IndexController@publicities')->name('publicities');
 Route::get('confidentialities', 'IndexController@confidentialities')->name('confidentialities');
 
-Route::get('products/{product?}', 'RowProductController@all')->name('rowproduct.all');
-Route::get('product/{rowproduct}', 'RowProductController@index')->name('rowproduct.index');
+// List product by Category OR no
+Route::get('shop/{category?}', 'ShopController@index')->name('shop.index');
+// Add product in cart
+Route::get('shop/add/{product}', 'ShopController@add')->name('shop.add');
+// Show cart
+Route::get('shop/cart', 'ShopController@cart')->name('shop.cart');
+// View Product
+Route::get('product/{product}', 'ProductController@index')->name('product.index');
 
 Route::get('blogs/{filter?}', 'BlogController@all')->name('blog.all');
 Route::get('blog/{blog}', 'BlogController@index')->name('blog.index');
@@ -70,8 +76,10 @@ Route::get('blog/{blog}/comments', 'CommentController@index')->name('comment.lis
 Route::middleware(["auth"])->group(function () {
     Route::get('profile', 'UserController@profile')->name('profile');
     
+    // Save OR Star Product
     Route::post('product/{product}/{type}', 'LabelController@storeOrUpdate')->name('label.store');
-    Route::post('labels/{type}', 'LabelController@all')->name('label.list');
+    // List saved products OR starred Product
+    Route::post('products/{type}', 'LabelController@all')->name('label.list');
     
     Route::post('blog/{blog}/comment', 'CommentController@store')->name('comment.store');
     Route::get('blog/{blog}/comment/{comment}', 'CommentController@edit')->name('comment.edit');
@@ -83,9 +91,6 @@ Route::middleware(["auth"])->group(function () {
     Route::post('/chat/messages', 'ChatController@sendMessage');
     
 });
-
-Route::get('pages/{filter?}', 'PageController@all')->name('page.all');
-Route::get('page/{blog}', 'PageController@index')->name('page.index');
 
 Route::prefix('admin')->middleware(["auth","role:admin"])->group(function () {
     Route::get('/', 'AdminController@dashboard')->name('admin.dashboard');
@@ -106,7 +111,7 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function () {
     });
     
     // Product Controller Groups
-    Route::get('products/{filter?}', 'ProductController@allAdmin')->name('admin.product.list');
+    Route::get('products/{filter?}', 'ProductController@all')->name('admin.product.list');
     Route::prefix('product')->group(function(){
         Route::get('/', 'ProductController@create')->name('admin.product.create');
         Route::post('/', 'ProductController@store')->name('admin.product.store');
@@ -116,19 +121,6 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function () {
         Route::get('archive/{product}', 'ProductController@archive')->name('admin.product.archive');
         Route::get('restore/{product}', 'ProductController@restore')->name('admin.product.restore');
         Route::get('star/{product}', 'ProductController@star')->name('admin.product.star');
-    });
-    
-    // RowProduct Controller Groups
-    Route::get('rowproducts/{filter?}', 'RowProductController@allAdmin')->name('admin.rowproduct.list');
-    Route::prefix('rowproduct')->group(function(){
-        Route::get('/', 'RowProductController@create')->name('admin.rowproduct.create');
-        Route::post('/', 'RowProductController@store')->name('admin.rowproduct.store');
-        Route::get('update/{rowproduct}', 'RowProductController@edit')->name('admin.rowproduct.edit');
-        Route::post('update/{rowproduct}', 'RowProductController@update')->name('admin.rowproduct.update');
-        Route::get('delete/{rowproduct}', 'RowProductController@delete')->name('admin.rowproduct.delete');
-        Route::get('archive/{rowproduct}', 'RowProductController@archive')->name('admin.rowproduct.archive');
-        Route::get('restore/{rowproduct}', 'RowProductController@restore')->name('admin.rowproduct.restore');
-        Route::get('star/{rowproduct}', 'RowProductController@star')->name('admin.rowproduct.star');
     });
     
     // Category Controller Groups
