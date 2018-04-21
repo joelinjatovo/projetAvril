@@ -12,13 +12,13 @@ use App\Models\ObjectCategory;
 
 class BlogController extends Controller
 {
-    
+
     /**
      * Type of Blog in database
      *
      */
     protected $post_type = 'post';
-    
+
     /**
      * Show a blog
      *
@@ -30,7 +30,7 @@ class BlogController extends Controller
     {
         return view('blog.index', ['item'=>$blog]);
     }
-    
+
     /**
      * Render form to create a blog
      *
@@ -41,7 +41,7 @@ class BlogController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
-        
+
         $blog = new Blog();
         if($title = $request->old('title')){
             $blog->title = $title;
@@ -49,13 +49,13 @@ class BlogController extends Controller
         if($content = $request->old('content')){
             $blog->content = $content;
         }
-        
+
         $categories = Category::all();
-        
+
         $action = route('admin.blog.store');
         return view('admin.blog.update', ['item'=>$blog, 'action'=>$action, 'categories'=>$categories]);
     }
-    
+
     /**
      * Store a blog
      *
@@ -66,7 +66,7 @@ class BlogController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
-        
+
         // Validate request
         $datas = $request->all();
         $validator = Validator::make($datas,[
@@ -74,12 +74,12 @@ class BlogController extends Controller
                             'content' => 'required',
                             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                         ]);
-        
+
         if ($validator->fails()) {
             return back()->withErrors($validator)
                         ->withInput();
         }
-        
+
         if($file=$request->file('image')){
             $image = $file->store('uploads');
             $datas["image"] = $image;
@@ -87,9 +87,9 @@ class BlogController extends Controller
         $datas["author_id"] = Auth::user()->id;
         $datas["post_type"] = $this->post_type;
         $datas["slug"] = generateSlug($request->title);
-        
+
         $blog = Blog::create($datas);
-        
+
         // Add Blog to the selected category
         if($categories = $request->category){
             foreach($categories as $categoryId){
@@ -103,7 +103,7 @@ class BlogController extends Controller
         }
         return back()->with('success',"L'article a été bien enregistré.");
     }
-    
+
     /**
      * Render form to edit a blog
      *
@@ -115,20 +115,20 @@ class BlogController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
-        
+
         if($title = $request->old('title')){
             $blog->title = $title;
         }
         if($content = $request->old('content')){
             $blog->content = $content;
         }
-        
+
         $categories = Category::all();
-        
+
         $action = route('admin.blog.update', ['blog'=>$blog]);
         return view('admin.blog.update', ['item'=>$blog, 'action'=>$action, 'categories'=>$categories]);
     }
-    
+
     /**
      * Update User
      *
@@ -146,12 +146,12 @@ class BlogController extends Controller
                             'content' => 'required',
                             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                         ]);
-        
+
         if ($validator->fails()) {
             return back()->withErrors($validator)
                         ->withInput();
         }
-        
+
         $blog->title = $request->input('title');
         $blog->content = $request->input('content');
         $blog->slug = generateSlug($blog->title);
@@ -160,9 +160,9 @@ class BlogController extends Controller
             $blog->image = $image;
         }
         $blog->save();
-        
+
         // TODO Remove Old Category
-        
+
         // Add Blog to the selected category
         if($categories = $request->category){
             foreach($categories as $categoryId){
@@ -174,10 +174,10 @@ class BlogController extends Controller
                 $row->save();
             }
         }
-        
+
         return back()->with('success',"L'utilisateur a été bien modifié.");
     }
-    
+
     /**
      * Show the list of blog.
      * Public Acces
@@ -192,7 +192,7 @@ class BlogController extends Controller
         if(!$page){
             $page =1;
         }
-        
+
         switch($filter){
             case 'starred':
                 $items = Blog::where('starred','=', 1)
@@ -210,7 +210,7 @@ class BlogController extends Controller
                         ->paginate($this->pageSize);
                 break;
         }
-        
+
         /*
         if($request->isAjax()){
             return response()->json(array(
@@ -218,10 +218,10 @@ class BlogController extends Controller
             ));
         }
         */
-        
-        return view('blog.all', compact('items', 'filter', 'page')); 
+
+        return view('blog.all', compact('items', 'filter', 'page'));
     }
-    
+
     /**
      * Show the list of blog.
      * Admin Only
@@ -234,12 +234,12 @@ class BlogController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
-        
+
         $page = $request->get('page');
         if(!$page){
             $page =1;
         }
-        
+
         switch($filter){
             case 'starred':
                 $items = Blog::where('starred','=', 1)
@@ -257,11 +257,11 @@ class BlogController extends Controller
                         ->paginate($this->pageSize);
                 break;
         }
-        
-        return view('admin.blog.all', compact('items', 'filter', 'page')); 
+
+        return view('admin.blog.all', compact('items', 'filter', 'page'));
     }
-    
-    
+
+
     /**
     * Mark as starred the Blog
     *
@@ -273,14 +273,14 @@ class BlogController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
-        
+
         $blog->starred = 1;
         $blog->save();
         return redirect()->route('admin.dashboard')
             ->with('success',"L'article a été supprimé avec succés");
     }
-    
-    
+
+
     /**
     * Archive Blog
     *
@@ -292,14 +292,14 @@ class BlogController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
-        
+
         $blog->status = "archived";
         $blog->save();
         return redirect()->route('admin.dashboard')
             ->with('success',"L'article a été supprimé avec succés");
     }
-    
-    
+
+
     /**
     * Restore Blog
     *
@@ -311,14 +311,14 @@ class BlogController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
-        
+
         $blog->status = "published";
         $blog->save();
         return redirect()->route('admin.dashboard')
             ->with('success',"L'article a été supprimé avec succés");
     }
-    
-    
+
+
     /**
     * Delete Blog
     *

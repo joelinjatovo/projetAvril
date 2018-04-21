@@ -19,7 +19,7 @@ class CategoryController extends Controller
     {
         //$this->middleware('auth');
     }
-    
+
     /**
      * Render form to create a category
      *
@@ -30,15 +30,15 @@ class CategoryController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
-        
+
         $item = new Category();
         if($value = $request->old('title'))     $item->title = $value;
         if($value = $request->old('content'))   $item->content = $value;
-        
+
         $action = route('admin.category.store');
         return view('admin.category.update', ['item'=>$item, 'action'=>$action]);
     }
-    
+
     /**
      * Store a category
      *
@@ -49,25 +49,25 @@ class CategoryController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
-        
+
         // Validate request
         $datas = $request->all();
         $validator = Validator::make($datas,[
                             'title' => 'required|max:100',
                             'content' => 'required',
                         ]);
-        
+
         if ($validator->fails()) {
             return back()->withErrors($validator)
                         ->withInput();
         }
-        
-        $datas['slug'] = generateSlug($datas['title']);
-        
+
+        $datas['slug'] = generateSlug($request->title);
+
         Category::create($datas);
         return back()->with('success',"La categorie a été bien enregistrée.");
     }
-    
+
     /**
      * Render form to edit a category
      *
@@ -79,14 +79,14 @@ class CategoryController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
-        
+
         if($value = $request->old('title'))     $item->title = $value;
         if($value = $request->old('content'))   $item->content = $value;
-        
+
         $action = route('admin.category.update', ['category'=>$category]);
         return view('admin.category.update', ['item'=>$category, 'action'=>$action]);
     }
-    
+
     /**
      * Update category
      *
@@ -98,25 +98,25 @@ class CategoryController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
-        
+
         // Validate request
         $validator = Validator::make($request->all(),[
                             'title' => 'required|max:100',
                             'content' => 'required',
                         ]);
-        
+
         if ($validator->fails()) {
             return back()->withErrors($validator)
                         ->withInput();
         }
-        
+
         $category->title = $request->input('title');
         $category->content = $request->input('content');
         $category->slug = generateSlug($category->title);
         $category->save();
         return back()->with('success',"Le produit a été bien modifié.");
     }
-    
+
     /**
      * Show the list of category.
      * Admin Only
@@ -129,11 +129,11 @@ class CategoryController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
-        
+
         $page = $request->get('page');
         if(!$page) $page =1;
-        
+
         $items = Category::paginate($this->pageSize);
-        return view('admin.category.all', compact('items', 'filter', 'page')); 
+        return view('admin.category.all', compact('items', 'filter', 'page'));
     }
 }
