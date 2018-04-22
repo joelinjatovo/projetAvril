@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Validator;
+use Auth;
 
 use App\Models\Page;
 use App\Models\PubPage;
@@ -23,7 +25,7 @@ class PageController extends Controller
         
         $item = new Page();
         if($value = $request->old('title'))     $item->title = $value;
-        if($value = $request->old('path'))      $item->content = $value;
+        if($value = $request->old('path'))      $item->path = $value;
         
         $action = route('admin.page.store');
         return view('admin.page.update', ['item'=>$item, 'action'=>$action]);
@@ -53,7 +55,10 @@ class PageController extends Controller
         }
         
         // Create page
-        $pub = Page::create($datas);
+        $page = new Page();
+        $page->title = $request->title;
+        $page->path = $request->path;
+        $page->save();
         
         return back()->with('success',"La page a été bien enregistrée.");
     }
@@ -70,11 +75,12 @@ class PageController extends Controller
         $this->middleware('auth');
         $this->middleware('role:admin');
         
-        if($value = $request->old('title'))     $pub->title = $value;
-        if($value = $request->old('path'))      $pub->content = $value;
+        if($value = $request->old('title'))     $page->title = $value;
+        if($value = $request->old('path'))      $page->path = $value;
         
         $action = route('admin.page.update', ['page'=>$page]);
-        return view('admin.page.update', ['item'=>$pub, 'action'=>$action]);
+        
+        return view('admin.page.update', ['item'=>$page, 'action'=>$action]);
     }
     
     /**
@@ -100,8 +106,8 @@ class PageController extends Controller
                         ->withInput();
         }
         
-        $page->title = $request->input('title');
-        $page->path = $request->input('path');
+        $page->title = $request->title;
+        $page->path = $request->path;
         $page->save();
         
         return back()->with('success',"La page a été bien modifiée.");
@@ -115,15 +121,13 @@ class PageController extends Controller
      * @param  String $filter
      * @return \Illuminate\Http\Response
      */
-    public function all(Request $request, $filter='all')
+    public function allAdmin(Request $request, $filter='all')
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
         
         $page = $request->get('page');
-        if(!$page){
-            $page =1;
-        }
+        if(!$page) $page =1;
         
         $items = Page::paginate($this->pageSize);
         return view('admin.page.all', compact('items', 'filter', 'page')); 

@@ -58,7 +58,7 @@
                                 <div class="well well-nice inline">
                                     <div class="fileupload fileupload-new" data-provides="fileupload">
                                         <div class="fileupload-preview thumbnail" style="width: 96px; height: 96px;">
-                                            <img src="{{storage($item->image?$item->image:'')}}">
+                                            <img src="{{$item->imageUrl()}}">
                                         </div>
                                         <div> <span class="btn btn-file"> <span class="fileupload-new">Select image</span> <span class="fileupload-exists">Changer</span>
                                             <input type="file" name="image" id="file">

@@ -19,5 +19,15 @@ class Image extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'content'];
+    protected $fillable = ['filename', 'filemime', 'filepath'];
+    
+    static function storeAndSave($file){
+        $path = $file->store('uploads');
+        $image = new Image();
+        $image->filename = '';
+        $image->filemime = '';
+        $image->filepath = $path;
+        $image->save();
+        return $image;
+    }
 }

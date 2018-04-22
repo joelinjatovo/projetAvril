@@ -235,7 +235,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 		'MetaData' => AstritZeqiri\Metadata\Models\MetaDada::class,
         'InterventionImage' => Intervention\Image\Facades\Image::class,
-        'Stripe' => Cartalyst\Stripe\Laravel\Facades\Stripe::class,
     ],
 
 ];

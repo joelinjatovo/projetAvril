@@ -31,8 +31,11 @@
                     <thead>
                         <tr>
                             <th scope="col">ID <span class="column-sorter"></span></th>
+                            <th scope="col">Photo <span class="column-sorter"></span></th>
                             <th scope="col">Titre <span class="column-sorter"></span></th>
-                            <th scope="col">tag <span class="column-sorter"></span></th>
+                            <th scope="col">Descripition <span class="column-sorter"></span></th>
+                            <th scope="col">Meta Tag <span class="column-sorter"></span></th>
+                            <th scope="col">Meta Description <span class="column-sorter"></span></th>
                             <th scope="col">Statut <span class="column-sorter"></span></th>
                             <th scope="col">Date de publication <span class="column-sorter"></span></th>
                             <th scope="col">Restaurer <span class="column-sorter"></span></th>
@@ -42,9 +45,12 @@
                       @foreach($items as $item) 
                         <tr>
                             <td>{{$item->id}}</td>
+                            <td>{{$item->imageUrl(true)}}</td>
+                            <td>{{$item->content}}</td>
                             <td>{{$item->title}}</td>
-                            <td>{{$item->tag}}</td>
-                            <td>{{ $item->state }}</td>
+                            <td>{{$item->meta_tag}}</td>
+                            <td>{{$item->meta_description}}</td>
+                            <td>{{ $item->status }}</td>
                             <td>{{date('d/m/y',strtotime($item->created_at))}}</td>
                             <td></td>
                         </tr>

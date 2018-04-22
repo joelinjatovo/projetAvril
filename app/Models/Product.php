@@ -24,7 +24,7 @@ class Product extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'content', 'reference', 'slug',
+        'title', 'content', 'reference', 'slug', 'price', 'tma', 'image_id', 'status',
     ];
     
     
@@ -39,6 +39,22 @@ class Product extends Model
     }
     
     /**
+     * Get Url of Attached Image OR Default Image
+     *
+     * @param Boolean $thumb
+     * @return String
+     */
+    public function imageUrl($thumb=false)
+    {
+        // Image is setted
+        if($this->image){
+            if($thumb) return thumbnail($this->image->filepath);
+            return storage($this->image->filepath);
+        } 
+        return asset('images/product.png');
+    }
+    
+    /**
      * A user can have many categories from products_categories table
      */
     /*
@@ -49,7 +65,23 @@ class Product extends Model
     */
     
     /**
-     * Get the author record associated with the blog.
+     * Get the image record associated with the product.
+     */
+    public function image()
+    {
+        return $this->belongsTo(Image::class, 'image_id', 'id');
+    }
+    
+    /**
+     * Get the seller record associated with the product.
+     */
+    public function seller()
+    {
+        return $this->belongsTo(User::class, 'seller_id', 'id');
+    }
+    
+    /**
+     * Get the author record associated with the product.
      */
     public function author()
     {

@@ -154,12 +154,12 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function () {
     Route::prefix('page')->group(function(){
         Route::get('/', 'PageController@create')->name('admin.page.create');
         Route::post('/', 'PageController@store')->name('admin.page.store');
-        Route::get('update/{blog}', 'PageController@edit')->name('admin.page.edit');
-        Route::post('update/{blog}', 'PageController@update')->name('admin.page.update');
-        Route::get('delete/{blog}', 'PageController@delete')->name('admin.page.delete');
-        Route::get('archive/{blog}', 'PageController@archive')->name('admin.page.archive');
-        Route::get('restore/{blog}', 'PageController@restore')->name('admin.page.restore');
-        Route::get('star/{blog}', 'PageController@star')->name('admin.page.star');
+        Route::get('update/{page}', 'PageController@edit')->name('admin.page.edit');
+        Route::post('update/{page}', 'PageController@update')->name('admin.page.update');
+        Route::get('delete/{page}', 'PageController@delete')->name('admin.page.delete');
+        Route::get('archive/{page}', 'PageController@archive')->name('admin.page.archive');
+        Route::get('restore/{page}', 'PageController@restore')->name('admin.page.restore');
+        Route::get('star/{page}', 'PageController@star')->name('admin.page.star');
     });
     
     // Pub Controller Groups
@@ -179,7 +179,15 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function () {
         Route::post('site', 'ConfigController@site')->name('config.site.update');
         Route::get('social', 'ConfigController@social')->name('config.social');
         Route::post('social', 'ConfigController@social')->name('config.social.update');
+        Route::get('paiement', 'ConfigController@paiement')->name('config.paiement');
+        Route::post('paiement', 'ConfigController@paiement')->name('config.paiement.update');
         Route::get('fontawesome', 'ConfigController@fontawesome')->name('config.fontawesome');
+    });
+    
+    // Order Controller Groups
+    Route::get('orders/{filter?}', 'OrderController@allAdmin')->name('admin.order.list');
+    Route::prefix('order')->group(function(){
+        Route::get('/{order}', 'OrderController@index')->name('admin.order.index');
     });
     
 });

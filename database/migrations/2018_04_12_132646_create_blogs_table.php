@@ -24,7 +24,7 @@ class CreateBlogsTable extends Migration
             $table->string('status', 20)->default('pinged'); // pinged published drafted trashed blocked archived
             $table->integer('starred')->default(0);
             $table->string('post_type')->nullable(); // page pub post
-            $table->string('image')->nullable();
+            $table->bigInteger('image_id')->default(0);
             $table->bigInteger('author_id')->default(0);
             $table->timestamps();
         });

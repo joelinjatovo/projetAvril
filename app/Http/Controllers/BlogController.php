@@ -9,6 +9,7 @@ use Auth;
 use App\Models\Blog;
 use App\Models\Category;
 use App\Models\ObjectCategory;
+use App\Models\Image;
 
 class BlogController extends Controller
 {
@@ -43,16 +44,14 @@ class BlogController extends Controller
         $this->middleware('role:admin');
 
         $blog = new Blog();
-        if($title = $request->old('title')){
-            $blog->title = $title;
-        }
-        if($content = $request->old('content')){
-            $blog->content = $content;
-        }
+        if($value = $request->old('title'))             $blog->title = $value;
+        if($value = $request->old('content'))           $blog->content = $value;
+        if($value = $request->old('meta_tag'))          $blog->meta_tag = $value;
+        if($value = $request->old('meta_description'))  $blog->meta_description = $value;
 
         $categories = Category::all();
-
         $action = route('admin.blog.store');
+        
         return view('admin.blog.update', ['item'=>$blog, 'action'=>$action, 'categories'=>$categories]);
     }
 
@@ -80,15 +79,20 @@ class BlogController extends Controller
                         ->withInput();
         }
 
+        $blog = new Blog();
         if($file=$request->file('image')){
-            $image = $file->store('uploads');
-            $datas["image"] = $image;
+            $image = Image::storeAndSave($file);
+            $blog->image_id = $image->id;
         }
-        $datas["author_id"] = Auth::user()->id;
-        $datas["post_type"] = $this->post_type;
-        $datas["slug"] = generateSlug($request->title);
-
-        $blog = Blog::create($datas);
+        
+        $blog->title = $request->title;
+        $blog->content = $request->content;
+        $blog->meta_tag = $request->meta_tag;
+        $blog->meta_description = $request->meta_description;
+        $blog->post_type = $this->post_type;
+        $blog->slug = generateSlug($request->title);
+        $blog->status = 'published';
+        $blog->save();
 
         // Add Blog to the selected category
         if($categories = $request->category){
@@ -116,16 +120,15 @@ class BlogController extends Controller
         $this->middleware('auth');
         $this->middleware('role:admin');
 
-        if($title = $request->old('title')){
-            $blog->title = $title;
-        }
-        if($content = $request->old('content')){
-            $blog->content = $content;
-        }
+        $blog = new Blog();
+        if($value = $request->old('title'))             $blog->title = $value;
+        if($value = $request->old('content'))           $blog->content = $value;
+        if($value = $request->old('meta_tag'))          $blog->meta_tag = $value;
+        if($value = $request->old('meta_description'))  $blog->meta_description = $value;
 
         $categories = Category::all();
-
         $action = route('admin.blog.update', ['blog'=>$blog]);
+        
         return view('admin.blog.update', ['item'=>$blog, 'action'=>$action, 'categories'=>$categories]);
     }
 
@@ -152,13 +155,19 @@ class BlogController extends Controller
                         ->withInput();
         }
 
-        $blog->title = $request->input('title');
-        $blog->content = $request->input('content');
-        $blog->slug = generateSlug($blog->title);
+        
         if($file=$request->file('image')){
-            $image = $file->store('uploads');
-            $blog->image = $image;
+            $image = Image::storeAndSave($file);
+            $blog->image_id = $image->id;
         }
+        
+        $blog->title = $request->title;
+        $blog->content = $request->content;
+        $blog->meta_tag = $request->meta_tag;
+        $blog->meta_description = $request->meta_description;
+        $blog->post_type = $this->post_type;
+        $blog->slug = generateSlug($request->title);
+        $blog->status = 'published';
         $blog->save();
 
         // TODO Remove Old Category

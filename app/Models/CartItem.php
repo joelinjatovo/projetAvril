@@ -39,7 +39,7 @@ class CartItem extends Model
     }
     
     /**
-     * Get the cart record associated with the item.
+     * Get the cart record associated with the cart item.
      */
     public function cart()
     {
@@ -47,11 +47,19 @@ class CartItem extends Model
     }
     
     /**
-     * Get the product record associated with the item.
+     * Get the product record associated with the cart item.
      */
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
+    
+    /**
+     * Get the afa record associated with the cart item.
+     */
+    public function afa()
+    {
+        return $this->belongsTo(User::class, 'afa_id', 'id');
     }
     
     /**

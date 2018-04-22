@@ -62,9 +62,12 @@ class CategoryController extends Controller
                         ->withInput();
         }
 
-        $datas['slug'] = generateSlug($request->title);
+        $category = new Category();
+        $category->slug = generateSlug($request->title);
+        $category->title = $request->title;
+        $category->content = $request->content;
+        $category->save();
 
-        Category::create($datas);
         return back()->with('success',"La categorie a été bien enregistrée.");
     }
 
@@ -84,6 +87,7 @@ class CategoryController extends Controller
         if($value = $request->old('content'))   $item->content = $value;
 
         $action = route('admin.category.update', ['category'=>$category]);
+        
         return view('admin.category.update', ['item'=>$category, 'action'=>$action]);
     }
 
@@ -110,11 +114,12 @@ class CategoryController extends Controller
                         ->withInput();
         }
 
-        $category->title = $request->input('title');
-        $category->content = $request->input('content');
-        $category->slug = generateSlug($category->title);
+        $category->slug = generateSlug($request->title);
+        $category->title = $request->title;
+        $category->content = $request->content;
         $category->save();
-        return back()->with('success',"Le produit a été bien modifié.");
+        
+        return back()->with('success',"Le category a été bien modifié.");
     }
 
     /**
@@ -131,9 +136,10 @@ class CategoryController extends Controller
         $this->middleware('role:admin');
 
         $page = $request->get('page');
-        if(!$page) $page =1;
+        if(!$page) $page = 1;
 
         $items = Category::paginate($this->pageSize);
+        
         return view('admin.category.all', compact('items', 'filter', 'page'));
     }
 }

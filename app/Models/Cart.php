@@ -112,4 +112,12 @@ class Cart extends Model
     {
       return $this->hasMany(CartItem::class, 'cart_id', 'id');
     }
+    
+    /**
+     * Get the author record associated with the cart.
+     */
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'author_id', 'id');
+    }
 }

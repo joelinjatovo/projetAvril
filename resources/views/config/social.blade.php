@@ -12,7 +12,7 @@
         <section>
             <div class="page-header">
                 <!-- Message de notification -->
-                @include('includes.notification')
+                @include('includes.alerts')
                 <!-- end notification -->
                 <h3>Réseaux Sociaux <small>. Social Media</small></h3>
             </div>

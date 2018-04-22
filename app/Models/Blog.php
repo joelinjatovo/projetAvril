@@ -23,9 +23,7 @@ class Blog extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'slug', 'title', 'content', 'status', 'image', 'post_type', 'author_id',
-    ];
+    protected $fillable = ['slug', 'title', 'content', 'status', 'image', 'post_type', 'author_id',];
     
     /**
      * Create a new model instance.
@@ -36,6 +34,23 @@ class Blog extends Model
     {
         $this->author_id = (Auth::check()?Auth::user()->id:0);
     }
+    
+    /**
+     * Get Url of Attached Image OR Default Image
+     *
+     * @param Boolean $thumb
+     * @return String
+     */
+    public function imageUrl($thumb=false)
+    {
+        // Image is setted
+        if($this->image){
+            if($thumb) return thumbnail($this->image->filepath);
+            return storage($this->image->filepath);
+        } 
+        return asset('images/blog.png');
+    }
+    
     
     /**
      * A blog can have many comments

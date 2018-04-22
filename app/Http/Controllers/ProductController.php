@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Validator;
+use Auth;
 
 use App\Models\Product;
+use App\Models\Category;
+use App\Models\Image;
 
 class ProductController extends Controller
 {
@@ -33,11 +36,14 @@ class ProductController extends Controller
         $this->middleware('role:admin');
         
         $item = new Product();
-        if($title = $request->old('title')) $item->title = $title; 
-        if($content = $request->old('content')) $item->content = $content; 
+        if($value = $request->old('title'))     $item->title = $value; 
+        if($value = $request->old('content'))   $item->content = $value; 
+        if($value = $request->old('price'))     $item->content = $price; 
+        if($value = $request->old('tma'))       $item->content = $tma; 
         
         $action = route('admin.product.store');
-        return view('admin.product.update', ['item'=>$item, 'action'=>$action]);
+        $categories = Category::all();
+        return view('admin.product.update', ['item'=>$item, 'action'=>$action, 'categories'=>$categories]);
     }
     
     /**
@@ -56,6 +62,8 @@ class ProductController extends Controller
         $validator = Validator::make($datas,[
                             'title' => 'required|max:100',
                             'content' => 'required',
+                            'price' => 'required',
+                            'tma' => 'required',
                         ]);
         
         if ($validator->fails()) {
@@ -63,9 +71,32 @@ class ProductController extends Controller
                         ->withInput();
         }
         
+        $product = new Product();
+        if($file=$request->file('image')){
+            $image = Image::storeAndSave($file);
+            $item->image_id = $image->id;
+        }
+        
+        $product->status = 'published';
+        $product->title = $request->title;
+        $product->content = $request->content;
+        $product->price = $request->price;
+        $product->tma = $request->tma;
         
         // Create Product
-        $product = Product::create($datas);
+        $item->save();
+
+        // Add Blog to the selected category
+        if($categories = $request->category){
+            foreach($categories as $categoryId){
+                $row = new ObjectCategory();
+                $row->category_id = $categoryId;
+                $row->object_id = $product->id;
+                $row->object_type = get_class($product);
+                $row->author_id = Auth::user()->id;
+                $row->save();
+            }
+        }
         
         return back()->with('success',"Le produit a été bien enregistré.");
     }
@@ -82,13 +113,14 @@ class ProductController extends Controller
         $this->middleware('auth');
         $this->middleware('role:admin');
         
-        if($title = $request->old('title')){
-            $product->title = $title;
-        }
-        if($content = $request->old('content')){
-            $product->content = $content;
-        }
+        if($value = $request->old('title'))     $item->title = $value; 
+        if($value = $request->old('content'))   $item->content = $value; 
+        if($value = $request->old('price'))     $item->content = $price; 
+        if($value = $request->old('tma'))       $item->content = $tma; 
+        
         $action = route('admin.product.update', ['product'=>$product]);
+        $categories = Category::all();
+        
         return view('admin.product.update', ['item'=>$product, 'action'=>$action, 'categories'=>$categories]);
     }
     
@@ -115,9 +147,30 @@ class ProductController extends Controller
                         ->withInput();
         }
         
-        $product->title = $request->input('title');
-        $product->content = $request->input('content');
+        if($file=$request->file('image')){
+            $image = Image::storeAndSave($file);
+            $product->image_id = $image->id;
+        }
+        
+        $product->title = $request->title;
+        $product->content = $request->content;
+        $product->price = $request->price;
+        $product->tma = $request->tma;
         $product->save();
+
+        // TODO Remove Old Category
+
+        // Add Blog to the selected category
+        if($categories = $request->category){
+            foreach($categories as $categoryId){
+                $row = new ObjectCategory();
+                $row->category_id = $categoryId;
+                $row->object_id = $product->id;
+                $row->object_type = get_class($product);
+                $row->author_id = Auth::user()->id;
+                $row->save();
+            }
+        }
         
         return back()->with('success',"Le produit a été bien modifié.");
     }
@@ -136,9 +189,7 @@ class ProductController extends Controller
         $this->middleware('role:admin');
         
         $page = $request->get('page');
-        if(!$page){
-            $page =1;
-        }
+        if(!$page) $page =1;
         
         $items = Product::paginate($this->pageSize);
         return view('admin.product.all', compact('items', 'filter', 'page')); 

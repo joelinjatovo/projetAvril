@@ -10,21 +10,18 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class UserRegistered
+class ProductAddedToCartEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    
-    public $user;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct()
     {
         //
-        $this->user = $user;
     }
 
     /**
@@ -34,6 +31,6 @@ class UserRegistered
      */
     public function broadcastOn()
     {
-        return [];
+        return new PrivateChannel('channel-name');
     }
 }

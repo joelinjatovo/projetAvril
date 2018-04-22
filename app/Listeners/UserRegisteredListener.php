@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Events\UserRegistered;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Mail;
 
 class UserRegisteredListener
 {
@@ -33,6 +34,16 @@ class UserRegisteredListener
     public function handle(UserRegistered $event)
     {
         $this->user = $event->user;
-        echo "<br>New User added in database with name: ".$this->user->name;
+        $this->sendMail($this->user);
+        
+    }
+    
+    public function sendMail($user){
+        $data = array('item'=>$user);
+        Mail::send('mail.registration', $data, function($message) use($user) {
+            $message->to($user->email, $user->name)
+                    ->subject('Registration Notification')
+                    ->from("admin@investirenaustralie.com", 'Admin');
+        });
     }
 }

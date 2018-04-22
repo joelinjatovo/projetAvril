@@ -37,4 +37,21 @@ class Pub extends Model
     {
         $this->author_id = (Auth::check()?Auth::user()->id:0);
     }
+    
+    /**
+     * Get Url of Attached Image OR Default Image
+     *
+     * @param Boolean $thumb
+     * @return String
+     */
+    public function imageUrl($thumb=false)
+    {
+        // Image is setted
+        if($this->image){
+            if($thumb) return thumbnail($this->image->filepath);
+            return storage($this->image->filepath);
+        } 
+        return asset('images/pub.png');
+    }
+    
 }

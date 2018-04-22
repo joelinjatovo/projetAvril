@@ -123,6 +123,67 @@ class ConfigController extends Controller
         
         return view('config.social',compact('item', 'keys', 'titles'));
     }
+
+    /**
+     * Show paiement config page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function paiement(Request $request)
+    {
+        $item = Config::findOrFail(1);
+        $keys = [
+                'percent_inscription_member' => 'required|max:100',
+                'percent_inscription_seller' => 'required|max:100',
+                'percent_inscription_afa' => 'required|max:100',
+                'percent_inscription_apl' => 'required|max:100',
+            
+                'percent_reservation' => 'required|max:100',
+            
+                'percent_presentation_afa' => 'required|max:100',
+                'percent_presentation_apl' => 'required|max:100',
+            
+                'disable_inscription_percent' => 'required|max:100',
+                'trial_delay' => 'required|max:100',
+            ];
+        $titles = [
+                'percent_inscription_member' => "Pourcentage d'inscription des membres",
+                'percent_inscription_seller' => "Pourcentage d'inscription des vendeurs",
+                'percent_inscription_afa' => "Pourcentage d'inscription des afa",
+                'percent_inscription_apl' => "Pourcentage d'inscription des apl",
+            
+                'percent_reservation' => "Pourcentage de reservation de produit",
+            
+                'percent_presentation_afa' => "Pourcentage de presentation de produit pour les afa",
+                'percent_presentation_apl' => "Pourcentage de presentation de produit pour les apl",
+            
+                'disable_inscription_percent' => "Desactiver le paiement de droit d'inscription",
+                'trial_delay' => "Duree d'essaie",
+            ];
+        
+        if ($request->isMethod('post')) {
+            
+            // Validate request
+            $datas = $request->all();
+            $validator = Validator::make($datas, $keys);
+            
+            // Check validation
+            if ($validator->fails()) {
+                return back()->withErrors($validator)
+                            ->withInput();
+            }
+            
+            // Save Config into MetaData By Validator rules key
+            foreach($keys as $key=>$val){
+                if($value = $request->input($key)) $item->update_meta($key, $value);
+            }
+            
+            // Go back with notification
+            return back()->with('success','La configuration a été modifiée avec succés ! ');
+        }
+        
+        return view('config.paiement',compact('item', 'titles'));
+    }
     
     
     /**

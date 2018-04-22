@@ -17,9 +17,10 @@ class CreateCartsItemsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('quantity')->default(0);
             $table->double('price', 10, 2)->default(0);
-            $table->bigInteger('cart_id')->default(0);
+            $table->bigInteger('afa_id')->default(0);
             $table->bigInteger('product_id')->default(0);
             $table->bigInteger('author_id')->default(0);
+            $table->bigInteger('cart_id')->default(0);
             $table->timestamps();
         });
     }

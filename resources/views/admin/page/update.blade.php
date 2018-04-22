@@ -25,7 +25,7 @@
                 </div>
                 <div class="well well-nice form-dark">
                     <div class="control-group">
-                        <textarea id="wysiBooEditorBlack" class="input-block-level" style="height: 100px" name="links" placeholder="Ajouter un path">{{$item->path}}</textarea>
+                        <textarea id="wysiBooEditorBlack" class="input-block-level" style="height: 100px" name="path" placeholder="Ajouter un path">{{$item->path}}</textarea>
                     </div>
                 </div>
             </section>

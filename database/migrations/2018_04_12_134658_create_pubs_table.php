@@ -18,8 +18,8 @@ class CreatePubsTable extends Migration
             $table->string('title')->nullable();
             $table->longText('content')->nullable();
             $table->string('links')->nullable();
-            $table->string('image')->nullable();
-            $table->bigInteger('author_id');
+            $table->bigInteger('author_id')->default(0);
+            $table->bigInteger('image_id')->default(0);
             $table->timestamps();
         });
     }

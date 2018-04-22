@@ -24,7 +24,7 @@
                 <li class="span3">
                     <div class="thumbnail bg-gray-light text-center">
                         <div class="equalize">
-                            <div class="well well-nice"> <a href="#"><img class="radius3" src="{{thumbnail($item->image)}}" width="640" height="320"></a>
+                            <div class="well well-nice"> <a href="#"><img class="radius3" src="{{$item->imageUrl()}}" width="640" height="320"></a>
                             </div>
                             <div class="caption text-center">
                                 <p><b>{{$item->title}}</b></p>

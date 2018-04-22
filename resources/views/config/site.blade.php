@@ -12,7 +12,7 @@
         <section>
             <div class="page-header">
               <!-- Message de notification -->
-              @include('includes.notification')
+              @include('includes.alerts')
               <!-- fin Message -->
                 <h3>Informations <small>du Site</small></h3>
             </div>

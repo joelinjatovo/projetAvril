@@ -31,4 +31,12 @@ class Page extends Model
     {
         $this->author_id = (Auth::check()?Auth::user()->id:0);
     }
+    
+    /**
+     * Get the author record associated with the product.
+     */
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'author_id', 'id');
+    }
 }

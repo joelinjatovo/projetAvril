@@ -21,6 +21,9 @@ class CreateUsersTable extends Migration
             $table->string('role')->default('member'); // admin afa apl member seller
             $table->string('type')->default('person'); // person organization
             $table->string('status', 20); // active disabled blocked pinged
+            $table->double('percent', 8, 2)->nullable();
+            $table->integer('is_seller')->nullable(); // if afa check if seller
+            $table->bigInteger('apl_id')->nullable(); // User must check his APL
             $table->dateTime('enabled_at')->nullable();
             $table->dateTime('disabled_at')->nullable();
             $table->bigInteger('author_id')->nullable();

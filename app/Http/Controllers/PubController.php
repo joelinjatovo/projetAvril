@@ -6,10 +6,13 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\CookiesController;
 use App\Http\Controllers\BlogsController;
+use Validator;
+use Auth;
 
 use App\Models\Pub;
 use App\Models\Page;
 use App\Models\PubPage;
+use App\Models\Image;
 
 class PubController extends Controller
 {
@@ -27,10 +30,11 @@ class PubController extends Controller
         $item = new Pub();
         if($value = $request->old('title'))     $item->title = $value;
         if($value = $request->old('content'))   $item->content = $value;
-        if($value = $request->old('link'))      $item->lik = $value;
+        if($value = $request->old('links'))      $item->links = $value;
         
         $action = route('admin.pub.store');
         $pages = Page::all();
+        
         return view('admin.pub.update', ['item'=>$item, 'action'=>$action, 'pages'=>$pages]);
     }
     
@@ -60,15 +64,15 @@ class PubController extends Controller
         }
         
         
+        $pub = new Pub();
         if($file=$request->file('image')){
-            $image = $file->store('uploads');
-            $datas['image'] = $image;
-        }else{
-            $datas['image'] = null;
+            $image = Image::storeAndSave($file);
+            $pub->image_id = $image->id;
         }
-        
-        // Create Publicity
-        $pub = Pub::create($datas);
+        $pub->title = $request->title;
+        $pub->content = $request->content;
+        $pub->links = $request->links;
+        $pub->save();
         
         // Add Publicity to the selected page
         if($pages = $request->page){
@@ -96,8 +100,9 @@ class PubController extends Controller
         $this->middleware('auth');
         $this->middleware('role:admin');
         
-        if($value = $request->old('title'))     $pub->title = $value;
-        if($value = $request->old('path'))      $pub->content = $value;
+        if($value = $request->old('title'))     $item->title = $value;
+        if($value = $request->old('content'))   $item->content = $value;
+        if($value = $request->old('links'))      $item->links = $value;
         
         $action = route('admin.pub.update', ['pub'=>$pub]);
         $pages = Page::all();
@@ -129,13 +134,13 @@ class PubController extends Controller
                         ->withInput();
         }
         
-        $pub->title = $request->input('title');
-        $pub->content = $request->input('content');
-        $pub->links = $request->input('link');
         if($file=$request->file('image')){
-            $image = $file->store('uploads');
-            $pub->image = $image;
+            $image = Image::storeAndSave($file);
+            $pub->image_id = $image->id;
         }
+        $pub->title = $request->title;
+        $pub->content = $request->content;
+        $pub->links = $request->links;
         $pub->save();
         
         // TODO remove Old Page
@@ -162,7 +167,7 @@ class PubController extends Controller
      * @param  String $filter
      * @return \Illuminate\Http\Response
      */
-    public function all(Request $request, $filter='all')
+    public function allAdmin(Request $request, $filter='all')
     {
         $this->middleware('auth');
         $this->middleware('role:admin');

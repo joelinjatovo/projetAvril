@@ -70,5 +70,19 @@ return [
     'admin.user.list'       => 'Liste des utilisateurs',
     'admin.user.add'        => 'Ajouter un utilisateurs',
     'admin.user.archive'    => 'Registre des utilisateurs',
+    
+    'pubs'                 => 'Publicites',
+    'pub'                  => 'Publicite',
+    'admin.pubs'           => 'Publicites',
+    'admin.pub.list'       => 'Liste des publicites',
+    'admin.pub.add'        => 'Ajouter une publicite',
+    
+    'pages'                 => 'Pages',
+    'page'                  => 'Page',
+    'admin.pages'           => 'Pages',
+    'admin.page.list'       => 'Liste des pages',
+    'admin.page.add'        => 'Ajouter une page',
+    
+    'admin.orders'           => 'Orders',
 
 ];
