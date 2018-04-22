@@ -12,32 +12,29 @@
 @endsection
 
 @section('content')
-<div id="site-header-top"></div>
-<div id="property-single">
-    <h1 class="page-title aligncenter">Formulaire d'inscription d'Agence Partenaire Locale</h1>
-</div>
-
-<div class="container">
-    <div class="row">
+<div class="main-slider-wrapper clearfix content corps">
+    <div class="container">
+        <div class="row">
             <div class="col-md-12">
+                <h3 class="page-title aligncenter">AUSTRALIAN FRANCOPHONE AGENTS</h3>
                 <div id="content">
                     <div role="main">
                         <div id="breadcrumbs" class="group font-size-14">
                             <div class="breadcrumb">
-                                <a href="https://www.propertyhq.com.au/">Accueil</a>
-                                <span class="aquo">&gt;</span> Formulaire d'inscription d'Agence Partenaire Locale
+                                <a href="https://www.propertyhq.com.au/">Home</a>
+                                <span class="aquo">&gt;</span> Australian francophone agents</div>
                             </div>
-                        </div>
-                        <div class="content-box-large">
-                            <div class="panel-heading">
-                                <div class="panel-title">Formulaire d'inscription </div>
-                            </div>
-                            <div class="panel-body">
-                                <form class="form-horizontal" role="form" id="particulierForm" action="{{$action}}" method="post" enctype="multipart/form-data">
+                            <div id="entry" class="group">
+                                <div class="hasfloat aligncenter">
+                                    <b>
+                                        Get your properties automatically sent to PropertyHQ.com platform from your CRM System. This means there is no extra work needed from your side for having your properties listed with us. Simply fill in the form below and our staff will contact your CRM to organise the feed.
+                                    </b>
+                                </div>
+                                <div class="hasfloat">
+                                <form class="form-horizontal" role="form" method="post" action="" enctype="multipart/form-data">
                                     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-                                    <input type="hidden" name="type" value="APL">
                                     <fieldset>
-                                        <legend>Details de l'APL</legend>
+                                        <legend>Login Information</legend>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label" for="name">Login *</label>
                                             <div class="col-sm-9">
@@ -51,84 +48,9 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label" for="apl_name">Nom de l'APL *</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="apl_name" name="apl_name" placeholder="you@exemple.com" required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label" for="address">Adresse de l'APL *</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="address" name="address" placeholder="Adresse de l'APL" required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label" for="contact_mobile">Pays *</label>
-                                            <div class="col-sm-9">
-                                                <select class="form-control" name="country" id="" required>
-                                                <?php   for( $i=0; $i< count($pays) ; $i++){  ?>
-                                                    <option value="<?php echo $pays[$i]; ?>"> <?php echo $pays[$i]; ?></option>
-                                                <?php  } ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label" for="city">Ville *</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="city" name="city" placeholder="Ville" required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label" for="state">Etat</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="state" name="state" placeholder="Si Etat fédéral">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label" for="postalCode">Code Postal *</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="postalCode" name="postalCode" placeholder="Code Postal" required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label" for="postalCode">Business Phone</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="phone" name="phone" placeholder="Business Phone">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label" for="postalCode">Logo</label>
-                                            <div class="col-sm-9">
-                                                <input type="file" class="btn btn-default" id="image" name="image">
-                                            </div>
-                                        </div>
-                                    </fieldset>
-                                    <fieldset>
-                                        <legend>Contacts de l'Entreprise</legend>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label" for="contact_name">Nom du Contact</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="contact_name" name="contact_name">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label" for="contact_email">Email du Contact</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="contact_email" name="contact_email">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label" for="contact_mobile">Tel du Contact</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="contact_mobile" name="contact_mobile">
-                                            </div>
-                                        </div>
-                                    </fieldset>
-                                    <fieldset>
-                                        <div class="form-group">
                                             <label for="language" class="col-sm-3 control-label" for="language">Langage *</label>
-                                            <div class="col-md-9">
-                                                <select class="form-control" name="language">
+                                            <div class="col-sm-9">
+                                                <select class="form-control" id="language" name="language">
                                                     <option value="fr">Français</option>
                                                     <option value="en">Anglais</option>
                                                 </select>
@@ -136,54 +58,134 @@
                                         </div>
                                     </fieldset>
                                     <fieldset>
+                                        <legend>Business Details</legend>
                                         <div class="form-group">
-                                            <label for="language" class="col-sm-3 control-label" for="language">Opérabilité : </label>
-                                            <div class="col-md-9">
-                                                <select  class="form-control"  name="operabilite">
-                                                    <option value="10"> &nbsp; 10 km</option>
-                                                    <option value="25"> &nbsp; 25 km</option>
-                                                    <option value="50"> &nbsp; 50 km</option>
-                                                    <option value="100"> &nbsp; 100 km</option>
-                                                    <option value="250"> &nbsp; 250 km</option>
-                                                    <option value="all"> &nbsp; Dans tous les territoires et Etats légales</option>
+                                            <label for="orga_name" class="col-sm-3 control-label">Business Name *</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="orga_name" name="orga_name" placeholder="Business Name" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="orga_email" class="col-sm-3 control-label">Business Email *</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="orga_email" name="orga_email" placeholder="Business Email" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="orga_phone" class="col-sm-3 control-label">Business Phone *</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="orga_phone" name="orga_phone" placeholder="Business Phone" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="orga_website" class="col-sm-3 control-label">Website URL *</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="orga_website" name="orga_website" placeholder="Business Website" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="orga_presentation" class="col-sm-3 control-label">Business Presentation *</label>
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control" id="orga_presentation" name="orga_presentation" placeholder="Business Presentation" rows="5"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="image" class="col-sm-3 control-label">Logo *</label>
+                                            <div class="col-md-3">
+                                                <input type="file" class="form-control" id="image" name="image" >
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="orga_operation_state" class="col-sm-3 control-label">State of legal operation of your present office *</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control" name="orga_operation_state" id="orga_operation_state">
+                                                    <option value="south"> South Australia</option>
+                                                    <option value="western"> Western Australia</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="orga_operation_range" class="col-sm-3 control-label">Range of operation of your present office *</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control" name="orga_operation_range" id="orga_operation_range">
+                                                    <option value="10"> 10km</option>
+                                                    <option value="25"> 25km</option>
+                                                    <option value="50"> 50km</option>
+                                                    <option value="100"> 100km</option>
+                                                    <option value="250"> 250km</option>
                                                 </select>
                                             </div>
                                         </div>
                                     </fieldset>
                                     <fieldset>
-                                      <legend>Présentation de l'A.P.L : </legend>
-                                        <div class="col-md-12">
-                                            <textarea class="form-control" name="presentationAPL" onkeyup="textLimit(this, 2000);"></textarea>
-                                        </div>
-                                    </fieldset>
-                                    <fieldset>
-                                        <legend>Réference bancaire</legend>
+                                        <legend>Locality Information</legend>
                                         <div class="form-group">
-                                            <label for="language" class="col-sm-3 control-label" for="iban">Compte bancaire IBAN</label>
+                                            <label for="street" class="col-sm-3 control-label">Street Address *</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="iban" name="iban">
+                                                <input type="text" class="form-control" id="street" name="street" placeholder="Street Address" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="language" class="col-sm-3 control-label" for="bic">Code BIC</label>
+                                            <label for="suburb" class="col-sm-3 control-label">Suburb *</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="bic" name="bic">
+                                                <input type="text" class="form-control" id="suburb" name="suburb" placeholder="Suburb" required>
                                             </div>
                                         </div>
-                                    </fieldset>
-                                    <fieldset>
                                         <div class="form-group">
-                                            <div class="col-sm-offset-3 col-sm-9">
-                                                <button type="submit" class="btn btn-primary">Valider mon inscription</button>
+                                            <label for="state" class="col-sm-3 control-label">State *</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="state" name="state" placeholder="State" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="postCode" class="col-sm-3 control-label">Post Code *</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="postCode" name="postCode" placeholder="Post Code" required>
                                             </div>
                                         </div>
                                     </fieldset>
                                     <fieldset>
-                                        <ol>
-                                            <li><a href="actif.php">[Page] Si le droit d'inscription APL est actif</a></li>
-                                            <li><a href="confirmation.php">[Page] Si le droit d'inscription APL n'est pas actif</a></li>
-                                       </ol>
+                                        <legend>Contact Details</legend>
+                                        <div class="form-group">
+                                            <label for="contact_name" class="col-sm-3 control-label">Contact Name *</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="contact_name" name="contact_name" placeholder="Contact Name" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="contact_email" class="col-sm-3 control-label">Contact Email *</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="contact_email" name="contact_email" placeholder="Contact Email" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="contact_phone" class="col-sm-3 control-label">Contact Email *</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="contact_phone" name="contact_phone" placeholder="Contact Phone" required>
+                                            </div>
+                                        </div>
                                     </fieldset>
+                                    <fieldset>
+                                        <legend>CRM Provider</legend>
+                                        <div class="form-group">
+                                            <label for="crm_name" class="col-sm-3 control-label">CRM Provider Name</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="crm_name" name="crm_name" placeholder="CRM Provider Name" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="crm_email" class="col-sm-3 control-label">CRM Provider Email</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="crm_email" name="crm_email" placeholder="CRM Provider Email" required>
+                                            </div>
+                                        </div>
+                                        <em class="help-block">(*) Required field</em>
+                                    </fieldset>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-3 col-sm-9">
+                                            <button type="submit" class="btn btn-primary">Valider mon inscription</button>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -192,6 +194,7 @@
             </div>
         </div>
     </div>
+</div>
 @endsection
 
 @section('script')

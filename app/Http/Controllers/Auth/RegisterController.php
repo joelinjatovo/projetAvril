@@ -345,6 +345,10 @@ class RegisterController extends Controller
         if($value = $request->input('contact_email'))       $user->update_meta("contact_email", $value);
         if($value = $request->input('contact_phone'))       $user->update_meta("contact_phone", $value);
         
+        // CRM Prodvider data
+        if($value = $request->input('crm_name'))       $user->update_meta("crm_name", $value);
+        if($value = $request->input('crm_email'))      $user->update_meta("crm_email", $value);
+        
         // Common datas
         if($value = $request->input('newsletter'))          $user->update_meta("newsletter", $value);
         if($value = $request->input('allow_sharing'))       $user->update_meta("allow_sharing", $value);
@@ -384,6 +388,13 @@ class RegisterController extends Controller
             'country' => 'required|max:100',
             'state' => 'required|max:100',
             'postalCode' => 'required|max:100',
+            
+            'contact_name' => 'required|max:100',
+            'contact_email' => 'required|max:100',
+            'contact_phone' => 'required|max:100',
+            
+            'crm_name' => 'required|max:100',
+            'crm_email' => 'required|max:100',
         ];
         
         // Validate request
@@ -393,12 +404,22 @@ class RegisterController extends Controller
                         ->withInput();
         }
         
+        // Create Localization
+        $datas['location_id'] = '';
+        if($location = Localization::create($datas)){
+            $datas['location_id'] = $location->id;
+        }
+        
+        // Store image file
+        $datas['image_id'] = '';
+        if($file=$request->file('image')){
+            $image = Image::storeAndSave($file);
+            $datas['image_id'] = $image->id;
+        }
+        
+        // Role and Type
         $datas['role'] = 'afa';
         $datas['type'] = 'organization';
-        
-        // Create Localization
-        $location = Localization::create($datas);
-        $datas['location_id'] = $location->id;
         
         // Create user
         $user = User::create($datas);
@@ -406,25 +427,30 @@ class RegisterController extends Controller
         // Update MetaData
         if($value = $request->input('orga_name')) $user->update_meta("orga_name", $value);
         if($value = $request->input('orga_presentation')) $user->update_meta("orga_presentation", $value);
-        if($value = $request->input('prefixPhone')) $user->update_meta("prefixPhone", $value);
-        if($value = $request->input('phone')) $user->update_meta("phone", $value);
+        if($value = $request->input('orga_email')) $user->update_meta("orga_email", $value);
+        if($value = $request->input('orga_phone')) $user->update_meta("orga_phone", $value);
+        if($value = $request->input('orga_website')) $user->update_meta("orga_website", $value);
+        if($value = $request->input('orga_operation_state')) $user->update_meta("orga_operation_state", $value);
+        if($value = $request->input('orga_operation_range')) $user->update_meta("orga_operation_range", $value);
+        
+        // Create Contact MetaData
+        if($value = $request->input('contact_name'))        $user->update_meta("contact_name", $value);
+        if($value = $request->input('contact_email'))       $user->update_meta("contact_email", $value);
+        if($value = $request->input('contact_phone'))       $user->update_meta("contact_phone", $value);
+        
+        // CRM Prodvider data
+        if($value = $request->input('crm_name'))       $user->update_meta("crm_name", $value);
+        if($value = $request->input('crm_email'))      $user->update_meta("crm_email", $value);
         
         // Common datas
-        if($value = $request->input('language')) $user->update_meta("language", $value);
         if($value = $request->input('newsletter')) $user->update_meta("newsletter", $value);
         if($value = $request->input('allow_sharing')) $user->update_meta("allow_sharing", $value);
-                
-        // Store image file
-        if($user && $file=$request->file('image')){
-            $image = $file->store('uploads');
-            $user->update_meta("image", $image);
-        }
         
         //firing an event
         Event::fire(new UserRegistered($user));
         
         // Success
-        return back()->with('success',"L'utilisateur a été bien enregistré.");
+        return back()->with('success',"L'afa a été bien enregistré.");
     }
 
     /*
@@ -439,17 +465,20 @@ class RegisterController extends Controller
         $rules = [
             'name' => 'required|unique:users,name|max:100',
             'email' => 'required|unique:users,email|max:100',
+            'language' => 'required|max:100',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            
             'orga_name' => 'required|max:100',
             'orga_presentation' => 'required|max:100',
+            
             'address' => 'required|max:100',
             'city' => 'required|max:100',
             'country' => 'required|max:100',
             'state' => 'required|max:100',
             'postalCode' => 'required|max:100',
-            'language' => 'required|max:100',
+            
             'prefixPhone' => 'required|max:100',
             'phone' => 'required|max:100',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
         
         // Validate request
