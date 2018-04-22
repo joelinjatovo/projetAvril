@@ -7,17 +7,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use AstritZeqiri\Metadata\Traits\HasManyMetaDataTrait;
 use Laravel\Cashier\Billable;
 
-use App\Models\ChatMessage;
-use App\Models\Blog;
-use App\Models\Comment;
-use App\Models\Product;
-use App\Models\RowProduct;
-use App\Models\ProductLabel;
-use App\Models\Localization;
-
-use App\Models\Pub;
-use App\Models\Page;
-
 class User extends Authenticatable
 {
     use Notifiable;
@@ -33,7 +22,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'location_id', 'status',
+        'name', 'email', 'password', 'image_id', 'location_id', 'status', 'type', 'role',
     ];
 
     /**

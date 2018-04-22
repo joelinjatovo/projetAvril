@@ -7,7 +7,7 @@ use AstritZeqiri\Metadata\Traits\HasManyMetaDataTrait;
 use Auth;
 
 // Eloquent Model to manage Pub
-class Pub extends Model
+class Pub extends BaseModel
 {
     // after the class declaration add this code snippet:
     use HasManyMetaDataTrait;

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 // Eloquent Model to manage Page list
-class Image extends Model
+class Image extends BaseModel
 {
    /**
      * The table associated with the model.

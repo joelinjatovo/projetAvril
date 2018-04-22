@@ -34,11 +34,12 @@ class UserRegisteredListener
     public function handle(UserRegistered $event)
     {
         $this->user = $event->user;
-        $this->sendMail($this->user);
+        //$this->sendMail();
         
     }
     
-    public function sendMail($user){
+    public function sendMail(){
+        $user = $this->user;
         $data = array('item'=>$user);
         Mail::send('mail.registration', $data, function($message) use($user) {
             $message->to($user->email, $user->name)

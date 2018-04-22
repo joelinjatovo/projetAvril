@@ -64,16 +64,16 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
-     * @return \App\User
+     * @param  array  $datas
+     * @return \App\Models\User
      */
-    protected function create(array $data)
+    protected function create(array $datas)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        $password = '1212'; //Hash::generate();
+        $datas['password'] = bcrypt($password);
+        $datas['status'] = 'pinged';
+        
+        return User::create($datas);
     }
     
     /**
@@ -92,16 +92,20 @@ class RegisterController extends Controller
                 $tels = $this->getTelsFromCsv();
                 return view('login.'.$role, ["pays"=>$pays , "tels"=>$tels, "action"=>$action]);
             break;
-            case "apl":
+            case "seller":
                 $request->session()->put("step", "condition");
-                return view('login.condition.apl');
+                //return view('login.condition.seller');
+                return view('login.seller');
             break;
             case "afa":
                 $request->session()->put("step", "condition");
-                return view('login.condition.apl');
+                //return view('login.condition.afa');
+                return view('login.afa');
             break;
-            case "seller":
-                return view('login.'.$role);
+            case "apl":
+                $request->session()->put("step", "condition");
+                //return view('login.condition.apl');
+                return view('login.apl');
             break;
         }
     }
@@ -119,17 +123,17 @@ class RegisterController extends Controller
             case "member":
                 return $this->registerMember($request);
             break;
-            case "apl":
+            case "seller":
                 if($request->session()->get("step") == "condition"){
                     $request->session()->put("step", "register");
                     $pays = $this->getPaysFromCsv();
-                    $action = route('register',['role'=>'apl']);
-                    return view('login.apl', ["pays"=>$pays , "action"=>$action]);
+                    $action = route('register',['role'=>'seller']);
+                    return view('login.seller', ["pays"=>$pays , "action"=>$action]);
                 }elseif($request->session()->get("step") == "register"){
-                    $request->session()->put("step", "");
-                    return $this->registerApl($request);
+                    $request->session()->forget("step");
+                    return $this->registerSeller($request);
                 }else{
-                    return redirect()->route('register',['role'=>'apl']);
+                    return redirect()->route('register',['role'=>'seller']);
                 }
             break;
             case "afa":
@@ -139,26 +143,130 @@ class RegisterController extends Controller
                     $action = route('register',['role'=>'afa']);
                     return view('login.afa', ["pays"=>$pays , "action"=>$action]);
                 }elseif($request->session()->get("step") == "register"){
-                    $request->session()->put("step", "");
+                    $request->session()->forget("step");
                     return $this->registerAfa($request);
                 }else{
                     return redirect()->route('register',['role'=>'afa']);
                 }
             break;
-            case "seller":
+            case "apl":
                 if($request->session()->get("step") == "condition"){
                     $request->session()->put("step", "register");
                     $pays = $this->getPaysFromCsv();
-                    $action = route('register',['role'=>'seller']);
-                    return view('login.seller', ["pays"=>$pays , "action"=>$action]);
+                    $action = route('register',['role'=>'apl']);
+                    return view('login.apl', ["pays"=>$pays , "action"=>$action]);
                 }elseif($request->session()->get("step") == "register"){
-                    $request->session()->put("step", "");
-                    return $this->registerSeller($request);
+                    $request->session()->forget("step");
+                    return $this->registerApl($request);
                 }else{
-                    return redirect()->route('register',['role'=>'seller']);
+                    return redirect()->route('register',['role'=>'apl']);
                 }
             break;
         }
+    }
+
+    /*
+    * Store member information into database
+    * Go back after saving data
+    *
+    * @param  Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
+    private function registerMember(Request $request)
+    {    
+        // Get post datas
+        $datas = $request->all();
+        
+        // Validate type Only
+        $validator = Validator::make($datas, ['type' => 'required|max:100',]);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)
+                        ->withInput();
+        }
+        
+        $type=$request->input('type');
+        if($type=='person'){
+            $rules = [
+                'name' => 'required|unique:users,name|max:100',
+                'email' => 'required|unique:users,email|max:100',
+                'language' => 'required|max:100',
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                
+                'firstname' => 'nullable|max:100',
+                'lastname' => 'nullable|max:100',
+                
+                'country' => 'required|max:100',
+            ];
+        }else{
+            $rules = [
+                'name' => 'required|unique:users,name|max:100',
+                'email' => 'required|unique:users,email|max:100',
+                'language' => 'required|max:100',
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                
+                'prefixPhone' => 'required|max:100',
+                'phone' => 'required|max:100',
+                
+                'orga_name' => 'required|max:100',
+                'orga_presentation' => 'required|max:100',
+                
+                'address' => 'required|max:100',
+                'city' => 'required|max:100',
+                'country' => 'required|max:100',
+                'state' => 'required|max:100',
+                'postalCode' => 'required|max:100',
+            ];
+        }
+
+        // Validate request
+        $validator = Validator::make($datas, $rules);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)
+                        ->withInput();
+        }
+        
+        // Create Localization
+        $datas['location_id'] = '';
+        if($location = Localization::create($datas)){
+            $datas['location_id'] = $location->id;
+        }
+        
+        // Store image file
+        $datas['image_id'] = '';
+        if($file=$request->file('image')){
+            $image = Image::storeAndSave($file);
+            $datas['image_id'] = $image->id;
+        }
+        
+        // Role
+        $datas['role'] = 'member';
+
+        // Create user
+        $user = $this->create($datas);
+        
+        if($type=='organization'){
+            // Update MetaData
+            if($value = $request->input('orga_name')) $user->update_meta("orga_name", $value);
+            if($value = $request->input('orga_presentation')) $user->update_meta("orga_presentation", $value);
+            if($value = $request->input('prefixPhone')) $user->update_meta("prefixPhone", $value);
+            if($value = $request->input('phone')) $user->update_meta("phone", $value);
+        }else{
+            // Update MetaData
+            if($value = $request->input('firstname')) $user->update_meta("firstname", $value);
+            if($value = $request->input('lastname')) $user->update_meta("lastname", $value);
+
+        }
+
+        // Common datas
+        if($value = $request->input('newsletter')) $user->update_meta("newsletter", $value);
+        if($value = $request->input('allow_sharing')) $user->update_meta("allow_sharing", $value);
+
+        // Firing an event
+        Event::fire(new UserRegistered($user));
+
+        // Success
+        return back()->with('success',"L'utilisateur a été bien enregistré.");
+        
     }
 
     /*
@@ -172,18 +280,31 @@ class RegisterController extends Controller
     {
         $rules = [
             'name' => 'required|unique:users,name|max:100',
-            'email' => 'required|unique:users,email|max:100',
+            'email' => 'required|email|unique:users,email|max:100',
+            'language' => 'required|max:100',
+            'type' => 'required|max:100',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            
             'orga_name' => 'required|max:100',
             'orga_presentation' => 'required|max:100',
-            'address' => 'required|max:100',
-            'city' => 'required|max:100',
-            'country' => 'required|max:100',
+            'orga_email' => 'required|email|max:100',
+            'orga_phone' => 'required|tel|max:100',
+            'orga_website' => 'required|url|max:100',
+            
+            'address' => 'max:100',
+            'street' => 'required|max:100',
+            'suburd' => 'required|max:100',
+            'city' => 'max:100',
+            'country' => 'max:100',
             'state' => 'required|max:100',
             'postalCode' => 'required|max:100',
-            'language' => 'required|max:100',
-            'prefixPhone' => 'required|max:100',
-            'phone' => 'required|max:100',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            
+            'contact_name' => 'required|max:100',
+            'contact_email' => 'required|max:100',
+            'contact_phone' => 'required|max:100',
+            
+            'crm_name' => 'required|max:100',
+            'crm_email' => 'required|max:100',
         ];
         
         // Validate request
@@ -193,37 +314,42 @@ class RegisterController extends Controller
                         ->withInput();
         }
         
-        $password = '1111';
-        $datas['password'] = bcrypt($password);
-        $datas['status'] = 'pinged';
-        $datas['role'] = 'apl';
-        $datas['type'] = 'organization';
-        
         // Create Localization
-        $location = Localization::create($datas);
-        $datas['location_id'] = $location->id;
-        
-        // Create user
-        $user = User::create($datas);
-        
-        // Update MetaData
-        if($value = $request->input('orga_name')) $user->update_meta("orga_name", $value);
-        if($value = $request->input('orga_presentation')) $user->update_meta("orga_presentation", $value);
-        if($value = $request->input('prefixPhone')) $user->update_meta("prefixPhone", $value);
-        if($value = $request->input('phone')) $user->update_meta("phone", $value);
-        
-        // Common datas
-        if($value = $request->input('language')) $user->update_meta("language", $value);
-        if($value = $request->input('newsletter')) $user->update_meta("newsletter", $value);
-        if($value = $request->input('allow_sharing')) $user->update_meta("allow_sharing", $value);
-                
-        // Store image file
-        if($user && $file=$request->file('image')){
-            $image = $file->store('uploads');
-            $user->update_meta("image", $image);
+        $datas['location_id'] = '';
+        if($location = Localization::create($datas)){
+            $datas['location_id'] = $location->id;
         }
         
-        //firing an event
+        // Store image file
+        $datas['image_id'] = '';
+        if($file=$request->file('image')){
+            $image = Image::storeAndSave($file);
+            $datas['image_id'] = $image->id;
+        }
+        
+        // Role
+        $datas['role'] = 'seller';
+
+        // Create user
+        $user = $this->create($datas);
+        
+        // Create Organisation MetaData
+        if($value = $request->input('orga_name'))           $user->update_meta("orga_name", $value);
+        if($value = $request->input('orga_presentation'))   $user->update_meta("orga_presentation", $value);
+        if($value = $request->input('orga_email'))          $user->update_meta("orga_email", $value);
+        if($value = $request->input('orga_phone'))          $user->update_meta("orga_phone", $value);
+        if($value = $request->input('orga_website'))        $user->update_meta("orga_website", $value);
+        
+        // Create Contact MetaData
+        if($value = $request->input('contact_name'))        $user->update_meta("contact_name", $value);
+        if($value = $request->input('contact_email'))       $user->update_meta("contact_email", $value);
+        if($value = $request->input('contact_phone'))       $user->update_meta("contact_phone", $value);
+        
+        // Common datas
+        if($value = $request->input('newsletter'))          $user->update_meta("newsletter", $value);
+        if($value = $request->input('allow_sharing'))       $user->update_meta("allow_sharing", $value);
+                
+        // Firing an event
         Event::fire(new UserRegistered($user));
         
         // Success
@@ -242,17 +368,22 @@ class RegisterController extends Controller
         $rules = [
             'name' => 'required|unique:users,name|max:100',
             'email' => 'required|unique:users,email|max:100',
+            'language' => 'required|max:100',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
             'orga_name' => 'required|max:100',
             'orga_presentation' => 'required|max:100',
+            'orga_email' => 'required|email|max:100',
+            'orga_phone' => 'required|tel|max:100',
+            'orga_website' => 'required|url|max:100',
+            'orga_operation_state' => 'required|url|max:100',
+            'orga_operation_range' => 'required|url|max:100',
+            
             'address' => 'required|max:100',
             'city' => 'required|max:100',
             'country' => 'required|max:100',
             'state' => 'required|max:100',
             'postalCode' => 'required|max:100',
-            'language' => 'required|max:100',
-            'prefixPhone' => 'required|max:100',
-            'phone' => 'required|max:100',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
         
         // Validate request
@@ -262,9 +393,6 @@ class RegisterController extends Controller
                         ->withInput();
         }
         
-        $password = '1111';
-        $datas['password'] = bcrypt($password);
-        $datas['status'] = 'pinged';
         $datas['role'] = 'afa';
         $datas['type'] = 'organization';
         
@@ -366,106 +494,6 @@ class RegisterController extends Controller
         
         // Success
         return back()->with('success',"L'utilisateur a été bien enregistré.");
-    }
-
-    /*
-    * Store member information into database
-    * Go back after saving data
-    *
-    * @param  Illuminate\Http\Request  $request
-    * @return \Illuminate\Http\Response
-    */
-    private function registerMember(Request $request)
-    {    
-        if($type=$request->input('type')){
-            $datas = $request->all();
-            if($type=='person'){
-                $rules = [
-                    'name' => 'required|unique:users,name|max:100',
-                    'email' => 'required|unique:users,email|max:100',
-                    'firstname' => 'nullable|max:100',
-                    'lastname' => 'nullable|max:100',
-                    'country' => 'required|max:100',
-                    'language' => 'required|max:100',
-                    'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                ];
-            }else if($type=='organization'){
-                $rules = [
-                    'name' => 'required|unique:users,name|max:100',
-                    'email' => 'required|unique:users,email|max:100',
-                    'orga_name' => 'required|max:100',
-                    'orga_presentation' => 'required|max:100',
-                    'address' => 'required|max:100',
-                    'city' => 'required|max:100',
-                    'country' => 'required|max:100',
-                    'state' => 'required|max:100',
-                    'postalCode' => 'required|max:100',
-                    'language' => 'required|max:100',
-                    'prefixPhone' => 'required|max:100',
-                    'phone' => 'required|max:100',
-                    'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                ];
-            }
-            
-            // type organization OR person
-            if($rules){
-                // Validate request
-                $validator = Validator::make($datas, $rules);
-                if ($validator->fails()) {
-                    return back()->withErrors($validator)
-                                ->withInput();
-                }
-                
-                $password = '1212'; //Hash::generate();
-                $datas['password'] = bcrypt($password);
-                $datas['status'] = 'pinged';
-                $datas['role'] = 'member';
-                $datas['type'] = $type;
-                if($type=='organization'){
-                    // Create Localization
-                    $location = Localization::create($datas);
-                    $datas['location_id'] = $location->id;
-                    
-                    // Create user
-                    $user = User::create($datas);
-                    
-                    // Update MetaData
-                    if($value = $request->input('orga_name')) $user->update_meta("orga_name", $value);
-                    if($value = $request->input('orga_presentation')) $user->update_meta("orga_presentation", $value);
-                    if($value = $request->input('prefixPhone')) $user->update_meta("prefixPhone", $value);
-                    if($value = $request->input('phone')) $user->update_meta("phone", $value);
-                }else{
-                    // Create user
-                    $user = User::create($datas);
-                    
-                    // Update MetaData
-                    if($value = $request->input('firstname')) $user->update_meta("firstname", $value);
-                    if($value = $request->input('lastname')) $user->update_meta("lastname", $value);
-                    if($value = $request->input('country')) $user->update_meta("country", $value);
-                    
-                }
-                
-                // Common datas
-                if($value = $request->input('language')) $user->update_meta("language", $value);
-                if($value = $request->input('newsletter')) $user->update_meta("newsletter", $value);
-                if($value = $request->input('allow_sharing')) $user->update_meta("allow_sharing", $value);
-                
-                
-                // Store image file
-                if($user && $file=$request->file('image')){
-                    $image = $file->store('uploads');
-                    $user->update_meta("image", $image);
-                }
-        
-                //firing an event
-                Event::fire(new UserRegistered($user));
-                
-                // Success
-                return back()->with('success',"L'utilisateur a été bien enregistré.");
-            }
-        }
-        return back()->with('warning', 'Veuillez re-saisir les données.');
-        
     }
 
     /*

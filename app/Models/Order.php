@@ -5,8 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
 
-
-class Order extends Model
+class Order extends BaseModel
 {
    /**
      * The table associated with the model.

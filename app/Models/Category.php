@@ -5,11 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
 
-use App\Models\User;
-use App\Models\Comment;
-
 // Eloquent Model to manage Category
-class Category extends Model
+class Category extends BaseModel
 {
    /**
      * The table associated with the model.

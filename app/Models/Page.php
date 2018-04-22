@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Auth;
 
 // Eloquent Model to manage Page list
-class Page extends Model
+class Page extends BaseModel
 {
    /**
      * The table associated with the model.

@@ -15,20 +15,16 @@
 <div class="main-slider-wrapper clearfix content corps">
     <div class="container">
         <div class="row">
-                <div class="col-md-12">
-                    <h3 class="page-title aligncenter">SELLER - SUBSCRIPTION FORM</h3>
-                    <div id="content">
-
-                        <div role="main">
-
-                            <div id="breadcrumbs" class="group font-size-14">
-                                <div class="breadcrumb">
-                                    <a href="https://www.propertyhq.com.au/">Accueil</a>
-                                    <span class="aquo">&gt;</span> Seller - Subscription form</div>
-                                </div>
-
+            <div class="col-md-12">
+                <h3 class="page-title aligncenter">SELLER - SUBSCRIPTION FORM</h3>
+                <div id="content">
+                    <div role="main">
+                        <div id="breadcrumbs" class="group font-size-14">
+                            <div class="breadcrumb">
+                                <a href="https://www.propertyhq.com.au/">Accueil</a>
+                                <span class="aquo">&gt;</span> Seller - Subscription form</div>
+                            </div>
                             <div id="entry" class="group">
-
                                 <div class="hasfloat aligncenter">
                                     <b>
                                         Get your properties automatically sent to PropertyHQ.com platform
@@ -37,120 +33,159 @@
                                         our staff will contact your CRM to organise the feed
                                     </b>
                                 </div>
-
                                 <div class="hasfloat">
-
-                                <form class="zoowidget-form" method="post" action="inscrire" enctype="multipart/form-data">
-
+                                <form class="form-horizontal" role="form" method="post" action="" enctype="multipart/form-data">
                                     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-                                    <input type="hidden" name="type" value="Vendeur">
-
                                     <fieldset>
-                                        <legend>Type of Business</legend>
-                                        <ol>
-                                            <li>
-                                            <select name="typeVendeur" id="typeVendeur">
-                                                <option value="Builder"> &nbsp; Builder</option>
-                                                <option value="Developer"> &nbsp; Developer</option>
-                                            </select>
-                                            </li>
-                                        </ol>
+                                        <legend>Login Information</legend>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label" for="name">Login *</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="name" name="name" placeholder="Votre nom d'utilisateur" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label" for="email">Adresse Email *</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="email" name="email" placeholder="you@exemple.com" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="language" class="col-sm-3 control-label" for="language">Langage *</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control" id="language" name="language">
+                                                    <option value="fr">Français</option>
+                                                    <option value="en">Anglais</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </fieldset>
                                     <fieldset>
                                         <legend>Business Details</legend>
-                                        <ol>
-                                            <li>
-                                                <label for="form_agency_name">Business Name *</label>
-                                                <input type="text" name="nom" id="form_agency_name" value="" required>
-                                            </li>
-                                            <li>
-                                                <label for="form_street_address">Street Address *</label>
-                                                <input type="text" name="adresse" id="adresse" value="" required>
-                                            </li>
-                                            <li>
-                                                <label for="form_suburb">Suburb *</label>
-                                                <input type="text" name="ville" id="form_suburb" value="" required>
-                                            </li>
-                                            <li>
-                                                <label for="form_state">State *</label>
-                                                <input type="text" name="etat" id="form_state" value="" required>
-                                            </li>
-                                            <li>
-                                                <label for="form_postcode">Postcode *</label>
-                                                <input type="text" name="codePostal" id="form_postcode" value="" required>
-                                            </li>
-                                            <li>
-                                                <label for="form_agency_email">Business Email *</label>
-                                                <input type="text" name="email" id="form_agency_email" value="" required>
-                                            </li>
-                                            <li>
-                                                <label for="form_agency_phone">Business Phone *</label>
-                                                <input type="text" name="numeroTelephone" id="form_agency_phone" value="" required>
-                                            </li>
-                                            <li>
-                                                <label for="form_agency_website">Website URL</label>
-                                                <input type="text" name="websiteUrl" id="form_agency_website" value="">
-                                            </li>
-                                        </ol>
+                                        <div class="form-group">
+                                            <label for="type" class="col-sm-3 control-label">Type of Business *</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control" name="type" id="type">
+                                                    <option value="builder"> Builder</option>
+                                                    <option value="developer"> Developer</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="orga_name" class="col-sm-3 control-label">Business Name *</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="orga_name" name="orga_name" placeholder="Business Name" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="orga_email" class="col-sm-3 control-label">Business Email *</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="orga_email" name="orga_email" placeholder="Business Email" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="orga_phone" class="col-sm-3 control-label">Business Phone *</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="orga_phone" name="orga_phone" placeholder="Business Phone" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="orga_website" class="col-sm-3 control-label">Website URL *</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="orga_website" name="orga_website" placeholder="Business Website" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="orga_presentation" class="col-sm-3 control-label">Business Presentation *</label>
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control" id="orga_presentation" name="orga_presentation" placeholder="Business Presentation" rows="5"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="image" class="col-sm-3 control-label">Logo *</label>
+                                            <div class="col-md-3">
+                                                <input type="file" class="form-control" id="image" name="image" >
+                                            </div>
+                                        </div>
                                     </fieldset>
                                     <fieldset>
-                                        <legend>Business Logo</legend>
-                                        <ol>
-                                            <li>
-                                                <label for="form_agency_logo">Business Logo</label>
-                                                <input type="file" name="logo" id="form_agency_logo" value="">
-                                            </li>
-                                        </ol>
+                                        <legend>Locality Information</legend>
+                                        <div class="form-group">
+                                            <label for="street" class="col-sm-3 control-label">Street Address *</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="street" name="street" placeholder="Street Address" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="suburb" class="col-sm-3 control-label">Suburb *</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="suburb" name="suburb" placeholder="Suburb" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="state" class="col-sm-3 control-label">State *</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="state" name="state" placeholder="State" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="postCode" class="col-sm-3 control-label">Post Code *</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="postCode" name="postCode" placeholder="Post Code" required>
+                                            </div>
+                                        </div>
                                     </fieldset>
                                     <fieldset>
                                         <legend>Contact Details</legend>
-                                        <ol>
-                                            <li>
-                                                <label for="form_contact_name">Contact Name *</label>
-                                                <input type="text" name="contactNom" id="form_contact_name" value="" required>
-                                            </li>
-                                            <li>
-                                                <label for="form_contact_email">Contact Email *</label>
-                                                <input type="text" name="conctactEmail" id="form_contact_email" value="" required>
-                                            </li>
-                                            <li>
-                                                <label for="form_contact_mobile">Contact Mobile *</label>
-                                                <input type="text" name="contactNumero" id="form_contact_mobile" value="" required>
-                                            </li>
-                                        </ol>
+                                        <div class="form-group">
+                                            <label for="contact_name" class="col-sm-3 control-label">Contact Name *</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="contact_name" name="contact_name" placeholder="Contact Name" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="contact_email" class="col-sm-3 control-label">Contact Email *</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="contact_email" name="contact_email" placeholder="Contact Email" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="contact_phone" class="col-sm-3 control-label">Contact Email *</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="contact_phone" name="contact_phone" placeholder="Contact Phone" required>
+                                            </div>
+                                        </div>
                                     </fieldset>
                                     <fieldset>
                                         <legend>CRM Provider</legend>
-                                        <ol>
-                                            <li>
-                                                <label for="form_crm_name">CRM Provider Name</label>
-                                                <input type="text" name="crmProviderName" id="crmProviderName" value="" required>
-                                            </li>
-                                            <li>
-                                                <label for="form_crm_email">CRM Provider Email</label>
-                                                <input type="text" name="crmProviderEmail" id="crmProviderEmail" value="" required>
-                                            </li>
-                                            <li>
-                                                <em class="help-block">(*) Required field</em>
-                                                <input type="submit" name="btnSubmit" id="btnSubmit" value="Submit">
-                                            </li>
-                                        </ol>
+                                        <div class="form-group">
+                                            <label for="crm_name" class="col-sm-3 control-label">CRM Provider Name</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="crm_name" name="crm_name" placeholder="CRM Provider Name" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="crm_email" class="col-sm-3 control-label">CRM Provider Email</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="crm_email" name="crm_email" placeholder="CRM Provider Email" required>
+                                            </div>
+                                        </div>
+                                        <em class="help-block">(*) Required field</em>
                                     </fieldset>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-3 col-sm-9">
+                                            <button type="submit" class="btn btn-primary">Valider mon inscription</button>
+                                        </div>
+                                    </div>
                                 </form>
-
-                                </div>
-
-                                </div>
-
+                            </div>
                         </div>
-
                     </div>
-
                 </div>
-
-                </div>
+            </div>
         </div>
     </div>
+</div>
 @endsection
 
 @section('script')

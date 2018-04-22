@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Auth;
 
 // Eloquent Model to manage PubPage
-class PubPage extends Model
+class PubPage extends BaseModel
 {
     
    /**

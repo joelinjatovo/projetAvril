@@ -4,12 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\Models\User;
-use App\Models\Category;
-use App\Models\Product;
-
 // Eloquent Model to manage Product's ObjectCategory list
-class ObjectCategory extends Model
+class ObjectCategory extends BaseModel
 {
    /**
      * The table associated with the model.

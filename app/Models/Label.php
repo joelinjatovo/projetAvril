@@ -4,11 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-use APp\Models\User;
-use APp\Models\Product;
-
 // Eloquent\Model to manage product saved and starred
-class Label extends Model
+class Label extends BaseModel
 {
    /**
      * The table associated with the model.

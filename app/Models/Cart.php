@@ -5,11 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
 
-use App\Models\CartItem;
-use App\Models\User;
-use App\Models\Product;
-
-class Cart extends Model
+class Cart extends BaseModel
 {
 
    /**

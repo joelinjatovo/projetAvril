@@ -5,11 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
 
-use App\Models\Blog;
-use App\Models\User;
-
 // Eloquent Model to manage blog's comment
-class Comment extends Model
+class Comment extends BaseModel
 {
    /**
      * The table associated with the model.

@@ -5,11 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
 
-use App\Models\Product;
-use App\Models\User;
-
 // Eloquent\Model to manage Product and Service to sell
-class Product extends Model
+class Product extends BaseModel
 {
    /**
      * The table associated with the model.

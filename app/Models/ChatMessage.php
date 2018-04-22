@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 // Eloquent Model to manage ChatMessage
-class ChatMessage extends Model
+class ChatMessage extends BaseModel
 {
    /**
      * The table associated with the model.
