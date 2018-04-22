@@ -94,18 +94,15 @@ class RegisterController extends Controller
             break;
             case "seller":
                 $request->session()->put("step", "condition");
-                //return view('login.condition.seller');
-                return view('login.seller');
+                return view('login.condition.seller');
             break;
             case "afa":
                 $request->session()->put("step", "condition");
-                //return view('login.condition.afa');
-                return view('login.afa');
+                return view('login.condition.afa');
             break;
             case "apl":
                 $request->session()->put("step", "condition");
-                //return view('login.condition.apl');
-                return view('login.apl');
+                return view('login.condition.apl');
             break;
         }
     }
@@ -119,50 +116,58 @@ class RegisterController extends Controller
      */
     public function register(Request $request, $role)
     {
+        if($role=='member') return $this->registerMember($request);
+        
+        // Switch to get Condition and Term count
+        $conditionCount = 0;
         switch($role){
-            case "member":
-                return $this->registerMember($request);
-            break;
             case "seller":
-                if($request->session()->get("step") == "condition"){
-                    $request->session()->put("step", "register");
-                    $pays = $this->getPaysFromCsv();
-                    $action = route('register',['role'=>'seller']);
-                    return view('login.seller', ["pays"=>$pays , "action"=>$action]);
-                }elseif($request->session()->get("step") == "register"){
-                    $request->session()->forget("step");
-                    return $this->registerSeller($request);
-                }else{
-                    return redirect()->route('register',['role'=>'seller']);
-                }
+                $conditionCount = 2;
             break;
             case "afa":
-                if($request->session()->get("step") == "condition"){
-                    $request->session()->put("step", "register");
-                    $pays = $this->getPaysFromCsv();
-                    $action = route('register',['role'=>'afa']);
-                    return view('login.afa', ["pays"=>$pays , "action"=>$action]);
-                }elseif($request->session()->get("step") == "register"){
-                    $request->session()->forget("step");
-                    return $this->registerAfa($request);
-                }else{
-                    return redirect()->route('register',['role'=>'afa']);
-                }
+                $conditionCount = 4;
             break;
             case "apl":
-                if($request->session()->get("step") == "condition"){
-                    $request->session()->put("step", "register");
-                    $pays = $this->getPaysFromCsv();
-                    $action = route('register',['role'=>'apl']);
-                    return view('login.apl', ["pays"=>$pays , "action"=>$action]);
-                }elseif($request->session()->get("step") == "register"){
-                    $request->session()->forget("step");
-                    return $this->registerApl($request);
-                }else{
-                    return redirect()->route('register',['role'=>'apl']);
-                }
+                $conditionCount = 5;
             break;
         }
+        
+        // Shown condition form
+        if($request->session()->get("step") == "condition"){
+            // Validate term check
+            $count = 0;
+            if($conditions = $request->condition && is_array($conditions)){
+                foreach($conditions as $condition){
+                    if($condition==1) $count++;
+                }
+            }
+            if($count!=$conditionCount){
+                return back()->with('error', 'You must agree the term and condition');
+            }
+
+            $request->session()->put("step", "register");
+            $pays = $this->getPaysFromCsv();
+            $action = route('register',['role'=>$role]);
+            return view('login.'.$role, ["pays"=>$pays , "action"=>$action]);
+            
+        }
+        
+        // Shown Register form
+        if($request->session()->get("step") == "register"){
+            $request->session()->forget("step");
+            switch($role){
+                case "seller":
+                    return $this->registerSeller($request);
+                case "afa":
+                    return $this->registerAfa($request);
+                case "apl":
+                    return $this->registerApl($request);
+            }
+        }
+        
+        // Open First Page of registration
+        return redirect()->route('register',['role'=>$role]);
+        
     }
 
     /*

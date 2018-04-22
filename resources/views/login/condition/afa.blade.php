@@ -12,154 +12,170 @@
 @endsection
 
 @section('content')
-<!-- Modal Bootstrap   -->
-<div id="myModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Message d'information</h4>
-      </div>
-      <div class="modal-body">
-        <p>
-          Les Agences Partenaires Locales (APL) sont des agences immobilières et d'affaires opérant
-          dans des pays et territoires francophones qui souhaitent participer au courant d'investissement
-          que développe le projet "Investir en Australie" (IEA).
-          Dans ce cadre, l'APL est chargée d'une Mission d'Information, d'Orientation et de Promotion (MIOP)
-          en direction des Membres du site IEA. Les Membres qui souhaitent une assistance locale pour leur
-          démarche d'investissement en Australie souscrivent une relation exclusive de 180 jours avec une APL
-          près de chez eux. En cas d'achat par le Membre inscrit auprès d'une APL, celle-ci perçoit une
-          "Commission de Contribution aux Ventes (CCV) égale à un pourcentage du prix de vente du bien.
-          Le montant de cette CCV peut être doublé si l'APL a été à l'origine d'un certain montant de chiffre
-          d'affaires au cours de l'année précédente.
-          </p>
-      </div>
-      <div class="modal-footer">
-       <a type="button" class="pull-left btn btn-default" href="javascript:history.back()">Abandonner</a>
-       <button type="button" class="btn btn-default" id="custom-close" data-dismiss="modal">Continuer</button>
+<!-- content -->
+<div id="property-single"> 
+    <div class="main-slider-wrapper clearfix content corps"> 
+        <div id="slider"> 
+            <div class="container text-center"> 
+                <div class="jumbotron"> 
+                        <h2>Australian Francophone Agents</h2> 
+                </div>                     
+            </div>                 
+        </div>             
+    </div>
+
+   <!-- Modal Bootstrap   -->
+    <div id="myModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title"> Explanation message</h4>
+          </div>
+          <div class="modal-body">
+            <p>
+                The Australian Francophone Agents are Australian agents who are partners with "Investir en Australie" website.
+                They are the essential link in the material realization of the sale of the products posted on the site, but
+                they can also sell their own products.The Australian Francophone Agent must make the commitment to provide
+                prospective or actual purchasers with a service in French during preliminary sales and during sales
+                transactions. They must also accept that a clientele introductory fee
+                ("Commission de Présentation de Clientèle" - CPC) will be due to the company managing IEA website in case of
+                actual sale of products, accept and respect the Terms and Conditions of Use of the site, and make the
+                commitment to verify and guarantee that the products for the sale of which they are the operating agent are
+                effectively residential, land, industrial or commercial properties which may be sold to non-resident foreigners
+                in accordance with the Australian law and the rules applicable to foreign investment by the Foreign Investment Review
+                Board (FIRB).
+            </p>
+          </div>
+          <div class="modal-footer">
+           <a type="button" class="pull-left btn btn-default" href="javascript:history.back()">Abandon</a>
+           <a type="button" class="btn btn-default" href="#section1" id="custom-close">Continue</a>
+          </div>
+        </div>
+
       </div>
     </div>
-  </div>
-</div>
-<!-- End Bootstrap Modal -->
-<div id="property-single">
-    <div class="container">
+    <!-- End Bootstrap Modal -->
+
+    <div class="container" id="section1"> 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12"> 
+
                 <!-- breadcrumbs -->
-                <div class="container" id="section1">
+                <div class="container"> 
                     <div class="row">
-                        <div class="col-md-12">
-                            <div id="content">
-                                <div role="main">
-                                    <div id="breadcrumbs" class="group font-size-14"><div class="breadcrumb"><a href="accueil.php">Home</a> <span class="aquo">&gt;</span> Page d'acceptation des Agences Partenaires Locales </div></div>
+                            <div class="col-md-12"> 
+                                <div id="content">   
+                                    <div role="main">
+                                        <div id="breadcrumbs" class="group font-size-14"><div class="breadcrumb"><a href="accueil.php">Home</a> <span class="aquo">&gt;</span> Australian Francophone Agents </div></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                     </div>
                 </div>
-                <div class="col-md-12">
+
+                <div class="col-md-12"> 
                     <h4 class="title wow slideInLeft" style="visibility: hidden; animation-name: none;">
-                        Page d'acceptation des Agences Partenaires Locales</h4>
+                        Australian Francophone Agent acceptation page</h4> 
                 </div>
-                <!-- Faq start from here -->
+
                 <section class="at-faq-sec">
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12">
-                                <form class="form-horizontal" role="form" id="particulierForm" action="" method="post" enctype="multipart/form-data">
-                                    <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-                                    <div class="panel-group">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <i class="more-less glyphicon glyphicon-plus"></i>
-                                                    POINT 1 – Mission d'Information, d'Orientation et de Promotion (MIOP)
 
-                                                </h4>
-                                            </div>
+                            <form action="checkConditionBeforeSubscription" method="post">
+                                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                                <div class="panel-group">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                    <i class="more-less glyphicon glyphicon-plus"></i>
+                                                    STEP 1 – Francophone service
+                                            </h4>
+                                        </div>
                                             <div class="panel-body">
-                                                L'Agence Partenaire Locale accepte la Mission d'Information, d'Orientation et de Promotion qui consiste d'une part à informer et orienter les Membres du site IEA qui sont engagés dans une relation exclusive avec elles, et d'autre part d'assurer le placement des produits affichés par des initiatives promotionnelles ciblées propres. <br>
-                                                <label data-pg-collapsed>
-                                                    <input class="control-label jm" type="checkbox" value="point_1" required id="jmAPL1">   &nbsp;     J'accepte *
+                                                The Australian francophone Agent commits to providing a service in french to
+                                                prospectice or actual purchasers. <br>
+                                                <label data-pg-collapsed> 
+                                                    <input class="control-label" type="checkbox" name="condition[]" id="condition1" value="1" >   &nbsp;     I agree *
                                                 </label>
                                             </div>
-                                        </div>
-
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                        <i class="more-less glyphicon glyphicon-plus"></i>
-                                                        POINT 2 - Sécurisation du marché des APL
-                                                </h4>
-                                            </div>
-                                                <div class="panel-body">
-                                                    L'Agence Partenaire Locale accepte la sécurisation du lien que des Membres ont établi en choisissant d'établir une relation d'exclusivité avec elle. Ceci sera détaillé dans le contrat qui lui sera proposé dans la suite de la procédure. <br>
-                                                    <label data-pg-collapsed>
-                                                        <input class="control-label jm" type="checkbox" value="point_2" required id="jmAPL2">   &nbsp;     J'accepte  *
-                                                    </label>
-                                                </div>
-                                        </div>
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                        <i class="more-less glyphicon glyphicon-plus"></i>
-                                                        POINT 3 - Sécurisation de la relation d'affaires entre IEA et l'APL
-                                                </h4>
-                                            </div>
-                                                <div class="panel-body">
-                                                    L'Agence Partenaire Locale accepte la sécurisation de la relation d'affaires entre IEA et elle-même qui comporte des clauses de non concurrence et de loyauté nécessaires et essentielles dans un marché virtuel. Ceci sera détaillé dans le contrat qui lui sera proposé dans la suite de la procédure. <br>
-                                                    <label data-pg-collapsed>
-                                                        <input class="control-label jm" type="checkbox" value="point_3" required id="jmAPL3">   &nbsp;     J'accepte *
-                                                    </label>
-                                                </div>
-                                        </div>
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                        <i class="more-less glyphicon glyphicon-plus"></i>
-                                                        POINT 4 – Rémunération de l'APL
-                                                </h4>
-                                            </div>
-                                                <div class="panel-body">
-                                                    L'Agence Partenaire Locale accepte les montants et la procédure de la rémunération établis par IEA. En cas d'achat d'un bien par un des Membres qui lui est lié par une relation d'exclusivité, le taux de rémunération normal de l'APL est de 0,5% du prix de vente du bien exprimé en dollars australiens. Si l'APL a été à l'origine d'un volume d'affaires égal ou supérieur à 2 500 000 dollars australiens au cours d'un exercice, le taux de sa rémunération est porté à 1% du prix de vente du bien exprimé en dollars australiens. Le versement de la rémunération s'effectue par une procédure automatisée à 30 jours fin de mois après la perception par IEA de sa propre rémunération.
-                                                    <br>
-                                                    <label data-pg-collapsed>
-                                                        <input class="control-label jm" type="checkbox" value="point_4" required id="jmAPL4">   &nbsp;     J'accepte  *
-                                                    </label>
-                                                </div>
-                                        </div>
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                        <i class="more-less glyphicon glyphicon-plus"></i>
-                                                        POINT 5
-                                                </h4>
-                                            </div>
-                                                <div class="panel-body">
-                                                    L'Agence Partenaire Locale reconnaît avoir pris connaissance des Termes et Conditions d'Utilisation du site "Investir en Australie" et déclare les accepter sans aucune réserve.
-                                                    <br>
-                                                    <label data-pg-collapsed>
-                                                        <input class="control-label jm" type="checkbox" value="point_5" required id="jmAPL5">   &nbsp;     J'accepte  *
-                                                    </label>
-                                                </div>
-                                        </div>
                                     </div>
 
-                                    <p class="help-block">
-                                      <em>(*) Champ obligatoire</em>
-                                    </p>
-                                     <a class="pull-left btn btn-danger btn-lg text-center" href="{{route('home')}}">Abandonner</a>
-                                     <button type="submit" class="pull-right btn btn-danger btn-lg text-center btnNextProcedure">Continuer</button>
-                                </form>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                    <i class="more-less glyphicon glyphicon-plus"></i>
+                                                    STEP 2 – Clientele Introductory Fee
+                                            </h4>
+                                        </div>
+                                            <div class="panel-body">
+                                                The Australian Francophone Agent accepts that a clientele introductory fee
+                                                ("Commission de Présentation de Clientèle" - CPC) will be due to the company
+                                                managing IEA website in case of actual sale of products. Therefore they
+                                                commit to have the buyer pay that fee at the same time they sign the sale
+                                                contract, and to pay it back to IEA website managing company without delay .
+                                                <br>
+                                                <label data-pg-collapsed> 
+                                                    <input class="control-label" type="checkbox" name="condition[]" id="condition2" value="1" >   &nbsp;     I agree *
+                                                </label>
+                                            </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                    <i class="more-less glyphicon glyphicon-plus"></i>
+                                                    STEP 3 – Terms and Conditions of Use
+                                            </h4>
+                                        </div>
+                                            <div class="panel-body">
+                                                The Australian Francophone Agent acknowledges having read the Terms and Conditions of Use of the
+                                                site "Investir en Australie" and declares to accept them without any reservation. <br>
+                                                <label data-pg-collapsed> 
+                                                    <input class="control-label" type="checkbox" name="condition[]" id="condition3" value="1" >   &nbsp;     I agree *
+                                                </label>
+                                            </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                    <i class="more-less glyphicon glyphicon-plus"></i>
+                                                    STEP 4 - Legal compliance of products
+                                            </h4>
+                                        </div>
+                                            <div class="panel-body">
+                                                The Australian francophone Agent makes the commitment to verify and guarantee that the products
+                                                for the sale of which they are the operating agent are effectively residential, land, industrial
+                                                or commercial properties which may be sold to non-resident foreigners in accordance with the
+                                                Australian law and the rules applicable to foreign investment by the Foreign Investment
+                                                Review Board (FIRB).<br>
+                                                <label data-pg-collapsed> 
+                                                    <input class="control-label" type="checkbox" name="condition[]" id="condition4" value="1" >   &nbsp;     I agree *
+                                                </label>
+                                            </div>
+                                    </div>
+                                </div>
+                                 <p class="help-block">
+                                        <em>(*) Required field</em>
+                                 </p>
+                                <a class="pull-left btn btn-danger btn-lg text-center" href="/">Abandon</a>
+                                 <button  type="submit" class="pull-right btn btn-danger btn-lg text-center">Continue</button>
+                            </form>
+
                             </div>
+
+
+
                         </div>
                     </div>
                 </section>
             </div>
-        </div>
-    </div>
-</div>
+        </div>                 
+    </div>             
+</div>         
+
 @endsection
 
 @section('script')

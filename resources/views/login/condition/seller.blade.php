@@ -13,29 +13,6 @@
 
 @section('content')
 <div id="property-single">
-    <div class="main-slider-wrapper clearfix content corps">
-        <div id="main-slider">
-            <div class="slide">
-                <img src="http://localhost/iea/assets/images/slider/1.jpg" alt="Slide">
-            </div>
-            <div class="slide">
-                <img src="http://localhost/iea/assets/images/slider/2.jpg" alt="Slide">
-            </div>
-            <div class="slide">
-                <img src="http://localhost/iea/assets/images/slider/3.jpg" alt="Slide">
-            </div>
-            <div class="slide">
-                <img src="http://localhost/iea/assets/images/slider/4.jpg" alt="Slide">
-            </div>
-        </div>
-        <div id="slider">
-            <div class="container text-center">
-                <div class="jumbotron">
-                        <h1>Seller</h1>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -92,7 +69,7 @@
                                                 "Investir en Australie" and declares to accept them without any reservation
                                                 <br>
                                                 <label data-pg-collapsed>
-                                                    <input class="control-label" type="checkbox" name="condition1" value="0" id="condition1" >    I agree   *
+                                                    <input class="control-label" type="checkbox" name="condition[]" value="1" id="condition1" >    I agree   *
                                                 </label>
                                             </div>
                                     </div>
@@ -108,7 +85,7 @@
                                                 site only products that can be sold to non-resident foreigners in accordance with Australian law and the
                                                 rules applicable by the Foreign Investment Review Board (FIRB).<br>
                                                 <label data-pg-collapsed>
-                                                    <input class="control-label" type="checkbox" value="0" id="condition2" name="condition2">   &nbsp;I agree   *
+                                                    <input class="control-label" type="checkbox" value="1" id="condition[]" name="condition2">   &nbsp;I agree   *
                                                 </label>
                                             </div>
                                     </div>
