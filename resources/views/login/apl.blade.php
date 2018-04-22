@@ -16,13 +16,13 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h3 class="page-title aligncenter">AUSTRALIAN FRANCOPHONE AGENTS</h3>
+                <h3 class="page-title aligncenter">Formulaire d'inscription d'Agence Partenaire Locale</h3>
                 <div id="content">
                     <div role="main">
                         <div id="breadcrumbs" class="group font-size-14">
                             <div class="breadcrumb">
                                 <a href="https://www.propertyhq.com.au/">Home</a>
-                                <span class="aquo">&gt;</span> Australian francophone agents</div>
+                                <span class="aquo">&gt;</span> Formulaire d'inscription d'Agence Partenaire Locale</div>
                             </div>
                             <div id="entry" class="group">
                                 <div class="hasfloat aligncenter">
@@ -96,15 +96,6 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="orga_operation_state" class="col-sm-3 control-label">State of legal operation of your present office *</label>
-                                            <div class="col-sm-9">
-                                                <select class="form-control" name="orga_operation_state" id="orga_operation_state">
-                                                    <option value="south"> South Australia</option>
-                                                    <option value="western"> Western Australia</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
                                             <label for="orga_operation_range" class="col-sm-3 control-label">Range of operation of your present office *</label>
                                             <div class="col-sm-9">
                                                 <select class="form-control" name="orga_operation_range" id="orga_operation_range">
@@ -138,6 +129,12 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
+                                            <label for="country" class="col-sm-3 control-label">Country *</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="country" name="country" placeholder="Country" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label for="postCode" class="col-sm-3 control-label">Post Code *</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" id="postCode" name="postCode" placeholder="Post Code" required>
@@ -168,15 +165,15 @@
                                     <fieldset>
                                         <legend>CRM Provider</legend>
                                         <div class="form-group">
-                                            <label for="crm_name" class="col-sm-3 control-label">CRM Provider Name</label>
+                                            <label for="bank_iban" class="col-sm-3 control-label">Compte bancaire IBAN</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="crm_name" name="crm_name" placeholder="CRM Provider Name" required>
+                                                <input type="text" class="form-control" id="bank_iban" name="bank_iban" placeholder="Compte bancaire IBAN" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="crm_email" class="col-sm-3 control-label">CRM Provider Email</label>
+                                            <label for="bank_bic" class="col-sm-3 control-label">Code BIC</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="crm_email" name="crm_email" placeholder="CRM Provider Email" required>
+                                                <input type="text" class="form-control" id="bank_bic" name="bank_bic" placeholder="Code BIC" required>
                                             </div>
                                         </div>
                                         <em class="help-block">(*) Required field</em>
