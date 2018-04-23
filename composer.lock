@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9ebed5a83f3e29c741caa03a439f95fa",
+    "content-hash": "31ba9318cfd4bb26dcff95661565d603",
     "packages": [
         {
             "name": "astritzeqiri/laravel-metadata",
@@ -50,53 +50,6 @@
                 "meta_data"
             ],
             "time": "2017-03-04T12:55:46+00:00"
-        },
-        {
-            "name": "braintree/braintree_php",
-            "version": "3.31.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/braintree/braintree_php.git",
-                "reference": "617a8541c006d1feb2f381d9321f76a53fb6dc79"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/braintree/braintree_php/zipball/617a8541c006d1feb2f381d9321f76a53fb6dc79",
-                "reference": "617a8541c006d1feb2f381d9321f76a53fb6dc79",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "ext-dom": "*",
-                "ext-hash": "*",
-                "ext-openssl": "*",
-                "ext-xmlwriter": "*",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "3.7.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Braintree": "lib/"
-                },
-                "psr-4": {
-                    "Braintree\\": "lib/Braintree"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Braintree",
-                    "homepage": "https://www.braintreepayments.com"
-                }
-            ],
-            "description": "Braintree PHP Client Library",
-            "time": "2018-04-10T21:22:01+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -592,72 +545,6 @@
                 "stripe"
             ],
             "time": "2018-03-14T12:22:43+00:00"
-        },
-        {
-            "name": "laravel/cashier-braintree",
-            "version": "v2.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel/cashier-braintree.git",
-                "reference": "341aa575e3de1f8379bc8247f4fbc880e96d8d18"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laravel/cashier-braintree/zipball/341aa575e3de1f8379bc8247f4fbc880e96d8d18",
-                "reference": "341aa575e3de1f8379bc8247f4fbc880e96d8d18",
-                "shasum": ""
-            },
-            "require": {
-                "braintree/braintree_php": "~3.0",
-                "dompdf/dompdf": "^0.8.0",
-                "illuminate/database": "~5.3",
-                "illuminate/support": "~5.3",
-                "nesbot/carbon": "~1.0",
-                "php": ">=5.5.9",
-                "symfony/http-kernel": "~3.0|~4.0"
-            },
-            "require-dev": {
-                "illuminate/http": "~5.3",
-                "illuminate/routing": "~5.3",
-                "illuminate/view": "~5.3",
-                "mockery/mockery": "~0.9",
-                "phpunit/phpunit": "~4.0",
-                "vlucas/phpdotenv": "~2.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "Laravel\\Cashier\\CashierServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Laravel\\Cashier\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylorotwell@gmail.com"
-                }
-            ],
-            "description": "Laravel Cashier provides an expressive, fluent interface to Braintree's subscription billing services.",
-            "keywords": [
-                "billing",
-                "braintree",
-                "cashier",
-                "laravel"
-            ],
-            "time": "2018-02-08T14:13:48+00:00"
         },
         {
             "name": "laravel/framework",
@@ -2836,7 +2723,7 @@
             ],
             "authors": [
                 {
-                    "name": "Padraic Brady",
+                    "name": "Pádraic Brady",
                     "email": "padraic.brady@gmail.com",
                     "homepage": "http://blog.astrumfutura.com"
                 },
