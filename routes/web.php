@@ -146,6 +146,7 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function () {
     Route::prefix('user')->group(function(){
         Route::get('/', 'UserController@create')->name('admin.user.create');
         Route::post('/', 'UserController@store')->name('admin.user.store');
+        Route::get('show/{user}', 'UserController@show')->name('admin.user.show');
         Route::get('update/{user}', 'UserController@edit')->name('admin.user.edit');
         Route::post('update/{user}', 'UserController@update')->name('admin.user.update');
         Route::get('active/{user}', 'UserController@active')->name('admin.user.active');

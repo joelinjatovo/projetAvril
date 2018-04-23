@@ -30,6 +30,20 @@ class UserController extends Controller
     }
 
     /**
+     * Show the user info in Admin Panel.
+     *
+     * @param  App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function show(User $user)
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        return view('admin.user.member', ['item'=>$user]);
+    }
+
+    /**
      * Show the user profile.
      *
      * @return \Illuminate\Http\Response
@@ -45,7 +59,7 @@ class UserController extends Controller
      * Render form to edit a User
      *
      * @param  Illuminate\Http\Request  $request
-     * @param  App\Models\Blog  $blog
+     * @param  App\Models\User  $user
      * @return Illuminate\Http\Response
      */
     public function edit(Request $request, User $user)
@@ -67,7 +81,7 @@ class UserController extends Controller
      * Update User
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Blog  $blog
+     * @param  App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, User $user)
@@ -150,7 +164,7 @@ class UserController extends Controller
     * Active User
     *
     * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Models\Blog  $blog
+     * @param  App\Models\User  $user
     * @return \Illuminate\Http\Response
     */
     public function active(Request $request,User $user)
@@ -168,7 +182,7 @@ class UserController extends Controller
     * Block User
     *
     * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Models\Blog  $blog
+     * @param  App\Models\User  $user
     * @return \Illuminate\Http\Response
     */
     public function block(Request $request,User $user)
@@ -185,7 +199,7 @@ class UserController extends Controller
     * Disable User
     *
     * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Models\Blog  $blog
+     * @param  App\Models\User  $user
     * @return \Illuminate\Http\Response
     */
     public function disable(Request $request,User $user)
@@ -202,7 +216,7 @@ class UserController extends Controller
     * Delete User
     *
     * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Models\Blog  $blog
+     * @param  App\Models\User  $user
     * @return \Illuminate\Http\Response
     */
     public function delete(Request $request,User $user)

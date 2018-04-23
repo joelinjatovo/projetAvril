@@ -45,6 +45,22 @@ class User extends Authenticatable
     }
     
     /**
+     * Get Url of Attached Image OR Default Image
+     *
+     * @param Boolean $thumb
+     * @return String
+     */
+    public function imageUrl($thumb=false)
+    {
+        // Image is setted
+        if($this->image){
+            if($thumb) return thumbnail($this->image->filepath);
+            return storage($this->image->filepath);
+        } 
+        return asset('images/product.png');
+    }
+    
+    /**
      * A user can have one parent
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
@@ -61,7 +77,7 @@ class User extends Authenticatable
      */
     public function location()
     {
-      return $this->hasOne(Localization::class, 'location_id', 'id');
+      return $this->hasOne(Localisation::class, 'id', 'location_id');
     }
     
     /**
@@ -105,23 +121,13 @@ class User extends Authenticatable
     }
     
     /**
-     * An admin can have many products from rows_products table
+     * An many user can have many products from labels table
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
      */
-    public function authorRowsProducts()
+    public function clientProductLabeled()
     {
-      return $this->hasMany(RowProduct::class, 'author_id', 'id');
-    }
-    
-    /**
-     * An user can have many products from products_labels table
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function authorProductsLabels()
-    {
-      return $this->hasMany(ProductLabel::class, 'author_id', 'id');
+      return $this->belongsToMany(Product::class, 'labels', 'author_id', 'product_id');
     }
     
     /**
