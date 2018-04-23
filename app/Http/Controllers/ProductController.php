@@ -8,7 +8,10 @@ use Auth;
 
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\ObjectCategory;
 use App\Models\Image;
+use App\Models\Page;
+use App\Models\Pub;
 
 class ProductController extends Controller
 {
@@ -21,7 +24,16 @@ class ProductController extends Controller
      */
     public function index(Request $request, Product $product)
     {
-        return view('product.index', ['item'=>$product]); 
+        
+        $products = Product::orderBy('created_at','desc')->paginate(3);
+        $page = Page::where('path', '=', '/')->first();
+        $categories = Category::orderBy('created_at', 'desc')->paginate(5);
+        $pubs = Pub::orderBy('created_at', 'desc')->paginate(5);
+        return view('product.index')
+            ->with('item', $product)
+            ->with('pubs', $pubs)
+            ->with('products', $products)
+            ->with('categories', $categories); 
     }
     
     /**
@@ -38,8 +50,8 @@ class ProductController extends Controller
         $item = new Product();
         if($value = $request->old('title'))     $item->title = $value; 
         if($value = $request->old('content'))   $item->content = $value; 
-        if($value = $request->old('price'))     $item->content = $price; 
-        if($value = $request->old('tma'))       $item->content = $tma; 
+        if($value = $request->old('price'))     $item->content = $value; 
+        if($value = $request->old('tma'))       $item->content = $value; 
         
         $action = route('admin.product.store');
         $categories = Category::all();

@@ -49,7 +49,7 @@ class ShopController extends Controller
         $this->middleware('auth');
         
     	$currentCart = Session::has('cart') ? Session::get('cart') : null;
-    	$cart = new Cart($currentCart);
+    	$cart = Cart::getInstance($currentCart);
     	$cart->add($product);
 
     	Session::put('cart', $cart);
@@ -61,17 +61,20 @@ class ShopController extends Controller
     /**
      * Show cart
      *
-     * @param  \App\Models\Product
      * @return \Illuminate\Http\Response
      */
     public function cart(){
+        $this->middleware('auth');
+        
         $currentCart = Session::has('cart') ? Session::get('cart') : null;
-        $cart = new Cart($currentCart);
+        $cart = Cart::getInstance($currentCart);
 
         return view('shop.cart')->with(['item' => $cart]);
     }
 
     public function getCheckout(){
+        $this->middleware('auth');
+        
         if (Auth::guest() || !Session::get('cart')) {
             return redirect()->route('product.index')->with('error', 'Merci de vous connecté');
         }
@@ -79,6 +82,7 @@ class ShopController extends Controller
     }
 
     public function postCheckout(){
+        $this->middleware('auth');
         
         if (Auth::guest() || !Session::get('cart')) {
             return redirect()->route('product.index')->with('error', 'Merci de vous connecté');
@@ -112,10 +116,11 @@ class ShopController extends Controller
         return redirect()->route('product.index')->with('success', 'Votre commande a été éffectué');
     }
 
-    public function reduceByOne($id){
+    public function reduceByOne(Product $product){
+        $this->middleware('auth');
 
         $currentCart = Session::has('cart') ? Session::get('cart') : null;
-        $cart = new Cart($currentCart);
+        $cart = Cart::getInstance($currentCart);
         $cart->reduceByOne($id);
 
         Session::put('cart', $cart);
@@ -128,10 +133,12 @@ class ShopController extends Controller
         return back()->with('success', "L'article a bien été supprimé !");
     }
 
-    public function deleteProduct($product){
+    public function deleteAll(Product $product){
+        $this->middleware('auth');
+        
         $currentCart = Session::has('cart') ? Session::get('cart') : null;
-        $cart = new Cart($currentCart);
-        $cart->delete($product);
+        $cart = Cart::getInstance($currentCart);
+        $cart->deleteAll($product);
 
         Session::put('cart', $cart);
         Session::save();

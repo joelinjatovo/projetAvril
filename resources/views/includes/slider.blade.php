@@ -1,9 +1,9 @@
 <div id="slider-area">
     <div class="main-slider">
         <div id="bg-slider" class="owl-carousel owl-theme">
-            <div class="slider"><img src="http://localhost/iea/public/assets/images/slider/1.jpg" alt="Slide"></div>
-            <div class="slider"><img src="http://localhost/iea/public/assets/images/slider/2.jpg" alt="Slide"></div>
-            <div class="slider"><img src="http://localhost/iea/public/assets/images/slider/3.jpg" alt="Slide"></div>
+            <div class="slider"><img src="{{asset('images/slider/1.jpg')}}" alt="Slide"></div>
+            <div class="slider"><img src="{{asset('images/slider/2.jpg')}}" alt="Slide"></div>
+            <div class="slider"><img src="{{asset('images/slider/3.jpg')}}" alt="Slide"></div>
         </div>
         <div class="slider-content">
             <div class="row">

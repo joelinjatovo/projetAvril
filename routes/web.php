@@ -63,9 +63,14 @@ Route::get('confidentialities', 'IndexController@confidentialities')->name('conf
 // List product by Category OR no
 Route::get('shop/{category?}', 'ShopController@index')->name('shop.index');
 // Add product in cart
-Route::get('shop/add/{product}', 'ShopController@add')->name('shop.add');
+Route::post('shop/add/{product}', 'ShopController@add')->name('shop.add');
 // Show cart
-Route::get('shop/cart', 'ShopController@cart')->name('shop.cart');
+Route::get('shop/cart/all', 'ShopController@cart')->name('shop.cart');
+// Delete one unity or all the selected product in the cart
+Route::get('shop/reduce/{product}', 'ShopController@reduceByOne')->name('shop.product.reduce');
+Route::get('shop/delete/{product}', 'ShopController@deleteAll')->name('shop.product.delete');
+Route::get('shop/checkout/all', 'ShopController@getCheckout')->name('shop.product.checkout');
+Route::post('shop/checkout/all', 'ShopController@getCheckout')->name('shop.product.postCheckout');
 // View Product
 Route::get('product/{product}', 'ProductController@index')->name('product.index');
 

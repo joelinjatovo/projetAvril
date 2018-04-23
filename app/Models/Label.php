@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Auth;
 
 // Eloquent\Model to manage product saved and starred
 class Label extends BaseModel
@@ -29,7 +30,7 @@ class Label extends BaseModel
      */
     public function product()
     {
-        return $this->belongsTo(RowProduct::class, 'product_id', 'id');
+        return $this->belongsTo(Product::class, 'product_id', 'id');
     }
     
     /**

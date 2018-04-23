@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
+
 use App\Models\Label;
+use App\Models\Product;
 
 class LabelController extends Controller
 {
@@ -22,23 +25,25 @@ class LabelController extends Controller
      * Store or update a product label
      *
      * @param  Illuminate\Http\Request  $request
-     * @param  App\Models\RowProduct  $product
+     * @param  App\Models\Product  $product
      * @param  String  $type
      * @return Illuminate\Http\Response
      */
-    public function storeOrUpdate(Request $request, RowProduct $product, $type)
+    public function storeOrUpdate(Request $request, Product $product, $type)
     {
         $label = Label::where('product_id','=', $product->id)
             ->where('label','=', $type)
             ->first();
-        if($label){
-            $label =new ProductLabel();
+        if(!$label){
+            $label = new Label();
         }
         $label->label = $type;
         $label->product_id = $product->id;
         $label->save();
         
-        return response()->json(array('msg'=>'Product $type'),200);
+        //return response()->json(array('msg'=>'Product $type'),200);
+        
+        return back()->with('success', 'Product '+$type);
     }
     
     /**

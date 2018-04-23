@@ -30,7 +30,7 @@
 </style>
 @section('content')
   <div class="row">
-      <form action="{{route('product.postCheckout')}}" method="post" id="payment-form">
+      <form action="{{route('shop.product.postCheckout')}}" method="post" id="payment-form">
         {{csrf_field()}}
         <div class="form-row">
           <label for="card-element">

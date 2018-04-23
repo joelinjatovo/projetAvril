@@ -24,34 +24,40 @@ class Cart extends BaseModel
         'quantity', 'price', 'currency', 'cart_id', 'product_id', 'author_id'
     ];
     
+    protected static $instance = null;
+    
 	/*
 	Si le panier contien déjà quelque chose, on initialise avec les
 	actuels
 	*/
-	public function __construct($currentCard){
+	public static function getInstance($currentCard){
 		if ($currentCard) {
-			$this->id = $currentCard->id;
-			$this->totalPrice = $currentCard->totalPrice;
-			$this->totalQuantity = $currentCard->totalQuantity;
+            self::$instance = Cart::find($currentCard->id);
 		}
         
-        $this->author_id = (Auth::check()?Auth::user()->id:0);
-        $this->status = 'encours';
+        if (!self::$instance) {
+            self::$instance = new Cart();
+            self::$instance->author_id = (Auth::check()?Auth::user()->id:0);
+            self::$instance->status = 'encours';
+            self::$instance->save();
+        }
+        
+        return self::$instance;
 	}
-
+    
 	/*
 	*id du produit et le produit lui même
 	*/
-	public function add($product){
+	public static function add($product){        
         // One product item
         $storedItem = new CartItem();
         $storedItem->quantity = 0;
         $storedItem->price = $product->price;
-        $storedItem->cart_id = $this->id;
+        $storedItem->cart_id = self::$instance->id;
         $storedItem->product_id = $product->id;
         $storedItem->author_id = (Auth::check()?Auth::user()->id:0);
         
-        foreach($this->items as $item){
+        foreach(self::$instance->items as $item){
             if($item->product_id==$product->id){
                 $storedItem = $item;
                 break;
@@ -62,16 +68,16 @@ class Cart extends BaseModel
 		$storedItem->price = $storedItem->quantity * $product->price;
         $storedItem->save();
         
-		$this->totalQuantity++;
-		$this->totalPrice += $product->price;
-        $this->save();
+		self::$instance->totalQuantity++;
+		self::$instance->totalPrice += $product->price;
+        self::$instance->save();
 	}
 
-	public function reduceByOne($product){
-		$this->totalQuantity--;
-		$this->totalPrice -= $product->price;
+	public static function reduceByOne($product){
+		self::$instance->totalQuantity--;
+		self::$instance->totalPrice -= $product->price;
         
-        foreach($this->items as $item){
+        foreach(self::$instance->items as $item){
             if($item->product_id==$product->id){
                 $item->quantity--;
                 $item->price -= $product->price;
@@ -86,12 +92,12 @@ class Cart extends BaseModel
         return false;
 	}
 
-	public function delete($product){
-        foreach($this->items as $item){
+	public static function deleteAll($product){
+        foreach(self::$instance->items as $item){
             if($item->product_id==$product->id){
-                $this->totalQuantity-=$item->quantity;
-                $this->totalPrice-=$item->price;
-                $this->delete();
+                self::$instance->totalQuantity-=$item->quantity;
+                self::$instance->totalPrice-=$item->price;
+                self::$instance->delete();
                 return true;
             }
         }

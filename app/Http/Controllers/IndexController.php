@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Product;
+use App\Models\Page;
+use App\Models\Pub;
+use App\Models\Category;
+
 class IndexController extends Controller
 {
     /**
@@ -23,7 +28,15 @@ class IndexController extends Controller
      */
     public function index()
     {
-        return view('index.index');
+        $products = Product::orderBy('created_at','desc')->paginate(3);
+        $page = Page::where('path', '=', '/')->first();
+        $categories = Category::orderBy('created_at', 'desc')->paginate(5);
+        $pubs = Pub::orderBy('created_at', 'desc')->paginate(5);
+        return view('index.index')
+            ->with('pubs', $pubs)
+            ->with('products', $products)
+            ->with('categories', $categories);
+            //->with('pubs', $page->pubs);
     }
 
     /**
