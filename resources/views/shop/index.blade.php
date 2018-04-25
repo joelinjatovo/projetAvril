@@ -82,7 +82,7 @@
             </div>
         </div>
         <div class="col-lg-4 col-md-5">
-
+            @include('includes.sidebar')
         </div>
     </div>
 </div>

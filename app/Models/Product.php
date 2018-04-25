@@ -52,16 +52,6 @@ class Product extends BaseModel
     }
     
     /**
-     * A user can have many categories from products_categories table
-     */
-    /*
-    public function rowProducts()
-    {
-      return $this->belongsToMany(Product::class, 'products_categories', 'product_id', 'category_id');
-    }
-    */
-    
-    /**
      * Get the image record associated with the product.
      */
     public function image()

@@ -6,7 +6,7 @@
     <div id="page-content" class="page-content tab-content overflow-y">
         <div id="TabTop1" class="tab-pane padding-bottom30 active fade in">
             <div class="page-header">
-                <h3>Profil client</h3>
+                <h3>Profil du APL</h3>
             </div>
             <div class="row-fluid">
                 <div class="grider">
@@ -32,22 +32,21 @@
                                         <div class="span12 form-dark">
                                             <fieldset>
                                                 <ul class="form-list label-left list-bordered dotted">
-                                                    @if($item->type=='person')
                                                     <li class="section-form">
-                                                        <h4>Informations personnelles</h4>
+                                                        <h4>Informations de l'organisation</h4>
                                                     </li>
                                                     <li class="control-group">
                                                         <label for="nom" class="control-label">Nom
                                                         </label>
                                                         <div class="controls">
-                                                            {{$item->get_meta('firstname')?$item->get_meta('firstname')->value:''}}
+                                                            {{$item->get_meta('orga_name')?$item->get_meta('orga_name')->value:''}}
                                                         </div>
                                                     </li>
                                                     <li class="control-group">
-                                                        <label for="prenom" class="control-label">Prenom
+                                                        <label for="prenom" class="control-label">E-mail
                                                         </label>
                                                         <div class="controls">
-                                                            {{$item->get_meta('lastname')?$item->get_meta('lastname')->value:''}}
+                                                            {{$item->get_meta('orga_email')?$item->get_meta('orga_email')->value:''}}
                                                         </div>
                                                     </li>
                                                     <li class="control-group">
@@ -57,36 +56,65 @@
                                                             {{$item->get_meta('orga_phone')?$item->get_meta('orga_phone')->value:''}}
                                                         </div>
                                                     </li>
-                                                    @else
-                                                    <li class="section-form">
-                                                        <h4>Informations sur l'organisation</h4>
-                                                    </li>
                                                     <li class="control-group">
-                                                        <label for="orga_name" class="control-label">Nom de l'organisation
+                                                        <label for="prenom" class="control-label">Site Web
                                                         </label>
                                                         <div class="controls">
-                                                            {{$item->get_meta('orga_name')?$item->get_meta('orga_name')->value:''}}
+                                                            {{$item->get_meta('orga_website')?$item->get_meta('orga_website')->value:''}}
                                                         </div>
                                                     </li>
                                                     <li class="control-group">
-                                                        <label for="orga_presentation" class="control-label">Presentation de l'organisation
+                                                        <label for="prenom" class="control-label">Site Web
                                                         </label>
                                                         <div class="controls">
-                                                            {{$item->get_meta('orga_presentation')?$item->get_meta('orga_presentation')->value:''}}
+                                                            {{$item->get_meta('orga_operation_state')?$item->get_meta('orga_operation_state')->value:''}}
                                                         </div>
                                                     </li>
-                                                    @endif
+                                                    <li class="control-group">
+                                                        <label for="prenom" class="control-label">Site Web
+                                                        </label>
+                                                        <div class="controls">
+                                                            {{$item->get_meta('orga_operation_range')?$item->get_meta('orga_operation_range')->value:''}}
+                                                        </div>
+                                                    </li>
                                                     <li class="section-form">
-                                                        <h4>Informations compte</h4>
+                                                        <h4>Informations sur le contact</h4>
                                                     </li>
                                                     <li class="control-group">
-                                                        <label for="referenceBancaire" class="control-label">Référence bancaire</label>
+                                                        <label for="referenceBancaire" class="control-label">Nom du contact</label>
                                                         <div class="controls">
+                                                            {{$item->get_meta('contact_name')?$item->get_meta('contact_name')->value:''}}
                                                         </div>
                                                     </li>
                                                     <li class="control-group">
-                                                        <label for="observation" class="control-label">Observation</label>
+                                                        <label for="referenceBancaire" class="control-label">Email du contact</label>
                                                         <div class="controls">
+                                                            {{$item->get_meta('contact_email')?$item->get_meta('contact_email')->value:''}}
+                                                        </div>
+                                                    </li>
+                                                    <li class="control-group">
+                                                        <label for="referenceBancaire" class="control-label">Telephone du contact</label>
+                                                        <div class="controls">
+                                                            {{$item->get_meta('contact_phone')?$item->get_meta('contact_phone')->value:''}}
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </fieldset>
+                                            <fieldset>
+                                                <legend class="section-form">CRM Provider Information</legend>
+                                                <ul class="form-list label-left list-bordered dotted">
+                                                    <li class="control-group">
+                                                        <label for="adresse" class="control-label">Bank IBAN
+                                                        </label>
+                                                        <div class="controls controls-row">
+                                                            {{$item->get_meta('bank_iban')?$item->get_meta('bank_iban')->value:''}}
+                                                        </div>
+                                                    </li>
+                                                    <li class="control-group">
+                                                        <label for="adresse" class="control-label">Bank Code BIC
+                                                        </label>
+                                                        <div class="controls controls-row">
+                                                            {{$item->get_meta('bank_bic')?$item->get_meta('bank_bic')->value:''}}
                                                         </div>
                                                     </li>
                                                 </ul>
@@ -135,7 +163,6 @@
                                                             {{$item->location?$item->location->postCode:''}}
                                                         </div>
                                                     </li>
-
                                                 </ul>
                                             </fieldset>
                                         </div>
@@ -148,7 +175,7 @@
                         
                     <div class="widget widget-simple">
                         <div class="widget-header">
-                            <h4><small>Produits achetes</small></h4>
+                            <h4><small>Liste des clients de l'agence</small></h4>
                         </div>
                         <div class="widget widget-simple widget-table">
                             <table id="exampleDTA" class="table boo-table table-striped table-hover">
@@ -160,6 +187,7 @@
                                         <th scope="col">Image produit <span class="column-sorter"></span></th>
                                         <th scope="col">Prix<span class="column-sorter"></span></th>
                                         <th scope="col">Type de bien<span class="column-sorter"></span></th>
+                                        <th scope="col">Status<span class="column-sorter"></span></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -172,7 +200,7 @@
                                             <img class="thumb" width="50" src="{{$product->imageUrl()}}">
                                         </td>
                                         <td>{{$product->title}}</td>
-                                        <td>Appartement</td>
+                                        <td>Vendu</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -184,7 +212,7 @@
                         
                     <div class="widget widget-simple">
                         <div class="widget-header">
-                            <h4><small>Produits enregistres</small></h4>
+                            <h4><small>Produits traites par l'agence</small></h4>
                         </div>
                         <div class="widget widget-simple widget-table">
                             <table id="exampleDTA" class="table boo-table table-striped table-hover">
@@ -196,6 +224,7 @@
                                         <th scope="col">Image produit <span class="column-sorter"></span></th>
                                         <th scope="col">Prix<span class="column-sorter"></span></th>
                                         <th scope="col">Type de bien<span class="column-sorter"></span></th>
+                                        <th scope="col">Status<span class="column-sorter"></span></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -208,43 +237,7 @@
                                             <img class="thumb" width="50" src="{{$product->imageUrl()}}">
                                         </td>
                                         <td>{{$product->title}}</td>
-                                        <td>Appartement</td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            <!-- // DATATABLE - DTA -->
-                        </div>
-                    </div>
-                    <!-- // Widget -->
-                        
-                    <div class="widget widget-simple">
-                        <div class="widget-header">
-                            <h4><small>Produits favoris</small></h4>
-                        </div>
-                        <div class="widget widget-simple widget-table">
-                            <table id="exampleDTA" class="table boo-table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Id produit <span class="column-sorter"></span></th>
-                                        <th scope="col">Nom de l'APL rattaché</th>
-                                        <th scope="col">Date de la vente <span class="column-sorter"></span></th>
-                                        <th scope="col">Image produit <span class="column-sorter"></span></th>
-                                        <th scope="col">Prix<span class="column-sorter"></span></th>
-                                        <th scope="col">Type de bien<span class="column-sorter"></span></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($item->clientProductLabeled as $product)
-                                    <tr>
-                                        <td>PdtRes004</td>
-                                        <td>APL	test</td>
-                                        <td>24/05/16</td>
-                                        <td>
-                                            <img class="thumb" width="50" src="{{$product->imageUrl()}}">
-                                        </td>
-                                        <td>{{$product->title}}</td>
-                                        <td>Appartement</td>
+                                        <td>Vendu</td>
                                     </tr>
                                     @endforeach
                                 </tbody>

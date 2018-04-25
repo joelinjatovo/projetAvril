@@ -12,7 +12,8 @@ use Event;
 use App\Events\UserRegistered;
 
 use App\Models\User;
-use App\Models\Localization;
+use App\Models\Localisation;
+use App\Models\Image;
 
 class RegisterController extends Controller
 {
@@ -136,11 +137,12 @@ class RegisterController extends Controller
         if($request->session()->get("step") == "condition"){
             // Validate term check
             $count = 0;
-            if($conditions = $request->condition && is_array($conditions)){
+            if(($conditions = $request->condition) && is_array($conditions)){
                 foreach($conditions as $condition){
                     if($condition==1) $count++;
                 }
             }
+            
             if($count!=$conditionCount){
                 return back()->with('error', 'You must agree the term and condition');
             }
@@ -154,7 +156,6 @@ class RegisterController extends Controller
         
         // Shown Register form
         if($request->session()->get("step") == "register"){
-            $request->session()->forget("step");
             switch($role){
                 case "seller":
                     return $this->registerSeller($request);
@@ -232,7 +233,7 @@ class RegisterController extends Controller
         
         // Create Localization
         $datas['location_id'] = '';
-        if($location = Localization::create($datas)){
+        if($location = Localisation::create($datas)){
             $datas['location_id'] = $location->id;
         }
         
@@ -268,6 +269,8 @@ class RegisterController extends Controller
 
         // Firing an event
         Event::fire(new UserRegistered($user));
+        
+        $request->session()->forget("step");
 
         // Success
         return back()->with('success',"L'utilisateur a été bien enregistré.");
@@ -293,26 +296,28 @@ class RegisterController extends Controller
             'orga_name' => 'required|max:100',
             'orga_presentation' => 'required|max:100',
             'orga_email' => 'required|email|max:100',
-            'orga_phone' => 'required|tel|max:100',
+            'orga_phone' => 'required|max:100',
             'orga_website' => 'required|url|max:100',
             
             'address' => 'max:100',
-            'street' => 'required|max:100',
-            'suburd' => 'required|max:100',
+            'street' => 'max:100',
+            'suburb' => 'max:100',
             'city' => 'max:100',
             'country' => 'max:100',
-            'state' => 'required|max:100',
-            'postalCode' => 'required|max:100',
+            'state' => 'max:100',
+            'postalCode' => 'max:100',
             
-            'contact_name' => 'required|max:100',
-            'contact_email' => 'required|max:100',
-            'contact_phone' => 'required|max:100',
+            'contact_name' => 'max:100',
+            'contact_email' => 'max:100',
+            'contact_phone' => 'max:100',
             
-            'crm_name' => 'required|max:100',
-            'crm_email' => 'required|max:100',
+            'crm_name' => 'max:100',
+            'crm_email' => 'max:100',
+            
         ];
         
         // Validate request
+        $datas = $request->all();
         $validator = Validator::make($datas, $rules);
         if ($validator->fails()) {
             return back()->withErrors($validator)
@@ -321,7 +326,7 @@ class RegisterController extends Controller
         
         // Create Localization
         $datas['location_id'] = '';
-        if($location = Localization::create($datas)){
+        if($location = Localisation::create($datas)){
             $datas['location_id'] = $location->id;
         }
         
@@ -361,8 +366,10 @@ class RegisterController extends Controller
         // Firing an event
         Event::fire(new UserRegistered($user));
         
+        $request->session()->forget("step");
+        
         // Success
-        return back()->with('success',"L'utilisateur a été bien enregistré.");
+        return redirect()->route('login')->with('success',"L'utilisateur a été bien enregistré.");
     }
 
     /*
@@ -383,26 +390,29 @@ class RegisterController extends Controller
             'orga_name' => 'required|max:100',
             'orga_presentation' => 'required|max:100',
             'orga_email' => 'required|email|max:100',
-            'orga_phone' => 'required|tel|max:100',
+            'orga_phone' => 'required|max:100',
             'orga_website' => 'required|url|max:100',
-            'orga_operation_state' => 'required|url|max:100',
-            'orga_operation_range' => 'required|url|max:100',
+            'orga_operation_state' => 'required|max:100',
+            'orga_operation_range' => 'required|max:100',
             
-            'address' => 'required|max:100',
-            'city' => 'required|max:100',
-            'country' => 'required|max:100',
-            'state' => 'required|max:100',
-            'postalCode' => 'required|max:100',
+            'address' => 'max:100',
+            'street' => 'max:100',
+            'suburb' => 'max:100',
+            'city' => 'max:100',
+            'country' => 'max:100',
+            'state' => 'max:100',
+            'postalCode' => 'max:100',
             
-            'contact_name' => 'required|max:100',
-            'contact_email' => 'required|max:100',
-            'contact_phone' => 'required|max:100',
+            'contact_name' => 'max:100',
+            'contact_email' => 'max:100',
+            'contact_phone' => 'max:100',
             
-            'crm_name' => 'required|max:100',
-            'crm_email' => 'required|max:100',
+            'crm_name' => 'max:100',
+            'crm_email' => 'max:100',
         ];
         
         // Validate request
+        $datas = $request->all();
         $validator = Validator::make($datas, $rules);
         if ($validator->fails()) {
             return back()->withErrors($validator)
@@ -411,7 +421,7 @@ class RegisterController extends Controller
         
         // Create Localization
         $datas['location_id'] = '';
-        if($location = Localization::create($datas)){
+        if($location = Localisation::create($datas)){
             $datas['location_id'] = $location->id;
         }
         
@@ -427,7 +437,7 @@ class RegisterController extends Controller
         $datas['type'] = 'organization';
         
         // Create user
-        $user = User::create($datas);
+        $user = $this->create($datas);
         
         // Update MetaData
         if($value = $request->input('orga_name')) $user->update_meta("orga_name", $value);
@@ -454,8 +464,10 @@ class RegisterController extends Controller
         //firing an event
         Event::fire(new UserRegistered($user));
         
+        $request->session()->forget("step");
+        
         // Success
-        return back()->with('success',"L'afa a été bien enregistré.");
+        return redirect()->route('login')->with('success',"L'afa a été bien enregistré.");
     }
 
     /*
@@ -476,26 +488,28 @@ class RegisterController extends Controller
             'orga_name' => 'required|max:100',
             'orga_presentation' => 'required|max:100',
             'orga_email' => 'required|email|max:100',
-            'orga_phone' => 'required|tel|max:100',
+            'orga_phone' => 'required|max:100',
             'orga_website' => 'required|url|max:100',
-            'orga_operation_range' => 'required|url|max:100',
+            'orga_operation_range' => 'required|max:100',
             
-            'street' => 'required|max:100',
-            'address' => 'required|max:100',
-            'city' => 'required|max:100',
-            'country' => 'required|max:100',
-            'state' => 'required|max:100',
-            'postalCode' => 'required|max:100',
+            'address' => 'max:100',
+            'street' => 'max:100',
+            'suburb' => 'max:100',
+            'city' => 'max:100',
+            'country' => 'max:100',
+            'state' => 'max:100',
+            'postalCode' => 'max:100',
             
-            'contact_name' => 'required|max:100',
-            'contact_email' => 'required|max:100',
-            'contact_phone' => 'required|max:100',
+            'contact_name' => 'max:100',
+            'contact_email' => 'max:100',
+            'contact_phone' => 'max:100',
             
-            'bank_iban' => 'required|max:100',
-            'bank_bic' => 'required|max:100',
+            'bank_iban' => 'max:100',
+            'bank_bic' => 'max:100',
         ];
         
         // Validate request
+        $datas = $request->all();
         $validator = Validator::make($datas, $rules);
         if ($validator->fails()) {
             return back()->withErrors($validator)
@@ -504,7 +518,7 @@ class RegisterController extends Controller
         
         // Create Localization
         $datas['location_id'] = '';
-        if($location = Localization::create($datas)){
+        if($location = Localisation::create($datas)){
             $datas['location_id'] = $location->id;
         }
         
@@ -520,7 +534,7 @@ class RegisterController extends Controller
         $datas['type'] = 'organization';
         
         // Create user
-        $user = User::create($datas);
+        $user = $this->create($datas);
         
         // Update MetaData
         if($value = $request->input('orga_name')) $user->update_meta("orga_name", $value);
@@ -535,7 +549,7 @@ class RegisterController extends Controller
         if($value = $request->input('contact_email'))       $user->update_meta("contact_email", $value);
         if($value = $request->input('contact_phone'))       $user->update_meta("contact_phone", $value);
         
-        // CRM Prodvider data
+        // Bank data
         if($value = $request->input('bank_iban'))     $user->update_meta("bank_iban", $value);
         if($value = $request->input('bank_bic'))      $user->update_meta("bank_bic", $value);
         
@@ -546,8 +560,10 @@ class RegisterController extends Controller
         //firing an event
         Event::fire(new UserRegistered($user));
         
+        $request->session()->forget("step");
+        
         // Success
-        return back()->with('success',"L'afa a été bien enregistré.");
+        return redirect()->route('login')->with('success',"L'afa a été bien enregistré.");
     }
 
     /*

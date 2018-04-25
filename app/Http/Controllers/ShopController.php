@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Page;
 
 class ShopController extends Controller
 {
@@ -24,19 +25,30 @@ class ShopController extends Controller
     public function index(Request $request, Category $category = null)
     {
         $page = $request->get('page');
-        if(!$page){
-            $page =1;
-        }
-        if($category){
+        if(!$page) $page =1;
+        
+        if($category==null||$category->id==0){
+            $items = Product::paginate($this->pageSize);
+        }else{
             $items = Product::where("category_id","=", $category->id)
                 ->paginate($this->pageSize);
-        }else{
-            $items = Product::paginate($this->pageSize);
         }
         
-        $items = Product::paginate($this->pageSize);
+        if($page2 = Page::where('path', '=', '/')->first()){
+            $pubs = $page2->pubs();
+        }else{
+            $pubs = [];
+        }
+        
+        $products = Product::orderBy('created_at','desc')->paginate(3);
+        $categories = Category::orderBy('created_at', 'desc')->paginate(5);
 
-        return view('shop.index', compact('items', 'page')); 
+        return view('shop.index')
+            ->with('items', $items)
+            ->with('page', $page)
+            ->with('pubs', $pubs)
+            ->with('products', $products)
+            ->with('categories', $categories); 
     }
     
     /**

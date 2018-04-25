@@ -39,4 +39,14 @@ class Page extends BaseModel
     {
         return $this->belongsTo(User::class, 'author_id', 'id');
     }
+    
+    /**
+     * An many page can have many pubs from pubs_pages table
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
+     */
+    public function pubs()
+    {
+      return $this->belongsToMany(Pub::class, 'pubs_pages', 'page_id', 'pub_id');
+    }
 }

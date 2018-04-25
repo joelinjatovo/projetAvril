@@ -39,8 +39,10 @@ class UserController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
-        
-        return view('admin.user.member', ['item'=>$user]);
+        if(!in_array($user->role, ['admin', 'member', 'afa', 'apl', 'seller'])){
+            return back()->with('error', 'Un probleme a survenu');
+        }
+        return view('admin.user.'.$user->role, ['item'=>$user]);
     }
 
     /**

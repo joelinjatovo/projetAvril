@@ -12,6 +12,7 @@
             </div>
         </div>
     </section>
+    
     <section class="widget property-meta-wrapper clearfix">
         <div class="col-md-12">
             <h6><img src="{{asset('images/features/bleu.png')}}" width="10" height="10"> Résidentiel </h6>
@@ -20,16 +21,17 @@
             <h6><img src="{{asset('images/features/jaune.png')}}" width="10" height="10"> Commercial</h6>
         </div>
     </section>
+    
     <section class="widget property-meta-wrapper clearfix">
-        <br><br>
         <h2 class="title wow slideInLeft">Pub</h2>
         @foreach($pubs as $pub)
         <div class="content-box-large box-with-header">
-            <img src="{{asset('images/publicite3-gformat.jpg')}}" class="img-rounded" alt="Cinque Terre" width="604" height="236">
+            <a target="_blank" href="{{$pub->links?$pub->links:'#'}}"><img src="{{$pub->imageUrl()}}" class="img-rounded" alt="Cinque Terre" width="604" height="236"></a>
             <br><br>
         </div>
         @endforeach
     </section>
+    
     <section class="widget recent-properties clearfix">
         <h5 class="title">Récents</h5>
         @foreach($products as $product)

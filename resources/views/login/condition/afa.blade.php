@@ -68,7 +68,7 @@
                             <div class="col-md-12"> 
                                 <div id="content">   
                                     <div role="main">
-                                        <div id="breadcrumbs" class="group font-size-14"><div class="breadcrumb"><a href="accueil.php">Home</a> <span class="aquo">&gt;</span> Australian Francophone Agents </div></div>
+                                        <div id="breadcrumbs" class="group font-size-14"><div class="breadcrumb"><a href="{{route('home')}}">Home</a> <span class="aquo">&gt;</span> Australian Francophone Agents </div></div>
                                     </div>
                                 </div>
                             </div>
@@ -85,7 +85,7 @@
                         <div class="row">
                             <div class="col-md-12">
 
-                            <form action="checkConditionBeforeSubscription" method="post">
+                            <form action="" method="post">
                                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                                 <div class="panel-group">
                                     <div class="panel panel-default">

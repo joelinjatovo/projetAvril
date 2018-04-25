@@ -24,11 +24,13 @@ class ProductController extends Controller
      */
     public function index(Request $request, Product $product)
     {
-        
         $products = Product::orderBy('created_at','desc')->paginate(3);
-        $page = Page::where('path', '=', '/')->first();
         $categories = Category::orderBy('created_at', 'desc')->paginate(5);
-        $pubs = Pub::orderBy('created_at', 'desc')->paginate(5);
+        if($page = Page::where('path', '=', '/')->first()){
+            $pubs = $page->pubs();
+        }else{
+            $pubs = [];
+        }
         return view('product.index')
             ->with('item', $product)
             ->with('pubs', $pubs)

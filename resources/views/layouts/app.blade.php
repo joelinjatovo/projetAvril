@@ -145,6 +145,8 @@
 </header>
 
 <!-- content -->
+@include('includes.alerts')
+    
 @yield('content')
 
 <footer id="footer">

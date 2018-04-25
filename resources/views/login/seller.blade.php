@@ -129,9 +129,9 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="postCode" class="col-sm-3 control-label">Post Code *</label>
+                                            <label for="postalCode" class="col-sm-3 control-label">Post Code *</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="postCode" name="postCode" placeholder="Post Code" required>
+                                                <input type="text" class="form-control" id="postalCode" name="postalCode" placeholder="Post Code" required>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -150,7 +150,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="contact_phone" class="col-sm-3 control-label">Contact Email *</label>
+                                            <label for="contact_phone" class="col-sm-3 control-label">Contact Phone *</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" id="contact_phone" name="contact_phone" placeholder="Contact Phone" required>
                                             </div>

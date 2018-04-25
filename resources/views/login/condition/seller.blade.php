@@ -85,7 +85,7 @@
                                                 site only products that can be sold to non-resident foreigners in accordance with Australian law and the
                                                 rules applicable by the Foreign Investment Review Board (FIRB).<br>
                                                 <label data-pg-collapsed>
-                                                    <input class="control-label" type="checkbox" value="1" id="condition[]" name="condition2">   &nbsp;I agree   *
+                                                    <input class="control-label" type="checkbox" value="1" id="condition2" name="condition[]">   &nbsp;I agree   *
                                                 </label>
                                             </div>
                                     </div>

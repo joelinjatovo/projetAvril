@@ -54,4 +54,14 @@ class Pub extends BaseModel
         return asset('images/pub.png');
     }
     
+    /**
+     * An many pubs can have many pages from pubs_pages table
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
+     */
+    public function pages()
+    {
+      return $this->belongsToMany(Page::class, 'pubs_pages', 'pub_id', 'page_id');
+    }
+    
 }
