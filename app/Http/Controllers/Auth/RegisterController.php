@@ -273,7 +273,7 @@ class RegisterController extends Controller
         $request->session()->forget("step");
 
         // Success
-        return back()->with('success',"L'utilisateur a été bien enregistré.");
+        return redirect()->route('login')->with('success',"L'utilisateur a été bien enregistré.");
         
     }
 

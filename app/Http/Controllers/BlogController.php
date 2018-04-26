@@ -10,6 +10,8 @@ use App\Models\Blog;
 use App\Models\Category;
 use App\Models\ObjectCategory;
 use App\Models\Image;
+use App\Models\Product;
+use App\Models\Page;
 
 class BlogController extends Controller
 {
@@ -29,7 +31,18 @@ class BlogController extends Controller
      */
     public function index(Request $request, Blog $blog)
     {
-        return view('blog.index', ['item'=>$blog]);
+        $products = Product::orderBy('created_at','desc')->take(3)->get();
+        $categories = Category::orderBy('created_at', 'desc')->take(5)->get();
+        if($page = Page::where('path', '=', '/blogs*')->first()){
+            $pubs = $page->pubs;
+        }else{
+            $pubs = [];
+        }
+        return view('blog.index')
+                ->with('item', $blog)
+                ->with('pubs', $pubs)
+                ->with('products', $products)
+                ->with('categories', $categories); 
     }
 
     /**
@@ -219,16 +232,29 @@ class BlogController extends Controller
                         ->paginate($this->pageSize);
                 break;
         }
-
-        /*
-        if($request->isAjax()){
+        
+        if($request->ajax()){
             return response()->json(array(
-                'html' => view('blog.ajax.all', compact('items'))
+                'html' => view('ajax.blog.all', compact('items'))->render()
             ));
         }
-        */
+        
+        
+        $products = Product::orderBy('created_at','desc')->take(3)->get();
+        $categories = Category::orderBy('created_at', 'desc')->take(5)->get();
+        if($page2 = Page::where('path', '=', '/blogs*')->first()){
+            $pubs = $page2->pubs;
+        }else{
+            $pubs = [];
+        }
 
-        return view('blog.all', compact('items', 'filter', 'page'));
+        return view('blog.all')
+                ->with('items', $items)
+                ->with('filter', $filter)
+                ->with('page', $page)
+                ->with('pubs', $pubs)
+                ->with('products', $products)
+                ->with('categories', $categories); 
     }
 
     /**

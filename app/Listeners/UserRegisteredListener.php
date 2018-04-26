@@ -5,10 +5,27 @@ namespace App\Listeners;
 use App\Events\UserRegistered;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Mail;
 
-class UserRegisteredListener
+class UserRegisteredListener implements ShouldQueue
 {
+    use InteractsWithQueue;
+    
+    /**
+     * The name of the connection the job should be sent to.
+     *
+     * @var string|null
+     */
+    public $connection = 'sqs';
+
+    /**
+     * The name of the queue the job should be sent to.
+     *
+     * @var string|null
+     */
+    public $queue = 'listeners';
+    
     /**
      * @var App\Models\User $user
      * User Object to handle
@@ -34,8 +51,14 @@ class UserRegisteredListener
     public function handle(UserRegistered $event)
     {
         $this->user = $event->user;
-        //$this->sendMail();
+        $this->sendMail();
         
+    }
+    
+    
+    public function failed(OrderShipped $event, $exception)
+    {
+        //
     }
     
     public function sendMail(){
@@ -44,7 +67,7 @@ class UserRegisteredListener
         Mail::send('mail.registration', $data, function($message) use($user) {
             $message->to($user->email, $user->name)
                     ->subject('Registration Notification')
-                    ->from("admin@investirenaustralie.com", 'Admin');
+                    ->from("joelinjatovo@gmail.com", 'joelinjatovo');
         });
     }
 }

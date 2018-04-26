@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Page;
+use App\Models\Pub;
 
 class ShopController extends Controller
 {
@@ -34,8 +35,8 @@ class ShopController extends Controller
                 ->paginate($this->pageSize);
         }
         
-        if($page2 = Page::where('path', '=', '/')->first()){
-            $pubs = $page2->pubs();
+        if($page2 = Page::where('path', '=', '/products*')->first()){
+            $pubs = $page2->pubs;
         }else{
             $pubs = [];
         }

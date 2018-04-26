@@ -3,7 +3,7 @@
     <article class="blog-post clearfix layout-item list-tem"> 
         <figure class="feature-image"> 
             <a href="#" class="clearfix zoom">
-                <img data-action="zoom" src="{{storage($item->image)}}" alt="{{$item->title}}">
+                <img data-action="zoom" src="{{$item->imageUrl()}}" alt="{{$item->title}}">
             </a>                                         
             <time class="updated btn btn-warning">{{Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $item->created_at)->format('d F')}}</time>            
         </figure>                                     

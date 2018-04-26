@@ -31,26 +31,24 @@
             </div>                     
         </div>                 
     </header>  
-
-
     <div class="container">
-        <div class="col-lg-9 col-md-8">
-            <div id="infinite-scroll" class="row"> 
-                <div id="filter-container" class="blog-data">
-                    @foreach($items as $item)
-                        @include('blog.ajax.all',['item'=>$item])
-                    @endforeach
-                </div> 
-            </div>  
-            <div class="row">
-                <div class="ajax-load text-center" style="display:none">
-                    <p><img src="{{asset('images/loader.gif')}}">Loading More post</p>
+        <div class="row">
+            <div class="col-lg-8 col-md-8">
+                <div id="infinite-scroll" class="row"> 
+                    <div id="filter-container" class="blog-data">
+                        @include('ajax.blog.all',['items'=>$items])
+                    </div> 
                 </div>  
-            </div> 
-        </div>
-        <div class="col-lg-3 col-md-4"> 
-            @include('includes.sidebar')
-        </div>
+                <div class="row">
+                    <div class="ajax-load text-center" style="display:none">
+                        <p><img src="{{asset('images/loader.gif')}}">Loading More post</p>
+                    </div>  
+                </div> 
+            </div>
+            <div class="col-lg-4 col-md-4"> 
+                @include('includes.sidebar')
+            </div>
+        </div>             
     </div>             
 </div> 
 @endsection
@@ -59,16 +57,17 @@
 <script type="text/javascript">
 var page = {{$page}};
 var norecord = false;
+var load = false;
 $(window).scroll(function() {
-    console.log("infinite heigth="+$('#infinite-scroll').height());
-    console.log("breadcrumb heigth="+$('#breadcrumb').height());
     if($(window).scrollTop() + $(window).height() >= 
        $('#infinite-scroll').height()+$('#breadcrumb').height()) {
-        if(!norecord){
-            page++;
-            loadMoreData(page);
-        }else{
-            $('.ajax-load').show();
+        if(!load){
+            if(!norecord){
+                page++;
+                loadMoreData(page);
+            }else{
+                $('.ajax-load').show();
+            }
         }
     }
 });
@@ -78,6 +77,7 @@ function loadMoreData(page){
         type: "get",
         beforeSend: function()
         {
+            load = true;
             $('.ajax-load').show();
         }
     }).done(function(data)
@@ -87,11 +87,15 @@ function loadMoreData(page){
             $('.ajax-load').html("No more records found");
             return;
         }
+        console.log(data.html);
         $('.ajax-load').hide();
         $(".blog-data").append(data.html);
+        load = false;
     }).fail(function(jqXHR, ajaxOptions, thrownError)
     {
+        page--;
         $('.ajax-load').html("Server not responding....");
+        load = false;
     });
 }
 </script>

@@ -13,6 +13,11 @@
 use Intervention\Image\ImageManagerStatic as InterventionImage;
 use Illuminate\Support\Facades\Storage;
 
+
+Route::get('mail/basic','MailController@basic_email');
+Route::get('mail/html','MailController@html_email');
+Route::get('mail/attachment','MailController@attachment_email');
+
 Auth::routes();
 Route::get('logout', 'Auth\LoginController@logout')->name('logout' );
 
@@ -65,12 +70,12 @@ Route::get('shop/{category?}', 'ShopController@index')->name('shop.index');
 // Add product in cart
 Route::post('shop/add/{product}', 'ShopController@add')->name('shop.add');
 // Show cart
-Route::get('shop/cart/all', 'ShopController@cart')->name('shop.cart');
+Route::get('cart', 'ShopController@cart')->name('shop.cart');
 // Delete one unity or all the selected product in the cart
 Route::get('shop/reduce/{product}', 'ShopController@reduceByOne')->name('shop.product.reduce');
 Route::get('shop/delete/{product}', 'ShopController@deleteAll')->name('shop.product.delete');
-Route::get('shop/checkout/all', 'ShopController@getCheckout')->name('shop.product.checkout');
-Route::post('shop/checkout/all', 'ShopController@getCheckout')->name('shop.product.postCheckout');
+Route::get('checkout', 'ShopController@getCheckout')->name('shop.product.checkout');
+Route::post('checkout', 'ShopController@getCheckout')->name('shop.product.postCheckout');
 // View Product
 Route::get('product/{product}', 'ProductController@index')->name('product.index');
 

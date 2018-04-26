@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->longText('content')->nullable();
             $table->bigInteger('quantity')->default(1);
             $table->string('price', 100)->nullable();
+            $table->string('currency', 10)->nullable();
             $table->float('tma', 8, 2)->nullable();
             $table->string('status', 20)->default('pinged'); // pinged published blocked drafted trashed archived
             $table->bigInteger('category_id')->default('0');

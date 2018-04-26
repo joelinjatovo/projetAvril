@@ -28,15 +28,17 @@ class IndexController extends Controller
      */
     public function index()
     {
-        $products = Product::orderBy('created_at','desc')->paginate(3);
-        $page = Page::where('path', '=', '/')->first();
-        $categories = Category::orderBy('created_at', 'desc')->paginate(5);
-        $pubs = Pub::orderBy('created_at', 'desc')->paginate(5);
+        $products = Product::orderBy('created_at','desc')->take(3)->get();
+        $categories = Category::orderBy('created_at', 'desc')->take(5)->get();
+        if($page = Page::where('path', '=', '/blogs*')->first()){
+            $pubs = $page->pubs;
+        }else{
+            $pubs = [];
+        }
         return view('index.index')
             ->with('pubs', $pubs)
             ->with('products', $products)
             ->with('categories', $categories);
-            //->with('pubs', $page->pubs);
     }
 
     /**
@@ -46,7 +48,17 @@ class IndexController extends Controller
      */
     public function services()
     {
-        return view('index.service');
+        $products = Product::orderBy('created_at','desc')->take(3)->get();
+        $categories = Category::orderBy('created_at', 'desc')->take(5)->get();
+        if($page = Page::where('path', '=', '/blogs*')->first()){
+            $pubs = $page->pubs;
+        }else{
+            $pubs = [];
+        }
+        return view('index.service')
+            ->with('pubs', $pubs)
+            ->with('products', $products)
+            ->with('categories', $categories);
     }
 
     /**
@@ -56,7 +68,17 @@ class IndexController extends Controller
      */
     public function terms()
     {
-        return view('index.service');
+        $products = Product::orderBy('created_at','desc')->take(3)->get();
+        $categories = Category::orderBy('created_at', 'desc')->take(5)->get();
+        if($page = Page::where('path', '=', '/blogs*')->first()){
+            $pubs = $page->pubs;
+        }else{
+            $pubs = [];
+        }
+        return view('index.service')
+            ->with('pubs', $pubs)
+            ->with('products', $products)
+            ->with('categories', $categories);
     }
 
     /**
@@ -66,7 +88,17 @@ class IndexController extends Controller
      */
     public function help()
     {
-        return view('index.service');
+        $products = Product::orderBy('created_at','desc')->take(3)->get();
+        $categories = Category::orderBy('created_at', 'desc')->take(5)->get();
+        if($page = Page::where('path', '=', '/blogs*')->first()){
+            $pubs = $page->pubs;
+        }else{
+            $pubs = [];
+        }
+        return view('index.service')
+            ->with('pubs', $pubs)
+            ->with('products', $products)
+            ->with('categories', $categories);
     }
 
     /**
@@ -76,7 +108,17 @@ class IndexController extends Controller
      */
     public function publicities()
     {
-        return view('index.service');
+        $products = Product::orderBy('created_at','desc')->take(3)->get();
+        $categories = Category::orderBy('created_at', 'desc')->take(5)->get();
+        if($page = Page::where('path', '=', '/blogs*')->first()){
+            $pubs = $page->pubs;
+        }else{
+            $pubs = [];
+        }
+        return view('index.publicities')
+            ->with('pubs', $pubs)
+            ->with('products', $products)
+            ->with('categories', $categories);
     }
 
     /**
@@ -86,6 +128,16 @@ class IndexController extends Controller
      */
     public function confidentialities()
     {
-        return view('index.service');
+        $products = Product::orderBy('created_at','desc')->take(3)->get();
+        $categories = Category::orderBy('created_at', 'desc')->take(5)->get();
+        if($page = Page::where('path', '=', '/blogs*')->first()){
+            $pubs = $page->pubs;
+        }else{
+            $pubs = [];
+        }
+        return view('index.service')
+            ->with('pubs', $pubs)
+            ->with('products', $products)
+            ->with('categories', $categories);
     }
 }

@@ -1,47 +1,19 @@
 <div id="property-sidebar">
-    
-    <section class="property-meta-wrapper common text-center bg-info">
-        <h2 class="title wow slideInLeft" style="visibility: hidden; animation-name: none;">
-            ESPACES PUBLICITES</h2>
-        <p class="wow slideInRight" style="visibility: hidden; animation-name: none;">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut <br>
-                labore et dolore magna aliquan ut enim ad minim veniam.</p>
-    </section>
-    
-    <section class="property-meta-wrapper common text-center bg-info">
-        <h2 class="title wow slideInLeft" style="visibility: hidden; animation-name: none;">
-            ESPACES PUBLICITES</h2>
-        <p class="wow slideInRight" style="visibility: hidden; animation-name: none;">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut <br>
-                labore et dolore magna aliquan ut enim ad minim veniam.</p>
-    </section>
-
-    <section class="widget property-taxonomies clearfix">
-      <button class="btn btn-info"><i class="fa fa-share-alt" aria-hidden="true"></i> Partager</button><br>
-        
-      <button class="btn btn-success"><i class="fa fa-envelope-open-o" aria-hidden="true"></i> Contacter l'agence</button><br>
-        
-      <form action="{{route('shop.add', ['product'=>$item])}}" method="post">
-        {{csrf_field()}}
-        <button class="btn btn-warning"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Je veux acheter ce produit</button>
-      </form>
-      <form action="{{route('label.store', ['product'=>$item,'type'=>'starred'])}}" method="post">
-        {{csrf_field()}}
-        <button class="btn btn-primary" type="submit"><i class="fa fa-star" aria-hidden="true"></i> Ajouter au Favoris</button>
-      </form>
-    </section>
-    
+    @foreach($pubs as $pub)
     <section class="widget property-meta-wrapper clearfix">
-        <br><br>
-        <h2 class="title wow slideInLeft">Pub</h2>
-        @foreach($pubs as $pub)
+        <h2 class="title wow slideInLeft">{{$pub->title}}</h2>
         <div class="content-box-large box-with-header">
-            <img src="{{asset('images/publicite3-gformat.jpg')}}" class="img-rounded" alt="Cinque Terre" width="604" height="236">
+            <a target="_blank" href="{{$pub->links?$pub->links:'#'}}"><img src="{{$pub->imageUrl()}}" class="img-rounded" alt="Cinque Terre" width="604" height="236"></a>
             <br><br>
         </div>
-        @endforeach
     </section>
-    
+    @endforeach
+    <section class="widget property-taxonomies clearfix">
+        <a href="#" class="btn btn-info"><i class="fa fa-share-alt" aria-hidden="true"></i> Partager</a><br>
+        <a href="#" class="btn btn-success"><i class="fa fa-envelope-open-o" aria-hidden="true"></i> Contacter l'agence</a><br>
+        <a href="{{route('shop.add', ['product'=>$item])}}" class="btn btn-warning"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Je veux acheter ce produit</a>
+        <a href="{{route('label.store', ['product'=>$item, 'type'=>'starred'])}}" class="btn btn-primary"><i class="fa fa-star" aria-hidden="true"></i> Ajouter au Favoris</a>
+    </section>
     <section class="widget recent-properties clearfix">
         <h5 class="title">Récents</h5>
         @foreach($products as $product)
@@ -51,10 +23,7 @@
             </a>
             <div class="property-contents">
                 <h6 class="entry-title"> <a href="{{route('product.index',['product'=>$product])}}">{{$product->title}}</a></h6>
-                <span class="btn-price">${{$product->price}}</span>
-                <div class="property-meta clearfix">
-                    <span> <i class="fa fa-arrows-alt"></i> 3060 SqFt</span>
-                </div>
+                <span  class="btn btn-price">${{$product->price}}</span>
             </div>
         </div>
         @endforeach

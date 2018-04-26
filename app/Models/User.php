@@ -35,6 +35,28 @@ class User extends Authenticatable
     ];
     
     /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $events = [
+        'saved' => UserSaved::class,
+        'deleted' => UserDeleted::class,
+    ];
+    
+    /**
+     * Scope a query to only include users of a given $role.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param mixed $role
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfRole($query, $role)
+    {
+        return $query->where('role', $role);
+    }
+    
+    /**
      * A user is admin || AFA || APL || member
      *
      * @return Boolean

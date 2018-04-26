@@ -24,10 +24,10 @@ class ProductController extends Controller
      */
     public function index(Request $request, Product $product)
     {
-        $products = Product::orderBy('created_at','desc')->paginate(3);
-        $categories = Category::orderBy('created_at', 'desc')->paginate(5);
-        if($page = Page::where('path', '=', '/')->first()){
-            $pubs = $page->pubs();
+        $products = Product::orderBy('created_at','desc')->take(3)->get();
+        $categories = Category::orderBy('created_at', 'desc')->take(5)->get();
+        if($page = Page::where('path', '=', '/products*')->first()){
+            $pubs = $page->pubs;
         }else{
             $pubs = [];
         }

@@ -36,6 +36,17 @@ class Product extends BaseModel
     }
     
     /**
+     * Excerpt
+     *
+     * @param int $length
+     * @return String
+     */
+    public function excerpt($length = 100)
+    {
+        return substr($this->content, 0, $length);
+    }
+    
+    /**
      * Get Url of Attached Image OR Default Image
      *
      * @param Boolean $thumb
