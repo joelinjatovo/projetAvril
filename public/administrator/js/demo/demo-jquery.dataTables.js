@@ -18,7 +18,7 @@ $(document)
 				// -------------------------------------------------------------------------------- * -->
 				$('#exampleDT')
                         .dataTable({
-                        iDisplayLength: 5,
+                        iDisplayLength: 10,
                         aaSorting: [
                                 [0, 'desc']
                         ],

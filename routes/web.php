@@ -153,6 +153,7 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function () {
         Route::get('/', 'UserController@create')->name('admin.user.create');
         Route::post('/', 'UserController@store')->name('admin.user.store');
         Route::get('show/{user}', 'UserController@show')->name('admin.user.show');
+        Route::post('show/{user}', 'ObservationController@store')->name('admin.user.observe');
         Route::get('update/{user}', 'UserController@edit')->name('admin.user.edit');
         Route::post('update/{user}', 'UserController@update')->name('admin.user.update');
         Route::get('active/{user}', 'UserController@active')->name('admin.user.active');
@@ -183,6 +184,15 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function () {
         Route::post('update/{pub}', 'PubController@update')->name('admin.pub.update');
         Route::get('delete/{pub}', 'PubController@delete')->name('admin.pub.delete');
         Route::get('restore/{pub}', 'PubController@restore')->name('admin.pub.restore');
+    });
+    
+    // Observation Controller Groups
+    Route::get('observations/{filter?}', 'ObservationController@allAdmin')->name('admin.observation.list');
+    Route::prefix('observation')->group(function(){
+        Route::get('update/{observation}', 'ObservationController@edit')->name('admin.observation.edit');
+        Route::post('update/{observation}', 'ObservationController@update')->name('admin.observation.update');
+        Route::get('delete/{observation}', 'ObservationController@delete')->name('admin.observation.delete');
+        Route::get('restore/{observation}', 'ObservationController@restore')->name('admin.observation.restore');
     });
     
     // Config Controller

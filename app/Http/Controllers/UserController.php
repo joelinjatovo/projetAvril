@@ -131,31 +131,33 @@ class UserController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
+        
         switch($filter){
             case 'admin':
             case 'apl':
             case 'afa':
             case 'member':
             case 'seller':
-                $items = User::where('role','=', $filter)
-                    ->where('status','=', 'active')
+                $items = User::ofRole($filter)
+                    ->isActive()
                     ->paginate($this->pageSize);
                 break;
             case 'person':
             case 'organization':
-                $items = User::where('type','=', $filter)
-                    ->where('status','=', 'active')
+                $items = User::ofType($filter)
+                    ->isActive()
                     ->paginate($this->pageSize);
                 break;
+            case 'active':
+            case 'pinged':
             case 'disabled':
             case 'blocked':
-                $items = User::where('status','=', $filter)
+                $items = User::ofStatus($filter)
                     ->paginate($this->pageSize);
                 break;
             default:
             case 'all':
-                $items = User::where('status','=', 'active')
-                    ->paginate($this->pageSize);
+                $items = User::paginate($this->pageSize);
                 break;
         }
         
@@ -173,6 +175,9 @@ class UserController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
+        if($user->id==1){
+            return back()->with('error',"Cette action ne peut pas etre réalisée.");
+        }
         
         $user->status = 'active';
         $user->delete();
@@ -191,10 +196,15 @@ class UserController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
+        if($user->id==1){
+            return back()->with('error',"Cette action ne peut pas etre réalisée.");
+        }
+        
+        $this->middleware('auth');
+        $this->middleware('role:admin');
         $user->status = 'blocked';
-        $user->delete();
-        return redirect()->route('admin.dashboard')
-            ->with('success',"L'utilsateur a été supprimé avec succés");
+        $user->save();
+        return back()->with('success',"L'utilsateur a été blocké avec succés");
     }
     
     /**
@@ -208,10 +218,14 @@ class UserController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
+        if($user->id==1){
+            return back()->with('error',"Cette action ne peut pas etre réalisée.");
+        }
+        
         $user->status = 'disabled';
-        $user->delete();
+        $user->save();
         return redirect()->route('admin.dashboard')
-            ->with('success',"L'utilsateur a été supprimé avec succés");
+            ->with('success',"L'utilsateur a été desactivé avec succés");
     }
     
     /**
@@ -225,6 +239,10 @@ class UserController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
+        if($user->id==1){
+            return back()->with('error',"Cette action ne peut pas etre réalisée.");
+        }
+        
         $user->delete();
         return redirect()->route('admin.dashboard')
             ->with('success',"L'utilsateur a été supprimé avec succés");

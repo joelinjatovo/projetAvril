@@ -9,6 +9,7 @@
             </div>
             <div class="row-fluid margin-bottom16">
                  <div class="span12">
+                 @include('includes.alerts')
                      <div class="widget widget-simple widget-table">
                          <table id="exampleDTA" class="table boo-table table-striped table-hover">
                              <thead>
@@ -43,32 +44,33 @@
                                      </td>
                                      <td>{{$item->name}}</td>
                                      <td>{{$item->email}}</td>
-                                     <td>{{$item->created_at}}</td>
-                                     <td>{{$item->role}}</td>
-                                     <td>{{$item->type}}</td>
+                                     <td>{{$item->created_at->diffForHumans()}}</td>
+                                     <td><a href="{{route('admin.user.list', ['filter'=>$item->role])}}"><span class="label label-warning">{{$item->role}}</span></a></td>
+                                     <td><a href="{{route('admin.user.list', ['filter'=>$item->typed])}}"><span class="label label-info">{{$item->type}}</span></a></td>
                                      <td>
+                                         <a href="{{route('admin.user.list', ['filter'=>$item->status])}}">
                                          @if($item->status=='active')
                                          <span class="label label-success">{{$item->status}}</span>
                                          @else
                                          <span class="label label-warning">{{$item->status}}</span>
                                          @endif
+                                         </a>
                                      </td>
                                      <td>
-                                         <a href="{{route('admin.user.edit', $item)}}" class="btn btn-small btn-primary">Modifier</a>
-                                         <a href="{{route('admin.user.block', $item)}}" class="btn btn-small btn-info">Bloquer</a>
-                                         <a href="{{route('admin.user.active', $item)}}" class="btn btn-small btn-warning">Activer</a>
-                                         <a href="{{route('admin.user.disable', $item)}}" class="btn btn-small btn-warning">Desactiver</a>
-                                         <a href="{{route('admin.user.disable', $item)}}" class="btn btn-small btn-error">Supprimer</a>
+                                     @if($item->status!='blocked')
+                                        <a href="{{route('admin.user.block', $item)}}" class="btn btn-small btn-info">Bloquer</a>
+                                     @endif
+                                     @if($item->status=='active')
+                                        <a href="{{route('admin.user.disable', $item)}}" class="btn btn-small btn-warning">Desactiver</a>
+                                     @else
+                                        <a href="{{route('admin.user.active', $item)}}" class="btn btn-small btn-warning">Activer</a>
+                                     @endif
                                      </td>
                                  </tr>
                                  @endforeach
                              </tbody>
                          </table>
-                         <!-- // DATATABLE - DTA -->
-
                      </div>
-                     <!-- // Column -->
-
                  </div>
              </div>
         </section>

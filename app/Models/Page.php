@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use AstritZeqiri\Metadata\Traits\HasManyMetaDataTrait;
 use Auth;
 
 // Eloquent Model to manage Page list
 class Page extends BaseModel
 {
+    use HasManyMetaDataTrait;
+    
    /**
      * The table associated with the model.
      *

@@ -11,6 +11,7 @@
             <div class="row-fluid">
                 <div class="grider">
                     <div class="widget widget-simple">
+                        @include('includes.alerts')
                         <div class="widget-content">
                             <div class="widget-body">
                                 <div id="accounForm" class="form-horizontal">
@@ -172,19 +173,20 @@
                         </div>
                     </div>
                     <!-- // Widget -->
-                        
                     
+                    <div class="widget widget-simple">
+                        <div class="widget-header">
+                            <h4><small>Observations</small></h4>
+                        </div>
+                        @include('admin.table.observation',['item'=>$item])
+                    </div>
+                    <!-- // Widget -->
+                        
                 </div>
-                <!-- // Column -->
-                <!-- // Column -->
             </div>
-            <!-- // Example row -->
         </div>
-
     </div>
-    <!-- // page content -->
 </div>
-<!-- // main-content -->
 
 @endsection
 

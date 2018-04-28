@@ -11,9 +11,6 @@ class User extends Authenticatable
 {
     use Notifiable;
     use Billable;
-    
-
-    // after the class declaration add this code snippet:
     use HasManyMetaDataTrait;
 
     /**
@@ -66,6 +63,18 @@ class User extends Authenticatable
     public function scopeOfType($query, $type)
     {
         return $query->where('type', $type);
+    }
+    
+    /**
+     * Scope a query to only include users of a given $status.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param mixed $status
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfStatus($query, $status)
+    {
+        return $query->where('status', $status);
     }
     
     /**
@@ -144,6 +153,16 @@ class User extends Authenticatable
     public function location()
     {
       return $this->hasOne(Localisation::class, 'id', 'location_id');
+    }
+    
+    /**
+     * A user can have many observation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function observations()
+    {
+      return $this->hasMany(Observation::class, 'user_id', 'id');
     }
     
     /**

@@ -21,7 +21,7 @@ class Product extends BaseModel
      * @var array
      */
     protected $fillable = [
-        'title', 'content', 'reference', 'slug', 'price', 'tma', 'image_id', 'status',
+        'title', 'content', 'reference', 'slug', 'price', 'tma', 'image_id', 'location_id', 'status',
     ];
     
     

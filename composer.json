@@ -7,11 +7,13 @@
     "require": {
         "php": ">=5.6.4",
         "astritzeqiri/laravel-metadata": "~1.0",
+        "guzzlehttp/guzzle": "~6.3",
         "intervention/image": "^2.4",
         "laravel/cashier": "~7.0",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
         "nesbot/carbon": "^1.25",
+        "paypal/rest-api-sdk-php": "*",
         "pusher/pusher-php-server": "^3.0"
     },
     "require-dev": {
