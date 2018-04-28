@@ -114,14 +114,14 @@
                     <ul class="nav navbar-nav ">
                         <li><a href="#">IMMOBILIER</a>
                             <ul>
-                                <li><a href="{{route('shop.index')}}">Résidentiel</a></li>
-                                <li><a href="{{route('shop.index')}}">Foncier</a></li>
+                                <li><a href="{{route('shop.index', ['category'=>1])}}">Résidentiel</a></li>
+                                <li><a href="{{route('shop.index', ['category'=>2])}}">Foncier</a></li>
                             </ul>
                         </li>
                         <li><a href="#">BUSINESS</a>
                             <ul>
-                                <li><a href="{{route('shop.index')}}">Industriel</a></li>
-                                <li><a href="{{route('shop.index')}}">Commercial</a></li>
+                                <li><a href="{{route('shop.index', ['category'=>3])}}">Industriel</a></li>
+                                <li><a href="{{route('shop.index', ['category'=>4])}}">Commercial</a></li>
                             </ul>
                         </li>
                         <li><a href="{{route('services')}}">NOS SERVICES</a></li>

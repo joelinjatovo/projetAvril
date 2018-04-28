@@ -123,7 +123,7 @@ if( ! function_exists('generateSlug') )
 {
     function generateSlug($text)
     {
-        return strtolower($text);
+        return str_replace(' ', '-', strtolower($text));
     }
 }
 

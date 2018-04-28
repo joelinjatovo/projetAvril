@@ -15,10 +15,10 @@ class CreateCartsTable extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('status')->nullable();
+            $table->string('status', 150)->index();
             $table->bigInteger('totalQuantity')->nullable();
             $table->double('totalPrice', 10, 2)->nullable();
-            $table->bigInteger('author_id')->default(0);
+            $table->bigInteger('author_id')->default(0)->index();
             $table->timestamps();
         });
     }

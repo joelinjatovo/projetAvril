@@ -15,20 +15,20 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('reference', 100)->nullable();
-            $table->string('slug')->nullable();
-            $table->string('title')->nullable();
+            $table->string('reference', 150)->index();
+            $table->string('slug', 150)->unique();
+            $table->string('title', 150)->nullable();
             $table->longText('content')->nullable();
             $table->bigInteger('quantity')->default(1);
-            $table->string('price', 100)->nullable();
+            $table->float('price', 20, 2)->nullable();
             $table->string('currency', 10)->nullable();
             $table->float('tma', 8, 2)->nullable();
-            $table->string('status', 20)->default('pinged'); // pinged published blocked drafted trashed archived
-            $table->bigInteger('category_id')->default('0');
-            $table->bigInteger('seller_id')->default('0');
-            $table->bigInteger('author_id')->default('0');
-            $table->bigInteger('location_id')->default('0');
-            $table->bigInteger('image_id')->default('0');
+            $table->string('status', 20)->default('pinged')->index(); // pinged published blocked drafted trashed archived
+            $table->bigInteger('category_id')->default('0')->index();
+            $table->bigInteger('seller_id')->default('0')->index();
+            $table->bigInteger('author_id')->default('0')->index();
+            $table->bigInteger('location_id')->default('0')->index();
+            $table->bigInteger('image_id')->default('0')->index();
             $table->timestamps();
         });
     }

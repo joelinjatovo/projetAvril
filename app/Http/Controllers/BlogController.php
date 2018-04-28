@@ -20,7 +20,7 @@ class BlogController extends Controller
      * Type of Blog in database
      *
      */
-    protected $post_type = 'post';
+    protected $post_type = 'blog';
 
     /**
      * Show a blog

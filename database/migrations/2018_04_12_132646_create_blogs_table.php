@@ -15,17 +15,17 @@ class CreateBlogsTable extends Migration
     {
         Schema::create('blogs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('slug')->nullable();
-            $table->string('title')->nullable();
+            $table->string('slug', 150)->unique();
+            $table->string('title', 150)->nullable();
             $table->longText('content')->nullable();
             $table->string('meta_tag')->nullable();
             $table->string('meta_description')->nullable();
             $table->string('view_count')->default("0");
-            $table->string('status', 20)->default('pinged'); // pinged published drafted trashed blocked archived
-            $table->integer('starred')->default(0);
-            $table->string('post_type')->nullable(); // page pub post
-            $table->bigInteger('image_id')->default(0);
-            $table->bigInteger('author_id')->default(0);
+            $table->string('status', 20)->default('pinged')->index(); // pinged published drafted trashed blocked archived
+            $table->integer('starred')->default(0)->index();
+            $table->string('post_type', 150)->default('blog')->index(); // page pub post
+            $table->bigInteger('image_id')->default(0)->index();
+            $table->bigInteger('author_id')->default(0)->index();
             $table->timestamps();
         });
     }

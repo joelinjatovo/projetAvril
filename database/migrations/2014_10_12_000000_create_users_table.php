@@ -15,21 +15,21 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name', 100);
+            $table->string('name', 100)->unique();
             $table->string('email', 100)->unique();
             $table->string('password');
-            $table->string('role')->default('member'); // admin afa apl member seller
-            $table->string('type')->default('person'); // person organization
+            $table->string('role', 20)->default('member')->index(); // admin afa apl member seller
+            $table->string('type', 20)->default('person')->index(); // person organization
             $table->string('language')->default('fr'); // fr en
             $table->string('status', 20); // active disabled blocked pinged
             $table->double('percent', 8, 2)->nullable();
-            $table->integer('is_seller')->nullable(); // if afa check if seller
-            $table->bigInteger('apl_id')->nullable(); // User must check his APL
-            $table->bigInteger('image_id')->nullable(); // User must check his APL
             $table->dateTime('enabled_at')->nullable();
             $table->dateTime('disabled_at')->nullable();
-            $table->bigInteger('author_id')->nullable();
-            $table->bigInteger('location_id')->nullable();
+            $table->integer('is_seller')->default(0)->index(); // if afa check if seller
+            $table->bigInteger('apl_id')->default(0)->index(); // User must check his APL
+            $table->bigInteger('image_id')->default(0)->index(); // User must check his APL
+            $table->bigInteger('author_id')->default(0)->index();
+            $table->bigInteger('location_id')->default(0)->index();
             $table->rememberToken();
             $table->timestamps();
             

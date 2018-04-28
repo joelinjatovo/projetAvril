@@ -15,11 +15,11 @@ class CreatePubsTable extends Migration
     {
         Schema::create('pubs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title')->nullable();
+            $table->string('title', 150)->nullable();
             $table->longText('content')->nullable();
             $table->string('links')->nullable();
-            $table->bigInteger('author_id')->default(0);
-            $table->bigInteger('image_id')->default(0);
+            $table->bigInteger('author_id')->default(0)->index();
+            $table->bigInteger('image_id')->default(0)->index();
             $table->timestamps();
         });
     }
