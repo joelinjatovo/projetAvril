@@ -10,6 +10,11 @@ return [
     'profile'      => 'Profile',
     'dashboard'    => 'Dashboard',
     'logout'       => 'Deconnexion',
+    'cart'         => 'Cart',
+    'detail'                => 'Detail',
+    'description'           => 'Description',
+    'select_one'            => 'Selectionner un',
+    'i_want_buy_this_item'  => 'Je veux acheter ce produit',
 
     'immobilier'        => 'Immobilier',
     'residentiel'       => 'residentiel',
@@ -88,7 +93,9 @@ return [
     'admin.page.list'       => 'Liste des pages',
     'admin.page.add'        => 'Ajouter une page',
     
-    'admin.orders'           => 'Orders',
+    'admin.orders'          => 'Orders',
     'admin.carts'           => 'Carts',
+    
 
 ];
+

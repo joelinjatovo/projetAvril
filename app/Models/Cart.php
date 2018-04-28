@@ -48,12 +48,14 @@ class Cart extends BaseModel
 	/*
 	*id du produit et le produit lui même
 	*/
-	public static function add($product){        
+	public static function add($product, $apl, $afa){        
         // One product item
         $storedItem = new CartItem();
         $storedItem->quantity = 0;
         $storedItem->price = $product->price;
         $storedItem->cart_id = self::$instance->id;
+        $storedItem->afa_id = $afa->id;
+        $storedItem->apl_id = $apl->id;
         $storedItem->product_id = $product->id;
         $storedItem->author_id = (Auth::check()?Auth::user()->id:0);
         
@@ -66,10 +68,16 @@ class Cart extends BaseModel
         
 		$storedItem->quantity++;
 		$storedItem->price = $storedItem->quantity * $product->price;
+		$storedItem->tma = $storedItem->price*$product->tma;
+		$storedItem->currency = $product->currency;
         $storedItem->save();
+        
+        //$product->quantity--;
+        //$product->save();
         
 		self::$instance->totalQuantity++;
 		self::$instance->totalPrice += $product->price;
+		self::$instance->totalTma += $product->price*$product->tma;
         self::$instance->save();
 	}
 

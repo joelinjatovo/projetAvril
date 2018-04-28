@@ -141,6 +141,9 @@
                                 </li>
                             </ul>
                         </li>
+                            @if(Session::has('cart'))
+                        <li><a href="{{route('shop.cart')}}">@lang('app.cart')<i class="badge badge-info">{{count(Session::get('cart')->items)}}</i></a></li>
+                            @endif
                         @endif
                     </ul>
                 </nav>

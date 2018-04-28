@@ -57,6 +57,29 @@ class User extends Authenticatable
     }
     
     /**
+     * Scope a query to only include users of a given $type.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param mixed $type
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfType($query, $type)
+    {
+        return $query->where('type', $type);
+    }
+    
+    /**
+     * Scope a query to only include users is active
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeIsActive($query)
+    {
+        return $query->where('status', 'active');
+    }
+    
+    /**
      * A user is admin || AFA || APL || member
      *
      * @return Boolean
@@ -93,6 +116,16 @@ class User extends Authenticatable
     }
     
     /**
+     * A user can have one default APL
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function apl()
+    {
+      return $this->hasOne(User::class, 'apl_id', 'id');
+    }
+    
+    /**
      * A user can have one location
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
@@ -120,6 +153,16 @@ class User extends Authenticatable
     public function blogs()
     {
       return $this->hasMany(Blog::class, 'author_id', 'id');
+    }
+    
+    /**
+     * An admin user can have many orders
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orders()
+    {
+      return $this->hasMany(Order::class, 'author_id', 'id');
     }
     
     /**

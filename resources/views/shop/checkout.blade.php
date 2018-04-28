@@ -29,24 +29,28 @@
 
 </style>
 @section('content')
-  <div class="row">
-      <form action="{{route('shop.product.postCheckout')}}" method="post" id="payment-form">
-        {{csrf_field()}}
-        <div class="form-row">
-          <label for="card-element">
-            Credit or debit card
-          </label>
-          <div id="card-element">
-            <!-- a Stripe Element will be inserted here. -->
-          </div>
+<div id="property-single" class="content corps">
+    <div class="container">
+      <div class="row">
+          <form action="{{route('shop.product.postCheckout')}}" method="post" id="payment-form">
+            {{csrf_field()}}
+            <div class="form-row">
+              <label for="card-element">
+                Credit or debit card
+              </label>
+              <div id="card-element">
+                <!-- a Stripe Element will be inserted here. -->
+              </div>
 
-          <!-- Used to display form errors -->
-          <div id="card-errors" role="alert"></div>
-        </div>
-        <br>
-        <button class="btn btn-info">Soumetre le paiement</button>
-      </form>
+              <!-- Used to display form errors -->
+              <div id="card-errors" role="alert"></div>
+            </div>
+            <br>
+            <button class="btn btn-info">Soumetre le paiement</button>
+          </form>
+      </div>
   </div>
+</div>
 
 <script type="text/javascript">
     var stripe = Stripe('pk_test_CoEy2pXe4UyImO3CluSOSJeQ');

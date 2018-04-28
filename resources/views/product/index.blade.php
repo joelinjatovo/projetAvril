@@ -38,12 +38,38 @@
                 </section>
 
                 <section class="property-meta-wrapper common">
-                    <p>
-                      <a href="#" class="btn btn-warning"><i class="fa fa-envelope-open-o" aria-hidden="true"></i> contacter l'administrateur</a>
-                      <a href="{{route('label.store', ['product'=>$item,'type'=>'saved'])}}" class="btn btn-info" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> Sauvegarder le produit</a>
-                      <a href="#" class="btn btn-success"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i>choisir un APL</a>
-                    </p>
+                    @include('includes.alerts')
+                    <div class="row">
+                        <div class="col-sm-12">
+                          <a href="#" class="btn btn-warning col-sm-6"><i class="fa fa-envelope-open-o"></i> contacter l'administrateur</a>
+                          <a href="#" class="btn btn-success col-sm-6"><i class="fa fa-envelope-open-o"></i> contacter l'APL</a>
+                        </div>
+                    </div>
+                    <form method="post" action="{{route('shop.add', ['product'=>$item])}}" class="form-inline">
+                        {{csrf_field()}}
+                      <div class="form-group mx-sm-3 mb-2 col-md-12">
+                          <input type="checkbox" name="is_default" value="true" {{(old('is_default'))?'checked':''}}>Choisir comme APL par defaut
+                      </div>
+                      <div class="form-group mx-sm-3 mb-2 col-md-6">
+                        <label for="apl" class="sr-only">Password</label>
+                        <select class="form-control" id="apl" name="apl">
+                            <option>@lang('app.select_one')</option>
+                            @foreach($apls as $apl)
+                            <option value="{{$apl->id}}" {{(old('apl')==$apl->id)?'selected':''}}>{{$apl->name}}</option>
+                            @endforeach
+                        </select>
+                      </div>
+                      <button type="submit" class="btn btn-primary mb-2  col-md-6">@lang('app.i_want_buy_this_item')</button>
+                    </form> 
+                    <div class="row">
+                        <div class="col-sm-12">
+                          <a href="{{route('label.store', ['product'=>$item,'type'=>'saved'])}}" class="btn btn-info col-sm-6"><i class="fa fa-floppy-o" aria-hidden="true"></i> Sauvegarder</a>
+                          <a href="{{route('label.store', ['product'=>$item,'type'=>'starred'])}}" class="btn btn-info col-sm-6"><i class="fa fa-floppy-o" aria-hidden="true"></i> Ajouter aux favoris</a>
+                        </div>
+                    </div>
                 </section>
+                
+                
                 <section class="property-meta-wrapper common">
                     <h3 class="entry-title">@lang('app.detail')</h3>
                     <div class="property-single-meta">

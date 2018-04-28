@@ -67,8 +67,10 @@ Route::get('confidentialities', 'IndexController@confidentialities')->name('conf
 
 
 Route::get('shop/{category?}', 'ShopController@index')->name('shop.index');// List product by Category OR no
-Route::get('shop/add/{product}', 'ShopController@add')->name('shop.add');// Add product in cart
-Route::get('cart', 'ShopController@cart')->name('shop.cart');// Show cart
+Route::post('product/{product}', 'ShopController@add')->name('shop.add')->middleware('auth');// Add product in cart
+Route::get('cart', 'ShopController@cart')->name('shop.cart')->middleware('auth');// Show cart
+
+Route::get('product/{product}', 'ProductController@index')->name('product.index');// View Product
 
 Route::get('shop/reduce/{product}', 'ShopController@reduceByOne')->name('shop.product.reduce');// Delete one unity or all the selected product in the cart
 Route::get('shop/delete/{product}', 'ShopController@deleteAll')->name('shop.product.delete');
@@ -76,7 +78,6 @@ Route::get('shop/delete/{product}', 'ShopController@deleteAll')->name('shop.prod
 Route::get('checkout', 'ShopController@getCheckout')->name('shop.product.checkout');
 Route::post('checkout', 'ShopController@getCheckout')->name('shop.product.postCheckout');
 
-Route::get('product/{product}', 'ProductController@index')->name('product.index');// View Product
 
 Route::get('blogs/{filter?}', 'BlogController@all')->name('blog.all');
 Route::get('blog/{blog}', 'BlogController@index')->name('blog.index');

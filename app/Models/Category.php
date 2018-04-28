@@ -41,5 +41,15 @@ class Category extends BaseModel
     {
         return $this->belongsTo(User::class, 'author_id', 'id');
     }
+    
+    /**
+     * A category can have many products
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function products()
+    {
+      return $this->hasMany(Product::class, 'category_id', 'id');
+    }
 
 }

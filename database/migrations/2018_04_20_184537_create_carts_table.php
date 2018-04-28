@@ -18,6 +18,8 @@ class CreateCartsTable extends Migration
             $table->string('status', 150)->index();
             $table->bigInteger('totalQuantity')->nullable();
             $table->double('totalPrice', 10, 2)->nullable();
+            $table->double('totalTma', 10, 2)->nullable();
+            $table->string('currency', 20)->nullable();
             $table->bigInteger('author_id')->default(0)->index();
             $table->timestamps();
         });

@@ -12,6 +12,7 @@ use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Page;
 use App\Models\Pub;
+use App\Models\User;
 
 class ShopController extends Controller
 {
@@ -55,15 +56,48 @@ class ShopController extends Controller
     /**
      * Add product in cart
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Product
      * @return \Illuminate\Http\Response
      */
-    public function add(Product $product){
+    public function add(Request $request, Product $product){
         $this->middleware('auth');
+        Auth::check();
+        
+        if(!$product->isDisponible()){
+    	   return back()->withInput()->with('error','Stock en rupture');
+        }
+        
+        $apl = null;
+        if($request->has('apl')){
+            $apl = User::ofRole('apl')->isActive()->where('id', '=', $request->apl)->first();
+        }
+        
+        // No APL selected
+        if(!$apl && !Auth::user()->apl){
+    	   return back()->withInput()->with('error','Vous devez chosir un apl.');
+        }
+        
+        // Update APL
+        if($apl && $apl->id>0 && $request->is_default){
+            Auth::user()->apl_id = $apl->id;
+            Auth::user()->save();
+        }
+        
+        // Get Default APL if no APL chosen
+        if(!$apl || $apl->id==0){
+            $apl = Auth::user()->apl;
+        }
+        
+        // Get AFA
+        $afa = User::ofRole('afa')->isActive()->first();
+        if($afa->id==0){
+    	   return back()->withInput()->with('error','Vous ne pouvez pas encore faire cet achat. Il n\'y a pas d\'agence dans la base');
+        }
         
     	$currentCart = Session::has('cart') ? Session::get('cart') : null;
     	$cart = Cart::getInstance($currentCart);
-    	$cart->add($product);
+        $cart->add($product, $apl, $afa);
 
     	Session::put('cart', $cart);
     	Session::save();
@@ -87,7 +121,6 @@ class ShopController extends Controller
 
     public function getCheckout(){
         $this->middleware('auth');
-        
         if (Auth::guest() || !Session::get('cart')) {
             return redirect()->route('product.index')->with('error', 'Merci de vous connecté');
         }
@@ -98,10 +131,10 @@ class ShopController extends Controller
         $this->middleware('auth');
         
         if (Auth::guest() || !Session::get('cart')) {
-            return redirect()->route('product.index')->with('error', 'Merci de vous connecté');
+            return redirect()->back()->with('error', 'Merci de vous connecté');
         }
 
-        $totalP = Session::get('cart')->totalP * 100;
+        $totalP = Session::get('cart')->totalPrice * 100;
         // Set your secret key: remember to change this to your live secret key in production
         // See your keys here: https://dashboard.stripe.com/account/apikeys
         \Stripe\Stripe::setApiKey("sk_test_nZJyPhr5zXad7xqqMNZ49i3J");
@@ -126,7 +159,7 @@ class ShopController extends Controller
         Auth::user()->orders()->save($order);
 
         Session::forget('cart');
-        return redirect()->route('product.index')->with('success', 'Votre commande a été éffectué');
+        return redirect()->route('shop.index')->with('success', 'Votre commande a été éffectué');
     }
 
     public function reduceByOne(Product $product){

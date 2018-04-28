@@ -36,6 +36,16 @@ class Product extends BaseModel
     }
     
     /**
+     * Check if product is disponible (quantity>0)
+     *
+     * @return Boolean
+     */
+    public function isDisponible()
+    {
+        return ($this->quantity>0);
+    }
+    
+    /**
      * Excerpt
      *
      * @param int $length

@@ -12,6 +12,7 @@ use App\Models\ObjectCategory;
 use App\Models\Image;
 use App\Models\Page;
 use App\Models\Pub;
+use App\Models\User;
 
 class ProductController extends Controller
 {
@@ -31,10 +32,12 @@ class ProductController extends Controller
         }else{
             $pubs = [];
         }
+        $apls = User::ofRole('apl')->isActive()->get();
         return view('product.index')
             ->with('item', $product)
             ->with('pubs', $pubs)
             ->with('products', $products)
+            ->with('apls', $apls)
             ->with('categories', $categories); 
     }
     /**
