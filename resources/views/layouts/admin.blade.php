@@ -200,6 +200,11 @@
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
+                      <a href="{{route('admin.cart.list')}}" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fontello-icon-mail-4"></i> @lang('app.admin.carts')</a>
+                  </div>
+              </li>
+              <li class="accordion-group">
+                  <div class="accordion-heading">
                       <a href="" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fontello-icon-mail-4"></i> Messages</a>
                   </div>
               </li>

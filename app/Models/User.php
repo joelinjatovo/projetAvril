@@ -40,8 +40,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $events = [
-        'saved' => UserSaved::class,
-        'deleted' => UserDeleted::class,
+        //'saved' => UserSaved::class,
+        //'deleted' => UserDeleted::class,
     ];
     
     /**
@@ -79,7 +79,7 @@ class User extends Authenticatable
             if($thumb) return thumbnail($this->image->filepath);
             return storage($this->image->filepath);
         } 
-        return asset('images/product.png');
+        return asset('images/avatar.png');
     }
     
     /**
@@ -137,9 +137,29 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function products()
+    public function adminProducts()
     {
       return $this->hasMany(Product::class, 'author_id', 'id');
+    }
+    
+    /**
+     * A seller can have many products to sell
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function products()
+    {
+      return $this->hasMany(Product::class, 'seller_id', 'id');
+    }
+    
+    /**
+     * An APL can have many clients
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function clients()
+    {
+      return $this->hasMany(User::class, 'apl_id', 'id');
     }
     
     /**
@@ -147,29 +167,46 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
      */
-    public function clientProductLabeled()
+    public function savedProducts()
     {
-      return $this->belongsToMany(Product::class, 'labels', 'author_id', 'product_id');
+      return $this->belongsToMany(Product::class, 'labels', 'author_id', 'product_id')
+          ->wherePivot('label', 'saved');
     }
     
     /**
-     * A seller can have many products from rows_products table
+     * An many user can have many products from labels table
      *
      * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
      */
-    public function sellerProducts()
+    public function starredProducts()
     {
-      return $this->belongsToMany(Product::class, 'rows_products', 'seller_id', 'product_id');
+      return $this->belongsToMany(Product::class, 'labels', 'author_id', 'product_id')
+          ->wherePivot('label', 'starred');
     }
     
     /**
-     * A user can have many products from products_labels table
+     * An many afa/apl can have many products from carts_items table
      *
      * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
      */
-    public function labels()
+    public function selledProducts()
     {
-      return $this->belongsToMany(Product::class, 'products_labels', 'author_id', 'product_id');
+        if($this->hasRole('afa')){
+            return $this->belongsToMany(Product::class, 'carts_items', 'afa_id', 'product_id');
+        }
+        
+        return $this->belongsToMany(Product::class, 'carts_items', 'apl_id', 'product_id');
     }
+    
+    /**
+     * An many cliens can buy many products from carts_items table
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
+     */
+    public function boughtProducts()
+    {
+      return $this->belongsToMany(Product::class, 'carts_items', 'author_id', 'product_id');
+    }
+    
     
 }

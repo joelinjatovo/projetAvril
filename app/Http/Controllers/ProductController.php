@@ -16,7 +16,7 @@ use App\Models\Pub;
 class ProductController extends Controller
 {
     /**
-     * Show the row product.
+     * Show the row product at the front.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Product  $product
@@ -36,6 +36,18 @@ class ProductController extends Controller
             ->with('pubs', $pubs)
             ->with('products', $products)
             ->with('categories', $categories); 
+    }
+    /**
+     * Show the row product at the back.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Request $request, Product $product)
+    {
+        return view('admin.product.index')
+            ->with('item', $product); 
     }
     
     /**

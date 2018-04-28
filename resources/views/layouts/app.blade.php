@@ -126,6 +126,22 @@
                         </li>
                         <li><a href="{{route('services')}}">NOS SERVICES</a></li>
                         <li><a href="{{route('blog.all')}}">BLOG</a></li>
+                        @if(Auth::check())
+                        <li>
+                            <a href="{{route('profile')}}">@lang('app.account')</a>
+                            <ul>
+                                <li>
+                                    <a href="{{route('home')}}">@lang('app.dashboard')</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('profile')}}">@lang('app.profile')</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('logout')}}">@lang('app.logout')</a>
+                                </li>
+                            </ul>
+                        </li>
+                        @endif
                     </ul>
                 </nav>
             </div>

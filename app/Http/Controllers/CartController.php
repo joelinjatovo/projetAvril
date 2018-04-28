@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 
-use App\Models\Order;
+use App\Models\Cart;
 
-class OrderController extends Controller
+class CartController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -24,16 +24,16 @@ class OrderController extends Controller
      * Show a order info
      *
      * @param  Illuminate\Http\Request  $request
-     * @param  App\Models\Order  $order
+     * @param  App\Models\Cart  $cart
      * @return Illuminate\Http\Response
      */
-    public function index(Request $request, Order $order)
+    public function index(Request $request, Cart $cart)
     {
-        return view('admin.order.index', ['item'=>$order]);
+        return view('admin.cart.index', ['item'=>$cart]);
     }
     
     /**
-     * Show the list of order.
+     * Show the list of cart.
      * Admin Only
      *
      * @param  \Illuminate\Http\Request  $request
@@ -48,7 +48,7 @@ class OrderController extends Controller
         $page = $request->get('page');
         if(!$page) $page =1;
         
-        $items = Order::paginate($this->pageSize);
-        return view('admin.order.all', compact('items', 'filter', 'page')); 
+        $items = Cart::paginate($this->pageSize);
+        return view('admin.cart.all', compact('items', 'filter', 'page')); 
     }
 }

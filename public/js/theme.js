@@ -280,12 +280,14 @@ $(function () {
             }
         };
 
+        /*
         $('.contact-form').validate({
             errorLabelContainer: errorContainer,
             submitHandler: function (form) {
                 $(form).ajaxSubmit(formOptions);
             }
         });
+        */
     }
 
 

@@ -65,19 +65,18 @@ Route::get('help', 'IndexController@help')->name('help');
 Route::get('publicities', 'IndexController@publicities')->name('publicities');
 Route::get('confidentialities', 'IndexController@confidentialities')->name('confidentialities');
 
-// List product by Category OR no
-Route::get('shop/{category?}', 'ShopController@index')->name('shop.index');
-// Add product in cart
-Route::post('shop/add/{product}', 'ShopController@add')->name('shop.add');
-// Show cart
-Route::get('cart', 'ShopController@cart')->name('shop.cart');
-// Delete one unity or all the selected product in the cart
-Route::get('shop/reduce/{product}', 'ShopController@reduceByOne')->name('shop.product.reduce');
+
+Route::get('shop/{category?}', 'ShopController@index')->name('shop.index');// List product by Category OR no
+Route::get('shop/add/{product}', 'ShopController@add')->name('shop.add');// Add product in cart
+Route::get('cart', 'ShopController@cart')->name('shop.cart');// Show cart
+
+Route::get('shop/reduce/{product}', 'ShopController@reduceByOne')->name('shop.product.reduce');// Delete one unity or all the selected product in the cart
 Route::get('shop/delete/{product}', 'ShopController@deleteAll')->name('shop.product.delete');
+
 Route::get('checkout', 'ShopController@getCheckout')->name('shop.product.checkout');
 Route::post('checkout', 'ShopController@getCheckout')->name('shop.product.postCheckout');
-// View Product
-Route::get('product/{product}', 'ProductController@index')->name('product.index');
+
+Route::get('product/{product}', 'ProductController@index')->name('product.index');// View Product
 
 Route::get('blogs/{filter?}', 'BlogController@all')->name('blog.all');
 Route::get('blog/{blog}', 'BlogController@index')->name('blog.index');
@@ -86,10 +85,8 @@ Route::get('blog/{blog}/comments', 'CommentController@index')->name('comment.lis
 Route::middleware(["auth"])->group(function () {
     Route::get('profile', 'UserController@profile')->name('profile');
     
-    // Save OR Star Product
-    Route::post('product/{product}/{type}', 'LabelController@storeOrUpdate')->name('label.store');
-    // List saved products OR starred Product
-    Route::post('products/{type}', 'LabelController@all')->name('label.list');
+    Route::get('product/{product}/{type}', 'LabelController@storeOrUpdate')->name('label.store');// Save OR Star Product
+    Route::get('products/{type}', 'LabelController@all')->name('label.list');// List saved products OR starred Product
     
     Route::post('blog/{blog}/comment', 'CommentController@store')->name('comment.store');
     Route::get('blog/{blog}/comment/{comment}', 'CommentController@edit')->name('comment.edit');
@@ -106,6 +103,8 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function () {
     Route::get('/', 'AdminController@dashboard')->name('admin.dashboard');
     
     Route::get('card', 'AdminController@card')->name('admin.card');
+    Route::get('carts', 'CartController@allAdmin')->name('admin.cart.list');
+    Route::get('cart/{cart}', 'CartController@index')->name('admin.cart.show');
     
     // Blog Controller Groups
     Route::get('blogs/{filter?}', 'BlogController@allAdmin')->name('admin.blog.list');
@@ -125,6 +124,7 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function () {
     Route::prefix('product')->group(function(){
         Route::get('/', 'ProductController@create')->name('admin.product.create');
         Route::post('/', 'ProductController@store')->name('admin.product.store');
+        Route::get('show/{product}', 'ProductController@show')->name('admin.product.show');
         Route::get('update/{product}', 'ProductController@edit')->name('admin.product.edit');
         Route::post('update/{product}', 'ProductController@update')->name('admin.product.update');
         Route::get('delete/{product}', 'ProductController@delete')->name('admin.product.delete');

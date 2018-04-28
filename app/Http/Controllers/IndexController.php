@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Page;
 use App\Models\Pub;
 use App\Models\Category;
+use App\Models\Blog;
 
 class IndexController extends Controller
 {
@@ -29,7 +30,9 @@ class IndexController extends Controller
     public function index()
     {
         $products = Product::orderBy('created_at','desc')->take(3)->get();
+        $recentProducts = Product::orderBy('created_at','desc')->take(6)->get();
         $categories = Category::orderBy('created_at', 'desc')->take(5)->get();
+        $blogs = Blog::orderBy('created_at', 'desc')->take(6)->get();
         if($page = Page::where('path', '=', '/blogs*')->first()){
             $pubs = $page->pubs;
         }else{
@@ -38,6 +41,8 @@ class IndexController extends Controller
         return view('index.index')
             ->with('pubs', $pubs)
             ->with('products', $products)
+            ->with('blogs', $blogs)
+            ->with('recentProducts', $recentProducts)
             ->with('categories', $categories);
     }
 

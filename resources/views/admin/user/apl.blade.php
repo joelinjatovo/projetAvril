@@ -175,38 +175,9 @@
                         
                     <div class="widget widget-simple">
                         <div class="widget-header">
-                            <h4><small>Liste des clients de l'agence</small></h4>
+                            <h4><small>Clients de l'agence</small></h4>
                         </div>
-                        <div class="widget widget-simple widget-table">
-                            <table id="exampleDTA" class="table boo-table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Id produit <span class="column-sorter"></span></th>
-                                        <th scope="col">Nom de l'APL rattaché</th>
-                                        <th scope="col">Date de la vente <span class="column-sorter"></span></th>
-                                        <th scope="col">Image produit <span class="column-sorter"></span></th>
-                                        <th scope="col">Prix<span class="column-sorter"></span></th>
-                                        <th scope="col">Type de bien<span class="column-sorter"></span></th>
-                                        <th scope="col">Status<span class="column-sorter"></span></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($item->clientProductLabeled as $product)
-                                    <tr>
-                                        <td>PdtRes004</td>
-                                        <td>APL	test</td>
-                                        <td>24/05/16</td>
-                                        <td>
-                                            <img class="thumb" width="50" src="{{$product->imageUrl()}}">
-                                        </td>
-                                        <td>{{$product->title}}</td>
-                                        <td>Vendu</td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            <!-- // DATATABLE - DTA -->
-                        </div>
+                        @include('admin.table.user',['users'=>$item->clients])
                     </div>
                     <!-- // Widget -->
                         
@@ -214,50 +185,14 @@
                         <div class="widget-header">
                             <h4><small>Produits traites par l'agence</small></h4>
                         </div>
-                        <div class="widget widget-simple widget-table">
-                            <table id="exampleDTA" class="table boo-table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Id produit <span class="column-sorter"></span></th>
-                                        <th scope="col">Nom de l'APL rattaché</th>
-                                        <th scope="col">Date de la vente <span class="column-sorter"></span></th>
-                                        <th scope="col">Image produit <span class="column-sorter"></span></th>
-                                        <th scope="col">Prix<span class="column-sorter"></span></th>
-                                        <th scope="col">Type de bien<span class="column-sorter"></span></th>
-                                        <th scope="col">Status<span class="column-sorter"></span></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($item->clientProductLabeled as $product)
-                                    <tr>
-                                        <td>PdtRes004</td>
-                                        <td>APL	test</td>
-                                        <td>24/05/16</td>
-                                        <td>
-                                            <img class="thumb" width="50" src="{{$product->imageUrl()}}">
-                                        </td>
-                                        <td>{{$product->title}}</td>
-                                        <td>Vendu</td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            <!-- // DATATABLE - DTA -->
-                        </div>
+                        @include('admin.table.product',['products'=>$item->selledProducts])
                     </div>
                     <!-- // Widget -->
                     
                 </div>
-                <!-- // Column -->
-                <!-- // Column -->
             </div>
-            <!-- // Example row -->
         </div>
-
     </div>
-    <!-- // page content -->
 </div>
-<!-- // main-content -->
-
 @endsection
 

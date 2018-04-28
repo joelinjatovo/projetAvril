@@ -64,57 +64,25 @@
             </div>
             <div class="col-md-6">
                 @include('includes.alerts')
-                <form class="form-horizontal" method="POST" action="{{ route('login') }}">
+                <form class="contact-form" method="POST" action="{{ route('login') }}">
                     {{ csrf_field() }}
-                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                        <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                        <div class="col-md-6">
-                            <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
-
-                            @if ($errors->has('email'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('email') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                        <label for="password" class="col-md-4 control-label">Password</label>
-
-                        <div class="col-md-6">
-                            <input id="password" type="password" class="form-control" name="password" required>
-
-                            @if ($errors->has('password'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('password') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-6 col-md-offset-4">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-8 col-md-offset-4">
-                            <button type="submit" class="btn btn-primary">
-                                Login
-                            </button>
-
-                            <a class="btn btn-link" href="{{ route('password.request') }}">
-                                Forgot Your Password?
-                            </a>
-                        </div>
-                    </div>
+                    <p class="form-author common form-group {{ $errors->has('email') ? ' has-error' : '' }}"> 
+                        <input name="email" type="email" placeholder="Votre email *" aria-required="true" required="required" value="{{ old('email') }}" autofocus>
+                    </p>
+                    <p class="form-author common form-group {{ $errors->has('email') ? ' has-error' : '' }}">
+                         <input name="password"  type="password" placeholder="Votre mot de passe *" aria-required="true" required="required">
+                    </p>
+                    <p><input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me</p>
+                    <p>Vous avez un compte ?<a href="{{ route('register',['role'=>'member']) }}"> Inscrivez-vous </a></p>
+                    <p>
+                        <a href="{{ route('password.request') }}">Forgot Your Password?</a>
+                    </p>
+                    <p class="form-submit">
+                        <button type="submit" class="pull-right btn btn-default btn-lg" data-hover="Connexion">Connexion</button>
+                        <span id="ajax-loader"><i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i><span class="sr-only">Loading...</span></span>
+                    </p>
+                    <div id="error-container"></div>
+                    <div id="message-container"></div>
                 </form>
             </div>
         </div>

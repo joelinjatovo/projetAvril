@@ -38,9 +38,9 @@
                                        </label>
                                      </td>
                                      <td>{{$item->id}}</td>
-                                     <td><img class="thumb" src="{{$item->imageUrl()}}" width="50"></td>
+                                     <td><a href="{{route('admin.product.show', ['product'=>$item])}}"><img class="thumb" src="{{$item->imageUrl()}}" width="50"></a></td>
                                      <td>{{$item->title}}</td>
-                                     <td>{{$item->content}}</td>
+                                     <td>{{$item->excerpt()}}</td>
                                      <td>{{$item->price}}</td>
                                      <td>Category</td>
                                      <td>{{$item->tma}}</td>

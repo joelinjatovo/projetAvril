@@ -5,6 +5,11 @@ return [
     'app_name'          => 'Investir en Italie',
     'copyright'         => '&ccopy; Copyright :year : "Investir en Italie" - Tout droit reserve',
     'last_update'       => 'Derniere Modification, :date',
+    
+    'account'      => 'Mon Compte',
+    'profile'      => 'Profile',
+    'dashboard'    => 'Dashboard',
+    'logout'       => 'Deconnexion',
 
     'immobilier'        => 'Immobilier',
     'residentiel'       => 'residentiel',
@@ -84,5 +89,6 @@ return [
     'admin.page.add'        => 'Ajouter une page',
     
     'admin.orders'           => 'Orders',
+    'admin.carts'           => 'Carts',
 
 ];

@@ -38,7 +38,8 @@ class LoginController extends Controller
      */
     protected function redirectTo()
     {
-        return '/admin';
+        Auth::check();
+        return '/'.Auth::user()->role;
     }
     
 }
