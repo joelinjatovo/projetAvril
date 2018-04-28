@@ -80,6 +80,17 @@ class User extends Authenticatable
     }
     
     /**
+     * Scope a query to only include users has Location
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeHasLocation($query)
+    {
+        return $query->where('location_id', '>', '0');
+    }
+    
+    /**
      * A user is admin || AFA || APL || member
      *
      * @return Boolean

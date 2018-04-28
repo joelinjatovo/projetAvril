@@ -24,7 +24,7 @@ class LocationsTableSeeder extends Seeder
             'latitude' => "-18.8876785",
             'longitude' => '47.5125139',
             'author_id' => 1,
-            'created_at' => date('m-d-Y h:i:s'),
+            'created_at' => date("Y-m-d H:i:s"),
         ]);
         DB::table('localizations')->insert([
             'id' => "2",
@@ -39,7 +39,7 @@ class LocationsTableSeeder extends Seeder
             'latitude' => "-25.792074",
             'longitude' => '118.967588',
             'author_id' => 1,
-            'created_at' => date('m-d-Y h:i:s'),
+            'created_at' => date("Y-m-d H:i:s"),
         ]);
         DB::table('localizations')->insert([
             'id' => "3",
@@ -54,7 +54,7 @@ class LocationsTableSeeder extends Seeder
             'latitude' => "-23.775014",
             'longitude' => '116.810178',
             'author_id' => 1,
-            'created_at' => date('m-d-Y h:i:s'),
+            'created_at' => date("Y-m-d H:i:s"),
         ]);
         DB::table('localizations')->insert([
             'id' => "4",
@@ -69,7 +69,7 @@ class LocationsTableSeeder extends Seeder
             'latitude' => "-24.832582",
             'longitude' => '119.161938',
             'author_id' => 1,
-            'created_at' => date('m-d-Y h:i:s'),
+            'created_at' => date("Y-m-d H:i:s"),
         ]);
         DB::table('localizations')->insert([
             'id' => "5",
@@ -84,7 +84,7 @@ class LocationsTableSeeder extends Seeder
             'latitude' => "-23.800026",
             'longitude' => '144.381948',
             'author_id' => 1,
-            'created_at' => date('m-d-Y h:i:s'),
+            'created_at' => date("Y-m-d H:i:s"),
         ]);
         DB::table('localizations')->insert([
             'id' => "6",
@@ -99,7 +99,7 @@ class LocationsTableSeeder extends Seeder
             'latitude' => "-22.697269",
             'longitude' => '147.426737',
             'author_id' => 1,
-            'created_at' => date('m-d-Y h:i:s'),
+            'created_at' => date("Y-m-d H:i:s"),
         ]);
     }
 }

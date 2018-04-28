@@ -96,4 +96,14 @@ class Product extends BaseModel
         return $this->belongsTo(User::class, 'author_id', 'id');
     }
     
+    /**
+     * A product can have one location
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function location()
+    {
+      return $this->hasOne(Localisation::class, 'id', 'location_id');
+    }
+    
 }

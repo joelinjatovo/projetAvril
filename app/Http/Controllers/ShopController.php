@@ -90,8 +90,25 @@ class ShopController extends Controller
         }
         
         // Get AFA
-        $afa = User::ofRole('afa')->isActive()->first();
-        if($afa->id==0){
+        if($product->location){
+            $afas = User::ofRole('afa')
+                ->isActive()
+                ->hasLocation()
+                ->get();
+            $dists = [];
+            $value = 10000000000;
+            foreach($afas as $item){
+                if($item->location){
+                    $dist = $product->location->getDistance($item->location);
+                    if($dist<=$value){
+                        $value = $dist;
+                        $afa = $item;
+                    }
+                }
+            }
+        }
+        
+        if(!isset($afa) || $afa->id==0){
     	   return back()->withInput()->with('error','Vous ne pouvez pas encore faire cet achat. Il n\'y a pas d\'agence dans la base');
         }
         

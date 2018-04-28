@@ -61,6 +61,6 @@ class Localisation extends BaseModel
             case 'nmi':
                 $distance =  $degrees * 59.97662; // 1 degré = 59.97662 milles nautiques, sur base du diamètre moyen de la Terre (6,876.3 milles nautiques)
         }
-        return round($distance, $decimals);
+        return round($distance, 2);
     }
 }
