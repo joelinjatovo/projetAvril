@@ -22,6 +22,7 @@ class ProductsTableSeeder extends Seeder
             'currency' => "eur",
             'tma' => "0.20",
             'created_at' => date("Y-m-d H:i:s"),
+            'location_id' => 1,
             'category_id' => 1,
             'author_id' => 1,
         ]);
@@ -50,6 +51,7 @@ class ProductsTableSeeder extends Seeder
             'currency' => "eur",
             'tma' => "0.20",
             'created_at' => date("Y-m-d H:i:s"),
+            'location_id' => 3,
             'category_id' => 2,
             'author_id' => 1,
         ]);
@@ -65,6 +67,7 @@ class ProductsTableSeeder extends Seeder
             'tma' => "0.20",
             'created_at' => date("Y-m-d H:i:s"),
             'category_id' => 2,
+            'location_id' => 4,
             'author_id' => 1,
         ]);
         DB::table('products')->insert([
@@ -79,6 +82,7 @@ class ProductsTableSeeder extends Seeder
             'tma' => "0.20",
             'created_at' => date("Y-m-d H:i:s"),
             'category_id' => 3,
+            'location_id' => 5,
             'author_id' => 1,
         ]);
         DB::table('products')->insert([
@@ -93,6 +97,7 @@ class ProductsTableSeeder extends Seeder
             'tma' => "0.20",
             'created_at' => date("Y-m-d H:i:s"),
             'category_id' => 3,
+            'location_id' => 6,
             'author_id' => 1,
         ]);
         DB::table('products')->insert([
@@ -107,6 +112,7 @@ class ProductsTableSeeder extends Seeder
             'tma' => "0.20",
             'created_at' => date("Y-m-d H:i:s"),
             'category_id' => 4,
+            'location_id' => 5,
             'author_id' => 1,
         ]);
         DB::table('products')->insert([
@@ -121,6 +127,7 @@ class ProductsTableSeeder extends Seeder
             'tma' => "0.20",
             'created_at' => date("Y-m-d H:i:s"),
             'category_id' => 4,
+            'location_id' => 4,
             'author_id' => 1,
         ]);
     }

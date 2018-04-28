@@ -28,6 +28,7 @@ class UsersTableSeeder extends Seeder
             'status' => 'active',
             'author_id' => '0',
             'created_at' => date("Y-m-d H:i:s"),
+            'location_id' => 2,
         ]);
         DB::table('users')->insert([
             'name' => "afa",
@@ -37,6 +38,27 @@ class UsersTableSeeder extends Seeder
             'status' => 'active',
             'author_id' => '0',
             'created_at' => date("Y-m-d H:i:s"),
+            'location_id' => 4,
+        ]);
+        DB::table('users')->insert([
+            'name' => "afa3",
+            'email' => 'afa3@iea.com',
+            'password' => bcrypt('afa3'),
+            'role' => 'afa',
+            'status' => 'active',
+            'author_id' => '0',
+            'created_at' => date("Y-m-d H:i:s"),
+            'location_id' => 5,
+        ]);
+        DB::table('users')->insert([
+            'name' => "afa2",
+            'email' => 'afa2@iea.com',
+            'password' => bcrypt('afa2'),
+            'role' => 'afa',
+            'status' => 'active',
+            'author_id' => '0',
+            'created_at' => date("Y-m-d H:i:s"),
+            'location_id' => 3,
         ]);
         DB::table('users')->insert([
             'name' => "seller",

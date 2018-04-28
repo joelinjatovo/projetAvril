@@ -52,6 +52,9 @@
   </div>
 </div>
 
+<script src="http://parsleyjs.org/dist/parsley.js"></script>
+
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <script type="text/javascript">
     var stripe = Stripe('pk_test_CoEy2pXe4UyImO3CluSOSJeQ');
     var elements = stripe.elements();
