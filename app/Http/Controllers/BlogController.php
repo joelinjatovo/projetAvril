@@ -103,7 +103,6 @@ class BlogController extends Controller
         $blog->meta_tag = $request->meta_tag;
         $blog->meta_description = $request->meta_description;
         $blog->post_type = $this->post_type;
-        $blog->slug = generateSlug($request->title);
         $blog->status = 'published';
         $blog->save();
 
@@ -174,16 +173,19 @@ class BlogController extends Controller
             $blog->image_id = $image->id;
         }
         
+        $blog->slug = generateSlug($request->title);
         $blog->title = $request->title;
         $blog->content = $request->content;
         $blog->meta_tag = $request->meta_tag;
         $blog->meta_description = $request->meta_description;
         $blog->post_type = $this->post_type;
-        $blog->slug = generateSlug($request->title);
         $blog->status = 'published';
         $blog->save();
 
-        // TODO Remove Old Category
+        // Delete Old Category
+        ObjectCategory::where('object_id','=',$blog->id)
+            ->where('object_type','=', get_class($blog))
+            ->delete();
 
         // Add Blog to the selected category
         if($categories = $request->category){
@@ -197,7 +199,7 @@ class BlogController extends Controller
             }
         }
 
-        return back()->with('success',"L'utilisateur a été bien modifié.");
+        return back()->with('success',"L'article a été bien modifié.");
     }
 
     /**
@@ -211,27 +213,11 @@ class BlogController extends Controller
     public function all(Request $request, $filter='all')
     {
         $page = $request->get('page');
-        if(!$page){
-            $page =1;
-        }
-
-        switch($filter){
-            case 'starred':
-                $items = Blog::where('starred','=', 1)
-                    ->where('post_type','=', $this->post_type)
-                    ->paginate($this->pageSize);
-                break;
-            case 'archive':
-                $items = Blog::where('status','=', 'archived')
-                    ->where('post_type','=', $this->post_type)
-                    ->paginate($this->pageSize);
-                break;
-            default:
-            case 'all':
-                $items = Blog::where('post_type','=', $this->post_type)
-                        ->paginate($this->pageSize);
-                break;
-        }
+        if(!$page) $page =1;
+        
+        $items = Blog::ofStatus('published')
+            ->where('post_type','=', $this->post_type)
+            ->paginate($this->pageSize);
         
         if($request->ajax()){
             return response()->json(array(
@@ -281,8 +267,11 @@ class BlogController extends Controller
                     ->where('post_type','=', $this->post_type)
                     ->paginate($this->pageSize);
                 break;
-            case 'archive':
-                $items = Blog::where('status','=', 'archived')
+            case 'archived':
+            case 'published':
+            case 'trashed':
+            case 'pinged':
+                $items = Blog::ofStatus($filter)
                     ->where('post_type','=', $this->post_type)
                     ->paginate($this->pageSize);
                 break;
@@ -311,8 +300,7 @@ class BlogController extends Controller
 
         $blog->starred = 1;
         $blog->save();
-        return redirect()->route('admin.dashboard')
-            ->with('success',"L'article a été supprimé avec succés");
+        return back()->with('success',"L'article a été ajouté aux favoris avec succés");
     }
 
 
@@ -330,8 +318,43 @@ class BlogController extends Controller
 
         $blog->status = "archived";
         $blog->save();
-        return redirect()->route('admin.dashboard')
-            ->with('success',"L'article a été supprimé avec succés");
+        return back()->with('success',"L'article a été achivé avec succés");
+    }
+
+
+    /**
+    * Publish Blog
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  \App\Models\Blog  $blog
+    * @return \Illuminate\Http\Response
+    */
+    public function publish(Request $request,Blog $blog)
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+
+        $blog->status = "published";
+        $blog->save();
+        return back()->with('success',"L'article a été publié avec succés");
+    }
+
+
+    /**
+    * Trash Blog
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  \App\Models\Blog  $blog
+    * @return \Illuminate\Http\Response
+    */
+    public function trash(Request $request,Blog $blog)
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+
+        $blog->status = "trashed";
+        $blog->save();
+        return back()->with('success',"L'article a été ajouté aux corbeilles avec succés");
     }
 
 
@@ -347,10 +370,9 @@ class BlogController extends Controller
         $this->middleware('auth');
         $this->middleware('role:admin');
 
-        $blog->status = "published";
+        $blog->status = "pinged";
         $blog->save();
-        return redirect()->route('admin.dashboard')
-            ->with('success',"L'article a été supprimé avec succés");
+        return back()->with('success',"L'article a été restoré avec succés");
     }
 
 
@@ -365,6 +387,7 @@ class BlogController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
+        
         $blog->delete();
         return redirect()->route('admin.dashboard')
             ->with('success',"L'article a été supprimé avec succés");

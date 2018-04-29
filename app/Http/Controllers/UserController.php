@@ -180,9 +180,8 @@ class UserController extends Controller
         }
         
         $user->status = 'active';
-        $user->delete();
-        return redirect()->route('admin.dashboard')
-            ->with('success',"L'utilsateur a été supprimé avec succés");
+        $user->save();
+        return back()->with('success',"L'utilsateur a été supprimé avec succés");
     }
     
     /**
@@ -224,8 +223,7 @@ class UserController extends Controller
         
         $user->status = 'disabled';
         $user->save();
-        return redirect()->route('admin.dashboard')
-            ->with('success',"L'utilsateur a été desactivé avec succés");
+        return back()->with('success',"L'utilsateur a été desactivé avec succés");
     }
     
     /**

@@ -40,6 +40,7 @@ class ProductController extends Controller
             ->with('apls', $apls)
             ->with('categories', $categories); 
     }
+    
     /**
      * Show the row product at the back.
      *
@@ -218,10 +219,107 @@ class ProductController extends Controller
         $this->middleware('role:admin');
         
         $page = $request->get('page');
-        if(!$page) $page =1;
+        if(!$page) $page = 1;
         
-        $items = Product::paginate($this->pageSize);
+        switch($filter){
+            case 'published':
+            case 'pinged':
+            case 'archived':
+            case 'trashed':
+                $items = Product::ofStatus($filter)
+                    ->paginate($this->pageSize);
+                break;
+            default:
+            case 'all':
+                $items = Product::paginate($this->pageSize);
+                break;
+        }
+        
         return view('admin.product.all', compact('items', 'filter', 'page')); 
+    }
+    /**
+    * Publish product
+    *
+    * @param  \Illuminate\Http\Request  $request
+     * @param  App\Models\Product  $product
+    * @return \Illuminate\Http\Response
+    */
+    public function publish(Request $request,Product  $product)
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        $product->status = 'published';
+        $product->save();
+        return back()->with('success',"Le produit a été publié avec succés");
+    }
+    
+    /**
+    * Save product in archive
+    *
+    * @param  \Illuminate\Http\Request  $request
+     * @param  App\Models\Product  $product
+    * @return \Illuminate\Http\Response
+    */
+    public function archive(Request $request,Product  $product)
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        $product->status = 'archived';
+        $product->save();
+        return back()->with('success',"Le produit a été archivé avec succés");
+    }
+    
+    /**
+    * Restore trashed product
+    *
+    * @param  \Illuminate\Http\Request  $request
+     * @param  App\Models\Product  $product
+    * @return \Illuminate\Http\Response
+    */
+    public function restore(Request $request,Product  $product)
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        $user->status = 'pinged';
+        $user->save();
+        return back()->with('success',"Le produit a été restoré avec succés");
+    }
+    
+    /**
+    * Trash product
+    *
+    * @param  \Illuminate\Http\Request  $request
+     * @param  App\Models\Product  $product
+    * @return \Illuminate\Http\Response
+    */
+    public function trash(Request $request,Product  $product)
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        $user->status = 'trashed';
+        $user->save();
+        return back()->with('success',"Le produit a été ajouté au corbeille avec succés");
+    }
+    
+    /**
+    * Delete Produt
+    *
+    * @param  \Illuminate\Http\Request  $request
+     * @param  App\Models\Product  $product
+    * @return \Illuminate\Http\Response
+    */
+    public function delete(Request $request,Product  $product)
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        $product->delete();
+        return redirect()->route('admin.dashboard')
+            ->with('success',"Le produit a été supprimé avec succés");
     }
 
 }

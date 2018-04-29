@@ -33,6 +33,18 @@ class Blog extends BaseModel
     }
     
     /**
+     * Scope a query to only include blogs of a given $status.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param mixed $status
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfStatus($query, $status)
+    {
+        return $query->where('status', $status);
+    }
+    
+    /**
      * Excerpt
      *
      * @param int $length

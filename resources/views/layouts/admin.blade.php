@@ -144,8 +144,10 @@
                   </div>
                   <ul class="accordion-content nav nav-list collapse" id="accProducts">
                       <li><a href="{{route('admin.product.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.list')</a></li>
-                      <li><a href="{{route('admin.product.create')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.add')</a></li>
-                       <li><a href="{{route('admin.product.list', ['filter'=>'archive'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.archive')</a></li>
+                      <li><a href="{{route('admin.product.list', ['filter'=>'published'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.publish')</a></li>
+                      <li><a href="{{route('admin.product.list', ['filter'=>'pinged'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.ping')</a></li>
+                      <li><a href="{{route('admin.product.list', ['filter'=>'archived'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.archive')</a></li>
+                      <li><a href="{{route('admin.product.list', ['filter'=>'trashed'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.trash')</a></li>
                   </ul>
               </li>
               <li class="accordion-group">
@@ -155,9 +157,12 @@
                         <i class="chevron fontello-icon-right-open-3"></i>@lang('app.admin.blogs')</a>
                   </div>
                   <ul class="accordion-content nav nav-list collapse" id="accBlogs">
-                      <li><a href="{{route('admin.blog.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.blog.list')</a></li>
                       <li><a href="{{route('admin.blog.create')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.blog.add')</a></li>
-                       <li><a href="{{route('admin.blog.list', ['filter'=>'archive'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.blog.archive')</a></li>
+                      <li><a href="{{route('admin.blog.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.blog.list')</a></li>
+                       <li><a href="{{route('admin.blog.list', ['filter'=>'published'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.blog.publish')</a></li>
+                       <li><a href="{{route('admin.blog.list', ['filter'=>'pinged'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.blog.ping')</a></li>
+                       <li><a href="{{route('admin.blog.list', ['filter'=>'archived'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.blog.archive')</a></li>
+                       <li><a href="{{route('admin.blog.list', ['filter'=>'trashed'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.blog.trash')</a></li>
                   </ul>
               </li>
               <li class="accordion-group">
@@ -265,13 +270,11 @@
                     <li><a class="btn-glyph fontello-icon-cog-4 tip" href="javascript:void(0);" title="settings app"></a></li>
                     <li class="divider-vertical"></li>
                     <li>
-                        <a id="btnLogout" class="btn-glyph fontello-icon-logout-1 tip" title="logout" href="http://localhost/iea/admin/logout"
-                            onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();">
+                        <a id="btnLogout" class="btn-glyph fontello-icon-logout-1 tip" title="logout" href="{{route('logout')}}"
+                            onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                         </a>
-
-                        <form id="logout-form" action="http://localhost/iea/admin/logout" method="POST" style="display: none;">
-                            <input type="hidden" name="_token" value="XekBc13dhl6LPueja3yqXDEHFZnvUbcSAGf36UEz">
+                        <form id="logout-form" action="{{route('logout')}}" method="POST" style="display: none;">
+                            {{csrf_field()}}
                         </form>
                     </li>
                     <li class="divider-vertical"></li>
@@ -281,11 +284,9 @@
         </div>
     </div>
     <!-- // footer content -->
-    
 </footer>
 <!-- // footer-fix  -->
     
-    <!-- Placed at the end of the document so the pages load faster -->
 <script src="{{asset('administrator/js/lib/jquery.js')}}"></script>
 <script src="{{asset('administrator/js/lib/jquery-ui.js')}}"></script>
 <script src="{{asset('administrator/js/lib/jquery.cookie.js')}}"></script>
@@ -374,16 +375,10 @@
 <script src="{{asset('administrator/plugins/pl-visualization/flot/jquery.flot.stackpercent.js')}}"></script>
 <script src="{{asset('administrator/plugins/pl-visualization/flot/jquery.flot.time.js')}}"></script>
 
-
-
-
 <!-- main js -->
 <script src="{{asset('administrator/js/core.js')}}"></script>
 <script src="{{asset('administrator/js/application.js')}}"></script>
-<!-- Only This Demo Page -->
 <script src="{{asset('administrator/js/demo/demo-jquery.dataTables.js')}}"></script>
-
-<!-- Only This Demo Page -->
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA48VeOmkB_L-TWKjgCknG92lDw21mOLvo&callback=myMap"></script>
 

@@ -114,10 +114,12 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function () {
         Route::post('/', 'BlogController@store')->name('admin.blog.store');
         Route::get('update/{blog}', 'BlogController@edit')->name('admin.blog.edit');
         Route::post('update/{blog}', 'BlogController@update')->name('admin.blog.update');
-        Route::get('delete/{blog}', 'BlogController@delete')->name('admin.blog.delete');
+        Route::get('publish/{blog}', 'BlogController@publish')->name('admin.blog.publish');
         Route::get('archive/{blog}', 'BlogController@archive')->name('admin.blog.archive');
+        Route::get('trash/{blog}', 'BlogController@trash')->name('admin.blog.trash');
         Route::get('restore/{blog}', 'BlogController@restore')->name('admin.blog.restore');
         Route::get('star/{blog}', 'BlogController@star')->name('admin.blog.star');
+        Route::get('delete/{blog}', 'BlogController@delete')->name('admin.blog.delete');
     });
     
     // Product Controller Groups
@@ -128,10 +130,11 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function () {
         Route::get('show/{product}', 'ProductController@show')->name('admin.product.show');
         Route::get('update/{product}', 'ProductController@edit')->name('admin.product.edit');
         Route::post('update/{product}', 'ProductController@update')->name('admin.product.update');
-        Route::get('delete/{product}', 'ProductController@delete')->name('admin.product.delete');
+        Route::get('publish/{product}', 'ProductController@publish')->name('admin.product.publish');
         Route::get('archive/{product}', 'ProductController@archive')->name('admin.product.archive');
+        Route::get('trash/{product}', 'ProductController@trash')->name('admin.product.trash');
         Route::get('restore/{product}', 'ProductController@restore')->name('admin.product.restore');
-        Route::get('star/{product}', 'ProductController@star')->name('admin.product.star');
+        Route::get('delete/{product}', 'ProductController@delete')->name('admin.product.delete');
     });
     
     // Category Controller Groups

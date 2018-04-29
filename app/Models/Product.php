@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use AstritZeqiri\Metadata\Traits\HasManyMetaDataTrait;
 use Auth;
 
 // Eloquent\Model to manage Product and Service to sell
 class Product extends BaseModel
 {
+    use HasManyMetaDataTrait;
+    
    /**
      * The table associated with the model.
      *
@@ -33,6 +36,18 @@ class Product extends BaseModel
     public function __construct()
     {
         $this->author_id = (Auth::check()?Auth::user()->id:0);
+    }
+    
+    /**
+     * Scope a query to only include products of a given $status.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param mixed $status
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfStatus($query, $status)
+    {
+        return $query->where('status', $status);
     }
     
     /**
