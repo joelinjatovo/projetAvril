@@ -37,6 +37,13 @@ class Pub extends BaseModel
     {
         $this->author_id = (Auth::check()?Auth::user()->id:0);
     }
+    /**
+     * Get the author record associated with the blog.
+     */
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'author_id', 'id');
+    }
     
     /**
      * Get Url of Attached Image OR Default Image

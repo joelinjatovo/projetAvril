@@ -16,6 +16,24 @@ use App\Models\Image;
 
 class PubController extends Controller
 {
+
+    /**
+     * Show a pub
+     * Admin Only
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @param  App\Models\Pub $pub
+     * @return Illuminate\Http\Response
+     */
+    public function index(Request $request, Pub $pub)
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        return view('admin.pub.index')
+                ->with('item', $pub); 
+    }
+    
     /**
      * Render form to create a publicity
      *
@@ -143,7 +161,9 @@ class PubController extends Controller
         $pub->links = $request->links;
         $pub->save();
         
-        // TODO remove Old Page
+        // remove Old Page
+        PubPage::where('pub_id','=',$pub->id)
+            ->delete();
         
         // Add Publicity to the selected page
         if($pages = $request->page){
@@ -179,5 +199,22 @@ class PubController extends Controller
         
         $items = Pub::paginate($this->pageSize);
         return view('admin.pub.all', compact('items', 'filter', 'page')); 
+    }
+    
+    /**
+    * Delete Pub
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  \App\Models\Pub $pub
+    * @return \Illuminate\Http\Response
+    */
+    public function delete(Request $request,Pub $pub)
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        $pub->delete();
+        return redirect()->route('admin.dashboard')
+            ->with('success',"La categorie a été supprimée avec succés");
     }
 }

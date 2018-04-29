@@ -40,7 +40,7 @@
                                    </td>
                                      <td>{{$item->id}}</td>
                                      <td>
-                                         <a href="{{route('admin.user.show', $item)}}"><img class="thumb" src="{{asset('administrator/img/profil.png')}}" width="50"></a>
+                                         <a href="{{route('admin.user.show', $item)}}"><img class="thumb" src="{{$item->imageUrl()}}" width="50"></a>
                                      </td>
                                      <td>{{$item->name}}</td>
                                      <td>{{$item->email}}</td>

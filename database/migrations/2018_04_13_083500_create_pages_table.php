@@ -18,6 +18,8 @@ class CreatePagesTable extends Migration
             $table->string('title', 150)->index();
             $table->longText('content')->nullable();
             $table->string('path')->nullable();
+            $table->integer('page_order')->nullable();
+            $table->bigInteger('parent_id')->default(0);
             $table->bigInteger('author_id')->default(0);
             $table->timestamps();
         });

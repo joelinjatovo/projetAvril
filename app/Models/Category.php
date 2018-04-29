@@ -51,5 +51,27 @@ class Category extends BaseModel
     {
       return $this->hasMany(Product::class, 'category_id', 'id');
     }
+    
+    /**
+     * A category can have many subProducts
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function subProducts()
+    {
+      return $this->belongsToMany(Product::class, 'objects_categories', 'category_id', 'object_id')
+          ->wherePivot('object_type', Product::class);
+    }
+    
+    /**
+     * A category can have many blogs
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
+     */
+    public function blogs()
+    {
+      return $this->belongsToMany(Product::class, 'objects_categories', 'category_id', 'object_id')
+          ->wherePivot('object_type', Blog::class);
+    }
 
 }

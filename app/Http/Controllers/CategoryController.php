@@ -21,6 +21,23 @@ class CategoryController extends Controller
     }
 
     /**
+     * Show a category
+     * Admin Only
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @param  App\Models\Category $category
+     * @return Illuminate\Http\Response
+     */
+    public function index(Request $request, Category $category)
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        return view('admin.blog.index')
+                ->with('item', $category); 
+    }
+
+    /**
      * Render form to create a category
      *
      * @param  Illuminate\Http\Request  $request
@@ -141,5 +158,23 @@ class CategoryController extends Controller
         $items = Category::paginate($this->pageSize);
         
         return view('admin.category.all', compact('items', 'filter', 'page'));
+    }
+
+
+    /**
+    * Delete Category
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  \App\Models\Category $category
+    * @return \Illuminate\Http\Response
+    */
+    public function delete(Request $request,Category $category)
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        $category->delete();
+        return redirect()->route('admin.dashboard')
+            ->with('success',"La categorie a été supprimée avec succés");
     }
 }

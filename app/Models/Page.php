@@ -23,7 +23,7 @@ class Page extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['title', 'path'];
+    protected $fillable = ['title', 'content', 'path', 'parent_id', 'page_order'];
     
     /**
      * Create a new model instance.
@@ -36,11 +36,33 @@ class Page extends BaseModel
     }
     
     /**
-     * Get the author record associated with the product.
+     * Get the author record associated with the page.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function author()
     {
-        return $this->belongsTo(User::class, 'author_id', 'id');
+        return $this->hasOne(User::class, 'author_id', 'id');
+    }
+    
+    /**
+     * Get the parent record associated with the page.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function parent()
+    {
+        return $this->hasOne(Page::class, 'parent_id', 'id');
+    }
+    
+    /**
+     * Get the childs record associated with the page.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function childs()
+    {
+        return $this->hasMany(Page::class, 'parent_id', 'id');
     }
     
     /**

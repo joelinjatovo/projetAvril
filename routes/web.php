@@ -142,11 +142,9 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function () {
     Route::prefix('category')->group(function(){
         Route::get('/', 'CategoryController@create')->name('admin.category.create');
         Route::post('/', 'CategoryController@store')->name('admin.category.store');
+        Route::get('show/{category}', 'CategoryController@show')->name('admin.category.show');
         Route::get('update/{category}', 'CategoryController@edit')->name('admin.category.edit');
         Route::post('update/{category}', 'CategoryController@update')->name('admin.category.update');
-        Route::get('active/{category}', 'CategoryController@active')->name('admin.category.active');
-        Route::get('block/{category}', 'CategoryController@block')->name('admin.category.block');
-        Route::get('disable/{category}', 'CategoryController@disable')->name('admin.category.disable');
         Route::get('delete/{category}', 'CategoryController@delete')->name('admin.category.delete');
     });
     
@@ -183,10 +181,10 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function () {
     Route::prefix('pub')->group(function(){
         Route::get('/', 'PubController@create')->name('admin.pub.create');
         Route::post('/', 'PubController@store')->name('admin.pub.store');
+        Route::get('show/{pub}', 'PubController@show')->name('admin.pub.show');
         Route::get('update/{pub}', 'PubController@edit')->name('admin.pub.edit');
         Route::post('update/{pub}', 'PubController@update')->name('admin.pub.update');
         Route::get('delete/{pub}', 'PubController@delete')->name('admin.pub.delete');
-        Route::get('restore/{pub}', 'PubController@restore')->name('admin.pub.restore');
     });
     
     // Observation Controller Groups

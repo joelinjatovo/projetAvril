@@ -2,14 +2,9 @@
 
 @section('content')
 <div id="main-content" class="main-content container-fluid">
-@if(Session::has('success')) 
-<div class="alert alert-success">
-    <strong>Information ! </strong> {{Session::get('success')}}
-</div>
-@endif
 <div class="row-fluid page-head">
-    <h2 class="page-title"><i class="fa fa-registered" aria-hidden="true"></i> Categories </h2>
-    <p class="pagedesc">Gestionnaire de categories </p>
+    <h2 class="page-title"><i class="fa fa-registered" aria-hidden="true"></i> Publicites </h2>
+    <p class="pagedesc">Gestionnaire de publicite </p>
     <div class="page-bar">
         <div class="btn-toolbar"> </div>
     </div>
@@ -23,6 +18,7 @@
         </div>
         <div class="row-fluid">
             <div class="span12">
+                @include('includes.alerts')
                 <table id="exampleDT" class="table table-striped table-hover">
                     <caption>
                     Listes des publicites
@@ -34,18 +30,26 @@
                             <th scope="col">Titre<span class="column-sorter"></span></th>
                             <th scope="col">Description<span class="column-sorter"></span></th>
                             <th scope="col">Liens<span class="column-sorter"></span></th>
+                            <th scope="col">Pages<span class="column-sorter"></span></th>
                             <th scope="col">Date de publication <span class="column-sorter"></span></th>
+                            <th scope="col">Auteur <span class="column-sorter"></span></th>
+                            <th scope="col">Actions </th>
                         </tr>
                     </thead>
                     <tbody>
                       @foreach($items as $item) 
                         <tr>
                             <td>{{$item->id}}</td>
-                            <td>{{$item->image}}</td>
+                             <td>
+                                 <a href="{{route('admin.pub.show', $item)}}"><img class="thumb" src="{{$item->imageUrl()}}" width="50"></a>
+                             </td>
                             <td>{{$item->title}}</td>
                             <td>{{$item->content}}</td>
                             <td>{{$item->links}}</td>
-                            <td>{{date('d/m/Y h:i:s',strtotime($item->created_at))}}</td>
+                            <td>{{count($item->pages)}}</td>
+                            <td>{{$item->created_at->diffForHumans()}}</td>
+                            <td><a href="{{route('admin.user.show', $item->author)}}">{{$item->author->name}}</a></td>
+                            <td><a href="{{route('admin.pub.delete', $item)}}" class="btn btn-small btn-warning btn-delete">Supprimer</a></td>
                         </tr>
                        @endforeach
                     </tbody>
