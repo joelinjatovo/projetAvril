@@ -73,21 +73,13 @@ class ConfigController extends Controller
         $item = Config::findOrFail(2);
         $keys = [
                 'facebook' => 'max:100',
-                'font_facebook' => 'max:100',
                 'twitter' => 'max:100',
-                'font_twitter' => 'max:100',
                 'googleplus' => 'max:100',
-                'font_googleplus' => 'max:100',
                 'linkedin' => 'max:100',
-                'font_linkedin' => 'max:100',
                 'tumblr' => 'max:100',
-                'font_tumblr' => 'max:100',
                 'youtube' => 'max:100',
-                'font_youtube' => 'max:100',
                 'pinterest' => 'max:100',
-                'font_pinterest' => 'max:100',
                 'vimeo' => 'max:100',
-                'font_vimeo' => 'max:100',
             ];
         $titles = [
                 'facebook' => 'Facebook',
@@ -101,7 +93,6 @@ class ConfigController extends Controller
             ];
         
         if ($request->isMethod('post')) {
-            
             // Validate request
             $datas = $request->all();
             $validator = Validator::make($datas, $keys);
@@ -125,11 +116,11 @@ class ConfigController extends Controller
     }
 
     /**
-     * Show paiement config page.
+     * Show payment config page.
      *
      * @return \Illuminate\Http\Response
      */
-    public function paiement(Request $request)
+    public function payment(Request $request)
     {
         $item = Config::findOrFail(1);
         $keys = [

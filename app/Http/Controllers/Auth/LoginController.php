@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Page;
 
 class LoginController extends Controller
 {
@@ -42,4 +43,17 @@ class LoginController extends Controller
         return '/'.Auth::user()->role;
     }
     
+    /**
+     * Show the application's login form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showLoginForm()
+    {
+        $page = Page::where('path', '/login')
+            ->locale()
+            ->first();
+        return view('auth.login')
+            ->with('item', $page);
+    }
 }

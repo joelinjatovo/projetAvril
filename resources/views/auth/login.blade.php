@@ -23,34 +23,13 @@
             <div class="col-md-6">
                 <div class="contact-form-wrapper">
                     <div class="contents">
-                        <p>Sed perspiciatis unde natus error sit voluptatem accusantium doloremque  laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae.</p>
+                        <p>{!!$item->content!!}</p>
                     </div>
+                    @foreach($item->childs as $child)
                     <div class="contact-page-contents clearfix">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <i class="fa fa-map-marker"></i>
-                                <div class="contents">
-                                    <h6 class="title">Mailing Address</h6>
-                                    <address>
-                                        95 Amphitheatre Parkway
-                                        Mountain View CA,
-                                        United States
-                                    </address>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <i class="fa fa-phone"></i>
-                                <div class="contents">
-                                    <h5 class="title">Contact Info</h5>
-                                    <ul>
-                                        <li>Phone: (123) 45678910</li>
-                                        <li>Mail: company@domain.com</li>
-                                        <li>Fax: +84 962 216 601</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                        {!!$child->content!!}
                     </div>
+                    @endforeach
 
                 </div>
             </div>

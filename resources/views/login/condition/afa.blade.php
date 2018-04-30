@@ -12,6 +12,24 @@
 @endsection
 
 @section('content')
+
+<div id="myModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h4 class="modal-title">{{$page->title}}</h4>
+      </div>
+      <div class="modal-body">
+          <p>{{$page->content}}</p>
+      </div>
+      <div class="modal-footer">
+       <a type="button" class="pull-left btn btn-default" href="javascript:history.back()">Abandon</a>
+       <a type="button" class="btn btn-default" href="#section1" id="custom-close">Continue</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- content -->
 <div id="property-single"> 
     <div class="main-slider-wrapper clearfix content corps"> 
@@ -23,41 +41,6 @@
             </div>                 
         </div>             
     </div>
-
-   <!-- Modal Bootstrap   -->
-    <div id="myModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
-      <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title"> Explanation message</h4>
-          </div>
-          <div class="modal-body">
-            <p>
-                The Australian Francophone Agents are Australian agents who are partners with "Investir en Australie" website.
-                They are the essential link in the material realization of the sale of the products posted on the site, but
-                they can also sell their own products.The Australian Francophone Agent must make the commitment to provide
-                prospective or actual purchasers with a service in French during preliminary sales and during sales
-                transactions. They must also accept that a clientele introductory fee
-                ("Commission de Présentation de Clientèle" - CPC) will be due to the company managing IEA website in case of
-                actual sale of products, accept and respect the Terms and Conditions of Use of the site, and make the
-                commitment to verify and guarantee that the products for the sale of which they are the operating agent are
-                effectively residential, land, industrial or commercial properties which may be sold to non-resident foreigners
-                in accordance with the Australian law and the rules applicable to foreign investment by the Foreign Investment Review
-                Board (FIRB).
-            </p>
-          </div>
-          <div class="modal-footer">
-           <a type="button" class="pull-left btn btn-default" href="javascript:history.back()">Abandon</a>
-           <a type="button" class="btn btn-default" href="#section1" id="custom-close">Continue</a>
-          </div>
-        </div>
-
-      </div>
-    </div>
-    <!-- End Bootstrap Modal -->
-
     <div class="container" id="section1"> 
         <div class="row">
             <div class="col-md-12"> 

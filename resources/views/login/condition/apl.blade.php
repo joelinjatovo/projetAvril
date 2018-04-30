@@ -12,27 +12,14 @@
 @endsection
 
 @section('content')
-<!-- Modal Bootstrap   -->
 <div id="myModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog">
-    <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Message d'information</h4>
+          <h4 class="modal-title">{{$page->title}}</h4>
       </div>
       <div class="modal-body">
-        <p>
-          Les Agences Partenaires Locales (APL) sont des agences immobilières et d'affaires opérant
-          dans des pays et territoires francophones qui souhaitent participer au courant d'investissement
-          que développe le projet "Investir en Australie" (IEA).
-          Dans ce cadre, l'APL est chargée d'une Mission d'Information, d'Orientation et de Promotion (MIOP)
-          en direction des Membres du site IEA. Les Membres qui souhaitent une assistance locale pour leur
-          démarche d'investissement en Australie souscrivent une relation exclusive de 180 jours avec une APL
-          près de chez eux. En cas d'achat par le Membre inscrit auprès d'une APL, celle-ci perçoit une
-          "Commission de Contribution aux Ventes (CCV) égale à un pourcentage du prix de vente du bien.
-          Le montant de cette CCV peut être doublé si l'APL a été à l'origine d'un certain montant de chiffre
-          d'affaires au cours de l'année précédente.
-          </p>
+          <p>{{$page->content}}</p>
       </div>
       <div class="modal-footer">
        <a type="button" class="pull-left btn btn-default" href="javascript:history.back()">Abandonner</a>
@@ -41,7 +28,7 @@
     </div>
   </div>
 </div>
-<!-- End Bootstrap Modal -->
+
 <div id="property-single">
     <div class="container">
         <div class="row">

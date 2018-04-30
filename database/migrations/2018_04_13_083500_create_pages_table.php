@@ -20,6 +20,7 @@ class CreatePagesTable extends Migration
             $table->string('path')->nullable();
             $table->integer('page_order')->nullable();
             $table->integer('is_pub')->default(0);
+            $table->string('language', 2)->default('fr');
             $table->bigInteger('parent_id')->default(0);
             $table->bigInteger('author_id')->default(0);
             $table->timestamps();

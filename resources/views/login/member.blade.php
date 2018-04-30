@@ -17,18 +17,10 @@
   <div class="modal-dialog">
       <div class="modal-content">
           <div class="modal-header">
-              <h4 class="modal-title">Message d'information</h4>
+              <h4 class="modal-title">{{$page->title}}</h4>
           </div>
           <div class="modal-body">
-              <p>Merci de votre intention de vous inscrire en qualité de Membre sur le site "Investir en Australie".
-                  En plus de pouvoir, comme tout Visiteur, voir dans le détail les produits et opérer des sélections
-                  multicritères, votre inscription vous permettra d'enregistrer vos recherches multicritères,
-                  d'enregistrer les produits qui vous intéressent dans vos "favoris", de partager des produits avec
-                  vos amis par emails et sur les réseaux sociaux, d'échanger avec une Agence Francophone Australienne
-                  située à proximité du bien qui vous intéresse. Lorsque vous aurez pris la décision d'acheter vous
-                  pourrez lancer la procédure d'acquisition en ligne. Au cours de cette procédure il vous sera proposé
-                  les services de certains de nos partenaires australiens francophones auxquels vous pourriez faire appel
-                  si vous en aviez besoin.</p>
+              <p>{{$page->content}}</p>
           </div>
           <div class="modal-footer">
               <a type="button" class="pull-left btn btn-primary" href="javascript:history.back()">Abandonner</a>

@@ -14,6 +14,7 @@ use App\Events\UserRegistered;
 use App\Models\User;
 use App\Models\Localisation;
 use App\Models\Image;
+use App\Models\Page;
 
 class RegisterController extends Controller
 {
@@ -70,7 +71,7 @@ class RegisterController extends Controller
      */
     protected function create(array $datas)
     {
-        $password = '1212'; //Hash::generate();
+        $password = $datas['password'];
         $datas['password'] = bcrypt($password);
         $datas['status'] = 'pinged';
         
@@ -87,23 +88,30 @@ class RegisterController extends Controller
     public function index(Request $request, $role)
     {
         $action = route('register',['role'=>$role]);
+        $page = Page::where('path', '/register/'.$role)
+            ->locale()
+            ->first();
         switch($role){
             case "member":
                 $pays = $this->getPaysFromCsv();
                 $tels = $this->getTelsFromCsv();
-                return view('login.'.$role, ["pays"=>$pays , "tels"=>$tels, "action"=>$action]);
+                return view('login.'.$role, ["pays"=>$pays , "tels"=>$tels, "action"=>$action])
+                    ->with('page', $page);
             break;
             case "seller":
                 $request->session()->put("step", "condition");
-                return view('login.condition.seller');
+                return view('login.condition.seller')
+                    ->with('page', $page);
             break;
             case "afa":
                 $request->session()->put("step", "condition");
-                return view('login.condition.afa');
+                return view('login.condition.afa')
+                    ->with('page', $page);
             break;
             case "apl":
                 $request->session()->put("step", "condition");
-                return view('login.condition.apl');
+                return view('login.condition.apl')
+                    ->with('page', $page);
             break;
         }
     }

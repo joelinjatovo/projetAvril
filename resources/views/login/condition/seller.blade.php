@@ -26,14 +26,10 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title"> Explanation message</h4>
+              <h4 class="modal-title">{{$page->title}}</h4>
           </div>
           <div class="modal-body">
-            <p>
-                The Seller must accept The Terms and Conditions of Use of "Investir en Australie" website and make the
-                commitment  to display only products that can be sold to non-resident foreigners in accordance with Australian
-                law and the rules applicable by the Foreign Investment Review Board (FIRB).
-            </p>
+              <p>{{$page->content}}</p>
           </div>
           <div class="modal-footer">
            <a type="button" class="pull-left btn btn-default" href="javascript:history.back()">Abandon</a>

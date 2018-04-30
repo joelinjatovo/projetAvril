@@ -43,7 +43,7 @@
                 </div>
                 <div class="row-fluid">
                     <div class="well well-nice">
-                        <select name="parent_id" style="width:100%;">
+                        <select name="parent_id" style="width:100%;" class="input-block-level" >
                             <option>@lang('app.select_one')</option>
                             @foreach($pages as $page)
                                 <option value="{{$page->id}}" {{$page->id==$item->parent_id?'selected':''}}>{{$page->title}} ({{$page->path}})</option>
@@ -58,7 +58,20 @@
                 </div>
                 <div class="row-fluid">
                     <div class="well well-nice">
-                        <input type="number" min="0" name="page_order" placeholder="Ordre de la page" style="width:100%;">
+                        <input type="number" min="0" name="page_order" class="input-block-level"  placeholder="Ordre de la page" style="width:100%;">
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="page-header">
+                    <h3><i class="fontello-icon-article-alt opaci35"></i> Langue</h3>
+                </div>
+                <div class="row-fluid">
+                    <div class="well well-nice">
+                        <select name="language" style="width:100%;" class="input-block-level" >
+                            <option value="fr">Francais</option>
+                            <option value="en">English</option>
+                        </select>
                     </div>
                 </div>
             </section>

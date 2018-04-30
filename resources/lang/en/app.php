@@ -6,22 +6,22 @@ return [
     'copyright'         => '&ccopy; Copyright :year : "Investir en Italie" - Tout droit reserve',
     'last_update'       => 'Derniere Modification, :date',
     
-    'home'      => 'Accueil',
-    'language'      => 'Langue',
-    'connexion'      => 'Connexion',
-    'account'      => 'Mon Compte',
+    'home'      => 'Home',
+    'language'      => 'Language',
+    'connexion'      => 'Login',
+    'account'      => 'Account',
     'profile'      => 'Profile',
     'dashboard'    => 'Dashboard',
-    'logout'       => 'Deconnexion',
+    'logout'       => 'Logout',
     'cart'         => 'Cart',
     'detail'                => 'Detail',
     'description'           => 'Description',
-    'select_one'            => 'Selectionner un',
-    'i_want_buy_this_item'  => 'Je veux acheter ce produit',
+    'select_one'            => 'Select one',
+    'i_want_buy_this_item'  => 'I want to buy',
 
     'immobilier'        => 'Immobilier',
-    'residentiel'       => 'residentiel',
-    'foncier'           => 'foncier',
+    'residentiel'       => 'Residentiel',
+    'foncier'           => 'Foncier',
     'business'          => 'Business',
     'industrial'        => 'Industriel',
     'commercial'        => 'Commercial',
@@ -31,11 +31,8 @@ return [
     'conditions'        => 'Conditions',
     'condition'         => 'Condition',
     'compte'            => 'Compte',
-    'confidential'      => 'Confidentialite',
-    'user_guide'        => "Guide de l'utilisateur",
-    
-    'profile'       => 'Profile',
-    'dashboard'     => 'Dashboard',
+    'confidential'      => 'Confidentiality',
+    'user_guide'        => "User guide",
     
     'publicities'   => 'Publicites',
     'Publicite'     => 'Publicite',
@@ -46,8 +43,8 @@ return [
     'configs'       => 'Configurations',
     'config.site'   => 'Information du site',
     'config.social' => 'Reseaux Sociaux',
-    'config.payment'   => 'Paiement',
-    'config.static_page'   => 'Page Statique',
+    'config.card'   => 'Paiement',
+    'config.page'   => 'Page Statique',
     
     'blogs'                 => 'Blogs',
     'blog'                  => 'Blog',
@@ -106,19 +103,6 @@ return [
     'admin.orders'          => 'Orders',
     'admin.carts'           => 'Carts',
     
-    'social_network'  => 'Réseaux Sociaux',
-    'info_site'  => 'Informations du site',
-    'payment'  => 'Informations sur le paiement',
-    'static_page'  => 'Pages statiques',
-    
-    
-    'btn.save'           => 'Sauvegarder',
-    'btn.cancel'         => 'Annuler',
-    'btn.edit'           => 'Modifier',
-    'btn.remove'         => 'Effacer',
-    'btn.delete'         => 'Supprimer',
-    'btn.view'           => 'Voir',
-    'btn.more'           => 'Plus',
 
 ];
 

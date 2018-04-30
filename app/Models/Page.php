@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use AstritZeqiri\Metadata\Traits\HasManyMetaDataTrait;
 use Auth;
+use App;
 
 // Eloquent Model to manage Page list
 class Page extends BaseModel
@@ -33,6 +34,18 @@ class Page extends BaseModel
     public function __construct()
     {
         $this->author_id = (Auth::check()?Auth::user()->id:0);
+    }
+    
+    /**
+     * Scope a query to only include pages of a current language.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param mixed $role
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeLocale($query)
+    {
+        return $query->where('language', App::getLocale());
     }
     
     /**

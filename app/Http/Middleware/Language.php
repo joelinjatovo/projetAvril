@@ -19,11 +19,6 @@ class Language
      */
     public function handle($request, Closure $next)
     {
-        /*
-        $locale = Session::get('locale', Auth::check()?Auth::user()->language:config('app.locale'));
-        App::setLocale($locale);
-        */
-        
         if(Session::has('locale')){
             App::setLocale(Session::get('locale'));
         }elseif(Auth::check()&&Auth::user()->language){

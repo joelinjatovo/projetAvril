@@ -73,6 +73,7 @@ class PageController extends Controller
         if($value = $request->old('path'))       $item->path = $value;
         if($value = $request->old('page_order')) $item->page_order = $value;
         if($value = $request->old('parent_id'))  $item->parent_id = $value;
+        if($value = $request->old('language'))   $item->language = $value;
         
         $action = route('admin.page.store');
         $pages = Page::where('parent_id', 0)->get();
@@ -111,6 +112,7 @@ class PageController extends Controller
         $page->parent_id = $request->parent_id;
         $page->page_order = $request->page_order;
         $page->path = $request->path;
+        $page->language = $request->language;
         $page->save();
         
         return back()->with('success',"La page a été bien enregistrée.");
@@ -133,6 +135,7 @@ class PageController extends Controller
         if($value = $request->old('path'))       $item->path = $value;
         if($value = $request->old('page_order')) $item->page_order = $value;
         if($value = $request->old('parent_id'))  $item->parent_id = $value;
+        if($value = $request->old('language'))   $item->language = $value;
         
         $action = route('admin.page.update', ['page'=>$page]);
         $pages = Page::where('parent_id', 0)->get();
@@ -169,6 +172,7 @@ class PageController extends Controller
         $page->parent_id = $request->parent_id;
         $page->page_order = $request->page_order;
         $page->path = $request->path;
+        $page->language = $request->language;
         $page->save();
         
         return back()->with('success',"La page a été bien modifiée.");
@@ -209,7 +213,7 @@ class PageController extends Controller
         
         $page->delete();
         return redirect()->route('admin.dashboard')
-            ->with('success',"La categorie a été supprimée avec succés");
+            ->with('success',"La page a été supprimée avec succés");
     }
 
 }

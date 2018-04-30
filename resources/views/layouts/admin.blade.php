@@ -194,8 +194,8 @@
                         <i class="chevron fontello-icon-right-open-3"></i>@lang('app.admin.pages')</a>
                   </div>
                   <ul class="accordion-content nav nav-list collapse" id="accPages">
-                      <li><a href="{{route('admin.page.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.page.list')</a></li>
                       <li><a href="{{route('admin.page.create')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.page.add')</a></li>
+                      <li><a href="{{route('admin.page.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.page.list')</a></li>
                   </ul>
               </li>
               <li class="accordion-group">
@@ -210,7 +210,7 @@
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fontello-icon-mail-4"></i> Messages</a>
+                      <a href="" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fontello-icon-mail-4"></i> @lang('app.messages')</a>
                   </div>
               </li>
               <li class="accordion-group">
@@ -223,6 +223,7 @@
                   <ul class="accordion-content nav nav-list collapse" id="accRéglages">
                     <li><a href="{{route('config.site')}}"> <i class="fontello-icon-right-dir"></i>@lang('app.config.site')</a></li>
                     <li><a href="{{route('config.social')}}"> <i class="fontello-icon-right-dir"></i>@lang('app.config.social')</a></li>
+                    <li><a href="{{route('config.payment')}}"> <i class="fontello-icon-right-dir"></i>@lang('app.config.payment')</a></li>
                   </ul>
               </li>
               <li class="accordion-group">
