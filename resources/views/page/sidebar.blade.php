@@ -8,24 +8,12 @@
         </div>
     </section>
     @endforeach
-    <section class="widget property-meta-wrapper clearfix">
-        <div class="col-md-12">
-            <!-- google maps API -->
-            <div class="content-box-large box-with-header">
-                <div id="map"></div>
-            </div>
-            <h6><img src="{{asset('images/features/bleu.png')}}" width="10" height="10"> Résidentiel </h6>
-            <h6><img src="{{asset('images/features/vert.png')}}" width="10" height="10"> Foncier </h6>
-            <h6><img src="{{asset('images/features/rouge.png')}}" width="10" height="10"> Industriel </h6>
-            <h6><img src="{{asset('images/features/jaune.png')}}" width="10" height="10"> Commercial</h6>
-        </div>
-    </section>
     <section class="widget recent-properties clearfix">
-        <h5 class="title">Produits Récents</h5>
+        <h5 class="title">Récents</h5>
         @foreach($products as $product)
         <div class="property clearfix">
-            <a href="{{route('product.index',['product'=>$product])}}">
-                <img src="{{$product->imageUrl(false)}}" alt="Property Image">
+            <a href="#" class="feature-image zoom">
+                <img data-action="zoom" src="{{asset('images/property/1.jpg')}}" alt="Property Image">
             </a>
             <div class="property-contents">
                 <h6 class="entry-title"> <a href="{{route('product.index',['product'=>$product])}}">{{$product->title}}</a></h6>
@@ -34,11 +22,12 @@
         </div>
         @endforeach
     </section>
+    
     <section class="widget property-taxonomies clearfix">
-        <h5 class="title">@lang('app.categories')</h5>
+        <h5 class="title">Types récents</h5>
         <ul class="clearfix">
             @foreach($categories as $category)
-            <li><a href="#">{{$category->title}} </a><span class="pull-right">30</span></li>
+            <li><a href="#">{{$category->title}} </a><span class="pull-right">{{count($category->products)}}</span></li>
             @endforeach
         </ul>
     </section>

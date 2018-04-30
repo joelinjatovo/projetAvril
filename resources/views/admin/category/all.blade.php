@@ -43,7 +43,10 @@
                             <td>{{count($item->products)}} / {{count($item->subProducts)}}</td>
                             <td>{{count($item->blogs)}}</td>
                             <td><a href="{{route('admin.user.show', $item->author)}}">{{$item->author->name}}</a></td>
-                            <td><a href="{{route('admin.category.delete', $item)}}" class="btn btn-small btn-warning btn-delete">Supprimer</a></td>
+                            <td>
+                                <a href="{{route('admin.category.edit', $item)}}" class="btn btn-small btn-info btn-update">Modifier</a>
+                                <a href="{{route('admin.category.delete', $item)}}" class="btn btn-small btn-warning btn-delete">Supprimer</a>
+                            </td>
                         </tr>
                        @endforeach
                     </tbody>

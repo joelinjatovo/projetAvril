@@ -11,9 +11,9 @@
 @endsection
 
 @section('content')
-<div id="breadcrumb" class="main-slider-wrapper clearfix content corps">
-    @include('includes.breadcrumb')
-</div>     
+@component('includes.breadcrumb')
+    @lang('app.blogs')
+@endcomponent
 
 <div id="blog-listing" class="grid-style"> 
     <header class="section-header text-center"> 

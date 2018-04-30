@@ -7,11 +7,55 @@ use App\Http\Controllers\Controller;
 use Validator;
 use Auth;
 
+use App\Models\Blog;
 use App\Models\Page;
 use App\Models\PubPage;
+use App\Models\Product;
+use App\Models\Category;
 
 class PageController extends Controller
 {
+
+    /**
+     * Show a page
+     * Front page
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @param  App\Models\Page $page
+     * @return Illuminate\Http\Response
+     */
+    public function index(Request $request, Page $page)
+    {
+        $products = Product::orderBy('created_at','desc')->take(3)->get();
+        $recentProducts = Product::orderBy('created_at','desc')->take(6)->get();
+        $categories = Category::orderBy('created_at', 'desc')->take(5)->get();
+        $blogs = Blog::orderBy('created_at', 'desc')->take(6)->get();
+        return view('page.index')
+            ->with('item', $page)
+            ->with('pubs', $page->pubs)
+            ->with('products', $products)
+            ->with('blogs', $blogs)
+            ->with('recentProducts', $recentProducts)
+            ->with('categories', $categories);
+    }
+
+    /**
+     * Show a page
+     * Admin Only
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @param  App\Models\Page $page
+     * @return Illuminate\Http\Response
+     */
+    public function show(Request $request, Page $page)
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        return view('admin.page.index')
+                ->with('item', $page); 
+    }
+    
     /**
      * Render form to create a page
      *
@@ -24,11 +68,16 @@ class PageController extends Controller
         $this->middleware('role:admin');
         
         $item = new Page();
-        if($value = $request->old('title'))     $item->title = $value;
-        if($value = $request->old('path'))      $item->path = $value;
+        if($value = $request->old('title'))      $item->title = $value;
+        if($value = $request->old('content'))    $item->content = $value;
+        if($value = $request->old('path'))       $item->path = $value;
+        if($value = $request->old('page_order')) $item->page_order = $value;
+        if($value = $request->old('parent_id'))  $item->parent_id = $value;
         
         $action = route('admin.page.store');
-        return view('admin.page.update', ['item'=>$item, 'action'=>$action]);
+        $pages = Page::where('parent_id', 0)->get();
+        return view('admin.page.update', ['item'=>$item, 'action'=>$action])
+            ->with('pages', $pages);
     }
     
     /**
@@ -46,6 +95,7 @@ class PageController extends Controller
         $datas = $request->all();
         $validator = Validator::make($datas,[
                             'title' => 'required|max:100',
+                            'content' => 'required',
                             'path' => 'required',
                         ]);
         
@@ -57,6 +107,9 @@ class PageController extends Controller
         // Create page
         $page = new Page();
         $page->title = $request->title;
+        $page->content = $request->content;
+        $page->parent_id = $request->parent_id;
+        $page->page_order = $request->page_order;
         $page->path = $request->path;
         $page->save();
         
@@ -75,12 +128,16 @@ class PageController extends Controller
         $this->middleware('auth');
         $this->middleware('role:admin');
         
-        if($value = $request->old('title'))     $page->title = $value;
-        if($value = $request->old('path'))      $page->path = $value;
+        if($value = $request->old('title'))      $item->title = $value;
+        if($value = $request->old('content'))    $item->content = $value;
+        if($value = $request->old('path'))       $item->path = $value;
+        if($value = $request->old('page_order')) $item->page_order = $value;
+        if($value = $request->old('parent_id'))  $item->parent_id = $value;
         
         $action = route('admin.page.update', ['page'=>$page]);
-        
-        return view('admin.page.update', ['item'=>$page, 'action'=>$action]);
+        $pages = Page::where('parent_id', 0)->get();
+        return view('admin.page.update', ['item'=>$page, 'action'=>$action])
+            ->with('pages', $pages);
     }
     
     /**
@@ -98,6 +155,7 @@ class PageController extends Controller
         // Validate request
         $validator = Validator::make($request->all(),[
                             'title' => 'required|max:100',
+                            'content' => 'required',
                             'path' => 'required|max:100',
                         ]);
         
@@ -107,6 +165,9 @@ class PageController extends Controller
         }
         
         $page->title = $request->title;
+        $page->content = $request->content;
+        $page->parent_id = $request->parent_id;
+        $page->page_order = $request->page_order;
         $page->path = $request->path;
         $page->save();
         
@@ -132,4 +193,23 @@ class PageController extends Controller
         $items = Page::paginate($this->pageSize);
         return view('admin.page.all', compact('items', 'filter', 'page')); 
     }
+
+    
+    /**
+    * Delete Page
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  \App\Models\Page $page
+    * @return \Illuminate\Http\Response
+    */
+    public function delete(Request $request,Page $page)
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        $page->delete();
+        return redirect()->route('admin.dashboard')
+            ->with('success',"La categorie a été supprimée avec succés");
+    }
+
 }

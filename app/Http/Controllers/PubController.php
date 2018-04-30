@@ -25,7 +25,7 @@ class PubController extends Controller
      * @param  App\Models\Pub $pub
      * @return Illuminate\Http\Response
      */
-    public function index(Request $request, Pub $pub)
+    public function show(Request $request, Pub $pub)
     {
         $this->middleware('auth');
         $this->middleware('role:admin');

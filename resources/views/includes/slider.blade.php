@@ -10,8 +10,8 @@
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
                     <!-- corps barre de recherche -->
                      <div class="search-form wow pulse" data-wow-delay="0.8s">
-                        <form method="post" action="http://localhost/iea/search" class="form-inline">
-                            <input type="hidden" name="_token" value="BHFqg7fSe2wdmu9XpbP4VUXXtPDIdwm007pnDXuQ">
+                        <form method="post" action="{{route('search')}}" class="form-inline">
+                            {{csrf_field()}}
                             <button class="btn  toggle-btn" type="button"><i class="fa fa-bars"></i></button>
                              <div class="form-group">
                                 <select id="basic" class="selectpicker show-tick form-control" name="etats">

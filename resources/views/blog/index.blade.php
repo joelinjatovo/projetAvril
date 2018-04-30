@@ -1,10 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="main-slider-wrapper clearfix content corps">
-    @include('includes.breadcrumb')
-</div>
-
+@component('includes.breadcrumb')
+    @lang('app.blogs')
+@endcomponent
 <div class="container">
     <div class="row"> 
         <div class="col-sm-8"> 
@@ -13,7 +12,7 @@
                     <img data-action="zoom" src="{{$item->imageUrl()}}" alt="{{$item->title}}" style="width:100%;"> 
                 </figure>                         
                 <div class="post-footer post-meta clearfix">
-                    <time class="updated btn btn-warning"><p>{{Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $item->created_at)->format('d F')}}</p></time>                             
+                    <time class="updated btn btn-warning"><p>{{$item->created_at->diffForHumans()}}</p></time>                             
                     <h4 class="entry-title">{{$item->title}}</h4> 
                     <span class="author">Publié par<a href="#">{{$item->author->name}}</a></span> 
                     <span>Commentaire<a href="#" style="font-size: inherit; background-color: rgb(255, 255, 255);">{{count($item->comments)}}</a></span>

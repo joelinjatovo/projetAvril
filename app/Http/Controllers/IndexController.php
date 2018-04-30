@@ -23,27 +23,14 @@ class IndexController extends Controller
     }
 
     /**
-     * Show the home page.
+     * Show home page
      *
-     * @return \Illuminate\Http\Response
+     * @param  Illuminate\Http\Request  $request
+     * @return Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::orderBy('created_at','desc')->take(3)->get();
-        $recentProducts = Product::orderBy('created_at','desc')->take(6)->get();
-        $categories = Category::orderBy('created_at', 'desc')->take(5)->get();
-        $blogs = Blog::orderBy('created_at', 'desc')->take(6)->get();
-        if($page = Page::where('path', '=', '/blogs*')->first()){
-            $pubs = $page->pubs;
-        }else{
-            $pubs = [];
-        }
-        return view('index.index')
-            ->with('pubs', $pubs)
-            ->with('products', $products)
-            ->with('blogs', $blogs)
-            ->with('recentProducts', $recentProducts)
-            ->with('categories', $categories);
+        return $this->render($request, 1);
     }
 
     /**
@@ -51,59 +38,9 @@ class IndexController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function services()
+    public function services(Request $request)
     {
-        $products = Product::orderBy('created_at','desc')->take(3)->get();
-        $categories = Category::orderBy('created_at', 'desc')->take(5)->get();
-        if($page = Page::where('path', '=', '/blogs*')->first()){
-            $pubs = $page->pubs;
-        }else{
-            $pubs = [];
-        }
-        return view('index.service')
-            ->with('pubs', $pubs)
-            ->with('products', $products)
-            ->with('categories', $categories);
-    }
-
-    /**
-     * Show the term and condition page.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function terms()
-    {
-        $products = Product::orderBy('created_at','desc')->take(3)->get();
-        $categories = Category::orderBy('created_at', 'desc')->take(5)->get();
-        if($page = Page::where('path', '=', '/blogs*')->first()){
-            $pubs = $page->pubs;
-        }else{
-            $pubs = [];
-        }
-        return view('index.service')
-            ->with('pubs', $pubs)
-            ->with('products', $products)
-            ->with('categories', $categories);
-    }
-
-    /**
-     * Show the help's page.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function help()
-    {
-        $products = Product::orderBy('created_at','desc')->take(3)->get();
-        $categories = Category::orderBy('created_at', 'desc')->take(5)->get();
-        if($page = Page::where('path', '=', '/blogs*')->first()){
-            $pubs = $page->pubs;
-        }else{
-            $pubs = [];
-        }
-        return view('index.service')
-            ->with('pubs', $pubs)
-            ->with('products', $products)
-            ->with('categories', $categories);
+        return $this->render($request, 3);
     }
 
     /**
@@ -111,19 +48,29 @@ class IndexController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function publicities()
+    public function publicities(Request $request)
     {
-        $products = Product::orderBy('created_at','desc')->take(3)->get();
-        $categories = Category::orderBy('created_at', 'desc')->take(5)->get();
-        if($page = Page::where('path', '=', '/blogs*')->first()){
-            $pubs = $page->pubs;
-        }else{
-            $pubs = [];
-        }
-        return view('index.publicities')
-            ->with('pubs', $pubs)
-            ->with('products', $products)
-            ->with('categories', $categories);
+        return $this->render($request, 5);
+    }
+
+    /**
+     * Show the term and condition page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function terms(Request $request)
+    {
+        return $this->render($request, 6);
+    }
+
+    /**
+     * Show the guide's page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function guide(Request $request)
+    {
+        return $this->render($request, 8);
     }
 
     /**
@@ -131,18 +78,21 @@ class IndexController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function confidentialities()
+    public function confidentialities(Request $request)
     {
-        $products = Product::orderBy('created_at','desc')->take(3)->get();
-        $categories = Category::orderBy('created_at', 'desc')->take(5)->get();
-        if($page = Page::where('path', '=', '/blogs*')->first()){
-            $pubs = $page->pubs;
-        }else{
-            $pubs = [];
-        }
-        return view('index.service')
-            ->with('pubs', $pubs)
-            ->with('products', $products)
-            ->with('categories', $categories);
+        return $this->render($request, 7);
+    }
+
+    /**
+     * Render page 
+     *
+     * @param Integer $id
+     * @return \Illuminate\Http\Response
+     */
+    private function render(Request $request, $id)
+    {
+        $page = Page::findOrFail($id);
+        $ctrl = new PageController();
+        return $ctrl->index($request, $page);
     }
 }

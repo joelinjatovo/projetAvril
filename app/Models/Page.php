@@ -36,6 +36,17 @@ class Page extends BaseModel
     }
     
     /**
+     * Excerpt
+     *
+     * @param int $length
+     * @return String
+     */
+    public function excerpt($length = 100)
+    {
+        return substr($this->content, 0, $length);
+    }
+    
+    /**
      * Get the author record associated with the page.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne

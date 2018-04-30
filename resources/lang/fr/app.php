@@ -6,6 +6,9 @@ return [
     'copyright'         => '&ccopy; Copyright :year : "Investir en Italie" - Tout droit reserve',
     'last_update'       => 'Derniere Modification, :date',
     
+    'home'      => 'Accueil',
+    'language'      => 'Langue',
+    'connexion'      => 'Connexion',
     'account'      => 'Mon Compte',
     'profile'      => 'Profile',
     'dashboard'    => 'Dashboard',

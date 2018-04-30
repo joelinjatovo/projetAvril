@@ -12,21 +12,13 @@
 @endsection
 
 @section('content')
-<div class="main-slider-wrapper clearfix content corps">
-    <div id="site-banner" class="text-center clearfix">
-        <div class="container">
-            <h1 class="title wow slideInLeft">Connexion</h1>
-            <ol class="breadcrumb wow slideInRight">
-                <li><a href="http://localhost/iea">Accueil</a></li>
-                <li class="active">Connexion</li>
-            </ol>
-        </div>
-    </div>
-</div>
+@component('includes.breadcrumb')
+    @lang('app.connexion')
+@endcomponent
 
 <div id="contact-page" class="contact-page-var-two">
     <div class="container">
-        <h3 class="entry-title">Connexion</h3>
+        <h3 class="entry-title">@lang('app.connexion')</h3>
         <div class="row">
             <div class="col-md-6">
                 <div class="contact-form-wrapper">

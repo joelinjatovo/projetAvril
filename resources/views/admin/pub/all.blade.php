@@ -49,7 +49,10 @@
                             <td>{{count($item->pages)}}</td>
                             <td>{{$item->created_at->diffForHumans()}}</td>
                             <td><a href="{{route('admin.user.show', $item->author)}}">{{$item->author->name}}</a></td>
-                            <td><a href="{{route('admin.pub.delete', $item)}}" class="btn btn-small btn-warning btn-delete">Supprimer</a></td>
+                            <td>
+                                <a href="{{route('admin.pub.edit', $item)}}" class="btn btn-small btn-info btn-update">Modifier</a>
+                                <a href="{{route('admin.pub.delete', $item)}}" class="btn btn-small btn-warning btn-delete">Supprimer</a>
+                            </td>
                         </tr>
                        @endforeach
                     </tbody>

@@ -217,7 +217,7 @@ input[type="search"]::-webkit-search-decoration {
     font-weight: 600;
 }
 .search-form {
-    top: -1000px;
+    top: 100px;
     background-color: #fff;
     border-radius: 5px;
     padding: 20px 0;
@@ -935,7 +935,7 @@ label small{
 
 .slider-content{
     position: absolute;
-    top: 20%;
+    top: 100px;
     text-align: center;
     color: #FFF;
     width: 100%;

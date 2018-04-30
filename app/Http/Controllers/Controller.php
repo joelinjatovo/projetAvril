@@ -7,6 +7,10 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
+use Auth;
+use Session;
+use App;
+
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -17,13 +21,11 @@ class Controller extends BaseController
     protected $pageSize = 10;
     
     /**
-     * Generate slug for the Current Model
+     * Create a new controller instance.
      *
-     * @params String $text
-     * @return String $text
+     * @return void
      */
-    public function generateSlug($text)
+    public function __construct()
     {
-        return $text;
     }
 }

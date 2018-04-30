@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -68,10 +68,10 @@
                         </div>
                         <div class="language-in-header">
                             <i class="fa fa-globe"></i>
-                            <label for="language-dropdown">Langue :</label>
+                            <label for="language-dropdown">@lang('app.language') :</label>
                             <select name="currency" id="language-dropdown" onChange="location.href=''+this.options[this.selectedIndex].value;">
-                                <option value="{{route('localization', ['locale'=>'fr'])}}" @if('fr'==App::getLocale()) {{'selected'}} @endif>Fr</option>
-                                <option value="{{route('localization', ['locale'=>'en'])}}" @if('en'==App::getLocale()) {{'selected'}} @endif>Eng</option>
+                                <option value="{{route('localization', ['locale'=>'fr'])}}" @if(App::isLocale('fr')) selected @endif>Fr</option>
+                                <option value="{{route('localization', ['locale'=>'en'])}}" @if(App::isLocale('en')) selected @endif>Eng</option>
                             </select>
                         </div>
                         @if(!Auth::check())
