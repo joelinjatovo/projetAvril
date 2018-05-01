@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
+
+use App\Models\Page;
 
 class ForgotPasswordController extends Controller
 {
@@ -28,5 +32,19 @@ class ForgotPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+    
+    /**
+     * Display the form to request a password reset link.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showLinkRequestForm()
+    {
+        $page = Page::where('path', '/login')
+            ->locale()
+            ->first();
+        return view('auth.passwords.email')
+            ->with('item', $page);
     }
 }

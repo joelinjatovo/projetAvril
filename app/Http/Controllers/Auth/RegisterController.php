@@ -10,6 +10,7 @@ use Auth;
 use Event;
 
 use App\Events\UserRegistered;
+use App\Notifications\AccountCreated;
 
 use App\Models\User;
 use App\Models\Localisation;
@@ -36,7 +37,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/profile';
+    protected $redirectTo = '/login';
 
     /**
      * Create a new controller instance.
@@ -76,6 +77,66 @@ class RegisterController extends Controller
         $datas['status'] = 'pinged';
         
         return User::create($datas);
+    }
+    
+    
+    /**
+     * Activate the user with given activation code.
+     * @param string $code
+     * @return String
+     */
+    public function activateUser($code)
+    {
+        try {
+            $user = User::where('activation_code', $code)->first();
+            if (!$user) {
+                return redirect()->route('login')
+                    ->with('error',"The code does not exist for any user in our system.");
+            }
+            $user->status = 'active';
+            $user->activation_code = null;
+            $user->save();
+        } catch (\Exception $exception) {
+            logger()->error($exception);
+            return redirect()->route('login')
+                ->with('error',"Whoops! something went wrong.");
+        }
+        return redirect()->route('login')
+                ->with('success',"Your account is activated. You can login now with your default password.");
+    }
+    
+    
+    /**
+     * Resend activation mail
+     * @param User $user
+     * @return String
+     */
+    public function resendActivation(User $user)
+    {
+        if($user->isActive()){
+            return back()
+                ->with('error',"User already active. Operation not allowed");
+        }
+        
+        try {
+            
+            $password = str_random(10);
+            $user->password = bcrypt($password);
+            $user->activation_code = md5(str_random(30).(time()*32));
+            $user->save();
+        } catch (\Exception $exception) {
+            logger()->error($exception);
+            return redirect()->route('login')
+                ->with('error',"Whoops! something went wrong.");
+        }
+        
+        // Notify User
+        $user->notify(new AccountCreated($user, $password));
+        
+        return redirect()->route('login')
+            ->with('success', 'Activation code sent. Please check your email and activate your account..<br>'
+                  .'<a class="btn btn-default" href="'.route('resend_code', $user).'">Resend code</a>');
+        
     }
     
     /**
@@ -252,11 +313,19 @@ class RegisterController extends Controller
             $datas['image_id'] = $image->id;
         }
         
-        // Role
+        // More info
         $datas['role'] = 'member';
+        $datas['password'] = $password = str_random(10);
+        $datas['activation_code'] = md5(str_random(30).(time()*32));
+        $datas['use_default_password'] = 1;
 
         // Create user
-        $user = $this->create($datas);
+        try{
+            $user = $this->create($datas);
+        }catch (\Exception $exception) {
+            logger()->error($exception);
+            return redirect()->back()->with('info', 'Unable to create new user.');
+        }
         
         if($type=='organization'){
             // Update MetaData
@@ -276,12 +345,17 @@ class RegisterController extends Controller
         if($value = $request->input('allow_sharing')) $user->update_meta("allow_sharing", $value);
 
         // Firing an event
-        Event::fire(new UserRegistered($user));
+        //Event::fire(new UserRegistered($user));
+        
+        // Notify User
+        $user->notify(new AccountCreated($user, $password));
         
         $request->session()->forget("step");
 
         // Success
-        return redirect()->route('login')->with('success',"L'utilisateur a été bien enregistré.");
+        return redirect()->route('login')
+            ->with('success', 'Successfully created a new account. Please check your email and activate your account.<br>'
+                  .'<a class="btn btn-default" href="'.route('resend_code', $user).'">Resend code</a>');
         
     }
 
@@ -347,9 +421,17 @@ class RegisterController extends Controller
         
         // Role
         $datas['role'] = 'seller';
+        $datas['password'] = $password = str_random(10);
+        $datas['activation_code'] = md5(str_random(30).(time()*32));
+        $datas['use_default_password'] = 1;
 
         // Create user
-        $user = $this->create($datas);
+        try{
+            $user = $this->create($datas);
+        }catch (\Exception $exception) {
+            logger()->error($exception);
+            return redirect()->back()->with('info', 'Unable to create new user.');
+        }
         
         // Create Organisation MetaData
         if($value = $request->input('orga_name'))           $user->update_meta("orga_name", $value);
@@ -372,12 +454,18 @@ class RegisterController extends Controller
         if($value = $request->input('allow_sharing'))       $user->update_meta("allow_sharing", $value);
                 
         // Firing an event
-        Event::fire(new UserRegistered($user));
+        //Event::fire(new UserRegistered($user));
+        
+        // Notify User
+        $user->notify(new AccountCreated($user, $password));
         
         $request->session()->forget("step");
         
         // Success
-        return redirect()->route('login')->with('success',"L'utilisateur a été bien enregistré.");
+        return redirect()->route('login')
+            ->with('success', 'Successfully created a new account. Please check your email and activate your account.<br>'
+                  .'<a class="btn btn-default" href="'.route('resend_code', $user).'">Resend code</a>');
+        
     }
 
     /*
@@ -443,9 +531,17 @@ class RegisterController extends Controller
         // Role and Type
         $datas['role'] = 'afa';
         $datas['type'] = 'organization';
+        $datas['password'] = $password = str_random(10);
+        $datas['activation_code'] = md5(str_random(30).(time()*32));
+        $datas['use_default_password'] = 1;
         
         // Create user
-        $user = $this->create($datas);
+        try{
+            $user = $this->create($datas);
+        }catch (\Exception $exception) {
+            logger()->error($exception);
+            return redirect()->back()->with('info', 'Unable to create new user.');
+        }
         
         // Update MetaData
         if($value = $request->input('orga_name')) $user->update_meta("orga_name", $value);
@@ -470,12 +566,18 @@ class RegisterController extends Controller
         if($value = $request->input('allow_sharing')) $user->update_meta("allow_sharing", $value);
         
         //firing an event
-        Event::fire(new UserRegistered($user));
+        //Event::fire(new UserRegistered($user));
+        
+        // Notify User
+        $user->notify(new AccountCreated($user, $password));
         
         $request->session()->forget("step");
         
         // Success
-        return redirect()->route('login')->with('success',"L'afa a été bien enregistré.");
+        return redirect()->route('login')
+            ->with('success', 'Successfully created a new account. Please check your email and activate your account.<br>'
+                  .'<a class="btn btn-default" href="'.route('resend_code', $user).'">Resend code</a>');
+        
     }
 
     /*
@@ -539,10 +641,17 @@ class RegisterController extends Controller
         
         // Role and Type
         $datas['role'] = 'apl';
-        $datas['type'] = 'organization';
+        $datas['password'] = $password = str_random(10);
+        $datas['activation_code'] = md5(str_random(30).(time()*32));
+        $datas['use_default_password'] = 1;
         
         // Create user
-        $user = $this->create($datas);
+        try{
+            $user = $this->create($datas);
+        }catch (\Exception $exception) {
+            logger()->error($exception);
+            return redirect()->back()->with('info', 'Unable to create new user.');
+        }
         
         // Update MetaData
         if($value = $request->input('orga_name')) $user->update_meta("orga_name", $value);
@@ -566,13 +675,21 @@ class RegisterController extends Controller
         if($value = $request->input('allow_sharing')) $user->update_meta("allow_sharing", $value);
         
         //firing an event
-        Event::fire(new UserRegistered($user));
+        //Event::fire(new UserRegistered($user));
+        
+        // Notify User
+        $user->notify(new AccountCreated($user, $password));
         
         $request->session()->forget("step");
         
         // Success
-        return redirect()->route('login')->with('success',"L'afa a été bien enregistré.");
+        return redirect()->route('login')
+            ->with('success', 'Successfully created a new account. Please check your email and activate your account.<br>'
+                  .'<a class="btn btn-default" href="'.route('resend_code', $user).'">Resend code</a>');
+        
     }
+    
+    
 
     /*
     * Load country code from csv file

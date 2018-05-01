@@ -21,10 +21,12 @@ class CreateUsersTable extends Migration
             $table->string('role', 20)->default('member')->index(); // admin afa apl member seller
             $table->string('type', 20)->default('person')->index(); // person organization
             $table->string('language')->default('fr'); // fr en
+            $table->string('activation_code')->nullable();
             $table->string('status', 20); // active disabled blocked pinged
             $table->double('percent', 8, 2)->nullable();
             $table->dateTime('enabled_at')->nullable();
             $table->dateTime('disabled_at')->nullable();
+            $table->integer('use_default_password')->default(0)->index(); // if afa check if seller
             $table->integer('is_seller')->default(0)->index(); // if afa check if seller
             $table->bigInteger('apl_id')->default(0)->index(); // User must check his APL
             $table->bigInteger('image_id')->default(0)->index(); // User must check his APL

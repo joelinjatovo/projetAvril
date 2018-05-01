@@ -18,7 +18,12 @@ Route::get('mail/html','MailController@html_email');
 Route::get('mail/attachment','MailController@attachment_email');
 
 Auth::routes();
-Route::get('logout', 'Auth\LoginController@logout')->name('logout' );
+Route::get('logout', 'Auth\LoginController@logout')->name('logout');
+
+Route::middleware('guest')->group(function(){
+    Route::get('verify-user/{code}', 'Auth\RegisterController@activateUser')->name('activate.user');
+    Route::get('resend-code/{user}', 'Auth\RegisterController@resendActivation')->name('resend_code');
+});
 
 Route::get('storage/{album}/{filename}', function ($album,$filename)
 {

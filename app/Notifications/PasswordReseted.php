@@ -7,22 +7,18 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class AccountCreated extends Notification
+class PasswordReseted extends Notification
 {
     use Queueable;
-    
-    private $user;
-    private $password;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($user , $password)
+    public function __construct()
     {
-        $this->user = $user;
-        $this->password = $password;
+        //
     }
 
     /**
@@ -44,21 +40,10 @@ class AccountCreated extends Notification
      */
     public function toMail($notifiable)
     {
-        /** @var User $user */
-        $user = $this->user;
-        
-        /** @var mixed $password */
-        $password = $this->password;
-        
         return (new MailMessage)
-            ->from(env('ADMIN_MAIL', 'tsorakoto@gmail.com'))
-            //->to($user->email, $user->name)
-            ->subject('Successfully created new account')
-            ->greeting(sprintf('Hello %s', $user->name))
-            ->line('You have successfully registered to our system. Please activate your account.')
-            ->action('Active Account', route('activate.user', $user->activation_code))
-            ->line(sprintf('Your default password is %s', $password))
-            ->line('Thank you for using our application!');
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**

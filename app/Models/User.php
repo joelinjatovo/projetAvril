@@ -19,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'image_id', 'location_id', 'status', 'type', 'role',
+        'name', 'email', 'password', 'image_id', 'location_id', 'status', 'type', 'role', 'activation_code', 'use_default_password',
     ];
 
     /**
@@ -97,6 +97,26 @@ class User extends Authenticatable
     public function scopeHasLocation($query)
     {
         return $query->where('location_id', '>', '0');
+    }
+    
+    /**
+     * Is user active
+     *
+     * @return Boolean
+     */
+    public function isActive()
+    {
+      return ($this->status == 'active');
+    }
+    
+    /**
+     * Is user admin
+     *
+     * @return Boolean
+     */
+    public function isAdmin()
+    {
+      return $this->hasRole('admin');
     }
     
     /**
