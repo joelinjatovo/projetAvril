@@ -158,22 +158,24 @@ class RegisterController extends Controller
                 $tels = $this->getTelsFromCsv();
                 return view('login.'.$role, ["pays"=>$pays , "tels"=>$tels, "action"=>$action])
                     ->with('page', $page);
-            break;
-            case "seller":
-                $request->session()->put("step", "condition");
-                return view('login.condition.seller')
-                    ->with('page', $page);
-            break;
+                break;
             case "afa":
                 $request->session()->put("step", "condition");
                 return view('login.condition.afa')
                     ->with('page', $page);
-            break;
+                break;
             case "apl":
                 $request->session()->put("step", "condition");
                 return view('login.condition.apl')
                     ->with('page', $page);
-            break;
+                break;
+            case "seller":
+                $request->session()->put("step", "condition");
+                return view('login.condition.seller')
+                    ->with('page', $page);
+                break;
+            default:
+                abort(404);
         }
     }
     
@@ -184,21 +186,21 @@ class RegisterController extends Controller
      * @param  String $role
      * @return \Illuminate\Http\Response
      */
-    public function register(Request $request, $role)
+    private function register(Request $request, $role)
     {
         if($role=='member') return $this->registerMember($request);
         
         // Switch to get Condition and Term count
         $conditionCount = 0;
         switch($role){
-            case "seller":
-                $conditionCount = 2;
-            break;
             case "afa":
                 $conditionCount = 4;
             break;
             case "apl":
                 $conditionCount = 5;
+            break;
+            case "seller":
+                $conditionCount = 2;
             break;
         }
         
@@ -225,14 +227,7 @@ class RegisterController extends Controller
         
         // Shown Register form
         if($request->session()->get("step") == "register"){
-            switch($role){
-                case "seller":
-                    return $this->registerSeller($request);
-                case "afa":
-                    return $this->registerAfa($request);
-                case "apl":
-                    return $this->registerApl($request);
-            }
+            return $this->storeByRole($request, $role);
         }
         
         // Open First Page of registration
@@ -247,50 +242,150 @@ class RegisterController extends Controller
     * @param  Illuminate\Http\Request  $request
     * @return \Illuminate\Http\Response
     */
-    private function registerMember(Request $request)
+    private function storeByRole(Request $request, $role)
     {    
         // Get post datas
         $datas = $request->all();
         
         // Validate type Only
-        $validator = Validator::make($datas, ['type' => 'required|max:100',]);
-        if ($validator->fails()) {
-            return back()->withErrors($validator)
-                        ->withInput();
+        if($role=='member'){
+            $validator = Validator::make($datas, ['type' => 'required|max:100',]);
+            if ($validator->fails()) {
+                return back()->withErrors($validator)
+                            ->withInput();
+            }
         }
         
-        $type=$request->input('type');
-        if($type=='person'){
-            $rules = [
-                'name' => 'required|unique:users,name|max:100',
-                'email' => 'required|unique:users,email|max:100',
-                'language' => 'required|max:100',
-                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                
-                'firstname' => 'nullable|max:100',
-                'lastname' => 'nullable|max:100',
-                
-                'country' => 'required|max:100',
-            ];
-        }else{
-            $rules = [
-                'name' => 'required|unique:users,name|max:100',
-                'email' => 'required|unique:users,email|max:100',
-                'language' => 'required|max:100',
-                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                
-                'prefixPhone' => 'required|max:100',
-                'phone' => 'required|max:100',
-                
-                'orga_name' => 'required|max:100',
-                'orga_presentation' => 'required|max:100',
-                
-                'address' => 'required|max:100',
-                'city' => 'required|max:100',
-                'country' => 'required|max:100',
-                'state' => 'required|max:100',
-                'postalCode' => 'required|max:100',
-            ];
+        switch($role){
+            case 'member':
+                $type=$request->input('type');
+                if($type=='person'){
+                    $rules = [
+                        'name' => 'required|unique:users,name|max:100',
+                        'email' => 'required|unique:users,email|max:100',
+                        'language' => 'required|max:100',
+                        'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
+                        'firstname' => 'nullable|max:100',
+                        'lastname' => 'nullable|max:100',
+
+                        'country' => 'required|max:100',
+                    ];
+                }else{
+                    $rules = [
+                        'name' => 'required|unique:users,name|max:100',
+                        'email' => 'required|unique:users,email|max:100',
+                        'language' => 'required|max:100',
+                        'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
+                        'prefixPhone' => 'required|max:100',
+                        'phone' => 'required|max:100',
+
+                        'orga_name' => 'required|max:100',
+                        'orga_presentation' => 'required|max:100',
+
+                        'address' => 'required|max:100',
+                        'city' => 'required|max:100',
+                        'country' => 'required|max:100',
+                        'state' => 'required|max:100',
+                        'postalCode' => 'required|max:100',
+                    ];
+                }
+                break;
+            case 'afa':
+                $rules = [
+                    'name' => 'required|unique:users,name|max:100',
+                    'email' => 'required|unique:users,email|max:100',
+                    'language' => 'required|max:100',
+                    'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
+                    'orga_name' => 'required|max:100',
+                    'orga_presentation' => 'required|max:100',
+                    'orga_email' => 'required|email|max:100',
+                    'orga_phone' => 'required|max:100',
+                    'orga_website' => 'required|url|max:100',
+                    'orga_operation_state' => 'required|max:100',
+                    'orga_operation_range' => 'required|max:100',
+
+                    'address' => 'max:100',
+                    'street' => 'max:100',
+                    'suburb' => 'max:100',
+                    'city' => 'max:100',
+                    'country' => 'max:100',
+                    'state' => 'max:100',
+                    'postalCode' => 'max:100',
+
+                    'contact_name' => 'max:100',
+                    'contact_email' => 'max:100',
+                    'contact_phone' => 'max:100',
+
+                    'crm_name' => 'max:100',
+                    'crm_email' => 'max:100',
+                ];
+                break;
+            case 'apl':
+                $rules = [
+                    'name' => 'required|unique:users,name|max:100',
+                    'email' => 'required|unique:users,email|max:100',
+                    'language' => 'required|max:100',
+                    'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
+                    'orga_name' => 'required|max:100',
+                    'orga_presentation' => 'required|max:100',
+                    'orga_email' => 'required|email|max:100',
+                    'orga_phone' => 'required|max:100',
+                    'orga_website' => 'required|url|max:100',
+                    'orga_operation_range' => 'required|max:100',
+
+                    'address' => 'max:100',
+                    'street' => 'max:100',
+                    'suburb' => 'max:100',
+                    'city' => 'max:100',
+                    'country' => 'max:100',
+                    'state' => 'max:100',
+                    'postalCode' => 'max:100',
+
+                    'contact_name' => 'max:100',
+                    'contact_email' => 'max:100',
+                    'contact_phone' => 'max:100',
+
+                    'bank_iban' => 'max:100',
+                    'bank_bic' => 'max:100',
+                ];
+                break;
+            case 'seller':
+                $rules = [
+                    'name' => 'required|unique:users,name|max:100',
+                    'email' => 'required|email|unique:users,email|max:100',
+                    'language' => 'required|max:100',
+                    'type' => 'required|max:100',
+                    'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
+                    'orga_name' => 'required|max:100',
+                    'orga_presentation' => 'required|max:100',
+                    'orga_email' => 'required|email|max:100',
+                    'orga_phone' => 'required|max:100',
+                    'orga_website' => 'required|url|max:100',
+
+                    'address' => 'max:100',
+                    'street' => 'max:100',
+                    'suburb' => 'max:100',
+                    'city' => 'max:100',
+                    'country' => 'max:100',
+                    'state' => 'max:100',
+                    'postalCode' => 'max:100',
+
+                    'contact_name' => 'max:100',
+                    'contact_email' => 'max:100',
+                    'contact_phone' => 'max:100',
+
+                    'crm_name' => 'max:100',
+                    'crm_email' => 'max:100',
+
+                ];
+                break;
+            default:
+                abort(404);
         }
 
         // Validate request
@@ -314,7 +409,7 @@ class RegisterController extends Controller
         }
         
         // More info
-        $datas['role'] = 'member';
+        $datas['role'] = $role;
         $datas['password'] = $password = str_random(10);
         $datas['activation_code'] = md5(str_random(30).(time()*32));
         $datas['use_default_password'] = 1;
@@ -327,26 +422,83 @@ class RegisterController extends Controller
             return redirect()->back()->with('info', 'Unable to create new user.');
         }
         
-        if($type=='organization'){
-            // Update MetaData
-            if($value = $request->input('orga_name')) $user->update_meta("orga_name", $value);
-            if($value = $request->input('orga_presentation')) $user->update_meta("orga_presentation", $value);
-            if($value = $request->input('prefixPhone')) $user->update_meta("prefixPhone", $value);
-            if($value = $request->input('phone')) $user->update_meta("phone", $value);
-        }else{
-            // Update MetaData
-            if($value = $request->input('firstname')) $user->update_meta("firstname", $value);
-            if($value = $request->input('lastname')) $user->update_meta("lastname", $value);
+        
+        switch($role){
+            case 'member':
+                if($type=='organization'){
+                    // Update MetaData
+                    if($value = $request->input('orga_name')) $user->update_meta("orga_name", $value);
+                    if($value = $request->input('orga_presentation')) $user->update_meta("orga_presentation", $value);
+                    if($value = $request->input('prefixPhone')) $user->update_meta("prefixPhone", $value);
+                    if($value = $request->input('phone')) $user->update_meta("phone", $value);
+                }else{
+                    // Update MetaData
+                    if($value = $request->input('firstname')) $user->update_meta("firstname", $value);
+                    if($value = $request->input('lastname')) $user->update_meta("lastname", $value);
 
+                }
+                break;
+            case 'afa':
+                // Update MetaData
+                if($value = $request->input('orga_name')) $user->update_meta("orga_name", $value);
+                if($value = $request->input('orga_presentation')) $user->update_meta("orga_presentation", $value);
+                if($value = $request->input('orga_email')) $user->update_meta("orga_email", $value);
+                if($value = $request->input('orga_phone')) $user->update_meta("orga_phone", $value);
+                if($value = $request->input('orga_website')) $user->update_meta("orga_website", $value);
+                if($value = $request->input('orga_operation_state')) $user->update_meta("orga_operation_state", $value);
+                if($value = $request->input('orga_operation_range')) $user->update_meta("orga_operation_range", $value);
+
+                // Create Contact MetaData
+                if($value = $request->input('contact_name'))        $user->update_meta("contact_name", $value);
+                if($value = $request->input('contact_email'))       $user->update_meta("contact_email", $value);
+                if($value = $request->input('contact_phone'))       $user->update_meta("contact_phone", $value);
+
+                // CRM Prodvider data
+                if($value = $request->input('crm_name'))       $user->update_meta("crm_name", $value);
+                if($value = $request->input('crm_email'))      $user->update_meta("crm_email", $value);
+                break;
+            case 'apl':
+                // Update MetaData
+                if($value = $request->input('orga_name')) $user->update_meta("orga_name", $value);
+                if($value = $request->input('orga_presentation')) $user->update_meta("orga_presentation", $value);
+                if($value = $request->input('orga_email')) $user->update_meta("orga_email", $value);
+                if($value = $request->input('orga_phone')) $user->update_meta("orga_phone", $value);
+                if($value = $request->input('orga_website')) $user->update_meta("orga_website", $value);
+                if($value = $request->input('orga_operation_range')) $user->update_meta("orga_operation_range", $value);
+
+                // Create Contact MetaData
+                if($value = $request->input('contact_name'))        $user->update_meta("contact_name", $value);
+                if($value = $request->input('contact_email'))       $user->update_meta("contact_email", $value);
+                if($value = $request->input('contact_phone'))       $user->update_meta("contact_phone", $value);
+
+                // Bank data
+                if($value = $request->input('bank_iban'))     $user->update_meta("bank_iban", $value);
+                if($value = $request->input('bank_bic'))      $user->update_meta("bank_bic", $value);
+                break;
+            case 'seller':
+                // Create Organisation MetaData
+                if($value = $request->input('orga_name'))           $user->update_meta("orga_name", $value);
+                if($value = $request->input('orga_presentation'))   $user->update_meta("orga_presentation", $value);
+                if($value = $request->input('orga_email'))          $user->update_meta("orga_email", $value);
+                if($value = $request->input('orga_phone'))          $user->update_meta("orga_phone", $value);
+                if($value = $request->input('orga_website'))        $user->update_meta("orga_website", $value);
+
+                // Create Contact MetaData
+                if($value = $request->input('contact_name'))        $user->update_meta("contact_name", $value);
+                if($value = $request->input('contact_email'))       $user->update_meta("contact_email", $value);
+                if($value = $request->input('contact_phone'))       $user->update_meta("contact_phone", $value);
+
+                // CRM Prodvider data
+                if($value = $request->input('crm_name'))       $user->update_meta("crm_name", $value);
+                if($value = $request->input('crm_email'))      $user->update_meta("crm_email", $value);
+                break;
         }
+        
 
         // Common datas
         if($value = $request->input('newsletter')) $user->update_meta("newsletter", $value);
         if($value = $request->input('allow_sharing')) $user->update_meta("allow_sharing", $value);
 
-        // Firing an event
-        //Event::fire(new UserRegistered($user));
-        
         // Notify User
         $user->notify(new AccountCreated($user, $password));
         
@@ -358,338 +510,6 @@ class RegisterController extends Controller
                   .'<a class="btn btn-default" href="'.route('resend_code', $user).'">Resend code</a>');
         
     }
-
-    /*
-    * Store Seller information into database
-    * Go back after saving data
-    *
-    * @param  Illuminate\Http\Request  $request
-    * @return \Illuminate\Http\Response
-    */
-    private function registerSeller(Request $request)
-    {
-        $rules = [
-            'name' => 'required|unique:users,name|max:100',
-            'email' => 'required|email|unique:users,email|max:100',
-            'language' => 'required|max:100',
-            'type' => 'required|max:100',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            
-            'orga_name' => 'required|max:100',
-            'orga_presentation' => 'required|max:100',
-            'orga_email' => 'required|email|max:100',
-            'orga_phone' => 'required|max:100',
-            'orga_website' => 'required|url|max:100',
-            
-            'address' => 'max:100',
-            'street' => 'max:100',
-            'suburb' => 'max:100',
-            'city' => 'max:100',
-            'country' => 'max:100',
-            'state' => 'max:100',
-            'postalCode' => 'max:100',
-            
-            'contact_name' => 'max:100',
-            'contact_email' => 'max:100',
-            'contact_phone' => 'max:100',
-            
-            'crm_name' => 'max:100',
-            'crm_email' => 'max:100',
-            
-        ];
-        
-        // Validate request
-        $datas = $request->all();
-        $validator = Validator::make($datas, $rules);
-        if ($validator->fails()) {
-            return back()->withErrors($validator)
-                        ->withInput();
-        }
-        
-        // Create Localization
-        $datas['location_id'] = '';
-        if($location = Localisation::create($datas)){
-            $datas['location_id'] = $location->id;
-        }
-        
-        // Store image file
-        $datas['image_id'] = '';
-        if($file=$request->file('image')){
-            $image = Image::storeAndSave($file);
-            $datas['image_id'] = $image->id;
-        }
-        
-        // Role
-        $datas['role'] = 'seller';
-        $datas['password'] = $password = str_random(10);
-        $datas['activation_code'] = md5(str_random(30).(time()*32));
-        $datas['use_default_password'] = 1;
-
-        // Create user
-        try{
-            $user = $this->create($datas);
-        }catch (\Exception $exception) {
-            logger()->error($exception);
-            return redirect()->back()->with('info', 'Unable to create new user.');
-        }
-        
-        // Create Organisation MetaData
-        if($value = $request->input('orga_name'))           $user->update_meta("orga_name", $value);
-        if($value = $request->input('orga_presentation'))   $user->update_meta("orga_presentation", $value);
-        if($value = $request->input('orga_email'))          $user->update_meta("orga_email", $value);
-        if($value = $request->input('orga_phone'))          $user->update_meta("orga_phone", $value);
-        if($value = $request->input('orga_website'))        $user->update_meta("orga_website", $value);
-        
-        // Create Contact MetaData
-        if($value = $request->input('contact_name'))        $user->update_meta("contact_name", $value);
-        if($value = $request->input('contact_email'))       $user->update_meta("contact_email", $value);
-        if($value = $request->input('contact_phone'))       $user->update_meta("contact_phone", $value);
-        
-        // CRM Prodvider data
-        if($value = $request->input('crm_name'))       $user->update_meta("crm_name", $value);
-        if($value = $request->input('crm_email'))      $user->update_meta("crm_email", $value);
-        
-        // Common datas
-        if($value = $request->input('newsletter'))          $user->update_meta("newsletter", $value);
-        if($value = $request->input('allow_sharing'))       $user->update_meta("allow_sharing", $value);
-                
-        // Firing an event
-        //Event::fire(new UserRegistered($user));
-        
-        // Notify User
-        $user->notify(new AccountCreated($user, $password));
-        
-        $request->session()->forget("step");
-        
-        // Success
-        return redirect()->route('login')
-            ->with('success', 'Successfully created a new account. Please check your email and activate your account.<br>'
-                  .'<a class="btn btn-default" href="'.route('resend_code', $user).'">Resend code</a>');
-        
-    }
-
-    /*
-    * Store AFA information into database
-    * Go back after saving data
-    *
-    * @param  Illuminate\Http\Request  $request
-    * @return \Illuminate\Http\Response
-    */
-    private function registerAfa(Request $request)
-    {  
-        $rules = [
-            'name' => 'required|unique:users,name|max:100',
-            'email' => 'required|unique:users,email|max:100',
-            'language' => 'required|max:100',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-
-            'orga_name' => 'required|max:100',
-            'orga_presentation' => 'required|max:100',
-            'orga_email' => 'required|email|max:100',
-            'orga_phone' => 'required|max:100',
-            'orga_website' => 'required|url|max:100',
-            'orga_operation_state' => 'required|max:100',
-            'orga_operation_range' => 'required|max:100',
-            
-            'address' => 'max:100',
-            'street' => 'max:100',
-            'suburb' => 'max:100',
-            'city' => 'max:100',
-            'country' => 'max:100',
-            'state' => 'max:100',
-            'postalCode' => 'max:100',
-            
-            'contact_name' => 'max:100',
-            'contact_email' => 'max:100',
-            'contact_phone' => 'max:100',
-            
-            'crm_name' => 'max:100',
-            'crm_email' => 'max:100',
-        ];
-        
-        // Validate request
-        $datas = $request->all();
-        $validator = Validator::make($datas, $rules);
-        if ($validator->fails()) {
-            return back()->withErrors($validator)
-                        ->withInput();
-        }
-        
-        // Create Localization
-        $datas['location_id'] = '';
-        if($location = Localisation::create($datas)){
-            $datas['location_id'] = $location->id;
-        }
-        
-        // Store image file
-        $datas['image_id'] = '';
-        if($file=$request->file('image')){
-            $image = Image::storeAndSave($file);
-            $datas['image_id'] = $image->id;
-        }
-        
-        // Role and Type
-        $datas['role'] = 'afa';
-        $datas['type'] = 'organization';
-        $datas['password'] = $password = str_random(10);
-        $datas['activation_code'] = md5(str_random(30).(time()*32));
-        $datas['use_default_password'] = 1;
-        
-        // Create user
-        try{
-            $user = $this->create($datas);
-        }catch (\Exception $exception) {
-            logger()->error($exception);
-            return redirect()->back()->with('info', 'Unable to create new user.');
-        }
-        
-        // Update MetaData
-        if($value = $request->input('orga_name')) $user->update_meta("orga_name", $value);
-        if($value = $request->input('orga_presentation')) $user->update_meta("orga_presentation", $value);
-        if($value = $request->input('orga_email')) $user->update_meta("orga_email", $value);
-        if($value = $request->input('orga_phone')) $user->update_meta("orga_phone", $value);
-        if($value = $request->input('orga_website')) $user->update_meta("orga_website", $value);
-        if($value = $request->input('orga_operation_state')) $user->update_meta("orga_operation_state", $value);
-        if($value = $request->input('orga_operation_range')) $user->update_meta("orga_operation_range", $value);
-        
-        // Create Contact MetaData
-        if($value = $request->input('contact_name'))        $user->update_meta("contact_name", $value);
-        if($value = $request->input('contact_email'))       $user->update_meta("contact_email", $value);
-        if($value = $request->input('contact_phone'))       $user->update_meta("contact_phone", $value);
-        
-        // CRM Prodvider data
-        if($value = $request->input('crm_name'))       $user->update_meta("crm_name", $value);
-        if($value = $request->input('crm_email'))      $user->update_meta("crm_email", $value);
-        
-        // Common datas
-        if($value = $request->input('newsletter')) $user->update_meta("newsletter", $value);
-        if($value = $request->input('allow_sharing')) $user->update_meta("allow_sharing", $value);
-        
-        //firing an event
-        //Event::fire(new UserRegistered($user));
-        
-        // Notify User
-        $user->notify(new AccountCreated($user, $password));
-        
-        $request->session()->forget("step");
-        
-        // Success
-        return redirect()->route('login')
-            ->with('success', 'Successfully created a new account. Please check your email and activate your account.<br>'
-                  .'<a class="btn btn-default" href="'.route('resend_code', $user).'">Resend code</a>');
-        
-    }
-
-    /*
-    * Store APL information into database
-    * Go back after saving data
-    *
-    * @param  Illuminate\Http\Request  $request
-    * @return \Illuminate\Http\Response
-    */
-    private function registerApl(Request $request)
-    {  
-        $rules = [
-            'name' => 'required|unique:users,name|max:100',
-            'email' => 'required|unique:users,email|max:100',
-            'language' => 'required|max:100',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-
-            'orga_name' => 'required|max:100',
-            'orga_presentation' => 'required|max:100',
-            'orga_email' => 'required|email|max:100',
-            'orga_phone' => 'required|max:100',
-            'orga_website' => 'required|url|max:100',
-            'orga_operation_range' => 'required|max:100',
-            
-            'address' => 'max:100',
-            'street' => 'max:100',
-            'suburb' => 'max:100',
-            'city' => 'max:100',
-            'country' => 'max:100',
-            'state' => 'max:100',
-            'postalCode' => 'max:100',
-            
-            'contact_name' => 'max:100',
-            'contact_email' => 'max:100',
-            'contact_phone' => 'max:100',
-            
-            'bank_iban' => 'max:100',
-            'bank_bic' => 'max:100',
-        ];
-        
-        // Validate request
-        $datas = $request->all();
-        $validator = Validator::make($datas, $rules);
-        if ($validator->fails()) {
-            return back()->withErrors($validator)
-                        ->withInput();
-        }
-        
-        // Create Localization
-        $datas['location_id'] = '';
-        if($location = Localisation::create($datas)){
-            $datas['location_id'] = $location->id;
-        }
-        
-        // Store image file
-        $datas['image_id'] = '';
-        if($file=$request->file('image')){
-            $image = Image::storeAndSave($file);
-            $datas['image_id'] = $image->id;
-        }
-        
-        // Role and Type
-        $datas['role'] = 'apl';
-        $datas['password'] = $password = str_random(10);
-        $datas['activation_code'] = md5(str_random(30).(time()*32));
-        $datas['use_default_password'] = 1;
-        
-        // Create user
-        try{
-            $user = $this->create($datas);
-        }catch (\Exception $exception) {
-            logger()->error($exception);
-            return redirect()->back()->with('info', 'Unable to create new user.');
-        }
-        
-        // Update MetaData
-        if($value = $request->input('orga_name')) $user->update_meta("orga_name", $value);
-        if($value = $request->input('orga_presentation')) $user->update_meta("orga_presentation", $value);
-        if($value = $request->input('orga_email')) $user->update_meta("orga_email", $value);
-        if($value = $request->input('orga_phone')) $user->update_meta("orga_phone", $value);
-        if($value = $request->input('orga_website')) $user->update_meta("orga_website", $value);
-        if($value = $request->input('orga_operation_range')) $user->update_meta("orga_operation_range", $value);
-        
-        // Create Contact MetaData
-        if($value = $request->input('contact_name'))        $user->update_meta("contact_name", $value);
-        if($value = $request->input('contact_email'))       $user->update_meta("contact_email", $value);
-        if($value = $request->input('contact_phone'))       $user->update_meta("contact_phone", $value);
-        
-        // Bank data
-        if($value = $request->input('bank_iban'))     $user->update_meta("bank_iban", $value);
-        if($value = $request->input('bank_bic'))      $user->update_meta("bank_bic", $value);
-        
-        // Common datas
-        if($value = $request->input('newsletter'))    $user->update_meta("newsletter", $value);
-        if($value = $request->input('allow_sharing')) $user->update_meta("allow_sharing", $value);
-        
-        //firing an event
-        //Event::fire(new UserRegistered($user));
-        
-        // Notify User
-        $user->notify(new AccountCreated($user, $password));
-        
-        $request->session()->forget("step");
-        
-        // Success
-        return redirect()->route('login')
-            ->with('success', 'Successfully created a new account. Please check your email and activate your account.<br>'
-                  .'<a class="btn btn-default" href="'.route('resend_code', $user).'">Resend code</a>');
-        
-    }
-    
-    
 
     /*
     * Load country code from csv file
