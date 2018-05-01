@@ -3,8 +3,11 @@
 return [
 
     'app_name'          => 'Investir en Italie',
-    'copyright'         => '&ccopy; Copyright :year : "Investir en Italie" - Tout droit reserve',
+    'footer_description'         => 'INVESTIR EN AUSTRALIE est un e-marketplace.',
+    'copyright'         => '© Copyright :year : ":app" - Tout droit reserve',
     'last_update'       => 'Derniere Modification, :date',
+    
+    'rapid_link'      => 'Acces Rapide',
     
     'home'      => 'Accueil',
     'language'      => 'Langue',
@@ -33,6 +36,7 @@ return [
     'conditions'        => 'Conditions',
     'condition'         => 'Condition',
     'compte'            => 'Compte',
+    'account'            => 'Compte',
     'confidential'      => 'Confidentialite',
     'user_guide'        => "Guide de l'utilisateur",
     
@@ -93,11 +97,11 @@ return [
     'admin.user.add'        => 'Ajouter un utilisateurs',
     'admin.user.archive'    => 'Registre des utilisateurs',
     
-    'pubs'                 => 'Publicites',
-    'pub'                  => 'Publicite',
-    'admin.pubs'           => 'Publicites',
-    'admin.pub.list'       => 'Liste des publicites',
-    'admin.pub.add'        => 'Ajouter une publicite',
+    'pubs'                 => 'Publicités',
+    'pub'                  => 'Publicité',
+    'admin.pubs'           => 'Publicités',
+    'admin.pub.list'       => 'Liste des publicités',
+    'admin.pub.add'        => 'Ajouter une publicité',
     
     'pages'                 => 'Pages',
     'page'                  => 'Page',

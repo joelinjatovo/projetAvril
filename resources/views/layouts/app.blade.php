@@ -54,18 +54,14 @@
                 </div>
                 <div class="col-md-9">
                     <div class="clearfix">
-                        <div class="language-in-header">
-                            <a href="{{social('googleplus.value')}}"><i class="{{social('googleplus.font')}}"></i></a>
-                        </div>
-                        <div class="language-in-header">
-                            <a href="{{social('linkedin.value')}}"><i class="{{social('linkedin.font')}}"></i></a>
-                        </div>
-                        <div class="language-in-header">
-                            <a href="{{social('twitter.value')}}"><i class="{{social('twitter.font')}}"></i></a>
-                        </div>
-                        <div class="language-in-header">
-                            <a href="{{social('facebook.value')}}"><i class="{{social('facebook.font')}}"></i></a>
-                        </div>
+                        @php $socialConfig = \App\Models\Config::social(); @endphp
+                        @foreach(\App\Models\Config::socialRules() as $key => $value)
+                            @if($metaConfig = $socialConfig->get_meta($key))
+                            <div class="language-in-header">
+                                <a href="{{$metaConfig->value}}"><i class="{{'fa fa-'.$key}}"></i></a>
+                            </div>
+                            @endif
+                        @endforeach
                         <div class="language-in-header">
                             <i class="fa fa-globe"></i>
                             <label for="language-dropdown">@lang('app.language') :</label>
@@ -179,24 +175,25 @@
                             <img src="{{asset('images/footer-logo.png')}}" alt="Footer Logo">
                         </a>
                         <ul class="social-icons clearfix">
-                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                            <li><a href="#"><i class="fa fa-youtube-play"></i></a></li>
+                            @foreach(\App\Models\Config::socialRules() as $key => $value)
+                                @if($metaConfig = $socialConfig->get_meta($key))
+                                <li><a target="_blank" href="{{$metaConfig->value}}"><i class="fa fa-{{$key}}"></i></a></li>
+                                @endif
+                            @endforeach
                         </ul>
                     </section>
                 </div>
                 <div class="col-md-4 col-sm-6">
                     <section class="widget address-widget clearfix">
-                        <h4 class="title">acces rapide</h4>
+                        <h4 class="title">@lang('app.rapid_link')</h4>
                         <ul>
-                            <li><a href="{{route('home')}}">Accueil</a></li>
-                            <li><a href="{{route('shop.index')}}">Immobilier</a></li>
-                            <li><a href="{{route('shop.index')}}">Business</a></li>
-                            <li><a href="{{route('services')}}">Nos services</a></li>
-                            <li><a href="{{route('blog.all')}}">Blog</a></li>
+                            <li><a href="{{route('home')}}">@lang('app.home')</a></li>
+                            <li><a href="{{route('shop.index')}}">@lang('app.immobilier')</a></li>
+                            <li><a href="{{route('shop.index')}}">@lang('app.business')</a></li>
+                            <li><a href="{{route('services')}}">@lang('app.services')</a></li>
+                            <li><a href="{{route('blog.all')}}">@lang('app.blog')</a></li>
                             @if(Auth::check())
-                            <li><a href="{{route('profile')}}">Mon Compte</a></li>
+                            <li><a href="{{route('profile')}}">@lang('app.account')</a></li>
                             @endif
                         </ul>
                     </section>
@@ -205,10 +202,10 @@
                     <section class="widget address-widget clearfix">
                         <h4 class="title"></h4>
                         <ul>
-                            <li><a href="{{route('terms')}}">Termes et conditions</a></li>
-                            <li><a href="{{route('confidentialities')}}">Politique de confidentialité</a></li>
-                            <li><a href="{{route('help')}}">Guide de l'investisseur</a></li>
-                            <li><a href="{{route('publicities')}}">Publicité</a></li>
+                            <li><a href="{{route('terms')}}">@lang('app.terms')</a></li>
+                            <li><a href="{{route('confidentialities')}}">@lang('app.confidential')</a></li>
+                            <li><a href="{{route('help')}}">@lang('app.user_guide')</a></li>
+                            <li><a href="{{route('publicities')}}">@lang('app.pubs')</a></li>
                         </ul>
                     </section>
                 </div>
@@ -218,8 +215,8 @@
     <div class="site-footer-bottom">
         <div class="container text-center">
             <div>
-                <p>INVESTIR EN AUSTRALIE est un e-marketplace.</p>
-                <p> © Copyright "Investir en Australie" {{date('Y')}} - Tous droits réservés</p>
+                <p>@lang('app.footer_description')</p>
+                <p>{!!trans('app.copyright', ['year'=>date('Y'), 'app'=>trans('app.app_name')])!!}</p>
             </div>
         </div>
     </div>
