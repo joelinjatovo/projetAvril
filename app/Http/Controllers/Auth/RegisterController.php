@@ -186,9 +186,9 @@ class RegisterController extends Controller
      * @param  String $role
      * @return \Illuminate\Http\Response
      */
-    private function register(Request $request, $role)
+    public function register(Request $request, $role)
     {
-        if($role=='member') return $this->registerMember($request);
+        if($role=='member') return $this->storeByRole($request, $role);
         
         // Switch to get Condition and Term count
         $conditionCount = 0;
@@ -419,7 +419,7 @@ class RegisterController extends Controller
             $user = $this->create($datas);
         }catch (\Exception $exception) {
             logger()->error($exception);
-            return redirect()->back()->with('info', 'Unable to create new user.');
+            return back()->with('info', 'Unable to create new user.');
         }
         
         
