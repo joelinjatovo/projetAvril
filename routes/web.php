@@ -22,7 +22,7 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
 // Baintree
 Route::get('/plans', 'PlanController@index');
-Route::post('braintree/webhook', '\Laravel\Cashier\Http\Controllers\WebhookController@handleWebhook');
+Route::post('braintree/webhook', 'WebhookController@handleWebhook');
 Route::get('/payment/process', 'PaymentController@process')->name('payment.process');
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/plan/{plan}', 'PlanController@show');
@@ -228,5 +228,32 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function () {
         Route::get('/{order}', 'OrderController@index')->name('admin.order.index');
     });
 
+});
+
+Route::prefix('afa')->middleware(["auth","role:afa"])->group(function () {
+    Route::get('/', 'BackendController@dashboard');
+    Route::get('edit', 'BackendController@profile');
+    Route::post('edit', 'BackendController@profile');
+});
+
+Route::prefix('apl')->middleware(["auth","role:apl"])->group(function () {
+    Route::get('/', 'BackendController@dashboard');
+    Route::get('edit', 'BackendController@profile');
+    Route::post('edit', 'BackendController@profile');
+});
+
+Route::prefix('seller')->middleware(["auth","role:seller"])->group(function () {
+    Route::get('/', 'BackendController@dashboard');
+    Route::get('edit', 'BackendController@profile');
+    Route::post('edit', 'BackendController@profile');
+});
+
+Route::prefix('member')->middleware(["auth","role:member"])->group(function () {
+    Route::get('/', 'BackendController@dashboard');
+    Route::get('edit', 'BackendController@profile');
+    Route::post('edit', 'BackendController@profile');
+    Route::get('starred', 'BackendController@starred');
+    Route::get('saved', 'BackendController@saved');
+    Route::get('order/{filter?}', 'BackendController@order');
 });
 
