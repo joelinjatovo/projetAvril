@@ -28,19 +28,13 @@ return [
     'sparkpost' => [
         'secret' => env('SPARKPOST_SECRET'),
     ],
-
-    'stripe' => [
-        'model' => App\Models\User::class,
-        'key' => env('STRIPE_KEY'),
-        'secret' => env('STRIPE_SECRET'),
-    ],
     
     'braintree' => [
         'model'  => App\Models\User::class,
-        'environment' => env('BRAINTREE_ENV'),
-        'merchant_id' => env('BRAINTREE_MERCHANT_ID'),
-        'public_key' => env('BRAINTREE_PUBLIC_KEY'),
-        'private_key' => env('BRAINTREE_PRIVATE_KEY'),
+        'environment' => env('BRAINTREE_ENV', 'sandbox'),
+        'merchant_id' => env('BRAINTREE_MERCHANT_ID', 'fhxxnh27vv8fjwzy'),
+        'public_key'  => env('BRAINTREE_PUBLIC_KEY', 'g33tjhcm3z5vb889'),
+        'private_key' => env('BRAINTREE_PRIVATE_KEY', '44e25ec1e8f9ff3a95d6d50a224ca7f9'),
     ],
 
 ];

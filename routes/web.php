@@ -20,6 +20,16 @@ Route::get('mail/attachment','MailController@attachment_email');
 Auth::routes();
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
+// Baintree
+Route::get('/plans', 'PlanController@index');
+Route::post('braintree/webhook', '\Laravel\Cashier\Http\Controllers\WebhookController@handleWebhook');
+Route::get('/payment/process', 'PaymentController@process')->name('payment.process');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/plan/{plan}', 'PlanController@show');
+    Route::get('/braintree/token', 'BraintreeController@token');
+    Route::post('/subscribe', 'SubscriptionController@store');
+});
+
 Route::middleware('guest')->group(function(){
     Route::get('verify-user/{code}', 'Auth\RegisterController@activateUser')->name('activate.user');
     Route::get('resend-code/{user}', 'Auth\RegisterController@resendActivation')->name('resend_code');

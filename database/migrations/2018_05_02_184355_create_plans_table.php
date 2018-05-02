@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSubscriptionsTable extends Migration
+class CreatePlansTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,14 @@ class CreateSubscriptionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('subscriptions', function ($table) {
+        Schema::create('plans', function (Blueprint $table) {
             $table->increments('id');
-            $table->bigInteger('user_id');
             $table->string('name');
-            
-            $table->string('braintree_id');
+            $table->string('slug')->unique(); //name used to identify plan in the URL
             $table->string('braintree_plan');
-            
-            $table->integer('quantity');
-            $table->timestamp('trial_ends_at')->nullable();
-            $table->timestamp('ends_at')->nullable();
+            $table->float('cost');
+            $table->text('description')->nullable();
+            $table->string('role', 20)->default('member')->index(); // admin afa apl member seller
             $table->timestamps();
         });
     }
@@ -35,6 +32,6 @@ class CreateSubscriptionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subscriptions');
+        Schema::dropIfExists('plans');
     }
 }

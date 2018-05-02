@@ -31,6 +31,15 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
     
+
+
+    /**
+     * The attributes that should be a date
+     *
+     * @var array
+     */
+    protected $dates = ['trial_ends_at', 'subscription_ends_at'];
+    
     /**
      * The event map for the model.
      *

@@ -413,6 +413,9 @@ class RegisterController extends Controller
         $datas['password'] = $password = str_random(10);
         $datas['activation_code'] = md5(str_random(30).(time()*32));
         $datas['use_default_password'] = 1;
+        
+        // Date d'essaie
+        $datas['trial_ends_at'] = \Carbon\Carbon::now()->addDays(14);
 
         // Create user
         try{

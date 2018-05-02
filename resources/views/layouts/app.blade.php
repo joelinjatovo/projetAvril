@@ -280,5 +280,7 @@
 </script>
 @yield('script')
     
+@yield('braintree')
+    
 </body>
 </html>    
