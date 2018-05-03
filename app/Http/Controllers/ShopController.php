@@ -62,6 +62,7 @@ class ShopController extends Controller
      */
     public function add(Request $request, Product $product){
         $this->middleware('auth');
+        $this->middleware('role:member');
         Auth::check();
         
         if(!$product->isDisponible()){
@@ -129,6 +130,7 @@ class ShopController extends Controller
      */
     public function cart(){
         $this->middleware('auth');
+        $this->middleware('role:member');
         
         $currentCart = Session::has('cart') ? Session::get('cart') : null;
         $cart = Cart::getInstance($currentCart);
@@ -138,20 +140,29 @@ class ShopController extends Controller
 
     public function getCheckout(){
         $this->middleware('auth');
-        if (Auth::guest() || !Session::get('cart')) {
-            return redirect()->route('product.index')->with('error', 'Merci de vous connecté');
-        }
+        $this->middleware('role:member');
+        
         return view('shop.checkout');
     }
 
-    public function postCheckout(){
+    public function postCheckout(Request $request){
         $this->middleware('auth');
+        $this->middleware('role:member');
         
-        if (Auth::guest() || !Session::get('cart')) {
-            return redirect()->back()->with('error', 'Merci de vous connecté');
+        if (!Session::has('cart')) {
+            return redirect()->back()->with('error', 'Votre carte est encore vide.');
+        }
+        
+        $currentCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = Cart::getInstance($currentCart);
+        
+        if (empty($cart->items)) {
+            return redirect()->back()->with('error', 'Votre carte est encore vide.');
         }
 
-        $totalP = Session::get('cart')->totalPrice * 100;
+        $total = $cart->totalTma;
+        $currency = $cart->currency;
+        
         // Set your secret key: remember to change this to your live secret key in production
         // See your keys here: https://dashboard.stripe.com/account/apikeys
         \Stripe\Stripe::setApiKey("sk_test_nZJyPhr5zXad7xqqMNZ49i3J");
@@ -162,25 +173,28 @@ class ShopController extends Controller
 
         // Charge the user's card:
         $charge = \Stripe\Charge::create(array(
-          "amount" => $totalP,
-          "currency" => "usd",
+          "amount" => $total,
+          "currency" => $currency,
           "description" => "Paiement de test",
           "source" => $token,
         ));
 
-        $cart = Session::get('cart');
-
         $order = new Order();
-        $order->cart = serialize($cart);
-
-        Auth::user()->orders()->save($order);
+        $order->cart_id = $cart->id;
+        $order->status = 'pinged';
+        $order->save();
+        
+        $cart->status = 'ordered';
+        $cart->save();
 
         Session::forget('cart');
+        
         return redirect()->route('shop.index')->with('success', 'Votre commande a été éffectué');
     }
 
     public function reduceByOne(Product $product){
         $this->middleware('auth');
+        $this->middleware('role:member');
 
         $currentCart = Session::has('cart') ? Session::get('cart') : null;
         $cart = Cart::getInstance($currentCart);
@@ -198,6 +212,7 @@ class ShopController extends Controller
 
     public function deleteAll(Product $product){
         $this->middleware('auth');
+        $this->middleware('role:member');
         
         $currentCart = Session::has('cart') ? Session::get('cart') : null;
         $cart = Cart::getInstance($currentCart);

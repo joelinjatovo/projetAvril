@@ -52,6 +52,14 @@ class CartItem extends BaseModel
     }
     
     /**
+     * Get the apl record associated with the cart item.
+     */
+    public function apl()
+    {
+        return $this->belongsTo(User::class, 'apl_id', 'id');
+    }
+    
+    /**
      * Get the afa record associated with the cart item.
      */
     public function afa()

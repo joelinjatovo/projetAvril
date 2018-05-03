@@ -1,10 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-@component('includes.breadcrumb')
-    Dashboard
-@endcomponent
-<div class="page-content">
+<div class="main-slider-wrapper clearfix content corps" style="margin-top: 150px;">
     <div class="container">
         <div class="row">
           <div class="col-md-3">

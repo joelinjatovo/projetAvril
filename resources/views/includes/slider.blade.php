@@ -12,9 +12,9 @@
                      <div class="search-form wow pulse" data-wow-delay="0.8s">
                         <form method="post" action="{{route('search')}}" class="form-inline">
                             {{csrf_field()}}
-                            <button class="btn  toggle-btn" type="button"><i class="fa fa-bars"></i></button>
+                            <button class="btn toggle-btn" type="button"><i class="fa fa-bars"></i></button>
                              <div class="form-group">
-                                <select id="basic" class="selectpicker show-tick form-control" name="etats">
+                                <select id="basic" class="selectpicker show-tick form-control" name="state">
                                     <option value="">Etats</option>
                                     <option value="Australie-Méridionale">Australie-Méridionale </option>
                                     <option value="Gold coast">Gold coast</option>
@@ -24,7 +24,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <select id="lunchBegins" class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Villes" name="villes">
+                                <select id="lunchBegins" class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Villes" name="city">
                                     <option value="">Villes</option>
                                     <option value="Surfers Paradise">Surfers Paradise</option>
                                     <option value="Melbourne">Melbourne</option>
@@ -34,7 +34,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <select id="basic" class="selectpicker show-tick form-control" name="suburbs">
+                                <select id="basic" class="selectpicker show-tick form-control" name="suburb">
                                     <option value="">Darlington</option>
                                     <option value="">Lucas Heights </option>
                                     <option value="">Mosman</option>
@@ -51,7 +51,7 @@
                                 <div class="search-row">
                                     <div class="form-group mar-r-20">
                                         <label for="price-range">Prix (AU$):</label>
-                                        <input type="text" class="span2" value="" data-slider-min="100000"
+                                        <input type="text" class="span2" name="price" value="" data-slider-min="100000"
                                                data-slider-max="10000000" data-slider-step="50000"
                                                data-slider-value="[500000,5000000]" id="price-range1" name="prix"><br />
                                         <b class="pull-left color">100000$</b>
@@ -59,7 +59,7 @@
                                     </div>
                                     <div class="form-group mar-l-20">
                                         <label for="property-geo">Superficie (m2) :</label>
-                                        <input type="text" class="span2" value="" data-slider-min="50"
+                                        <input type="text" class="span2"  name="superficie" value="" data-slider-min="50"
                                                data-slider-max="1000" data-slider-step="25"
                                                data-slider-value="[50,450]" id="property-geo" name="superficie"><br />
                                         <b class="pull-left color">50m</b>
@@ -69,7 +69,7 @@
                                 <div class="search-row">
                                     <div class="form-group mar-r-20">
                                         <label for="price-range">Min salle de bain :</label>
-                                        <input type="text" class="span2" value="" data-slider-min="1"
+                                        <input type="text" class="span2" name="bain" value="" data-slider-min="1"
                                                data-slider-max="10" data-slider-step="1"
                                                data-slider-value="[4,8]" id="min-baths" name="sdb"><br />
                                         <b class="pull-left color">1</b>
@@ -77,7 +77,7 @@
                                     </div>
                                     <div class="form-group mar-l-20">
                                         <label for="property-geo">Min chambre :</label>
-                                        <input type="text" class="span2" value="" data-slider-min="1"
+                                        <input type="text" class="span2" name="chambre" value="" data-slider-min="1"
                                                data-slider-max="10" data-slider-step="1"
                                                data-slider-value="[3,7]" id="min-bed" name="ch"><br />
                                         <b class="pull-left color">1</b>
@@ -86,7 +86,7 @@
                                 </div>
                                 <br>
                                 <div class="form-group">
-                                    <select id="basic" class="selectpicker show-tick form-control" name="typelogement">
+                                    <select id="basic" class="selectpicker show-tick form-control" name="category">
                                         <option value="">Type de logement</option>
                                         <option value="Appartement">Appartement </option>
                                         <option value="Maison individuelle">Maison individuelle</option>
@@ -97,7 +97,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <select id="basic" class="selectpicker show-tick form-control" name="localisation">
+                                    <select id="basic" class="selectpicker show-tick form-control" name="type">
                                         <option value="">Localisation</option>
                                         <option value="">En agglomération </option>
                                         <option value="">Hors agglomération</option>

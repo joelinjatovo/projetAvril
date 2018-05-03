@@ -20,21 +20,6 @@ Route::get('mail/attachment','MailController@attachment_email');
 Auth::routes();
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
-// Baintree
-Route::get('/plans', 'PlanController@index');
-Route::post('braintree/webhook', 'WebhookController@handleWebhook');
-Route::get('/payment/process', 'PaymentController@process')->name('payment.process');
-Route::group(['middleware' => 'auth'], function () {
-    Route::get('/plan/{plan}', 'PlanController@show');
-    Route::get('/braintree/token', 'BraintreeController@token');
-    Route::post('/subscribe', 'SubscriptionController@store');
-});
-
-Route::middleware('guest')->group(function(){
-    Route::get('verify-user/{code}', 'Auth\RegisterController@activateUser')->name('activate.user');
-    Route::get('resend-code/{user}', 'Auth\RegisterController@resendActivation')->name('resend_code');
-});
-
 Route::get('storage/{album}/{filename}', function ($album,$filename)
 {
     $path = storage_path('app/'.$album.'/'.$filename);
@@ -65,11 +50,10 @@ Route::get('storage/thumbnail/{album}/{filename}', function ($album,$filename)
     return $response;
 });
 
-// Registration 
-Route::get('register/{role}', 'Auth\RegisterController@index')->name('register')->middleware('guest');
-Route::post('register/{role}', 'Auth\RegisterController@register')->name('register')->middleware('guest');
-
+// Localisation
 Route::get('localization/{locale}', 'LocalizationController@index')->name('localization');
+
+// Search
 Route::get('search', 'SearchController@index')->name('search');
 
 // Static pages
@@ -80,41 +64,87 @@ Route::get('help', 'IndexController@help')->name('help');
 Route::get('publicities', 'IndexController@publicities')->name('publicities');
 Route::get('confidentialities', 'IndexController@confidentialities')->name('confidentialities');
 
-
-Route::get('shop/{category?}', 'ShopController@index')->name('shop.index');// List product by Category OR no
-Route::post('product/{product}', 'ShopController@add')->name('shop.add')->middleware('auth');// Add product in cart
-Route::get('cart', 'ShopController@cart')->name('shop.cart')->middleware('auth');// Show cart
-
-Route::get('product/{product}', 'ProductController@index')->name('product.index');// View Product
-
-Route::get('shop/reduce/{product}', 'ShopController@reduceByOne')->name('shop.product.reduce');// Delete one unity or all the selected product in the cart
-Route::get('shop/delete/{product}', 'ShopController@deleteAll')->name('shop.product.delete');
-
-Route::get('checkout', 'ShopController@getCheckout')->name('shop.product.checkout');
-Route::post('checkout', 'ShopController@getCheckout')->name('shop.product.postCheckout');
-
-
+// Blog
 Route::get('blogs/{filter?}', 'BlogController@all')->name('blog.all');
 Route::get('blog/{blog}', 'BlogController@index')->name('blog.index');
-Route::get('blog/{blog}/comments', 'CommentController@index')->name('comment.list');
+Route::post('blog/{blog}', 'CommentController@store')->name('comment.store');
 
-Route::get('page/{page}', 'PageController@index')->name('page.index');
+// Shop and Product
+Route::get('shop/{category?}', 'ShopController@index')->name('shop.index');// List product by Category OR no
+Route::get('product/{product}', 'ProductController@index')->name('product.index');// View Product
 
-Route::middleware(["auth"])->group(function () {
-    Route::get('profile', 'UserController@profile')->name('profile');
+// Baintree
+Route::post('braintree/webhook', 'WebhookController@handleWebhook');
+Route::get('/braintree/token', 'BraintreeController@token')->name('braintree.token');
 
+Route::middleware('guest')->group(function(){
+    Route::get('register/{role}', 'Auth\RegisterController@index')->name('register');
+    Route::get('verify-user/{code}', 'Auth\RegisterController@activateUser')->name('activate.user');
+    Route::get('resend-code/{user}', 'Auth\RegisterController@resendActivation')->name('resend_code');
+});
+
+Route::middleware(["auth"])->group(function(){
+    // Baintree
+    Route::get('/plans', 'PlanController@index');
+    
+    // Label
     Route::get('product/{product}/{type}', 'LabelController@storeOrUpdate')->name('label.store');// Save OR Star Product
     Route::get('products/{type}', 'LabelController@all')->name('label.list');// List saved products OR starred Product
 
-    Route::post('blog/{blog}/comment', 'CommentController@store')->name('comment.store');
-    Route::get('blog/{blog}/comment/{comment}', 'CommentController@edit')->name('comment.edit');
-    Route::post('blog/{blog}/comment/{comment}', 'CommentController@update')->name('comment.update');
-
+    // Braintree
+    Route::get('/plan/{plan}', 'PlanController@show');
+    Route::post('/subscribe', 'SubscriptionController@store');
+    
     // Send a message by Javascript.
     Route::get('/chat', 'ChatController@index');
     Route::get('/chat/messages', 'ChatController@fetchMessages');
     Route::post('/chat/messages', 'ChatController@sendMessage');
+    
+    Route::prefix('profile')->group(function(){
+        Route::get('/', 'UserController@profile')->name('profile');
+        Route::get('edit', 'BackendController@profile')->name('profile.edit');
+        Route::post('edit', 'BackendController@profile');
+    });
 
+});
+
+
+Route::middleware(["auth", "role:member"])->group(function () {
+    Route::post('product/{product}', 'ShopController@add')->name('shop.add');// Add product in cart
+    Route::get('cart', 'ShopController@cart')->name('shop.cart');// Show cart
+    Route::get('shop/reduce/{product}', 'ShopController@reduceByOne')->name('shop.product.reduce');// Delete one unity or all the selected product in the cart
+    Route::get('shop/delete/{product}', 'ShopController@deleteAll')->name('shop.product.delete');
+    Route::get('checkout', 'ShopController@getCheckout')->name('shop.product.checkout');
+    Route::post('checkout', 'ShopController@getCheckout')->name('shop.product.postCheckout');
+    
+    Route::prefix('member')->group(function(){
+        Route::get('/', 'BackendController@dashboard');
+        Route::get('starred', 'BackendController@starred');
+        Route::get('saved', 'BackendController@saved');
+        Route::get('order/{filter?}', 'MemberController@order');
+    });
+});
+
+Route::prefix('afa')->middleware(["auth","role:afa"])->group(function(){
+    Route::get('/', 'BackendController@dashboard');
+    Route::get('starred', 'BackendController@starred');
+    Route::get('saved', 'BackendController@saved');
+    Route::get('products', 'AfaController@products');
+});
+
+Route::prefix('apl')->middleware(["auth","role:apl"])->group(function(){
+    Route::get('/', 'BackendController@dashboard');
+    Route::get('starred', 'BackendController@starred');
+    Route::get('saved', 'BackendController@saved');
+    Route::get('products', 'AplController@products');
+    Route::get('clients', 'AplController@clients');
+});
+
+Route::prefix('seller')->middleware(["auth","role:seller"])->group(function(){
+    Route::get('/', 'BackendController@dashboard');
+    Route::get('starred', 'BackendController@starred');
+    Route::get('saved', 'BackendController@saved');
+    Route::get('products', 'SellerController@products');
 });
 
 Route::prefix('admin')->middleware(["auth","role:admin"])->group(function () {
@@ -229,38 +259,3 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function () {
     });
 
 });
-
-Route::prefix('profile')->middleware(["auth"])->group(function(){
-    Route::get('edit', 'BackendController@profile');
-    Route::post('edit', 'BackendController@profile');
-});
-
-Route::prefix('afa')->middleware(["auth","role:afa"])->group(function(){
-    Route::get('/', 'BackendController@dashboard');
-    Route::get('starred', 'BackendController@starred');
-    Route::get('saved', 'BackendController@saved');
-    Route::get('products', 'AfaController@products');
-});
-
-Route::prefix('apl')->middleware(["auth","role:apl"])->group(function(){
-    Route::get('/', 'BackendController@dashboard');
-    Route::get('starred', 'BackendController@starred');
-    Route::get('saved', 'BackendController@saved');
-    Route::get('products', 'AplController@products');
-    Route::get('clients', 'AplController@clients');
-});
-
-Route::prefix('seller')->middleware(["auth","role:seller"])->group(function(){
-    Route::get('/', 'BackendController@dashboard');
-    Route::get('starred', 'BackendController@starred');
-    Route::get('saved', 'BackendController@saved');
-    Route::get('products', 'SellerController@products');
-});
-
-Route::prefix('member')->middleware(["auth","role:member"])->group(function(){
-    Route::get('/', 'BackendController@dashboard');
-    Route::get('starred', 'BackendController@starred');
-    Route::get('saved', 'BackendController@saved');
-    Route::get('order/{filter?}', 'MemberController@order');
-});
-

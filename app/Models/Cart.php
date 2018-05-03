@@ -38,7 +38,7 @@ class Cart extends BaseModel
         if (!self::$instance) {
             self::$instance = new Cart();
             self::$instance->author_id = (Auth::check()?Auth::user()->id:0);
-            self::$instance->status = 'encours';
+            self::$instance->status = 'pinged';
             self::$instance->save();
         }
         
