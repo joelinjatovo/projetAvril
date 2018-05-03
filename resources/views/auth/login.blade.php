@@ -13,7 +13,7 @@
 
 @section('content')
 @component('includes.breadcrumb')
-    @lang('app.contact')
+    @lang('app.connexion')
 @endcomponent
 
 <div id="contact-page" class="contact-page-var-two">

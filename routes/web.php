@@ -230,30 +230,37 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function () {
 
 });
 
-Route::prefix('afa')->middleware(["auth","role:afa"])->group(function () {
-    Route::get('/', 'BackendController@dashboard');
+Route::prefix('profile')->middleware(["auth"])->group(function(){
     Route::get('edit', 'BackendController@profile');
     Route::post('edit', 'BackendController@profile');
 });
 
-Route::prefix('apl')->middleware(["auth","role:apl"])->group(function () {
+Route::prefix('afa')->middleware(["auth","role:afa"])->group(function(){
     Route::get('/', 'BackendController@dashboard');
-    Route::get('edit', 'BackendController@profile');
-    Route::post('edit', 'BackendController@profile');
-});
-
-Route::prefix('seller')->middleware(["auth","role:seller"])->group(function () {
-    Route::get('/', 'BackendController@dashboard');
-    Route::get('edit', 'BackendController@profile');
-    Route::post('edit', 'BackendController@profile');
-});
-
-Route::prefix('member')->middleware(["auth","role:member"])->group(function () {
-    Route::get('/', 'BackendController@dashboard');
-    Route::get('edit', 'BackendController@profile');
-    Route::post('edit', 'BackendController@profile');
     Route::get('starred', 'BackendController@starred');
     Route::get('saved', 'BackendController@saved');
-    Route::get('order/{filter?}', 'BackendController@order');
+    Route::get('products', 'AfaController@products');
+});
+
+Route::prefix('apl')->middleware(["auth","role:apl"])->group(function(){
+    Route::get('/', 'BackendController@dashboard');
+    Route::get('starred', 'BackendController@starred');
+    Route::get('saved', 'BackendController@saved');
+    Route::get('products', 'AplController@products');
+    Route::get('clients', 'AplController@clients');
+});
+
+Route::prefix('seller')->middleware(["auth","role:seller"])->group(function(){
+    Route::get('/', 'BackendController@dashboard');
+    Route::get('starred', 'BackendController@starred');
+    Route::get('saved', 'BackendController@saved');
+    Route::get('products', 'SellerController@products');
+});
+
+Route::prefix('member')->middleware(["auth","role:member"])->group(function(){
+    Route::get('/', 'BackendController@dashboard');
+    Route::get('starred', 'BackendController@starred');
+    Route::get('saved', 'BackendController@saved');
+    Route::get('order/{filter?}', 'MemberController@order');
 });
 

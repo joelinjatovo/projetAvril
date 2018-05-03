@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 
-class BackendController extends Controller
+class SellerController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -15,30 +15,19 @@ class BackendController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('role:seller');
         Auth::check();
     }
-
+    
     /**
-     * Show the dashboard.
+     * 
      *
      * @return \Illuminate\Http\Response
      */
-    public function dashboard()
+    public function products()
     {
-        return view('backend.dashboard.'.Auth::user()->role);
-    }
-
-    /**
-     * Show form and edit current user profile
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function profile()
-    {
-        $action = url(Auth::user()->role.'/edit');
-        return view('backend.user.update')
-            ->with('action',$action)
-            ->with('item',Auth::user());
+        return view('backend.product.all')
+            ->with('items', Auth::user()->products);
     }
     
     /**
@@ -62,5 +51,4 @@ class BackendController extends Controller
         return view('backend.product.all')
             ->with('items', Auth::user()->savedProducts);
     }
-
 }

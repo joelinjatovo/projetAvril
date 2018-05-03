@@ -1,29 +1,25 @@
-@extends('layouts.app')
+@extends('layouts.backend')
 
-@section('content')
-<div id="property-single" class="content corps">
-    <div class="container">
-          <div class="row">
-              @if(!$item)
-                  <h3>Votre panier est vide!</h3>
-              @else
-                  <h3>Votre panier</h3>
-                  <ul class="list-group">
-                      @foreach($item->items as $cartItem)
-                        @if($cartItem->product)
-                          <li class="list-group-item">
-                              <span><strong>{{$cartItem->product->title}}</strong> x {{$cartItem->quantity}}</span>
-                              <a class="btn" href="{{route('shop.product.reduce', ['product' => $cartItem->product])}}"><i class="fa fa-minus-square" aria-hidden="true"></i></a>
-                              <a class="btn" href="{{route('shop.product.delete', ['product' => $cartItem->product])}}"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                              <span class="badge">{{$cartItem->price}} $</span>
-                          </li>
-                        @endif
-                      @endforeach
-                  </ul>
-                  <span class="pull-right badge">Total à payer : {{$item->totalPrice}} $</span>
-                  <a href="{{route('shop.product.checkout')}}" class="btn btn-primary">Passé au paiement</a>
-              @endif
-          </div>
-    </div>
+@section('subcontent')
+<div class="row">
+  @if(!$item)
+      <h3>Votre panier est vide!</h3>
+  @else
+      <h3>Votre panier</h3>
+      <ul class="list-group">
+          @foreach($item->items as $cartItem)
+            @if($cartItem->product)
+              <li class="list-group-item">
+                  <span><strong>{{$cartItem->product->title}}</strong> x {{$cartItem->quantity}}</span>
+                  <a class="btn" href="{{route('shop.product.reduce', ['product' => $cartItem->product])}}"><i class="fa fa-minus-square" aria-hidden="true"></i></a>
+                  <a class="btn" href="{{route('shop.product.delete', ['product' => $cartItem->product])}}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                  <span class="badge">{{$cartItem->price}} $</span>
+              </li>
+            @endif
+          @endforeach
+      </ul>
+      <span class="pull-right badge">Total à payer : {{$item->totalPrice}} $</span>
+      <a href="{{route('shop.product.checkout')}}" class="btn btn-primary">Passé au paiement</a>
+  @endif
 </div>
 @endsection

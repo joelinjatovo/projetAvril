@@ -17,6 +17,7 @@ class CreateOrdersTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('cart_id')->default(0)->index();
             $table->bigInteger('author_id')->default(0)->index();
+            $table->string('status')->default('pinged'); // pinged payed canceled confirmed (confirmed is payed&&livred)
             $table->timestamps();
         });
     }

@@ -75,20 +75,20 @@
                             <i class="fa fa-sign-in"></i>
                             <label for="currency-dropdown"> S'inscrire: </label>
                             <select name="currency" id="currency-dropdown" onChange="location.href=''+this.options[this.selectedIndex].value;">
-                                <option value="#">En tant que</option>
-                                <option value="{{route('register', ['role'=>'member'])}}">Membre</option>
-                                <option value="{{route('register', ['role'=>'seller'])}}">vendeur</option>
-                                <option value="{{route('register', ['role'=>'afa'])}}">A.F.A</option>
-                                <option value="{{route('register', ['role'=>'apl'])}}">A.P.L</option>
+                                <option value="#">@lang('app.as')</option>
+                                <option value="{{route('register', ['role'=>'member'])}}">@lang('app.member')</option>
+                                <option value="{{route('register', ['role'=>'seller'])}}">@lang('app.seller')</option>
+                                <option value="{{route('register', ['role'=>'afa'])}}">@lang('app.afa')</option>
+                                <option value="{{route('register', ['role'=>'apl'])}}">@lang('app.apl')</option>
                             </select>
                         </div>
                         <div class="currency-in-header">
                             <i class="fa fa-mouse-pointer"></i>
-                            <label for="currency-dropdown"> <a href="{{route('login')}}">Connexion</a> </label>
+                            <label for="currency-dropdown"> <a href="{{route('login')}}">@lang('app.connexion')</a> </label>
                         </div>
                         @else
                         <div class="currency-in-header">
-                            <i class="fa fa-user"></i><a href="{{route('admin.dashboard')}}">{{Auth::user()->name}}</a>
+                            <i class="fa fa-user"></i><a href="{{url(Auth::user()->role)}}">{{Auth::user()->name}}</a>
                         </div>
                         @endif
                     </div>
@@ -108,20 +108,20 @@
             <div class="col-md-6 col-sm-7 ">
                 <nav id="site-nav" class="nav navbar-default menuBtn">
                     <ul class="nav navbar-nav ">
-                        <li><a href="#">IMMOBILIER</a>
+                        <li><a href="#">@lang('app.immobilier')</a>
                             <ul>
-                                <li><a href="{{route('shop.index', ['category'=>1])}}">Résidentiel</a></li>
-                                <li><a href="{{route('shop.index', ['category'=>2])}}">Foncier</a></li>
+                                <li><a href="{{route('shop.index', ['category'=>1])}}">@lang('app.residentiel')</a></li>
+                                <li><a href="{{route('shop.index', ['category'=>2])}}">@lang('app.foncier')</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">BUSINESS</a>
+                        <li><a href="#">@lang('app.business')</a>
                             <ul>
-                                <li><a href="{{route('shop.index', ['category'=>3])}}">Industriel</a></li>
-                                <li><a href="{{route('shop.index', ['category'=>4])}}">Commercial</a></li>
+                                <li><a href="{{route('shop.index', ['category'=>3])}}">@lang('app.industriel')</a></li>
+                                <li><a href="{{route('shop.index', ['category'=>4])}}">@lang('app.commercial')</a></li>
                             </ul>
                         </li>
-                        <li><a href="{{route('services')}}">NOS SERVICES</a></li>
-                        <li><a href="{{route('blog.all')}}">BLOG</a></li>
+                        <li><a href="{{route('services')}}">@lang('app.services')</a></li>
+                        <li><a href="{{route('blog.all')}}">@lang('app.blog')</a></li>
                         @if(Auth::check())
                         <li>
                             <a href="{{route('profile')}}">@lang('app.account')</a>
@@ -170,7 +170,7 @@
             <div class="row">
                 <div class="col-md-4 col-sm-6">
                     <section class="widget about-widget clearfix">
-                        <h4 class="title hide">About Us</h4>
+                        <h4 class="title hide">@lang('app.about_us')</h4>
                         <a class="footer-logo" href="#">
                             <img src="{{asset('images/footer-logo.png')}}" alt="Footer Logo">
                         </a>
