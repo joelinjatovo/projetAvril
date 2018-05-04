@@ -79,6 +79,7 @@ Route::get('/braintree/token', 'BraintreeController@token')->name('braintree.tok
 
 Route::middleware('guest')->group(function(){
     Route::get('register/{role}', 'Auth\RegisterController@index')->name('register');
+    Route::post('register/{role}', 'Auth\RegisterController@index');
     Route::get('verify-user/{code}', 'Auth\RegisterController@activateUser')->name('activate.user');
     Route::get('resend-code/{user}', 'Auth\RegisterController@resendActivation')->name('resend_code');
 });
@@ -103,8 +104,11 @@ Route::middleware(["auth"])->group(function(){
     Route::prefix('profile')->group(function(){
         Route::get('/', 'UserController@profile')->name('profile');
         Route::get('edit', 'BackendController@profile')->name('profile.edit');
-        Route::post('edit', 'BackendController@profile');
+        Route::post('edit', 'BackendController@editProfile');
+        Route::get('password', 'BackendController@password')->name('password.edit');
+        Route::post('password', 'BackendController@updatePassword');
     });
+    
 
 });
 

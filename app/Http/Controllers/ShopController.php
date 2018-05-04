@@ -189,6 +189,13 @@ class ShopController extends Controller
 
         Session::forget('cart');
         
+        // Notify User
+        //Auth::user()->notify(new OrderPinged($user, $order));
+        //Auth::user()->notify(new OrderPayed($user, $order));
+        
+        //Fire event
+        
+        
         return redirect()->route('shop.index')->with('success', 'Votre commande a été éffectué');
     }
 

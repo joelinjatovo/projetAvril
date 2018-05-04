@@ -43,7 +43,7 @@ class LoginController extends Controller
     {
         Auth::check();
         if(Auth::user()->use_default_password==1){
-            return '/password/edit';
+            return '/profile/password';
         }
         return '/'.Auth::user()->role;
     }

@@ -10,18 +10,20 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ProductAddedToCartEvent
+class OrderPinged
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+    
+    private $order;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(App\Models\Order $order)
     {
-        //
+        $this->order = $order;
     }
 
     /**
@@ -32,5 +34,9 @@ class ProductAddedToCartEvent
     public function broadcastOn()
     {
         return new PrivateChannel('channel-name');
+    }
+    
+    public function order(){
+        return $this->order;
     }
 }

@@ -16,6 +16,7 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \App\Http\Middleware\Language::class,
+        \App\Http\Middleware\EditPassword::class,
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
@@ -37,6 +38,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\Language::class,
+            \App\Http\Middleware\EditPassword::class,
         ],
 
         'api' => [
