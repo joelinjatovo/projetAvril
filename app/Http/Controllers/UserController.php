@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Validator;
+use Auth;
 
 use App\Models\User;
 
@@ -53,8 +54,12 @@ class UserController extends Controller
     public function profile()
     {
         $this->middleware('auth');
-        
-        return view('user.profile');
+        if(Auth::user()->isAdmin()){
+            return view('admin.user.profile')
+                ->with('item', Auth::user());
+        }
+        return view('backend.user.profile')
+                ->with('item', Auth::user());
     }
     
     /**

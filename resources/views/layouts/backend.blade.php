@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="main-slider-wrapper clearfix content corps" style="margin-top: 150px;">
+<div class="content corps" style="margin-top: 160px;">
     <div class="container">
         <div class="row">
           <div class="col-md-3">

@@ -20,8 +20,8 @@ class EditPassword
      */
     public function handle($request, Closure $next)
     {
-        if(!Route::is('*profile/password*')&&Auth::check()&&Auth::user()->use_default_password==1){
-            return redirect()->route('password.edit')->with('info', 'Vous utilisez le mot de passe par defaut');
+        if(Route::is('*profile/password*')&&Auth::check()&&Auth::user()->use_default_password == 1){
+            return redirect()->route('password.edit');
         }
         return $next($request);
     }

@@ -22,8 +22,8 @@
                 <label for="language" class="col-sm-3 control-label" for="language">Langage *</label>
                 <div class="col-sm-9">
                     <select name="language" class="form-control" id="language">
-                        <option value="fr" {{$item->name=='fr'?'selected':''}}>Français</option>
-                        <option value="en" {{$item->name=='en'?'selected':''}}>Anglais</option>
+                        <option value="fr" {{$item->language=='fr'?'selected':''}}>Français</option>
+                        <option value="en" {{$item->language=='en'?'selected':''}}>Anglais</option>
                     </select>
                 </div>
             </div>

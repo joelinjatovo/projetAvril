@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Session;
 use Auth;
 use Validator;
+
+use App\Models\Cart;
 
 class BackendController extends Controller
 {
@@ -26,7 +29,12 @@ class BackendController extends Controller
      */
     public function dashboard()
     {
-        return view('backend.dashboard.'.Auth::user()->role);
+        $currentCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = Cart::getInstance($currentCart);
+        
+        return view('backend.dashboard.'.Auth::user()->role)
+            ->with('item',Auth::user())
+            ->with(['cart' => $cart]);
     }
 
     /**

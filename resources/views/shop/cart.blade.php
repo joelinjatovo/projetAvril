@@ -16,6 +16,7 @@
                               <h4>{{$cartItem->product->title}}</h4>
                               <h5>APL: {{$cartItem->apl->name}}</h5>
                               <p><strong>Quantity:</strong> {{$cartItem->quantity}} / <strong>Price:</strong> ${{$cartItem->price}}</p>
+                              <p><strong>Taux de reseervation:</strong> {{$cartItem->product->tma}}</p>
                           </div>
                           <div class="pull-right">
                               <a class="btn" href="{{route('shop.product.reduce', ['product' => $cartItem->product])}}"><i class="fa fa-minus-square" aria-hidden="true"></i></a>
