@@ -107,6 +107,8 @@ Route::middleware(["auth"])->group(function(){
         Route::post('edit', 'BackendController@editProfile');
         Route::get('password', 'BackendController@password')->name('password.edit');
         Route::post('password', 'BackendController@updatePassword');
+        Route::get('avatar', 'BackendController@avatar')->name('avatar.edit');
+        Route::post('avatar', 'BackendController@updateAvatar');
     });
     
 

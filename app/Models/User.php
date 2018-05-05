@@ -155,6 +155,16 @@ class User extends Authenticatable
     }
     
     /**
+     * A user can have one image
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function image()
+    {
+      return $this->hasOne(Image::class, 'id', 'image_id');
+    }
+    
+    /**
      * A user can have one parent
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne

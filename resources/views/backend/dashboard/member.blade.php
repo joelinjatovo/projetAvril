@@ -15,7 +15,7 @@
             <div class="col-sm-4">
                 <a href="r">
                     <section class="widget text-center">
-                        <strong>@lang('app.save')/@lang('app.star')</strong>
+                        <strong>@lang('app.pin')/@lang('app.favorites')</strong>
                         <h3>{{count($item->savedProducts)}}/{{count($item->starredProduts)}}</h3>
                     </section>
                 </a>
@@ -23,7 +23,7 @@
             <div class="col-sm-4">
                 <a href="r">
                     <section class="widget text-center">
-                        <strong>@lang('app.orders')/@lang('app.sale')</strong>
+                        <strong>@lang('app.orders')/@lang('app.purchases')</strong>
                         <h3>{{count($item->orders)}}/{{count($item->orders)}}</h3>
                     </section>
                 </a>

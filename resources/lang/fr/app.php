@@ -28,6 +28,12 @@ return [
     'seller'  => 'Vendeur',
     'afa'  => 'Agence Francophone Australienne',
     'apl'  => 'Agence Partenaire Locale',
+    'favorites'  => 'Favoris',
+    'pin'  => 'Epingle',
+    'order'  => 'Commande',
+    'orders'  => 'Commandes',
+    'purchase'  => 'Achat',
+    'purchases'  => 'Achats',
 
     'immobilier'        => 'Immobilier',
     'residentiel'       => 'residentiel',

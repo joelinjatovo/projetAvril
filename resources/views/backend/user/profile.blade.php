@@ -3,6 +3,17 @@
 @section('subcontent')
 <div class="row">
     <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-3">
+                <a href="{{route('profile.edit')}}" class="btn btn-info">Modifier Profile</a>
+            </div>
+            <div class="col-sm-3">
+                <a href="{{route('avatar.edit')}}"  class="btn btn-warning">Modifier Avatar</a>
+            </div>
+            <div class="col-sm-3">
+                <a href="{{route('password.edit')}}"  class="btn btn-success">Modifier Mot de passe</a>
+            </div>
+        </div>
         <fieldset>
             <legend>Login Information</legend>
             <div class="col-sm-12">
@@ -32,7 +43,7 @@
                 </div>
                 <div class="col-sm-4">
                     <section class="widget">
-                        <img src="{{$item->imageUrl(false)}}" alt="{{$item->name}}">
+                        <img src="{{$item->imageUrl(false)}}" alt="{{$item->name}}"  width="100%">
                     </section>
                 </div>
             </div>
@@ -112,13 +123,7 @@
                 <label for="crm_email" class="col-sm-3 control-label">CRM Provider Email</label>
                 <div class="col-sm-9">{{$item->get_meta('v')?$item->get_meta('crm_email')->value:''}}</div>
             </div>
-            <em class="help-block">(*) Required field</em>
         </fieldset>
-        <div class="form-group">
-            <div class="col-sm-offset-3 col-sm-9">
-                <button type="submit" class="btn btn-primary">Valider mon inscription</button>
-            </div>
-        </div>
     </div>
 </div>
 @endsection

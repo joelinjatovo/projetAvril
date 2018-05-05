@@ -8,6 +8,7 @@ use Auth;
 use Validator;
 
 use App\Models\Cart;
+use App\Models\Image;
 
 class BackendController extends Controller
 {
@@ -341,6 +342,50 @@ class BackendController extends Controller
         // Success
         return back()->with('success',"Votre mot de passe a été bien modifié.");
     }
+
+    /**
+     * Show form to edit current user avatar
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function avatar()
+    {
+        return view('backend.user.avatar')
+            ->with('item', Auth::user());
+    }
+
+    /**
+     * Show form to edit current user avatar
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateAvatar(Request $request)
+    {
+        // Validate request
+        $validator = Validator::make($request->all(),[
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+        
+        if ($validator->fails()) {
+            return back()->withErrors($validator)
+                        ->withInput();
+        }
+        
+        $user = Auth::user();
+        try{
+            $file = $request->file('image');
+            $image = Image::storeAndSave($file);
+            $user->image_id = $image->id;
+            $user->save();
+        }catch(\Exception $e){
+            return back()->with('success', $e->getMessage());
+        }
+        
+        // Success
+        return back()->with('success',"Votre photo a été bien modifiée.");
+    }
+
     
     /**
      * 
