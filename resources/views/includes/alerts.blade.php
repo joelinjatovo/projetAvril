@@ -10,6 +10,12 @@
 </div>
 @endif
 
+@if(Session::has('info')) 
+<div class="alert alert-info">
+    <strong>{!!Session::get('info')!!}</strong> 
+</div>
+@endif
+
 @if(Session::has('error')) 
 <div class="alert alert-danger">
     <strong>{!!Session::get('error')!!}</strong> 

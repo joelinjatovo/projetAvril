@@ -44,6 +44,8 @@
                             </ol>
                         </div>
                     </div>
+                    
+                    @include('includes.alerts')
 
                     <div class="content-box-large">
                         <div class="panel-heading">

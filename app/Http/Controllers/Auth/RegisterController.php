@@ -396,16 +396,16 @@ class RegisterController extends Controller
         }
         
         // Create Localization
-        $datas['location_id'] = '';
+        $datas['location_id'] = 0;
         if($location = Localisation::create($datas)){
-            $datas['location_id'] = $location->id;
+            $datas['location_id'] = $location->id>0?$location->id:0;
         }
         
         // Store image file
-        $datas['image_id'] = '';
+        $datas['image_id'] = 0;
         if($file=$request->file('image')){
             $image = Image::storeAndSave($file);
-            $datas['image_id'] = $image->id;
+            $datas['image_id'] = $image->id>0?$image->id:0;
         }
         
         // More info
@@ -422,7 +422,7 @@ class RegisterController extends Controller
             $user = $this->create($datas);
         }catch (\Exception $exception) {
             logger()->error($exception);
-            return back()->with('info', 'Unable to create new user.');
+            return back()->with('info', 'Unable to create new user.<br>'.$exception->getMessage());
         }
         
         

@@ -83,7 +83,7 @@ Route::get('api/chart/locations', 'ChartController@locations')->name('chart.loca
 
 Route::middleware('guest')->group(function(){
     Route::get('register/{role}', 'Auth\RegisterController@index')->name('register');
-    Route::post('register/{role}', 'Auth\RegisterController@index');
+    Route::post('register/{role}', 'Auth\RegisterController@register');
     Route::get('verify-user/{code}', 'Auth\RegisterController@activateUser')->name('activate.user');
     Route::get('resend-code/{user}', 'Auth\RegisterController@resendActivation')->name('resend_code');
 });
