@@ -26,7 +26,7 @@
                     @endif
                     @If(Auth::user()->hasRole('apl'))
                     <li><a href="{{route('apl.sales')}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('app.sales')</a></li>
-                    <li><a href="{{route('afa.customers')}}"><i class="fa fa-users" aria-hidden="true"></i> @lang('app.customers')</a></li>
+                    <li><a href="{{route('apl.customers')}}"><i class="fa fa-users" aria-hidden="true"></i> @lang('app.customers')</a></li>
                     @endif
                     <li><a href="{{route('logout')}}"><i class="fa fa-sign-out" aria-hidden="true"></i> @lang('app.logout')</a></li>
                 </ul>

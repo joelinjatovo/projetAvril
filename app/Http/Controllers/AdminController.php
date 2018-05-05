@@ -28,6 +28,22 @@ class AdminController extends Controller
     }
 
     /**
+     * Show the dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function chart($type)
+    {
+        switch($type){
+            case "category":
+                return view('admin.chart.product.category');
+            default:
+                abort(404);
+                
+        }
+    }
+
+    /**
      * Show the card config.
      *
      * @return \Illuminate\Http\Response

@@ -112,6 +112,27 @@ class Product extends BaseModel
     }
     
     /**
+     * A product can have one category
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function category()
+    {
+      return $this->hasOne(Category::class, 'id', 'category_id');
+    }
+    
+    /**
+     * A product can have many categories
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
+     */
+    public function categories()
+    {
+      return $this->belongsToMany(Product::class, 'objects_categories', 'product_id', 'category_id');
+    }
+    
+    
+    /**
      * A product can have one location
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne

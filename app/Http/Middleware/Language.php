@@ -7,6 +7,7 @@ use Closure;
 use Auth;
 use Session;
 use App;
+use Carbon\Carbon;
 
 class Language
 {
@@ -21,9 +22,11 @@ class Language
     {
         if(Session::has('locale')){
             App::setLocale(Session::get('locale'));
+            Carbon::setLocale(Session::get('locale'));
         }elseif(Auth::check()&&Auth::user()->language){
             Session::put('locale',Auth::user()->language);
-            App::setLocale(Auth::user()->language);
+            App::setLocale(Session::get('locale'));
+            Carbon::setLocale(Session::get('locale'));
         }
         return $next($request);
     }

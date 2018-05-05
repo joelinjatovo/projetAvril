@@ -1,45 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+<!-- CSRF Token -->
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Admin - @yield('title') - {{ config('app.name', 'IEA') }}</title>
-    
-    <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="{{asset('images/favicon.png')}}">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{asset('administrator/assets/ico/apple-touch-icon-144-precomposed.png')}}">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{asset('administrator/assets/ico/apple-touch-icon-114-precomposed.png')}}">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{asset('administrator/assets/ico/apple-touch-icon-72-precomposed.png')}}">
-    <link rel="apple-touch-icon-precomposed" href="{{asset('administrator/assets/ico/apple-touch-icon-57-precomposed.png')}}">
+<title>Admin - @yield('title') - {{ config('app.name', 'IEA') }}</title>
 
-    
-    <!-- Le styles -->
-    <link href="{{asset('administrator/css/lib/bootstrap.css')}}" rel="stylesheet" type="text/css" >
-    <link href="{{asset('administrator/css/lib/bootstrap-responsive.css')}}" rel="stylesheet" type="text/css" >
-    <link href="{{asset('administrator/css/boo-extension.css')}}" rel="stylesheet" type="text/css" >
-    <link href="{{asset('administrator/css/boo.css')}}" rel="stylesheet" type="text/css" >
-    <link href="{{asset('administrator/css/style.css')}}" rel="stylesheet" type="text/css" >
-    <link href="{{asset('administrator/css/boo-coloring.css')}}" rel="stylesheet" type="text/css" >
-    <link href="{{asset('administrator/css/boo-utility.css')}}" rel="stylesheet" type="text/css" >
-    <link href="{{asset('css/font-awesome.min.css')}}" rel="stylesheet" type="text/css" >
-    
-    <!-- Le Script -->
-    <script src="{{asset('administrator/amcharts/amcharts.js')}}"></script>
-    <script src="{{asset('administrator/amcharts/xy.js')}}"></script>
-    <script src="{{asset('administrator/amcharts/funnel.js')}}"></script>
-    <script src="{{asset('administrator/amcharts/pie.js')}}"></script>
-    <script src="{{asset('administrator/amcharts/serial.js')}}"></script>
-    <script src="{{asset('administrator/amcharts/graphe.js')}}"></script>
-    <script src="{{asset('administrator/amcharts/gantt.js')}}"></script>
-    <script src="{{asset('administrator/amcharts/gauge.js')}}"></script>
-    <script src="{{asset('administrator/amcharts/radar.js')}}"></script>
+<!-- Le fav and touch icons -->
+<link rel="shortcut icon" href="{{asset('images/favicon.png')}}">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{asset('administrator/assets/ico/apple-touch-icon-144-precomposed.png')}}">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{asset('administrator/assets/ico/apple-touch-icon-114-precomposed.png')}}">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{asset('administrator/assets/ico/apple-touch-icon-72-precomposed.png')}}">
+<link rel="apple-touch-icon-precomposed" href="{{asset('administrator/assets/ico/apple-touch-icon-57-precomposed.png')}}">
+
+
+<!-- Le styles -->
+<link href="{{asset('administrator/css/lib/bootstrap.css')}}" rel="stylesheet" type="text/css" >
+<link href="{{asset('administrator/css/lib/bootstrap-responsive.css')}}" rel="stylesheet" type="text/css" >
+<link href="{{asset('administrator/css/boo-extension.css')}}" rel="stylesheet" type="text/css" >
+<link href="{{asset('administrator/css/boo.css')}}" rel="stylesheet" type="text/css" >
+<link href="{{asset('administrator/css/style.css')}}" rel="stylesheet" type="text/css" >
+<link href="{{asset('administrator/css/boo-coloring.css')}}" rel="stylesheet" type="text/css" >
+<link href="{{asset('administrator/css/boo-utility.css')}}" rel="stylesheet" type="text/css" >
+<link href="{{asset('css/font-awesome.min.css')}}" rel="stylesheet" type="text/css" >
 
 </head>
 <body class="sidebar-left ">
@@ -100,14 +89,14 @@
           @if(Auth::check())
           <div class="sidebar-item">
               <div class="media profile">
-                  <div class="media-thumb media-left thumb-bordereb">
+                  <div class="media-thumb media-left">
                       <a class="img-shadow" href="">
-                          <img class="thumb" src="{{asset('administrator/img/administrateur-1520608223.jpeg')}}">
+                          <img class="thumb" src="{{Auth::user()->imageUrl()}}" style="width:100%;">
                       </a>
                   </div>
                   <div class="media-body">
                       <h5 class="media-heading">{{Auth::user()->name}}</h5>
-                      <p class="data">Dernière modif : {{Auth::user()->updated_at}}</p>
+                      <p class="data">{{Auth::user()->created_at->diffForHumans()}}</p>
                   </div>
               </div>
           </div>
@@ -120,8 +109,16 @@
             </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="{{route('admin.dashboard')}}" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fontello-icon-chart"></i> Statistiques</a>
+                      <a href="{{route('admin.dashboard')}}" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fontello-icon-chart"></i> </a>
                   </div>
+              </li>
+              <li class="accordion-group">
+                  <div class="accordion-heading">
+                      <a href="#accDashboard" data-parent="#mainSideMenu"  data-toggle="collapse" class="accordion-toggle"><i class="fontello-icon-users-1"></i><i class="chevron fontello-icon-right-open-3"></i>Statistiques</a>
+                  </div>
+                  <ul class="accordion-content nav nav-list collapse" id="accDashboard">
+                      <li><a href="{{route('admin.chart', ['type'=>'category'])}}"> <i class="fontello-icon-right-dir"></i>Produit Par Categorry</a></li>
+                  </ul>
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
@@ -381,9 +378,6 @@
 <script src="{{asset('administrator/js/application.js')}}"></script>
 <script src="{{asset('administrator/js/demo/demo-jquery.dataTables.js')}}"></script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA48VeOmkB_L-TWKjgCknG92lDw21mOLvo&callback=myMap"></script>
-
-
 <script type="text/javascript">
 $(document).ready(function () {
      /* initiate plugin jPage */
@@ -548,6 +542,8 @@ $(function() {
      });/**/
      });
 </script>
+    
+@yield('script')
 
 </body>
 </html>

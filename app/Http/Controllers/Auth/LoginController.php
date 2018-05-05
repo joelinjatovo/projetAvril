@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Session;
 
 use App\Models\Page;
 
@@ -42,6 +43,9 @@ class LoginController extends Controller
     protected function redirectTo()
     {
         Auth::check();
+        Session::put('locale',Auth::user()->language);
+        Session::save();
+        
         if(Auth::user()->use_default_password==1){
             return '/profile/password';
         }

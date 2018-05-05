@@ -22,7 +22,6 @@ class CategoryController extends Controller
 
     /**
      * Show a category
-     * Admin Only
      *
      * @param  Illuminate\Http\Request  $request
      * @param  App\Models\Category $category
@@ -33,7 +32,24 @@ class CategoryController extends Controller
         $this->middleware('auth');
         $this->middleware('role:admin');
         
-        return view('admin.blog.index')
+        return view('admin.category.index')
+                ->with('item', $category); 
+    }
+
+    /**
+     * Show a category
+     * Admin Only
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @param  App\Models\Category $category
+     * @return Illuminate\Http\Response
+     */
+    public function show(Request $request, Category $category)
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        return view('admin.category.index')
                 ->with('item', $category); 
     }
 

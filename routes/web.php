@@ -77,6 +77,9 @@ Route::get('product/{product}', 'ProductController@index')->name('product.index'
 Route::post('braintree/webhook', 'WebhookController@handleWebhook');
 Route::get('/braintree/token', 'BraintreeController@token')->name('braintree.token');
 
+// Chart
+Route::get('api/chart/categories', 'ChartController@categories')->name('chart.categories');
+
 Route::middleware('guest')->group(function(){
     Route::get('register/{role}', 'Auth\RegisterController@index')->name('register');
     Route::post('register/{role}', 'Auth\RegisterController@index');
@@ -160,6 +163,7 @@ Route::prefix('seller')->middleware(["auth","role:seller"])->group(function(){
 
 Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
     Route::get('/', 'AdminController@dashboard')->name('admin.dashboard');
+    Route::get('/chart/{type}', 'AdminController@chart')->name('admin.chart');
 
     Route::get('card', 'AdminController@card')->name('admin.card');
     Route::get('carts', 'CartController@allAdmin')->name('admin.cart.list');
