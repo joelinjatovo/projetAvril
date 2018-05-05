@@ -79,6 +79,7 @@ Route::get('/braintree/token', 'BraintreeController@token')->name('braintree.tok
 
 // Chart
 Route::get('api/chart/categories', 'ChartController@categories')->name('chart.categories');
+Route::get('api/chart/locations', 'ChartController@locations')->name('chart.locations');
 
 Route::middleware('guest')->group(function(){
     Route::get('register/{role}', 'Auth\RegisterController@index')->name('register');

@@ -63,4 +63,24 @@ class Localisation extends BaseModel
         }
         return round($distance, 2);
     }
+    
+    /**
+     * An location can have many products
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function products()
+    {
+      return $this->hasMany(Product::class, 'location_id', 'id');
+    }
+    
+    /**
+     * An location can have many users
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function users()
+    {
+      return $this->hasMany(User::class, 'location_id', 'id');
+    }
 }

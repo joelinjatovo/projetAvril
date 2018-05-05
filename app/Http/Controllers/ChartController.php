@@ -31,4 +31,19 @@ class ChartController extends Controller
             'data' => $data,
         ]);
     }
+    
+    public function locations(Request $request)
+    {
+        /*
+        $items = Localisation::where('country', "Australie")
+            ->groupBy('state')
+            ->get();
+        */
+
+        return response()->json([
+            'state' => '1',
+            'response' => 'This is get method',
+            'data' => $data,
+        ]);
+    }
 }

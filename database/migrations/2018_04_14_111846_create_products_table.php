@@ -30,6 +30,15 @@ class CreateProductsTable extends Migration
             $table->bigInteger('location_id')->default('0')->index();
             $table->bigInteger('image_id')->default('0')->index();
             $table->timestamps();
+
+            /*            
+            $table->string('state', 100)->nullable();
+            $table->string('city', 100)->nullable();
+            $table->string('suburb', 100)->nullable();
+            $table->string('longitude')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('altitude')->nullable();
+            */
         });
     }
 
