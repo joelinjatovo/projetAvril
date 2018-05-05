@@ -57,7 +57,7 @@ class Product extends BaseModel
      */
     public function isDisponible()
     {
-        return ($this->quantity>0);
+        return ($this->quantity>0 && $this->status=='published');
     }
     
     /**

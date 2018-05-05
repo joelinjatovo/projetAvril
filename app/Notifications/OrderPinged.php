@@ -6,23 +6,26 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use App\Models\Order;
+use App\Models\User;
 
-class UserSubscribed extends Notification
+class OrderPinged extends Notification
 {
     use Queueable;
+
     
     private $user;
-    private $plan;
-
+    private $order;
+    
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(User $user, Plan $plan)
+    public function __construct(User $user, Order $order)
     {
         $this->user = $user;
-        $this->plan = $plan;
+        $this->order = $order;
     }
 
     /**
@@ -48,14 +51,15 @@ class UserSubscribed extends Notification
         $user = $this->user;
         
         /** @var mixed $plan */
-        $plan = $this->plan;
+        $order = $this->order;
         
         return (new MailMessage)
-            ->from(env('ADMIN_MAIL', 'tsorakoto@gmail.com'))
-            ->subject('Successfully subscribed acount')
-            ->greeting(sprintf('Hello %s', $user->name))
-            ->line('You have successfully subscribed to the plan "'.$plan->name.'".')
-            ->line('Thank you for using our application!');
+                    ->from(env('ADMIN_MAIL', 'tsorakoto@gmail.com'))
+                    ->subject('Successfully subscribed acount')
+                    ->greeting(sprintf('Hello %s', $user->name))
+                    ->line('Someone ordered product from the account attached to this email.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**

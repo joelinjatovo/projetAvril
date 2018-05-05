@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Session;
 use Auth;
 
+use App\Notifications\OrderPinged;
+
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\Cart;
@@ -142,6 +144,11 @@ class ShopController extends Controller
         $this->middleware('auth');
         $this->middleware('role:member');
         
+        if (!Session::has('cart')) {
+            return redirect()->route('profile')
+                ->with('error', 'Votre carte est encore vide.');
+        }
+        
         return view('shop.checkout');
     }
 
@@ -149,54 +156,59 @@ class ShopController extends Controller
         $this->middleware('auth');
         $this->middleware('role:member');
         
+        $user = Auth::user();
+        
         if (!Session::has('cart')) {
-            return redirect()->back()->with('error', 'Votre carte est encore vide.');
+            return redirect()->route('profile')
+                ->with('error', 'Votre carte est encore vide.');
         }
         
         $currentCart = Session::has('cart') ? Session::get('cart') : null;
         $cart = Cart::getInstance($currentCart);
         
-        if (empty($cart->items)) {
-            return redirect()->back()->with('error', 'Votre carte est encore vide.');
+        if (count($cart->items)<=0) {
+            return redirect()->route('profile')
+                ->with('error', 'Votre carte est encore vide.');
         }
 
         $total = $cart->totalTma;
         $currency = $cart->currency;
         
-        // Set your secret key: remember to change this to your live secret key in production
-        // See your keys here: https://dashboard.stripe.com/account/apikeys
-        \Stripe\Stripe::setApiKey("sk_test_nZJyPhr5zXad7xqqMNZ49i3J");
-
-        // Token is created using Checkout or Elements!
-        // Get the payment token ID submitted by the form:
-        $token = $_POST['stripeToken'];
-
-        // Charge the user's card:
-        $charge = \Stripe\Charge::create(array(
-          "amount" => $total,
-          "currency" => $currency,
-          "description" => "Paiement de test",
-          "source" => $token,
-        ));
+        
+        try{
+            $result = \Braintree_Transaction::sale([
+                'amount' => $total,
+                'paymentMethodNonce' => $request->payment_method_nonce,
+                'options' => [
+                    'submitForSettlement' => true,
+                ],
+            ]);
+        }catch(\Exception $e){
+            return back()->with('error', $e->getMessage());
+        }
+        
+        if (!$result->success) {
+          return back()->with('error', "Votre commande n'a pas été éffectué");
+        }
+        
 
         $order = new Order();
         $order->cart_id = $cart->id;
         $order->status = 'pinged';
         $order->save();
         
-        $cart->status = 'ordered';
-        $cart->save();
+        $cart->setAsOrdered();
 
         Session::forget('cart');
         
         // Notify User
-        //Auth::user()->notify(new OrderPinged($user, $order));
+        Auth::user()->notify(new OrderPinged($user, $order));
         //Auth::user()->notify(new OrderPayed($user, $order));
         
         //Fire event
         
         
-        return redirect()->route('shop.index')->with('success', 'Votre commande a été éffectué');
+        return redirect()->route('profile')->with('success', 'Votre commande a été éffectué');
     }
 
     public function reduceByOne(Product $product){

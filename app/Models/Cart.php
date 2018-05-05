@@ -114,6 +114,21 @@ class Cart extends BaseModel
     
     
     /**
+     * Set status as ordered
+     *
+     */
+    public function setAsOrdered()
+    {
+        $this->status = 'ordered';
+        $this->save();
+        
+        foreach($this->items as $item){
+            $item->product--;
+            $item->product->save();
+        }
+    }
+    
+    /**
      * A cart can have many items
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

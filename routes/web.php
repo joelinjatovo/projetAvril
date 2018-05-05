@@ -125,7 +125,7 @@ Route::middleware(["auth", "role:member"])->group(function(){
     Route::get('shop/reduce/{product}', 'ShopController@reduceByOne')->name('shop.product.reduce');// Delete one unity or all the selected product in the cart
     Route::get('shop/delete/{product}', 'ShopController@deleteAll')->name('shop.product.delete');
     Route::get('checkout', 'ShopController@getCheckout')->name('shop.product.checkout');
-    Route::post('checkout', 'ShopController@getCheckout')->name('shop.product.postCheckout');
+    Route::post('checkout', 'ShopController@postCheckout')->name('shop.product.postCheckout');
     
     Route::prefix('member')->group(function(){
         Route::get('/', 'BackendController@dashboard');
