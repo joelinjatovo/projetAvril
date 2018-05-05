@@ -34,6 +34,7 @@ return [
     'orders'  => 'Commandes',
     'purchase'  => 'Achat',
     'purchases'  => 'Achats',
+    'empty_cart'  => 'Panier vide',
 
     'immobilier'        => 'Immobilier',
     'residentiel'       => 'residentiel',

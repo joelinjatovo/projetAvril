@@ -2,8 +2,17 @@
 
 @section('subcontent')
 <div class="row">
-  @if(!$item||!$item->items)
-      <h3>Votre panier est vide!</h3>
+  @if(!$item||count($item->items)==0)
+     <div class="panel panel-default">
+         <div class="panel-heading"><h3>Votre panier</h3></div>
+        <div class="panel-body">
+          <ul class="list-group">
+              <li class="list-group-item clearfix">
+                  <h4>@lang('app.empty_cart')</h4>
+              </li>
+            </ul>
+        </div>
+    </div>
   @else
       <div class="panel panel-default">
         <div class="panel-heading"><h3>Votre panier</h3></div>
