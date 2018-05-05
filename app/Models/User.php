@@ -269,7 +269,7 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function clients()
+    public function customers()
     {
       return $this->hasMany(User::class, 'apl_id', 'id');
     }
@@ -279,7 +279,7 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
      */
-    public function savedProducts()
+    public function pins()
     {
       return $this->belongsToMany(Product::class, 'labels', 'author_id', 'product_id')
           ->wherePivot('label', 'saved');
@@ -290,7 +290,7 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
      */
-    public function starredProducts()
+    public function favorites()
     {
       return $this->belongsToMany(Product::class, 'labels', 'author_id', 'product_id')
           ->wherePivot('label', 'starred');
@@ -301,7 +301,7 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
      */
-    public function selledProducts()
+    public function sales()
     {
         if($this->hasRole('afa')){
             return $this->belongsToMany(Product::class, 'carts_items', 'afa_id', 'product_id');
@@ -311,11 +311,11 @@ class User extends Authenticatable
     }
     
     /**
-     * An many cliens can buy many products from carts_items table
+     * An many clients can buy many products from carts_items table
      *
      * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
      */
-    public function boughtProducts()
+    public function purchases()
     {
       return $this->belongsToMany(Product::class, 'carts_items', 'author_id', 'product_id');
     }

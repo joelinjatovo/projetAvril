@@ -392,10 +392,10 @@ class BackendController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function starred()
+    public function favorites()
     {
         return view('backend.product.all')
-            ->with('items', Auth::user()->starredProducts);
+            ->with('items', Auth::user()->favorites);
     }
 
     /**
@@ -403,10 +403,10 @@ class BackendController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function saved()
+    public function pins()
     {
         return view('backend.product.all')
-            ->with('items', Auth::user()->savedProducts);
+            ->with('items', Auth::user()->pins);
     }
 
 }

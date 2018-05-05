@@ -18,16 +18,17 @@ class MemberController extends Controller
         $this->middleware('role:member');
         Auth::check();
     }
-    
+
     /**
      * 
      *
      * @return \Illuminate\Http\Response
      */
-    public function starred()
+    public function orders()
     {
+        $items = Auth::user()->orders()->ofStatus('pinged')->get();
         return view('backend.product.all')
-            ->with('items', Auth::user()->starredProducts);
+                ->with('items', $items);
     }
 
     /**
@@ -35,26 +36,9 @@ class MemberController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function saved()
+    public function purchases()
     {
-        return view('backend.product.all')
-            ->with('items', Auth::user()->savedProducts);
-    }
-
-    /**
-     * 
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function order($filter='pinged')
-    {
-        if($filter=='pinged'){
-            $items = Auth::user()->orders()->ofStatus('pinged')->get();
-        }else if($filter=='payed'){
-            $items = Auth::user()->orders()->ofStatus('payed')->get();
-        }else{
-            abort(404);
-        }
+        $items = Auth::user()->orders()->ofStatus('payed')->get();
         return view('backend.product.all')
                 ->with('items', $items);
     }

@@ -24,10 +24,10 @@ class AplController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function products()
+    public function sales()
     {
         return view('backend.product.all')
-            ->with('items', Auth::user()->selledProducts);
+            ->with('items', Auth::user()->sales);
     }
     
     /**
@@ -35,10 +35,10 @@ class AplController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function clients()
+    public function customers()
     {
         return view('backend.user.all')
-            ->with('items', Auth::user()->clients);
+            ->with('items', Auth::user()->customers);
     }
     
 }

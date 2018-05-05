@@ -24,31 +24,9 @@ class AfaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function products()
+    public function sales()
     {
         return view('backend.product.all')
-            ->with('items', Auth::user()->selledProducts);
-    }
-    
-    /**
-     * 
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function starred()
-    {
-        return view('backend.product.all')
-            ->with('items', Auth::user()->starredProducts);
-    }
-
-    /**
-     * 
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function saved()
-    {
-        return view('backend.product.all')
-            ->with('items', Auth::user()->savedProducts);
+            ->with('items', Auth::user()->sales);
     }
 }

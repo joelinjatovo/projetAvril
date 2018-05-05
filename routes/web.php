@@ -115,7 +115,7 @@ Route::middleware(["auth"])->group(function(){
 });
 
 
-Route::middleware(["auth", "role:member"])->group(function () {
+Route::middleware(["auth", "role:member"])->group(function(){
     Route::post('product/{product}', 'ShopController@add')->name('shop.add');// Add product in cart
     Route::get('cart', 'ShopController@cart')->name('shop.cart');// Show cart
     Route::get('shop/reduce/{product}', 'ShopController@reduceByOne')->name('shop.product.reduce');// Delete one unity or all the selected product in the cart
@@ -125,35 +125,40 @@ Route::middleware(["auth", "role:member"])->group(function () {
     
     Route::prefix('member')->group(function(){
         Route::get('/', 'BackendController@dashboard');
-        Route::get('starred', 'BackendController@starred');
-        Route::get('saved', 'BackendController@saved');
-        Route::get('order/{filter?}', 'MemberController@order');
+        Route::get('favorites', 'BackendController@favorites');
+        Route::get('pins', 'BackendController@pins');
+        
+        Route::get('purchases', 'MemberController@purchases')->name('member.purchases');
+        Route::get('orders', 'MemberController@orders')->name('member.orders');
     });
 });
 
 Route::prefix('afa')->middleware(["auth","role:afa"])->group(function(){
     Route::get('/', 'BackendController@dashboard');
-    Route::get('starred', 'BackendController@starred');
-    Route::get('saved', 'BackendController@saved');
-    Route::get('products', 'AfaController@products');
+    Route::get('favorites', 'BackendController@favorites');
+    Route::get('pins', 'BackendController@pins');
+    
+    Route::get('sales', 'AfaController@sales')->name('afa.sales');
 });
 
 Route::prefix('apl')->middleware(["auth","role:apl"])->group(function(){
     Route::get('/', 'BackendController@dashboard');
-    Route::get('starred', 'BackendController@starred');
-    Route::get('saved', 'BackendController@saved');
-    Route::get('products', 'AplController@products');
-    Route::get('clients', 'AplController@clients');
+    Route::get('favorites', 'BackendController@favorites');
+    Route::get('pins', 'BackendController@pins');
+    
+    Route::get('sales', 'AplController@sales')->name('apl.sales');
+    Route::get('customers', 'AplController@customers')->name('apl.customers');
 });
 
 Route::prefix('seller')->middleware(["auth","role:seller"])->group(function(){
     Route::get('/', 'BackendController@dashboard');
-    Route::get('starred', 'BackendController@starred');
-    Route::get('saved', 'BackendController@saved');
-    Route::get('products', 'SellerController@products');
+    Route::get('favorites', 'BackendController@favorites');
+    Route::get('pins', 'BackendController@pins');
+    
+    Route::get('products', 'SellerController@products')->name('seller.products');
 });
 
-Route::prefix('admin')->middleware(["auth","role:admin"])->group(function () {
+Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
     Route::get('/', 'AdminController@dashboard')->name('admin.dashboard');
 
     Route::get('card', 'AdminController@card')->name('admin.card');
