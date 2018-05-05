@@ -24,7 +24,7 @@ class ConfigsTableSeeder extends Seeder
             'author_id' => 1,
         ]);
         DB::table('configs')->insert([
-            'name' => "paiement",
+            'name' => "payment",
             'content' => "Parametre du paiement en ligne",
             'created_at' => date("Y-m-d H:i:s"),
             'author_id' => 1,

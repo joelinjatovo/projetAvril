@@ -102,19 +102,14 @@
           </div>
           @endif
           <ul id="mainSideMenu" class="nav nav-list nav-side">
-            <li class="accordion-group">
+              <li class="accordion-group">
                 <div class="accordion-heading">
                     <a href="{{route('profile')}}" data-parent="" class="accordion-toggle"><i class="fontello-icon-user-4"></i>@lang('app.profile')</a>
                 </div>
-            </li>
-              <li class="accordion-group">
-                  <div class="accordion-heading">
-                      <a href="{{route('admin.dashboard')}}" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fontello-icon-chart"></i> </a>
-                  </div>
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="#accDashboard" data-parent="#mainSideMenu"  data-toggle="collapse" class="accordion-toggle"><i class="fontello-icon-users-1"></i><i class="chevron fontello-icon-right-open-3"></i>Statistiques</a>
+                      <a href="#accDashboard" data-parent="#mainSideMenu"  data-toggle="collapse" class="accordion-toggle"><i class="fontello-icon-chart"></i><i class="chevron fontello-icon-right-open-3"></i>Statistiques</a>
                   </div>
                   <ul class="accordion-content nav nav-list collapse" id="accDashboard">
                       <li><a href="{{route('admin.chart', ['type'=>'category'])}}"> <i class="fontello-icon-right-dir"></i>Produit Par Categorry</a></li>
@@ -137,7 +132,7 @@
                   <div class="accordion-heading">
                       <a href="#accProducts" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle">
                         <i class="fontello-icon-users-1"></i>
-                        <i class="chevron fontello-icon-right-open-3"></i>@lang('app.admin.products')</a>
+                        <i class="chevron fontello-icon-right-open-3"></i>@lang('app.admin.products'){{option('payment.trial_delay', 14)}}</a>
                   </div>
                   <ul class="accordion-content nav nav-list collapse" id="accProducts">
                       <li><a href="{{route('admin.product.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.list')</a></li>

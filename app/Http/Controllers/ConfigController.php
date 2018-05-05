@@ -114,14 +114,15 @@ class ConfigController extends Controller
             
             // Save Config into MetaData By Validator rules key
             foreach($keys as $key=>$val){
-                if($value = $request->input($key)) $item->update_meta($key, $value);
+                $value = $request->input($key)?$request->input($key):0;
+                $item->update_meta($key, $value);
             }
             
             // Go back with notification
             return back()->with('success','La configuration a été modifiée avec succés ! ');
         }
         
-        return view('config.paiement',compact('item', 'keys'));
+        return view('config.payment',compact('item', 'keys'));
     }
     
     

@@ -52,6 +52,31 @@ if( ! function_exists('thumbnail'))
 }
 
 /**
+* Alias to acces to storage thumbnail image path
+* @param String $path : Local storage path
+*/
+if( ! function_exists('option'))
+{
+	function option($keys, $default=null)
+	{
+		$keys = explode('.', $keys);
+        if(count($keys)==2){
+            $group = $keys[0];
+            $key = $keys[1];
+            
+            $model = App\Models\Config::where('name', $group)
+                ->get()
+                ->first();
+            if(!$model) return $default;
+            
+            $meta = $model->get_meta($key);
+            if($meta) return $meta->value;
+        }
+        return $default;
+	}
+}
+
+/**
 * creer le lien javascript vers le dashboard ADMIN en ligne  
 * @param $url_js string : lien de l'image en local
 * format : assets/js/lib/jquery.js ou assets/plugins/bootstrap-wysihtml5/lib/js/wysihtml5-0.3.0.min.js

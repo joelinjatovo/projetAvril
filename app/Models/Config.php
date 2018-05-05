@@ -21,8 +21,8 @@ class Config extends BaseModel
     
     public static $SITE_ID = 1;
     public static $SOCIAL_ID = 2;
-    public static $STYLE_ID = 3;
-    public static $PAYMENT_ID = 4;
+    public static $PAYMENT_ID = 3;
+    public static $STYLE_ID = 4;
     
     public static function site(){
         return Config::findOrFail(self::SITE_ID);
@@ -79,17 +79,17 @@ class Config extends BaseModel
     
     public static function paymentRules(){
         return [
-            'percent_inscription_member' => 'required|max:100',
-            'percent_inscription_seller' => 'required|max:100',
-            'percent_inscription_afa' => 'required|max:100',
-            'percent_inscription_apl' => 'required|max:100',
+            'value_inscription_member' => 'required|max:100',
+            'value_inscription_seller' => 'required|max:100',
+            'value_inscription_afa' => 'required|max:100',
+            'value_inscription_apl' => 'required|max:100',
 
             'percent_reservation' => 'required|max:100',
 
             'percent_presentation_afa' => 'required|max:100',
             'percent_presentation_apl' => 'required|max:100',
 
-            'disable_inscription_percent' => 'required|max:100',
+            'disable_payed_inscription' => 'max:100',
             'trial_delay' => 'required|max:100',
         ];
     }

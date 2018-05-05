@@ -415,7 +415,7 @@ class RegisterController extends Controller
         $datas['use_default_password'] = 1;
         
         // Date d'essaie
-        $datas['trial_ends_at'] = \Carbon\Carbon::now()->addDays(14);
+        $datas['trial_ends_at'] = \Carbon\Carbon::now()->addDays(option('payment.trial_delay', 14));
 
         // Create user
         try{
