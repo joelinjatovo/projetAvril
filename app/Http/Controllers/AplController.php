@@ -24,10 +24,25 @@ class AplController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function orders()
+    {
+        $items = Auth::user()->sales()
+                ->wherePivot('status', 'ordered');
+        return view('backend.product.all')
+            ->with('items', $items);
+    }
+    
+    /**
+     * 
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function sales()
     {
+        $items = Auth::user()->sales()
+                ->wherePivot('status', 'paid');
         return view('backend.product.all')
-            ->with('items', Auth::user()->sales);
+            ->with('items', $items);
     }
     
     /**

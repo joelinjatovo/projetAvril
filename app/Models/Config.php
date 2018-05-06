@@ -24,6 +24,9 @@ class Config extends BaseModel
     public static $PAYMENT_ID = 3;
     public static $STYLE_ID = 4;
     
+    public static $TRIAL = "payment.trial_delay";
+    public static $RESERVATION = "payment.percent_reservation";
+    
     public static function site(){
         return Config::findOrFail(self::SITE_ID);
     }

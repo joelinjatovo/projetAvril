@@ -117,7 +117,13 @@ class ShopController extends Controller
         
     	$currentCart = Session::has('cart') ? Session::get('cart') : null;
     	$cart = Cart::getInstance($currentCart);
-        $cart->add($product, $apl, $afa);
+        
+        try{
+            $cart->add($product, $apl, $afa);
+        }catch(\Exception $e){
+            return back()->with('error', $e->getMessage());
+        }
+        
 
     	Session::put('cart', $cart);
     	Session::save();
@@ -197,16 +203,12 @@ class ShopController extends Controller
         $order->status = 'pinged';
         $order->save();
         
-        $cart->setAsOrdered();
+        // Set as order and notify user
+        $cart->setAsOrdered($order);
 
         Session::forget('cart');
         
-        // Notify User
-        Auth::user()->notify(new OrderPinged($user, $order));
-        //Auth::user()->notify(new OrderPayed($user, $order));
-        
         //Fire event
-        
         
         return redirect()->route('profile')->with('success', 'Votre commande a été éffectué');
     }

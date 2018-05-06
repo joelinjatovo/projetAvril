@@ -61,23 +61,24 @@ class Cart extends BaseModel
         
         foreach(self::$instance->items as $item){
             if($item->product_id==$product->id){
-                $storedItem = $item;
+                if($product->quantity==1){
+                    throw new \Exception("Votre carte contient deja ce produit.");
+                }else{
+                    $storedItem = $item;
+                }
                 break;
             }
         }
         
 		$storedItem->quantity++;
 		$storedItem->price = $storedItem->quantity * $product->price;
-		$storedItem->tma = $storedItem->price*$product->tma;
+		$storedItem->tma = $storedItem->price*option(Config::$RESERVATION, 0.10);
 		$storedItem->currency = $product->currency;
         $storedItem->save();
         
-        //$product->quantity--;
-        //$product->save();
-        
 		self::$instance->totalQuantity++;
 		self::$instance->totalPrice += $product->price;
-		self::$instance->totalTma += $product->price*$product->tma;
+		self::$instance->totalTma += $product->price**option(Config::$RESERVATION, 0.10);
         self::$instance->save();
 	}
 
@@ -117,15 +118,48 @@ class Cart extends BaseModel
      * Set status as ordered
      *
      */
-    public function setAsOrdered()
+    public function setAsOrdered(Order $order)
     {
         $this->status = 'ordered';
         $this->save();
         
         foreach($this->items as $item){
-            $item->product--;
+            $item->status = 'ordered';
+            $item->save();
+            $item->product->quantity--;
             $item->product->save();
         }
+        
+        if($this->author){
+            $this->author->notify(new OrderPinged($this->author, $order));
+        }
+        
+    }
+    
+    
+    /**
+     * Set status as ordered
+     *
+     */
+    public function setAsPaid()
+    {
+        $this->status = 'paid';
+        $this->save();
+        
+        foreach($this->items as $item){
+            $item->status = 'paid';
+            $item->save();
+        }
+    }
+    
+    /**
+     * An many user can have many products from carts_items table
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
+     */
+    public function products()
+    {
+      return $this->belongsToMany(Product::class, 'carts_items', 'cart_id', 'product_id');
     }
     
     /**

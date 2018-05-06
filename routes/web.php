@@ -134,6 +134,7 @@ Route::middleware(["auth", "role:member"])->group(function(){
         
         Route::get('purchases', 'MemberController@purchases')->name('member.purchases');
         Route::get('orders', 'MemberController@orders')->name('member.orders');
+        Route::get('order/{order}', 'MemberController@showOrder')->name('member.order');
     });
 });
 
@@ -142,6 +143,7 @@ Route::prefix('afa')->middleware(["auth","role:afa"])->group(function(){
     Route::get('favorites', 'BackendController@favorites');
     Route::get('pins', 'BackendController@pins');
     
+    Route::get('orders', 'AfaController@orders')->name('afa.orders');
     Route::get('sales', 'AfaController@sales')->name('afa.sales');
 });
 
@@ -150,6 +152,7 @@ Route::prefix('apl')->middleware(["auth","role:apl"])->group(function(){
     Route::get('favorites', 'BackendController@favorites');
     Route::get('pins', 'BackendController@pins');
     
+    Route::get('orders', 'AplController@orders')->name('apl.orders');
     Route::get('sales', 'AplController@sales')->name('apl.sales');
     Route::get('customers', 'AplController@customers')->name('apl.customers');
 });

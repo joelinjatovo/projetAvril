@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 
+use App\Models\Order;
+
 class MemberController extends Controller
 {
     /**
@@ -24,10 +26,21 @@ class MemberController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function showOrder(Order $order)
+    {
+        return view('backend.order.index')
+                ->with('item', $order);
+    }
+
+    /**
+     * 
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function orders()
     {
         $items = Auth::user()->orders()->ofStatus('pinged')->get();
-        return view('backend.product.all')
+        return view('backend.order.all')
                 ->with('items', $items);
     }
 
@@ -39,7 +52,7 @@ class MemberController extends Controller
     public function purchases()
     {
         $items = Auth::user()->orders()->ofStatus('payed')->get();
-        return view('backend.product.all')
+        return view('backend.order.all')
                 ->with('items', $items);
     }
 }

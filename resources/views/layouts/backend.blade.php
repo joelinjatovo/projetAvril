@@ -22,9 +22,11 @@
                     <li><a href="{{route('seller.products')}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('app.products')</a></li>
                     @endif
                     @If(Auth::user()->hasRole('afa'))
+                    <li><a href="{{route('afa.orders')}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('app.orders')</a></li>
                     <li><a href="{{route('afa.sales')}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('app.sales')</a></li>
                     @endif
                     @If(Auth::user()->hasRole('apl'))
+                    <li><a href="{{route('apl.orders')}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('app.orders')</a></li>
                     <li><a href="{{route('apl.sales')}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('app.sales')</a></li>
                     <li><a href="{{route('apl.customers')}}"><i class="fa fa-users" aria-hidden="true"></i> @lang('app.customers')</a></li>
                     @endif

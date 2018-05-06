@@ -15,6 +15,7 @@ class CreateCartsItemsTable extends Migration
     {
         Schema::create('carts_items', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('status', 150)->default('pinged')->index();
             $table->bigInteger('quantity')->default(0);
             $table->double('price', 10, 2)->default(0);
             $table->double('tma', 10, 2)->default(0);
