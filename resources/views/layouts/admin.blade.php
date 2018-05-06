@@ -132,7 +132,7 @@
                   <div class="accordion-heading">
                       <a href="#accProducts" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle">
                         <i class="fontello-icon-users-1"></i>
-                        <i class="chevron fontello-icon-right-open-3"></i>@lang('app.admin.products')}}</a>
+                        <i class="chevron fontello-icon-right-open-3"></i>@lang('app.admin.products')</a>
                   </div>
                   <ul class="accordion-content nav nav-list collapse" id="accProducts">
                       <li><a href="{{route('admin.product.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.list')</a></li>
@@ -192,13 +192,16 @@
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="{{route('admin.order.list')}}" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fontello-icon-mail-4"></i> @lang('app.admin.orders')</a>
+                      <a href="#accCarts" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle">
+                        <i class="fontello-icon-users-1"></i>
+                        <i class="chevron fontello-icon-right-open-3"></i>@lang('app.admin.carts')</a>
                   </div>
-              </li>
-              <li class="accordion-group">
-                  <div class="accordion-heading">
-                      <a href="{{route('admin.cart.list')}}" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fontello-icon-mail-4"></i> @lang('app.admin.carts')</a>
-                  </div>
+                  <ul class="accordion-content nav nav-list collapse" id="accCarts">
+                      <li><a href="{{route('admin.cart.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.cart.list')</a></li>
+                      <li><a href="{{route('admin.cart.list', ['type'=>'pinged'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.cart.pinged')</a></li>
+                      <li><a href="{{route('admin.cart.list', ['type'=>'ordered'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.cart.ordered')</a></li>
+                      <li><a href="{{route('admin.cart.list', ['type'=>'paid'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.cart.paid')</a></li>
+                  </ul>
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">

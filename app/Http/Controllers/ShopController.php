@@ -9,7 +9,6 @@ use Auth;
 use App\Notifications\OrderPinged;
 
 use App\Models\Product;
-use App\Models\Order;
 use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Page;
@@ -196,15 +195,9 @@ class ShopController extends Controller
         if (!$result->success) {
           return back()->with('error', "Votre commande n'a pas été éffectué");
         }
-        
-
-        $order = new Order();
-        $order->cart_id = $cart->id;
-        $order->status = 'pinged';
-        $order->save();
-        
+    
         // Set as order and notify user
-        $cart->setAsOrdered($order);
+        $cart->setAsOrdered();
 
         Session::forget('cart');
         

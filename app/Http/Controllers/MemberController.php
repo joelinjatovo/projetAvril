@@ -26,10 +26,10 @@ class MemberController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function showOrder(Order $order)
+    public function showCart(Cart $cart)
     {
-        return view('backend.order.index')
-                ->with('item', $order);
+        return view('backend.cart.index')
+                ->with('item', $cart);
     }
 
     /**
@@ -39,8 +39,10 @@ class MemberController extends Controller
      */
     public function orders()
     {
-        $items = Auth::user()->orders()->ofStatus('pinged')->get();
-        return view('backend.order.all')
+        $items = Auth::user()->purchases()
+            ->where('carts_items.status', 'pinged')
+            ->get();
+        return view('backend.product.all')
                 ->with('items', $items);
     }
 
@@ -51,8 +53,10 @@ class MemberController extends Controller
      */
     public function purchases()
     {
-        $items = Auth::user()->orders()->ofStatus('payed')->get();
-        return view('backend.order.all')
+        $items = Auth::user()->purchases()
+            ->where('carts_items.status', 'paid')
+            ->get();
+        return view('backend.product.all')
                 ->with('items', $items);
     }
 }

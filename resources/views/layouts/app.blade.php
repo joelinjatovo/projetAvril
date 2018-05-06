@@ -116,7 +116,7 @@
                         </li>
                         <li><a href="#">@lang('app.business')</a>
                             <ul>
-                                <li><a href="{{route('shop.index', ['category'=>3])}}">@lang('app.industriel')</a></li>
+                                <li><a href="{{route('shop.index', ['category'=>3])}}">@lang('app.industrial')</a></li>
                                 <li><a href="{{route('shop.index', ['category'=>4])}}">@lang('app.commercial')</a></li>
                             </ul>
                         </li>
@@ -127,7 +127,7 @@
                             <a href="{{route('profile')}}">@lang('app.account')</a>
                             <ul>
                                 <li>
-                                    <a href="{{route('home')}}">@lang('app.dashboard')</a>
+                                    <a href="{{url(Auth::user()->role)}}">@lang('app.dashboard')</a>
                                 </li>
                                 <li>
                                     <a href="{{route('profile')}}">@lang('app.profile')</a>

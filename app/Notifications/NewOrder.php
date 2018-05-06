@@ -6,26 +6,26 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use App\Models\Order;
+use App\Models\Cart;
 use App\Models\User;
 
-class OrderPinged extends Notification
+class NewOrder extends Notification
 {
     use Queueable;
 
     
     private $user;
-    private $order;
+    private $cart;
     
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(User $user, Order $order)
+    public function __construct(User $user, Cart $cart)
     {
         $this->user = $user;
-        $this->order = $order;
+        $this->cart = $cart;
     }
 
     /**
@@ -50,8 +50,8 @@ class OrderPinged extends Notification
         /** @var User $user */
         $user = $this->user;
         
-        /** @var mixed $plan */
-        $order = $this->order;
+        /** @var mixed $cart */
+        $cart = $this->cart;
         
         return (new MailMessage)
                     ->from(env('ADMIN_MAIL', 'tsorakoto@gmail.com'))

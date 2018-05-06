@@ -26,6 +26,19 @@ class Cart extends BaseModel
     
     protected static $instance = null;
     
+    /**
+     * Scope a query to only include orders of a given $status.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param mixed $status
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfStatus($query, $status)
+    {
+        return $query->where('status', $status);
+    }
+    
+    
 	/*
 	Si le panier contien déjà quelque chose, on initialise avec les
 	actuels
@@ -131,7 +144,7 @@ class Cart extends BaseModel
         }
         
         if($this->author){
-            $this->author->notify(new OrderPinged($this->author, $order));
+            $this->author->notify(new NewOrder($this->author, $this));
         }
         
     }
@@ -149,6 +162,10 @@ class Cart extends BaseModel
         foreach($this->items as $item){
             $item->status = 'paid';
             $item->save();
+        }
+        
+        if($this->author){
+            $this->author->notify(new OrderPaid($this->author, $this));
         }
     }
     

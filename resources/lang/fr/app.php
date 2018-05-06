@@ -127,6 +127,10 @@ return [
     
     'admin.orders'          => 'Orders',
     'admin.carts'           => 'Carts',
+    'admin.cart.list'       => 'Liste des commandes',
+    'admin.cart.pinged'     => 'Cartes non attente',
+    'admin.cart.ordered'    => 'Commandes',
+    'admin.cart.paid'       => 'Vendus',
     
     'social_network'  => 'Réseaux Sociaux',
     'info_site'  => 'Informations du site',

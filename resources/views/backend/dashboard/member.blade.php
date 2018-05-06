@@ -16,7 +16,7 @@
                 <a href="r">
                     <section class="widget text-center">
                         <strong>@lang('app.pin')/@lang('app.favorites')</strong>
-                        <h3>{{count($item->savedProducts)}}/{{count($item->starredProduts)}}</h3>
+                        <h3>{{count($item->pins)}}/{{count($item->favorites)}}</h3>
                     </section>
                 </a>
             </div>
@@ -24,7 +24,7 @@
                 <a href="r">
                     <section class="widget text-center">
                         <strong>@lang('app.orders')/@lang('app.purchases')</strong>
-                        <h3>{{count($item->orders)}}/{{count($item->orders)}}</h3>
+                        <h3>{{count($item->purchases)}}/{{count($item->purchases)}}</h3>
                     </section>
                 </a>
             </div>

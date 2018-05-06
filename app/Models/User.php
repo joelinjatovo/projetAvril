@@ -224,15 +224,6 @@ class User extends Authenticatable
       return $this->hasMany(Blog::class, 'author_id', 'id');
     }
     
-    /**
-     * An admin user can have many orders
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function orders()
-    {
-      return $this->hasMany(Order::class, 'author_id', 'id');
-    }
     
     /**
      * A user can have many comments
@@ -272,6 +263,16 @@ class User extends Authenticatable
     public function customers()
     {
       return $this->hasMany(User::class, 'apl_id', 'id');
+    }
+    
+    /**
+     * An Client can have many carts
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function carts()
+    {
+      return $this->hasMany(User::class, 'author_id', 'id');
     }
     
     /**

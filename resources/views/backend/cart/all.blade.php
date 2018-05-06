@@ -16,6 +16,7 @@
                         <th scope="col">Nombre de produit<span class="column-sorter"></span></th>
                         <th scope="col">Date <span class="column-sorter"></span></th>
                         <th scope="col">Status<span class="column-sorter"></span></th>
+                        <th scope="col">Action<span class="column-sorter"></span></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,8 +26,9 @@
                         <td>{{$item->author?$item->author->name:''}}</td>
                         <td>{{$item->totalPrice}}</td>
                         <td>{{$item->totalQuantity}}</td>
-                        <td>{{date('d/m/Y h:i:s',strtotime($item->created_at))}}</td>
+                        <td>{{$item->created_at->diffForHumans()}}</td>
                         <td>{{$item->status}}</td>
+                        <td><a href="{{route('member.cart', $item)}}" class="btn btn-success">@lang('app.btn.view')</a></td>
                     </tr>
                    @endforeach
                 </tbody>

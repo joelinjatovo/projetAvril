@@ -134,7 +134,7 @@ Route::middleware(["auth", "role:member"])->group(function(){
         
         Route::get('purchases', 'MemberController@purchases')->name('member.purchases');
         Route::get('orders', 'MemberController@orders')->name('member.orders');
-        Route::get('order/{order}', 'MemberController@showOrder')->name('member.order');
+        Route::get('cart/{cart}', 'MemberController@showCart')->name('member.cart');
     });
 });
 
@@ -269,12 +269,6 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::get('payment', 'ConfigController@payment')->name('config.payment');
         Route::post('payment', 'ConfigController@payment')->name('config.payment.update');
         Route::get('fontawesome', 'ConfigController@fontawesome')->name('config.fontawesome');
-    });
-
-    // Order Controller Groups
-    Route::get('orders/{filter?}', 'OrderController@allAdmin')->name('admin.order.list');
-    Route::prefix('order')->group(function(){
-        Route::get('/{order}', 'OrderController@index')->name('admin.order.index');
     });
 
 });
