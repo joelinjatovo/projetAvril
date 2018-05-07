@@ -1,7 +1,7 @@
 <div id="property-sidebar">
     @foreach($pubs as $pub)
     <section class="widget property-meta-wrapper clearfix">
-        <h2 class="title wow slideInLeft">{{$pub->title}}</h2>
+        <h4 class="title wow slideInLeft">{{$pub->title}}</h4>
         <div class="content-box-large box-with-header">
             <a target="_blank" href="{{$pub->links?$pub->links:'#'}}"><img src="{{$pub->imageUrl()}}" class="img-rounded" alt="Cinque Terre" width="604" height="236"></a>
             <br><br>
@@ -22,7 +22,7 @@
         </div>
         @endforeach
     </section>
-    
+
     <section class="widget property-taxonomies clearfix">
         <h5 class="title">Types récents</h5>
         <ul class="clearfix">
