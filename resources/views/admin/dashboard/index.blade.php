@@ -80,12 +80,12 @@ function drawCategoryChart($data){
       }],
       "startDuration": 1,
       "graphs": [{
-        "balloonText": "<b>[[type]]: [[nombre]]</b>",
+        "balloonText": "<b>[[type]]: [[number]]</b>",
         "fillColorsField": "color",
         "fillAlphas": 0.9,
         "lineAlpha": 0.2,
         "type": "column",
-        "valueField": "nombre"
+        "valueField": "number"
       }],
       "chartCursor": {
         "categoryBalloonEnabled": false,
@@ -119,7 +119,7 @@ function drawLocationChart($data){
     var chart = AmCharts.makeChart( "chart-location", {
       "type": "pie",
       "dataProvider": $data,
-      "valueField": "products_count",
+      "valueField": "number",
       "titleField": "state",
        "balloon":{
         "fixedPosition":true
@@ -129,7 +129,7 @@ function drawLocationChart($data){
 }
 function loadLocationData() {
     $.ajax({
-        url: "{{route('chart.locations')}}",
+        url: "{{route('chart.locations', ['type'=>'product'])}}",
         ifModified:true,
         success: function(content){
             drawLocationChart(content.data);
@@ -146,14 +146,14 @@ function drawPriceChart($data){
         "balloon": {
           "fixedPosition": true
         },
-        "valueField": "count",
+        "valueField": "number",
         "titleField": "label",
         "marginRight": 240,
         "marginLeft": 50,
         "startX": -500,
         "rotate": true,
         "labelPosition": "right",
-        "balloonText": "[[label]]: [[count]]",
+        "balloonText": "[[label]]: [[number]]",
       }
     );
 
@@ -182,12 +182,12 @@ function drawSellerChart($data){
       }],
       "startDuration": 1,
       "graphs": [{
-        "balloonText": "<b>[[type]]: [[products_count]]</b>",
+        "balloonText": "<b>[[type]]: [[number]]</b>",
         "fillColorsField": "color",
         "fillAlphas": 0.9,
         "lineAlpha": 0.2,
         "type": "column",
-        "valueField": "products_count"
+        "valueField": "number"
       }],
       "chartCursor": {
         "categoryBalloonEnabled": false,

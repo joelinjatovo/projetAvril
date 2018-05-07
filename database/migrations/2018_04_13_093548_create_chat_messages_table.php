@@ -15,10 +15,12 @@ class CreateChatMessagesTable extends Migration
     {
         Schema::create('chat_messages', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('message');
-            $table->integer('read')->default(0);
-            $table->bigInteger('user_from')->unsigned();
-            $table->bigInteger('user_to')->unsigned();
+            $table->text('message');
+            $table->boolean('is_seen')->default(0);
+            $table->boolean('deleted_from_sender')->default(0);
+            $table->boolean('deleted_from_receiver')->default(0);
+            $table->bigInteger('user_id');
+            $table->bigInteger('thread_id');
             $table->timestamps();
         });
     }

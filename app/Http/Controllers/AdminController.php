@@ -24,7 +24,7 @@ class AdminController extends Controller
      */
     public function dashboard()
     {
-        return view('admin.dashboard');
+        return view('admin.--dashboard');
     }
 
     /**
@@ -36,7 +36,19 @@ class AdminController extends Controller
     {
         switch($type){
             case "product":
-                return view('admin.dashboard');
+                return view('admin.dashboard.index');
+            case "user":
+                return view('admin.dashboard.user');
+            case "member":
+                return view('admin.dashboard.member');
+            case "afa":
+                return view('admin.dashboard.afa');
+            case "apl":
+                return view('admin.dashboard.apl');
+            case "seller":
+                return view('admin.dashboard.seller');
+            case "cart":
+                return view('admin.dashboard.cart');
             default:
                 abort(404);
                 

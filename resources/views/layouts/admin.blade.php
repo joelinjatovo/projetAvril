@@ -113,6 +113,12 @@
                   </div>
                   <ul class="accordion-content nav nav-list collapse" id="accDashboard">
                       <li><a href="{{route('admin.chart', ['type'=>'product'])}}"> <i class="fontello-icon-right-dir"></i>@lang('app.products')</a></li>
+                      <li><a href="{{route('admin.chart', ['type'=>'user'])}}"> <i class="fontello-icon-right-dir"></i>@lang('app.users')</a></li>
+                      <li><a href="{{route('admin.chart', ['type'=>'member'])}}"> <i class="fontello-icon-right-dir"></i>@lang('app.members')</a></li>
+                      <li><a href="{{route('admin.chart', ['type'=>'afa'])}}"> <i class="fontello-icon-right-dir"></i>@lang('app.afa')</a></li>
+                      <li><a href="{{route('admin.chart', ['type'=>'apl'])}}"> <i class="fontello-icon-right-dir"></i>@lang('app.apl')</a></li>
+                      <li><a href="{{route('admin.chart', ['type'=>'seller'])}}"> <i class="fontello-icon-right-dir"></i>@lang('app.seller')</a></li>
+                      <li><a href="{{route('admin.chart', ['type'=>'cart'])}}"> <i class="fontello-icon-right-dir"></i>@lang('app.carts')</a></li>
                   </ul>
               </li>
               <li class="accordion-group">
@@ -205,7 +211,7 @@
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fontello-icon-mail-4"></i> @lang('app.messages')</a>
+                      <a href="{{route('admin.chat.list')}}" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fontello-icon-mail-4"></i> @lang('app.messages')</a>
                   </div>
               </li>
               <li class="accordion-group">

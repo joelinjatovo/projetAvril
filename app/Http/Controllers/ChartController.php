@@ -22,7 +22,7 @@ class ChartController extends Controller
         foreach($items as $item){
             $data[] = [
                 "type"=>$item->title,
-                "nombre"=>$item->products_count,
+                "number"=>$item->products_count,
                 "color"=>"#B0DE09",
             ];
         }
@@ -37,14 +37,74 @@ class ChartController extends Controller
         ]);
     }
     
-    public function locations(Request $request)
+    public function locations(Request $request, $type='product')
     {
         
-        $items = Localisation::join('products', 'products.location_id', '=', 'localizations.id')
-            ->select(DB::raw('count(*) as products_count, state'))
-            ->groupBy('state')
-            ->get();
+        switch($type){
+            case 'product':
+                $items = Localisation::join('products', 'products.location_id', '=', 'localizations.id')
+                    ->select(DB::raw('count(*) as number, state'))
+                    ->groupBy('state')
+                    ->get();
+            break;
+            case 'user':
+                $items = Localisation::join('users', 'users.location_id', '=', 'localizations.id')
+                    ->select(DB::raw('count(*) as number, state'))
+                    ->groupBy('state')
+                    ->get();
+            break;
+            case 'member':
+            case 'afa':
+            case 'apl':
+            case 'seller':
+                $items = Localisation::join('users', 'users.location_id', '=', 'localizations.id')
+                    ->where('users.role', $type)
+                    ->select(DB::raw('count(*) as number, state'))
+                    ->groupBy('state')
+                    ->get();
+            break;
+                
+        }
 
+        return response()->json([
+            'state' => '1',
+            'data' => $items,
+        ]);
+    }
+    
+    public function dates(Request $request, $role = null)
+    {    
+        switch($role){
+            case 'afa':
+            case 'member':
+            case 'apl':
+            case 'seller':
+                $items = DB::table('users')
+                  ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as number'))
+                  ->where('role', $role)
+                  ->groupBy('date')
+                  ->get();
+                break;
+            default:
+                $items = DB::table('users')
+                  ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as number'))
+                  ->groupBy('date')
+                  ->get();
+                break;
+        }
+        
+        return response()->json([
+            'state' => '1',
+            'data' => $items,
+        ]);
+    }
+    
+    public function carts(Request $request)
+    {    
+        $items = DB::table('carts')
+                  ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as number'))
+                  ->groupBy('date')
+                  ->get();
         return response()->json([
             'state' => '1',
             'data' => $items,
@@ -57,26 +117,26 @@ class ChartController extends Controller
         $list = [300000,500000, 750000, 1000000];
         $data = [];
         foreach($list as $max){
-            $item = Product::select(DB::raw('count(*) as products_count'))
+            $item = Product::select(DB::raw('count(*) as number'))
                 ->whereBetween('price', [$min, $max])
                 ->first();
             if($item){
                 $data[]=[
                     "label"=>'['.$min.' - '.$max.']',
-                    "count"=>$item->products_count
+                    "number"=>$item->number
                 ];
             }
             $min = $max;
         }
         
-        $item = Product::select(DB::raw('count(*) as products_count'))
+        $item = Product::select(DB::raw('count(*) as number'))
             ->where('price', '>', $max)
             ->first();
         
         if($item){
             $data[]=[
                 "label"=>' > '.$max,
-                "count"=>$item->products_count
+                "number"=>$item->number
             ];
         }
 
@@ -92,7 +152,7 @@ class ChartController extends Controller
         $items = User::where('role', 'seller')
             ->groupBy('type')
             ->join('products', 'products.seller_id', '=', 'users.id')
-            ->select(DB::raw('count(*) as products_count, type'))
+            ->select(DB::raw('count(*) as number, type'))
             ->get();
         for($i=0; $i<count($items); $i++){
             $item = $items[$i];

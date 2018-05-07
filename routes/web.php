@@ -79,9 +79,11 @@ Route::get('/braintree/token', 'BraintreeController@token')->name('braintree.tok
 
 // Chart
 Route::get('api/chart/categories', 'ChartController@categories')->name('chart.categories');
-Route::get('api/chart/locations', 'ChartController@locations')->name('chart.locations');
+Route::get('api/chart/locations/{type?}', 'ChartController@locations')->name('chart.locations');
 Route::get('api/chart/prices', 'ChartController@prices')->name('chart.prices');
 Route::get('api/chart/sellers', 'ChartController@sellers')->name('chart.sellers');
+Route::get('api/chart/dates/{role}', 'ChartController@dates')->name('chart.dates');
+Route::get('api/chart/carts', 'ChartController@carts')->name('chart.carts');
 
 Route::middleware('guest')->group(function(){
     Route::get('register/{role}', 'Auth\RegisterController@index')->name('register');
@@ -178,6 +180,10 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
     Route::get('card', 'AdminController@card')->name('admin.card');
     Route::get('carts', 'CartController@allAdmin')->name('admin.cart.list');
     Route::get('cart/{cart}', 'CartController@index')->name('admin.cart.show');
+
+    // Chat Controller Groups
+    Route::get('chats/{filter?}', 'ChatController@all')->name('admin.chat.list');
+    Route::get('chat/delete/{chat}', 'ChatController@delete')->name('admin.chat.delete');
 
     // Blog Controller Groups
     Route::get('blogs/{filter?}', 'BlogController@allAdmin')->name('admin.blog.list');
