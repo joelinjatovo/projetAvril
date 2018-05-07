@@ -5,13 +5,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Cache-control" content="public">
-    
+
 <meta name="_token" content="{!! csrf_token() !!}" />
-    
+
 <title>Investir en Australie</title>
 <!-- favicon and touch icons -->
 <link rel="shortcut icon" href="{{ link_img('favicon.png') }}">
-    
+
 <!-- Bootstrap -->
 <link href="{{asset('css/bootstrap.css')}}" rel="stylesheet">
 <link href="{{asset('css/bootstrap-slider.min.css')}}" rel="stylesheet" />
@@ -20,7 +20,7 @@
 <!-- sylesheet css search-bar -->
 <link rel="stylesheet" href="{{asset('css/icheck.min_all.css')}}">
 <link rel="stylesheet" href="{{asset('css/price-range.css')}}">
-    
+
 <link href="{{asset('css/multirange.css')}}" rel="stylesheet">
 <link href="{{asset('css/owl.carousel.css')}}" rel="stylesheet">
 <link href="{{asset('css/owl.transitions.css')}}" rel="stylesheet">
@@ -28,13 +28,13 @@
 <link href="{{asset('plugins/slick/slick.css')}}" rel="stylesheet">
 <link href="{{asset('plugins/slick-nav/slicknav.css')}}" rel="stylesheet">
 <link href="{{asset('plugins/wow/animate.css')}}" rel="stylesheet">
-    
+
 <!-- Plugins -->
 <link rel="stylesheet" href="{{asset('plugins/font-awesome/css/font-awesome.min.css')}}">
 <link rel="stylesheet" href="{{asset('plugins/fontello/css/fontello.css')}}">
 <link rel="stylesheet" href="{{asset('plugins/icon-7-stroke/css/pe-icon-7-stroke.css')}}">
 <link rel="stylesheet" href="{{asset('plugins/icon-7-stroke/css/helper.css')}}" rel="stylesheet">
-    
+
 <!-- Styles -->
 <link href="{{asset('css/theme.css')}}" rel="stylesheet">
 <link href="{{asset('css/head.css')}}" rel="stylesheet">
@@ -163,7 +163,7 @@
 
 <!-- content -->
 @include('includes.alerts')
-    
+
 @yield('content')
 
 <footer id="footer">
@@ -245,7 +245,7 @@
 <script src="{{asset('plugins/zoom/zoom.js')}}"></script>
 <script src="{{asset('plugins/mixitup/mixitup.min.js')}}"></script>
 <script src="{{asset('plugins/whats-nearby/source/WhatsNearby.js')}}"></script>
-    
+
 <script src="{{asset('js/theme.js')}}"></script>
 <script src="{{asset('js/multirange.js')}}"></script>
 <script src="{{asset('js/head.js')}}"></script>
@@ -281,8 +281,8 @@
     });
 </script>
 @yield('script')
-    
+
 @yield('braintree')
-    
+
 </body>
-</html>    
+</html>

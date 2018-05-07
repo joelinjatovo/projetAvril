@@ -14,7 +14,7 @@
             <div class="col-lg-8 col-md-7">
                 <section class="property-contents common">
                     <div class="entry-title clearfix">
-                        <h2 class="pull-left">{{$item->title}}</h2>
+                        <h4 class="pull-left">{{$item->title}}</h4>
                     </div>
                     <p>{!!$item->content!!}</p>
                 </section>
@@ -22,7 +22,7 @@
                 @foreach($item->childs as $child)
                 <section class="property-contents common text-center">
                     <header class="section-header home-section-header">
-                       <h2 class="wow slideInRight">{{$child->title}}</h2>
+                       <h4 class="wow slideInRight">{{$child->title}}</h4>
                     </header>
                     <div class="row">
                         <div class="property-single-metax">{!!$child->content!!}</div>
@@ -42,7 +42,7 @@
 <div class="container">
   <header class="section-header text-center">
      <div class="container">
-       <h3 class="pull-left">Derniers Produits </h3>
+       <h4 class="pull-left">Derniers Produits </h4>
      </div>
   </header>
    <div class="row">
@@ -69,7 +69,7 @@
 <div class="container">
  <header class="section-header text-center">
      <div class="container">
-       <h3 class="pull-left">Derniers Articles</h3>
+       <h4 class="pull-left">Derniers Articles</h4>
      </div>
  </header>
    <div class="row">
