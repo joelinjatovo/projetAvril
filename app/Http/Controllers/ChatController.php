@@ -8,9 +8,13 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Session;
 use App\Models\ChatMessage;
+use App\Models\Thread;
 
 class ChatController extends Controller
 {
+    private $talk;
+    
+    
     /**
      * Create a new controller instance.
      *
@@ -19,6 +23,7 @@ class ChatController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        //$this->talk = new Talk(new Thread(), new ChatMessage());
     }
 
     /**
@@ -42,12 +47,12 @@ class ChatController extends Controller
         {
           $message = ChatMessage::create([
             'message' => $request->input('message'),
-            'user_from' => \Auth::user()->id,
-            'user_to' => $user->id,
+            'user_id' => \Auth::user()->id,
           ]);
 
           return response()->json(['status' => 'Message Sent!', 'content'=>$message->message]);
         }
+        
         $items = ChatMessage::orderBy('created_at', 'desc')
             ->where('user_from', \Auth::user()->id)
             ->orWhere('user_to', \Auth::user()->id)
@@ -97,7 +102,7 @@ class ChatController extends Controller
      */
     public function all(Request $request, $filter='all')
     {
-      $items = ChatMessage::orderBy('created_at', 'desc')->get();
+      $items = Thread::orderBy('created_at', 'desc')->get();
       return view('admin.chat.all')
           ->with('items', $items);
     }
@@ -106,16 +111,17 @@ class ChatController extends Controller
     * Delete Message
     *
     * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Models\ChatMessage  $chat
+    * @param  \App\Models\Thread  $thread
     * @return \Illuminate\Http\Response
     */
-    public function delete(Request $request,ChatMessage $chat)
+    public function delete(Request $request, Thread $thread)
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
         
-        $chat->delete();
+        $thread->delete();
         return redirect()->route('admin.dashboard')
             ->with('success',"Le message a été supprimé avec succés");
     }
+
 }

@@ -183,7 +183,7 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
 
     // Chat Controller Groups
     Route::get('chats/{filter?}', 'ChatController@all')->name('admin.chat.list');
-    Route::get('chat/delete/{chat}', 'ChatController@delete')->name('admin.chat.delete');
+    Route::get('chat/delete/{thread}', 'ChatController@delete')->name('admin.chat.delete');
 
     // Blog Controller Groups
     Route::get('blogs/{filter?}', 'BlogController@allAdmin')->name('admin.blog.list');
