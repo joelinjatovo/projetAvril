@@ -19,7 +19,7 @@ class ChatMessage extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'message'];
+    protected $fillable = ['user_from', 'user_to', 'message'];
     
     /**
      * A message belong to a user

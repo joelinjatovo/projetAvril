@@ -402,3 +402,15 @@
     </div>
 </div>
 @endsection
+
+@section('script')
+<script src="{{asset('administrator/amcharts/amcharts.js')}}"></script>
+<script src="{{asset('administrator/amcharts/xy.js')}}"></script>
+<script src="{{asset('administrator/amcharts/funnel.js')}}"></script>
+<script src="{{asset('administrator/amcharts/pie.js')}}"></script>
+<script src="{{asset('administrator/amcharts/serial.js')}}"></script>
+<script src="{{asset('administrator/amcharts/gantt.js')}}"></script>
+<script src="{{asset('administrator/amcharts/gauge.js')}}"></script>
+<script src="{{asset('administrator/amcharts/radar.js')}}"></script>
+<script src="{{asset('administrator/amcharts/graphe.js')}}"></script>
+@show

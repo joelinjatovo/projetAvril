@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Cache-control" content="public">
     
+<meta name="_token" content="{!! csrf_token() !!}" />
+    
 <title>Investir en Australie</title>
 <!-- favicon and touch icons -->
 <link rel="shortcut icon" href="{{ link_img('favicon.png') }}">

@@ -80,6 +80,8 @@ Route::get('/braintree/token', 'BraintreeController@token')->name('braintree.tok
 // Chart
 Route::get('api/chart/categories', 'ChartController@categories')->name('chart.categories');
 Route::get('api/chart/locations', 'ChartController@locations')->name('chart.locations');
+Route::get('api/chart/prices', 'ChartController@prices')->name('chart.prices');
+Route::get('api/chart/sellers', 'ChartController@sellers')->name('chart.sellers');
 
 Route::middleware('guest')->group(function(){
     Route::get('register/{role}', 'Auth\RegisterController@index')->name('register');
@@ -89,6 +91,10 @@ Route::middleware('guest')->group(function(){
 });
 
 Route::middleware(["auth"])->group(function(){
+    // Chat
+    Route::get('/chat/{user}', 'ChatController@chat');
+    Route::post('/chat/{user}', 'ChatController@chat')->name('chat.with');
+    
     // Baintree
     Route::get('/plans', 'PlanController@index');
     

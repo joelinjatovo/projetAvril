@@ -14,7 +14,7 @@
                     </div>
                     <div class="widget-content">
                         <div class="widget-body">
-                            <div id="chartLocation" style="width: 100%; height: 300px;"></div>
+                            <div id="chart-location" style="width: 100%; height: 300px;"></div>
                         </div>
                     </div>
                 </div>
@@ -24,31 +24,29 @@
                     </div>
                     <div class="widget-content">
                         <div class="widget-body">
-                            <div id="chartPrix" style="width: 100%; height: 300px;"></div>
+                            <div id="chart-price" style="width: 100%; height: 300px;"></div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row-fluid">
-                <div class="widget widget-simple">
+                <div class="span6 widget widget-simple">
                     <div class="widget-header">
                         <h4><i class="fontello-icon-chart"></i>Repartition des produits par type</h4>
                     </div>
                     <div class="widget-content">
                         <div class="widget-body">
-                            <div id="my-chart" style="width: 100%; height: 300px;"></div>
+                            <div id="chart-category" style="width: 100%; height: 300px;"></div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row-fluid">
-                <div class="widget well well-simple">
+                <div class="span6 widget well well-simple">
                     <div class="widget-header">
                         <h4><i class="fontello-icon-chart"></i>Repartition des produits par vendeur</h4>
                     </div>
                     <div class="widget-content">
                         <div class="widget-body">
-                            <div id="chartTypeVendeur" style="width: 100%; height: 300px;"></div>
+                            <div id="chart-seller-type" style="width: 100%; height: 300px;"></div>
                         </div>
                     </div>
                 </div>
@@ -69,10 +67,8 @@
 <script src="{{asset('administrator/amcharts/radar.js')}}"></script>
 <script src="{{asset('administrator/amcharts/graphddde.js')}}"></script>
 <script type="text/javascript">
-
-var chart;
 function drawCategoryChart($data){
-    chart = AmCharts.makeChart("my-chart", {
+    var chart = AmCharts.makeChart("chart-category", {
       "type": "serial",
       "theme": "light",
       "marginRight": 70,
@@ -117,6 +113,105 @@ function loadCategoryData() {
     });
 }
 loadCategoryData();
+    
+
+function drawLocationChart($data){
+    var chart = AmCharts.makeChart( "chart-location", {
+      "type": "pie",
+      "dataProvider": $data,
+      "valueField": "products_count",
+      "titleField": "state",
+       "balloon":{
+        "fixedPosition":true
+      }
+    });
+
+}
+function loadLocationData() {
+    $.ajax({
+        url: "{{route('chart.locations')}}",
+        ifModified:true,
+        success: function(content){
+            drawLocationChart(content.data);
+        }
+    });
+}
+loadLocationData();
+    
+function drawPriceChart($data){
+    var chart =  AmCharts.makeChart( "chart-price", {
+        "type": "funnel",
+        "theme": "light",
+        "dataProvider": $data,
+        "balloon": {
+          "fixedPosition": true
+        },
+        "valueField": "count",
+        "titleField": "label",
+        "marginRight": 240,
+        "marginLeft": 50,
+        "startX": -500,
+        "rotate": true,
+        "labelPosition": "right",
+        "balloonText": "[[label]]: [[count]]",
+      }
+    );
+
+}
+function loadPriceData() {
+    $.ajax({
+        url: "{{route('chart.prices')}}",
+        ifModified:true,
+        success: function(content){
+            drawPriceChart(content.data);
+        }
+    });
+}
+loadPriceData();
+    
+function drawSellerChart($data){
+    var chart = AmCharts.makeChart("chart-seller-type", {
+      "type": "serial",
+      "theme": "light",
+      "marginRight": 70,
+      "dataProvider": $data,
+      "valueAxes": [{
+        "axisAlpha": 0,
+        "position": "left",
+        "title": "Nombres de produits"
+      }],
+      "startDuration": 1,
+      "graphs": [{
+        "balloonText": "<b>[[type]]: [[products_count]]</b>",
+        "fillColorsField": "color",
+        "fillAlphas": 0.9,
+        "lineAlpha": 0.2,
+        "type": "column",
+        "valueField": "products_count"
+      }],
+      "chartCursor": {
+        "categoryBalloonEnabled": false,
+        "cursorAlpha": 0,
+        "zoomable": false
+      },
+      "categoryField": "type",
+      "categoryAxis": {
+        "gridPosition": "start",
+        "labelRotation": 45
+      }
+    });
+
+}
+function loadSellerData() {
+    $.ajax({
+        url: "{{route('chart.sellers')}}",
+        ifModified:true,
+        success: function(content){
+            drawSellerChart(content.data);
+        }
+    });
+}
+loadSellerData();
     
 function check_demande($url) {
     $.ajax({

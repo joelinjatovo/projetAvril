@@ -35,8 +35,8 @@ class AdminController extends Controller
     public function chart($type)
     {
         switch($type){
-            case "category":
-                return view('admin.chart.product.category');
+            case "product":
+                return view('admin.dashboard');
             default:
                 abort(404);
                 

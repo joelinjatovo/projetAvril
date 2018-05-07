@@ -112,7 +112,7 @@
                       <a href="#accDashboard" data-parent="#mainSideMenu"  data-toggle="collapse" class="accordion-toggle"><i class="fontello-icon-chart"></i><i class="chevron fontello-icon-right-open-3"></i>Statistiques</a>
                   </div>
                   <ul class="accordion-content nav nav-list collapse" id="accDashboard">
-                      <li><a href="{{route('admin.chart', ['type'=>'category'])}}"> <i class="fontello-icon-right-dir"></i>Produit Par Categorry</a></li>
+                      <li><a href="{{route('admin.chart', ['type'=>'product'])}}"> <i class="fontello-icon-right-dir"></i>@lang('app.products')</a></li>
                   </ul>
               </li>
               <li class="accordion-group">

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\ChatMessage;
 use Illuminate\Support\Facades\Auth;
+
+use App\Models\User;
+use App\Models\ChatMessage;
 
 class ChatController extends Controller
 {
@@ -26,6 +28,32 @@ class ChatController extends Controller
     public function index()
     {
       return view('chat.index');
+    }
+
+    /**
+     * Show chats
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function chat(Request $request, User $user)
+    {
+        if($request->ajax())
+        {
+          $user = Auth::user();
+
+          $message = ChatMessage::create([
+            'message' => $request->input('message'),
+            'user_from' => \Auth::user()->id,
+            'user_to' => $user->id,
+          ]);
+
+          return response()->json(['status' => 'Message Sent!', 'content'=>$message->message]);
+        }
+        $items = ChatMessage::all();
+        return view('chat.chat')
+          ->with('items', $items)
+          ->with('from',\Auth::user())
+          ->with('to',$user);
     }
 
     /**

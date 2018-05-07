@@ -5,7 +5,7 @@
     <div id="page-content" class="page-content">
         <section>
             <div class="page-header">
-                <h3>Repartition des produits par categorie</h3>
+                <h3>Repartition des produits par Etat</h3>
             </div>
             <div class="row-fluid">
                 <div class="widget widget-simple">
@@ -35,7 +35,7 @@
 <script type="text/javascript">
 function loadData() {
     $.ajax({
-        url: "{{route('chart.categories')}}",
+        url: "{{route('chart.locations')}}",
         ifModified:true,
         success: function(content){
             drawChart(content.data);
@@ -44,37 +44,13 @@ function loadData() {
 }
 loadData();
 function drawChart($data){
-    var chart = AmCharts.makeChart("chart", {
-      "type": "serial",
-      "theme": "light",
-      "marginRight": 70,
+    var chart = AmCharts.makeChart( "chart", {
+      "type": "pie",
       "dataProvider": $data,
-      "valueAxes": [{
-        "axisAlpha": 0,
-        "position": "left",
-        "title": "Nombres de produits"
-      }],
-      "startDuration": 1,
-      "graphs": [{
-        "balloonText": "<b>[[type]]: [[nombre]]</b>",
-        "fillColorsField": "color",
-        "fillAlphas": 0.9,
-        "lineAlpha": 0.2,
-        "type": "column",
-        "valueField": "nombre"
-      }],
-      "chartCursor": {
-        "categoryBalloonEnabled": false,
-        "cursorAlpha": 0,
-        "zoomable": false
-      },
-      "categoryField": "type",
-      "categoryAxis": {
-        "gridPosition": "start",
-        "labelRotation": 45
-      },
-      "export": {
-        "enabled": true
+      "valueField": "products_count",
+      "titleField": "state",
+       "balloon":{
+       "fixedPosition":true
       }
     });
 

@@ -6,18 +6,23 @@ use Illuminate\Http\Request;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Localisation;
+use App\Models\User;
+use DB;
 
 class ChartController extends Controller
 {
     public function categories(Request $request)
     {
         
-        $items = Category::all();
+        $items = Category::has('products')
+            ->withCount(['products' ])
+            ->get();
         $data = array();
         foreach($items as $item){
             $data[] = [
                 "type"=>$item->title,
-                "nombre"=>count($item->products),
+                "nombre"=>$item->products_count,
                 "color"=>"#B0DE09",
             ];
         }
@@ -34,16 +39,73 @@ class ChartController extends Controller
     
     public function locations(Request $request)
     {
-        /*
-        $items = Localisation::where('country', "Australie")
+        
+        $items = Localisation::join('products', 'products.location_id', '=', 'localizations.id')
+            ->select(DB::raw('count(*) as products_count, state'))
             ->groupBy('state')
             ->get();
-        */
 
         return response()->json([
             'state' => '1',
-            'response' => 'This is get method',
+            'data' => $items,
+        ]);
+    }
+    
+    public function prices(Request $request)
+    {
+        $min = 0;
+        $list = [300000,500000, 750000, 1000000];
+        $data = [];
+        foreach($list as $max){
+            $item = Product::select(DB::raw('count(*) as products_count'))
+                ->whereBetween('price', [$min, $max])
+                ->first();
+            if($item){
+                $data[]=[
+                    "label"=>'['.$min.' - '.$max.']',
+                    "count"=>$item->products_count
+                ];
+            }
+            $min = $max;
+        }
+        
+        $item = Product::select(DB::raw('count(*) as products_count'))
+            ->where('price', '>', $max)
+            ->first();
+        
+        if($item){
+            $data[]=[
+                "label"=>' > '.$max,
+                "count"=>$item->products_count
+            ];
+        }
+
+        return response()->json([
+            'state' => '1',
             'data' => $data,
+        ]);
+    }
+    
+    public function sellers(Request $request)
+    {
+        
+        $items = User::where('role', 'seller')
+            ->groupBy('type')
+            ->join('products', 'products.seller_id', '=', 'users.id')
+            ->select(DB::raw('count(*) as products_count, type'))
+            ->get();
+        for($i=0; $i<count($items); $i++){
+            $item = $items[$i];
+            if($item->type == 'organization'){
+                $item->color="#FF9E01";
+            }else if($item->type == 'person'){
+                $item->color="#04D215";
+            }
+        }
+
+        return response()->json([
+            'state' => '1',
+            'data' => $items,
         ]);
     }
 }
