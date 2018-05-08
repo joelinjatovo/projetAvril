@@ -185,6 +185,9 @@ return [
         
         // Cahier
         Laravel\Cashier\CashierServiceProvider::class,
+        
+        // Chat
+        Musonza\Chat\ChatServiceProvider::class,
 
     ],
 
@@ -236,6 +239,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 		'MetaData' => AstritZeqiri\Metadata\Models\MetaDada::class,
         'InterventionImage' => Intervention\Image\Facades\Image::class,
+        'Chat' => Musonza\Chat\Facades\ChatFacade::class
     ],
 
 ];

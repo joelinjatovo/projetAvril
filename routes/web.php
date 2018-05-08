@@ -93,6 +93,11 @@ Route::middleware('guest')->group(function(){
 });
 
 Route::middleware(["auth"])->group(function(){
+    //Chat
+    Route::get('chat', 'ChatController@index');
+    Route::get('chat/messages', 'ChatController@fetchMessages');
+    Route::post('chat/messages', 'ChatController@sendMessage');
+    
     // Baintree
     Route::get('/plans', 'PlanController@index');
     

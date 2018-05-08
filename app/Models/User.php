@@ -211,7 +211,7 @@ class User extends Authenticatable
      */
     public function messages()
     {
-      return $this->hasMany(ChatMessage::class, 'user_id', 'id');
+      return $this->hasMany(Message::class, 'user_id', 'id');
     }
     
     /**

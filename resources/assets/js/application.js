@@ -1,27 +1,19 @@
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+import Echo from "laravel-echo"
 
-require('./bootstrap');
+window.Echo = new Echo({  
+    broadcaster: 'pusher',
+    key: '0e9323ab7cc9a905ce73',
+    cluster: 'ap2',
+    encrypted: true
+});
 
-window.Vue = require('vue');
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-Vue.component('example', require('./components/Example.vue'));
- 
-Vue.component('chat', require('./components/chat'));
+Vue.component('chat-messages', require('./components/ChatMessages.vue'));
+Vue.component('chat-form', require('./components/ChatForm.vue'));
 
 const app = new Vue({
     el: '#app',
-    
+
     data: {
         messages: []
     },
@@ -32,7 +24,7 @@ const app = new Vue({
 
     methods: {
         fetchMessages() {
-            axios.get('/chat/messages').then(response => {
+            axios.get('/messages').then(response => {
                 this.messages = response.data;
             });
         },
@@ -40,13 +32,12 @@ const app = new Vue({
         addMessage(message) {
             this.messages.push(message);
 
-            axios.post('/chat/messages', message).then(response => {
+            axios.post('/messages', message).then(response => {
               console.log(response.data);
             });
         }
     }
 });
-
 
 Echo.private('chat')
   .listen('MessageSent', (e) => {
