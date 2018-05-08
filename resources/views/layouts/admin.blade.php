@@ -211,11 +211,6 @@
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="{{route('admin.chat.list')}}" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fontello-icon-mail-4"></i> @lang('app.messages')</a>
-                  </div>
-              </li>
-              <li class="accordion-group">
-                  <div class="accordion-heading">
                       <a href="#accRéglages" data-parent="#mainSideMenu"  data-toggle="collapse" class="accordion-toggle">
                         <i class="fontello-icon-tools"></i>
                         <i class="chevron fontello-icon-right-open-3"></i>@lang('app.configs')

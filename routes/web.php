@@ -75,7 +75,7 @@ Route::get('product/{product}', 'ProductController@index')->name('product.index'
 
 // Baintree
 Route::post('braintree/webhook', 'WebhookController@handleWebhook');
-Route::get('/braintree/token', 'BraintreeController@token')->name('braintree.token');
+Route::get('braintree/token', 'BraintreeController@token')->name('braintree.token');
 
 // Chart
 Route::get('api/chart/categories', 'ChartController@categories')->name('chart.categories');
@@ -93,10 +93,6 @@ Route::middleware('guest')->group(function(){
 });
 
 Route::middleware(["auth"])->group(function(){
-    // Chat
-    Route::get('/chat/{user}', 'ChatController@chat');
-    Route::post('/chat/{user}', 'ChatController@chat')->name('chat.with');
-    
     // Baintree
     Route::get('/plans', 'PlanController@index');
     
@@ -108,11 +104,7 @@ Route::middleware(["auth"])->group(function(){
     Route::get('/plan/{plan}', 'PlanController@show');
     Route::post('/subscribe', 'SubscriptionController@store');
     
-    // Send a message by Javascript.
-    Route::get('/chat', 'ChatController@index');
-    Route::get('/chat/messages', 'ChatController@fetchMessages');
-    Route::post('/chat/messages', 'ChatController@sendMessage');
-    
+    // Profile
     Route::prefix('profile')->group(function(){
         Route::get('/', 'UserController@profile')->name('profile');
         Route::get('edit', 'BackendController@profile')->name('profile.edit');
@@ -174,16 +166,13 @@ Route::prefix('seller')->middleware(["auth","role:seller"])->group(function(){
 });
 
 Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
+    
     Route::get('/', 'AdminController@dashboard')->name('admin.dashboard');
     Route::get('/chart/{type}', 'AdminController@chart')->name('admin.chart');
 
     Route::get('card', 'AdminController@card')->name('admin.card');
     Route::get('carts', 'CartController@allAdmin')->name('admin.cart.list');
     Route::get('cart/{cart}', 'CartController@index')->name('admin.cart.show');
-
-    // Chat Controller Groups
-    Route::get('chats/{filter?}', 'ChatController@all')->name('admin.chat.list');
-    Route::get('chat/delete/{thread}', 'ChatController@delete')->name('admin.chat.delete');
 
     // Blog Controller Groups
     Route::get('blogs/{filter?}', 'BlogController@allAdmin')->name('admin.blog.list');
