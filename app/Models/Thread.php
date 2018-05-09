@@ -33,7 +33,7 @@ class Thread extends Model
      * */
     public function messages()
     {
-        return $this->hasMany(ChatMessage::class, 'thread_id')
+        return $this->hasMany(Message::class, 'thread_id')
             ->with('sender');
     }
     

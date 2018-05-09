@@ -12,7 +12,6 @@
         "laravel/cashier-braintree": "~2.0",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
-        "musonza/chat": "^2.1",
         "nesbot/carbon": "^1.25",
         "pusher/pusher-php-server": "^3.0"
     },

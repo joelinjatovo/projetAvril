@@ -98,6 +98,11 @@ Route::middleware(["auth"])->group(function(){
     Route::get('chat/messages', 'ChatController@fetchMessages');
     Route::post('chat/messages', 'ChatController@sendMessage');
     
+    // thread
+    Route::get('thread', 'ChatController@show');
+    Route::resource('thread/threads', 'ThreadController');
+    Route::resource('thread/messages', 'ChatController');
+    
     // Baintree
     Route::get('/plans', 'PlanController@index');
     

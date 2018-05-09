@@ -16,5 +16,14 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('chat', function ($user) {
-  return Auth::check();
+  return \Auth::check();
 });
+
+Broadcast::channel('users.{id}', function ($user, $id) {
+    return (int) $user->id === (int) $id;
+});
+
+Broadcast::channel('threads.{thread}', function ($user, \App\Models\Thread $thread) {
+    return true; //\App\Talk\Facades\Talk::isAuthenticUser($thread, $user);
+});
+

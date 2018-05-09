@@ -171,9 +171,10 @@ return [
         /*
          * Application Service Providers...
          */
+        App\Providers\TalkServiceProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        //App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 		
@@ -186,8 +187,8 @@ return [
         // Cahier
         Laravel\Cashier\CashierServiceProvider::class,
         
-        // Chat
-        Musonza\Chat\ChatServiceProvider::class,
+        //
+        
 
     ],
 
@@ -239,7 +240,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 		'MetaData' => AstritZeqiri\Metadata\Models\MetaDada::class,
         'InterventionImage' => Intervention\Image\Facades\Image::class,
-        'Chat' => Musonza\Chat\Facades\ChatFacade::class
+        'Talk' => App\Talk\Facades\Talk::class,
+        'Pusher' => Pusher\Pusher::class,
     ],
 
 ];

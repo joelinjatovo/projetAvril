@@ -30,7 +30,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  */
 
 let token = document.head.querySelector('meta[name="csrf-token"]');
-
 if (token) {
     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
@@ -52,7 +51,9 @@ if (token) {
 //     key: 'your-pusher-key'
 // });
 
+import Pusher from "pusher-js"
 import Echo from "laravel-echo"
+import Vue from 'vue';
 
 window.Echo = new Echo({  
     broadcaster: 'pusher',

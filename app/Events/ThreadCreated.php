@@ -10,28 +10,20 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-use App\Models\User;
-use App\Models\Message;
-
-class MessageSent implements ShouldBroadcast
+class ThreadCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
-    /**
-     * Message details
-     *
-     * @var Message
-     */
-    public $message;
-
+    
+    public $thread;
+    
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Message $message)
+    public function __construct(\App\Models\Thread $thread)
     {
-        $this->message = $message;
+        $this->thread = $thread;
     }
 
     /**
@@ -41,6 +33,16 @@ class MessageSent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('threads.'.$this->message->thread->id);
+        $channels = [];
+
+        if ($this->thread->userone) {
+            array_push($channels, new PrivateChannel('users.' . $this->thread->userone->id));
+        }
+
+        if ($this->thread->usertwo) {
+            array_push($channels, new PrivateChannel('users.' . $this->thread->usertwo->id));
+        }
+
+        return $channels;
     }
 }
