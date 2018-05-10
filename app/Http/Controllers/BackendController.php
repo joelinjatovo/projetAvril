@@ -386,6 +386,46 @@ class BackendController extends Controller
         return back()->with('success',"Votre photo a été bien modifiée.");
     }
 
+    /**
+     * Show form to edit current user location
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function location()
+    {
+        return view('backend.user.location')
+            ->with('item', Auth::user());
+    }
+
+    /**
+     * Show form to edit current user location
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateLocation(Request $request)
+    {
+        // Validate request
+        $validator = Validator::make($request->all(),[
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+        
+        if ($validator->fails()) {
+            return back()->withErrors($validator)
+                        ->withInput();
+        }
+        
+        $user = Auth::user();
+        try{
+            $user->save();
+        }catch(\Exception $e){
+            return back()->with('success', $e->getMessage());
+        }
+        
+        // Success
+        return back()->with('success',"Votre location a été bien modifiée.");
+    }
+
     
     /**
      * 

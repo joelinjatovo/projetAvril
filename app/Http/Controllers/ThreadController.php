@@ -21,4 +21,33 @@ class ThreadController extends Controller
 
         return $thread;
     }
+
+    /**
+     * Show a category
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @param  App\Models\Category $category
+     * @return Illuminate\Http\Response
+     */
+    public function show(Request $request, Thread $thread)
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        return view('admin.chat.index')
+                ->with('item', $thread->load('messages')); 
+    }
+
+    /**
+     * Show all conversation in admin panel
+     *
+     * @param  Request $request
+     * @return Response
+     */
+    public function all(Request $request, $filter='all')
+    {
+      $items = Thread::orderBy('created_at', 'desc')->get();
+      return view('admin.chat.all')
+          ->with('items', $items);
+    }
 }

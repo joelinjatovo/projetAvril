@@ -6,7 +6,7 @@
           enctype="multipart/form-data">
         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
         <fieldset>
-            <legend>Modifcation Image</legend>
+            <legend>Modification Image</legend>
             <div class="col-sm-12">
                 <div class="col-sm-4">
                     <section class="widget">

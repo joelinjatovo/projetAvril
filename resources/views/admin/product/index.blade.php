@@ -44,10 +44,10 @@
                                                 </ul>
                                             </fieldset>
                                             <fieldset>
-                                                <legend class="section-form">Localisation du produit</legend>
+                                                <legend class="section-form">@lang('app.admin.location')</legend>
                                                 <ul class="form-list label-left list-bordered dotted">
                                                     <li class="control-group">
-                                                        <label for="adresse" class="control-label">Address
+                                                        <label for="adresse" class="control-label">@lang('app.admin.address')
                                                         </label>
                                                         <div class="controls controls-row">
                                                             {{$item->location?$item->location->address:''}}
@@ -55,33 +55,29 @@
                                                         <div class="controls margin-s0">
                                                         </div>
                                                     </li>
-                                                    <!-- // form item -->
                                                     <li class="control-group">
-                                                        <label for="cite" class="control-label">City
+                                                        <label for="cite" class="control-label">@lang('app.admin.city')
                                                         </label>
                                                         <div class="controls">
                                                             {{$item->location?$item->location->city:''}}
                                                         </div>
                                                     </li>
-                                                    <!-- // form item -->
                                                     <li class="control-group">
-                                                        <label for="paysList" class="control-label">Pays
+                                                        <label for="paysList" class="control-label">@lang('app.admin.country')
                                                         </label>
                                                         <div class="controls">
                                                             {{$item->location?$item->location->country:''}}
                                                         </div>
                                                     </li>
-                                                    <!-- // form item -->
                                                     <li class="control-group">
-                                                        <label for="etatList" class="control-label">Etat
+                                                        <label for="etatList" class="control-label">@lang('app.admin.state')
                                                         </label>
                                                         <div class="controls">
                                                             {{$item->location?$item->location->state:''}}
                                                         </div>
                                                     </li>
-                                                    <!-- // form item -->
                                                     <li class="control-group">
-                                                        <label for="zipCode" class="control-label">Zip / Code postal
+                                                        <label for="zipCode" class="control-label">@lang('app.admin.zip') / @lang('app.admin.postalCode')
                                                         </label>
                                                         <div class="controls">
                                                             {{$item->location?$item->location->postCode:''}}
@@ -95,7 +91,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- // Widget -->
                 </div>
             </div>
         </div>

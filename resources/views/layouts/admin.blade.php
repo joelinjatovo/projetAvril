@@ -211,12 +211,17 @@
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="#accRéglages" data-parent="#mainSideMenu"  data-toggle="collapse" class="accordion-toggle">
+                      <a href="{{route('admin.chat.list')}}" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fontello-icon-left-1"></i>@lang('app.admin.chat.list')</a>
+                  </div>
+              </li>
+              <li class="accordion-group">
+                  <div class="accordion-heading">
+                      <a href="#accReglages" data-parent="#mainSideMenu"  data-toggle="collapse" class="accordion-toggle">
                         <i class="fontello-icon-tools"></i>
                         <i class="chevron fontello-icon-right-open-3"></i>@lang('app.configs')
                       </a>
                   </div>
-                  <ul class="accordion-content nav nav-list collapse" id="accRéglages">
+                  <ul class="accordion-content nav nav-list collapse" id="accReglages">
                     <li><a href="{{route('config.site')}}"> <i class="fontello-icon-right-dir"></i>@lang('app.config.site')</a></li>
                     <li><a href="{{route('config.social')}}"> <i class="fontello-icon-right-dir"></i>@lang('app.config.social')</a></li>
                     <li><a href="{{route('config.payment')}}"> <i class="fontello-icon-right-dir"></i>@lang('app.config.payment')</a></li>
@@ -224,7 +229,7 @@
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="{{route('logout')}}" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fontello-icon-left-1"></i>Se deconnecter</a>
+                      <a href="{{route('logout')}}" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fontello-icon-left-1"></i>@lang('app.logout')</a>
                   </div>
               </li>
           </ul>

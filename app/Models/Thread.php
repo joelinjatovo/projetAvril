@@ -34,6 +34,7 @@ class Thread extends Model
     public function messages()
     {
         return $this->hasMany(Message::class, 'thread_id')
+            ->orderBy('created_at', 'desc')
             ->with('sender');
     }
     

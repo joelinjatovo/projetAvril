@@ -123,6 +123,8 @@ Route::middleware(["auth"])->group(function(){
         Route::post('password', 'BackendController@updatePassword');
         Route::get('avatar', 'BackendController@avatar')->name('avatar.edit');
         Route::post('avatar', 'BackendController@updateAvatar');
+        Route::get('location', 'BackendController@location')->name('location.edit');
+        Route::post('location', 'BackendController@updateLocation');
     });
     
 
@@ -260,6 +262,13 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::get('update/{pub}', 'PubController@edit')->name('admin.pub.edit');
         Route::post('update/{pub}', 'PubController@update')->name('admin.pub.update');
         Route::get('delete/{pub}', 'PubController@delete')->name('admin.pub.delete');
+    });
+
+    // Chats Controller Groups
+    Route::get('chats/{filter?}', 'ThreadController@all')->name('admin.chat.list');
+    Route::prefix('chat')->group(function(){
+        Route::get('show/{thread}', 'ThreadController@show')->name('admin.thread.show');
+        Route::get('delete/{thread}', 'ThreadController@delete')->name('admin.thread.delete');
     });
 
     // Observation Controller Groups

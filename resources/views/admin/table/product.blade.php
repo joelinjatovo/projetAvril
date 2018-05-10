@@ -1,29 +1,63 @@
-<div class="widget widget-simple widget-table">
-    <table id="exampleDTA" class="table boo-table table-striped table-hover">
-        <thead>
-            <tr>
-                <th scope="col">Images <span class="column-sorter"></span></th>
-                <th scope="col">References <span class="column-sorter"></span></th>
-                <th scope="col">Nom du produit</th>
-                <th scope="col">Date de la vente <span class="column-sorter"></span></th>
-                <th scope="col">Prix<span class="column-sorter"></span></th>
-                <th scope="col">TMA<span class="column-sorter"></span></th>
-                <th scope="col">Status<span class="column-sorter"></span></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($products as $product)
-            <tr>
-                <td><img class="thumb" width="50" src="{{$product->imageUrl()}}"></td>
-                <td>{{$product->reference}}</td>
-                <td>{{$product->title}}</td>
-                <td>{{$product->created_at}}</td>
-                <td>{{$product->currency}} {{$product->price}} </td>
-                <td>{{$product->tma}} % ({{$product->currency}} {{$product->price*($product->tma/100)}} )</td>
-                <td>{{$product->status}}</td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-    <!-- // DATATABLE - DTA -->
-</div>
+<table id="exampleDTA" class="table boo-table table-striped table-hover">
+ <thead>
+     <tr>
+       <th scope="col">
+         <label class="checkbox">
+             <input class="checkbox" type="checkbox" value="option1">
+         </label>
+       </th>
+         <th scope="col">ID <span class="column-sorter"></span></th>
+         <th scope="col">Photo <span class="column-sorter"></span></th>
+         <th scope="col">Title/Description <span class="column-sorter"></span></th>
+         <th scope="col">Prix/TMA <span class="column-sorter"></span></th>
+         <th scope="col">Date <span class="column-sorter"></span></th>
+         <th scope="col">Statut <span class="column-sorter"></span></th>
+         <th scope="col">Vendeur <span class="column-sorter"></span></th>
+         <th scope="col">Auteur <span class="column-sorter"></span></th>
+         <th scope="col">Actions </th>
+     </tr>
+ </thead>
+ <tbody>
+     @foreach($products as $product)
+     <tr>
+         <td>
+           <label class="checkbox">
+               <input class="checkbox" type="checkbox" value="option1">
+           </label>
+         </td>
+         <td>{{$product->id}}</td>
+         <td><a href="{{route('admin.product.show', ['product'=>$product])}}"><img class="thumb" src="{{$product->imageUrl()}}" width="50"></a></td>
+         <td>
+             <a href="{{route('admin.product.show', ['product'=>$product])}}">{{$product->title}}</a><br>
+             {{$product->excerpt()}}
+         </td>
+         <td>{{$product->currency}} {{$product->price}} / {{$product->tma}}</td>
+         <td>{{$product->created_at->diffForHumans()}}</td>
+         <td>
+             <a href="{{route('admin.product.list', ['filter'=>$product->status])}}">
+             @if($product->status=='published')
+             <span class="label label-success">{{$product->status}}</span>
+             @else
+             <span class="label label-warning">{{$product->status}}</span>
+             @endif
+             </a>
+         </td>
+         <td>@if($product->seller)<a href="{{route('admin.user.show', $product->seller)}}">{{$product->seller->name}}</a>@endif</td>
+         <td><a href="{{route('admin.user.show', $product->author)}}">{{$product->author->name}}</a></td>
+         <td>
+         @if($product->status=='pinged' || $product->status=='archived')
+            <a href="{{route('admin.product.publish', $product)}}" class="btn btn-small btn-info btn-publish">Publier</a>
+            <a href="{{route('admin.product.trash', $product)}}" class="btn btn-small btn-info btn-trash">Trash</a>
+         @elseif($product->status=='trashed')
+            <a href="{{route('admin.product.restore', $product)}}" class="btn btn-small btn-info btn-restore">Restore</a>
+         @endif
+         @if($product->status=='published')
+            <a href="{{route('admin.product.archive', $product)}}" class="btn btn-small btn-warning  btn-archive">Archiver</a>
+            <a href="{{route('admin.product.trash', $product)}}" class="btn btn-small btn-warning btn-trash">Trash</a>
+         @endif
+            <a href="{{route('admin.product.delete', $product)}}" class="btn btn-small btn-warning btn-delete">Supprimer</a>
+         </td>
+     </tr>
+     @endforeach
+ </tbody>
+</table>

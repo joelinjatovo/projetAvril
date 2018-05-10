@@ -3,26 +3,15 @@
 @section('content')
 <div id="main-content" class="main-content container-fluid">
 <div class="row-fluid page-head">
-    <h2 class="page-title"><i class="fa fa-registered" aria-hidden="true"></i> Publicites </h2>
-    <p class="pagedesc">Gestionnaire de publicite </p>
-    <div class="page-bar">
-        <div class="btn-toolbar"> </div>
-    </div>
+    <h2 class="page-title"><i class="fa fa-registered" aria-hidden="true"></i> @lang('app.admin.pub.list') </h2>
 </div>
 <!-- // page head -->
 <div id="page-content" class="page-content">
     <section>
-        <div class="page-header">
-            <h3><i class="fa fa-list-ol" aria-hidden="true"></i><small>Gestion des publicites</small></h3>
-            <p>Classement des publicites <code> disponibles</code> et <code> archivés </code> dans le plateforme <code> Investir en Australie </code> </p>
-        </div>
         <div class="row-fluid">
             <div class="span12">
                 @include('includes.alerts')
                 <table id="exampleDT" class="table table-striped table-hover">
-                    <caption>
-                    Listes des publicites
-                    </caption>
                     <thead>
                         <tr>
                             <th scope="col">ID <span class="column-sorter"></span></th>

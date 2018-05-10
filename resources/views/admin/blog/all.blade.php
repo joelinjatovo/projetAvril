@@ -2,21 +2,11 @@
 
 @section('content')
 <div id="main-content" class="main-content container-fluid">
-    @include('includes.notification')
     <div class="row-fluid page-head">
-        <h2 class="page-title"><i class="fontello-icon-monitor"></i> Gestion du Blog <small> Tableau de bord de la gestion du Blog</small></h2>
-        <div class="page-bar">
-            <div class="btn-toolbar"> </div>
-        </div>
+        <h2 class="page-title"><i class="fontello-icon-monitor"></i> @lang('app.admin.blog.list')</h2>
     </div>
-    <!-- // page head -->
-
-    <div id="page-content" class="page-content">
+    <div class="page-content">
         <section>
-            <div class="page-header">
-                <h3><i class="fontello-icon-picture-2"></i> Listes de tous les articles du Blog </h3>
-                <p>Ceci est la liste de tous les articles publiés dans la partie Blog. Vous pouvez supprimer avec le bouton <b>"Delete"</b> ou modifier avec le bouton <b>"Edit"</b> ou les mettre à la Une grâce au bouton <b>"Favoris"</b>. </p>
-            </div>
             @include('includes.alerts')
             <ul class="thumbnails equal-height">
                 <!-- item -->
@@ -42,17 +32,17 @@
                         </div>
                         <p class="action"> 
                          @if($item->status=='pinged' || $item->status=='archived')
-                            <a href="{{route('admin.blog.publish', $item)}}" class="btn btn-small btn-info btn-publish">Publier</a>
-                            <a data-dismiss="modal" data-toggle="modal" data-target="#modal-trash-{{$item->id}}" class="btn btn-small btn-warning btn-trash">Trash</a>
+                            <a href="{{route('admin.blog.publish', $item)}}" class="btn btn-small btn-info btn-publish">@lang('app.btn.publish')</a>
+                            <a data-dismiss="modal" data-toggle="modal" data-target="#modal-trash-{{$item->id}}" class="btn btn-small btn-warning btn-trash">@lang('app.btn.trash')</a>
                          @elseif($item->status=='trashed')
-                            <a href="{{route('admin.blog.restore', $item)}}" class="btn btn-small btn-info btn-restore">Restore</a>
+                            <a href="{{route('admin.blog.restore', $item)}}" class="btn btn-small btn-info btn-restore">@lang('app.btn.restore')</a>
                          @endif
                          @if($item->status=='published')
-                            <a data-dismiss="modal" data-toggle="modal" data-target="#modal-archive-{{$item->id}}" class="btn btn-small btn-warning  btn-archive">Archiver</a>
-                            <a data-dismiss="modal" data-toggle="modal" data-target="#modal-trash-{{$item->id}}" class="btn btn-small btn-warning btn-trash">Trash</a>
+                            <a data-dismiss="modal" data-toggle="modal" data-target="#modal-archive-{{$item->id}}" class="btn btn-small btn-warning  btn-archive">@lang('app.btn.archive')</a>
+                            <a data-dismiss="modal" data-toggle="modal" data-target="#modal-trash-{{$item->id}}" class="btn btn-small btn-warning btn-trash">@lang('app.btn.trash')</a>
                          @endif
-                            <a data-dismiss="modal" data-toggle="modal" data-target="#modal-delete-{{$item->id}}" class="btn btn-small btn-warning btn-delete">Supprimer</a>
-                            <a class="btn btn-small" href="{{route('admin.blog.star',$item)}}"><i class="fontello-icon-star-1"></i> Favoris</a> 
+                            <a data-dismiss="modal" data-toggle="modal" data-target="#modal-delete-{{$item->id}}" class="btn btn-small btn-warning btn-delete">@lang('app.btn.delete')</a>
+                            <a class="btn btn-small" href="{{route('admin.blog.star',$item)}}"><i class="fontello-icon-star-1"></i> @lang('app.btn.star')</a> 
                         </p>
                     </div>
                     <div id="modal-archive-{{$item->id}}" class="modal fade" role="dialog">
@@ -66,8 +56,8 @@
                             <p>Voulez vous vraiment archiver l'article <br><b>{{ucfirst($item->title)}}</b>  </p>
                           </div>
                           <div class="modal-footer">
-                            <a type="button" class="btn btn-primary" href="{{route('admin.blog.archive',$item)}}">Archiver</a>
-                            <button type="reset" class="btn btn-default" data-dismiss="modal">annuler</button>
+                            <a type="button" class="btn btn-primary" href="{{route('admin.blog.archive',$item)}}">@lang('app.btn.archive')</a>
+                            <button type="reset" class="btn btn-default" data-dismiss="modal">@lang('app.btn.reset')</button>
                           </div>
                         </div>
                       </div>
@@ -83,8 +73,8 @@
                             <p>Voulez vous vraiment ajouter l'article aux corbeilles<br><b>{{ucfirst($item->title)}}</b>  </p>
                           </div>
                           <div class="modal-footer">
-                            <a type="button" class="btn btn-primary" href="{{route('admin.blog.trash',$item)}}">Archiver</a>
-                            <button type="reset" class="btn btn-default" data-dismiss="modal">annuler</button>
+                            <a type="button" class="btn btn-primary" href="{{route('admin.blog.trash',$item)}}">@lang('app.btn.trash')</a>
+                            <button type="reset" class="btn btn-default" data-dismiss="modal">@lang('app.btn.reset')</button>
                           </div>
                         </div>
                       </div>
@@ -100,18 +90,16 @@
                             <p>Voulez vous vraiment supprimer l'article definitivement <br><b>{{ucfirst($item->title)}}</b>  </p>
                           </div>
                           <div class="modal-footer">
-                            <a type="button" class="btn btn-primary" href="{{route('admin.blog.delete',$item)}}">Archiver</a>
-                            <button type="reset" class="btn btn-default" data-dismiss="modal">annuler</button>
+                            <a type="button" class="btn btn-primary" href="{{route('admin.blog.delete',$item)}}">@lang('app.btn.delete')</a>
+                            <button type="reset" class="btn btn-default" data-dismiss="modal">@lang('app.btn.reset')</button>
                           </div>
                         </div>
                       </div>
                     </div>
                 </li>
-                <!-- // item -->
                 @endforeach
             </ul>
         </section>
     </div>
-    <!-- // page content --> 
 </div>
 @endsection

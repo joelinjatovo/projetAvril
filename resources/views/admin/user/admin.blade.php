@@ -6,7 +6,7 @@
     <div id="page-content" class="page-content tab-content overflow-y">
         <div id="TabTop1" class="tab-pane padding-bottom30 active fade in">
             <div class="page-header">
-                <h3>Profil de l'admin</h3>
+                <h3>@lang('app.profile')</h3>
             </div>
             <div class="row-fluid">
                 <div class="grider">
@@ -172,16 +172,12 @@
                             </div>
                         </div>
                     </div>
-                    <!-- // Widget -->
-                    
                     <div class="widget widget-simple">
                         <div class="widget-header">
                             <h4><small>Observations</small></h4>
                         </div>
                         @include('admin.table.observation',['item'=>$item])
                     </div>
-                    <!-- // Widget -->
-                        
                 </div>
             </div>
         </div>

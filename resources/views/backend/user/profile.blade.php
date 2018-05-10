@@ -4,14 +4,17 @@
 <div class="row">
     <div class="form-horizontal">
         <div class="form-group">
-            <div class="col-sm-offset-3 col-sm-3">
+            <div class="col-sm-3 text-center">
                 <a href="{{route('profile.edit')}}" class="btn btn-info">Modifier Profile</a>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-3 text-center">
                 <a href="{{route('avatar.edit')}}"  class="btn btn-warning">Modifier Avatar</a>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-3 text-center">
                 <a href="{{route('password.edit')}}"  class="btn btn-success">Modifier Mot de passe</a>
+            </div>
+            <div class="col-sm-3 text-center">
+                <a href="{{route('location.edit')}}" class="btn btn-info">Modifier Localisation</a>
             </div>
         </div>
         <fieldset>

@@ -86,7 +86,8 @@ class Page extends BaseModel
      */
     public function childs()
     {
-        return $this->hasMany(Page::class, 'parent_id', 'id');
+        return $this->hasMany(Page::class, 'parent_id', 'id')
+            ->locale($this->language);
     }
     
     /**

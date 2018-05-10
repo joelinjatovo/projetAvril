@@ -2,10 +2,10 @@
 
 return [
 
-    'app_name'          => 'Investir en Italie',
-    'footer_description'         => 'INVESTIR EN AUSTRALIE est un e-marketplace.',
-    'copyright'         => '© Copyright :year : ":app" - Tout droit reserve',
-    'last_update'       => 'Derniere Modification, :date',
+    'app_name'            => 'Investir en Italie',
+    'footer_description'  => 'INVESTIR EN AUSTRALIE est un e-marketplace.',
+    'copyright'           => '© Copyright :year : ":app" - Tout droit reserve',
+    'last_update'         => 'Derniere Modification, :date',
     
     'rapid_link'      => 'Acces Rapide',
     
@@ -76,21 +76,78 @@ return [
     'admin.blogs'           => 'Blogs',
     'admin.blog.list'       => 'Liste des blogs',
     'admin.blog.add'        => 'Ajouter un article',
+    'admin.blog.update'     => 'Modification d\'un article',
     'admin.blog.archive'    => 'Articles achivés',
     'admin.blog.trash'      => 'Articles aux corbeilles',
     'admin.blog.publish'    => 'Articles publiés',
     'admin.blog.ping'       => 'Articles en attente',
     'admin.blog.star'       => 'Articles aux favoris',
+    'admin.blog.gestion'  => 'Gestion des blogs',
+    
+    'subproducts'           => 'Sub Produits',
+    'subproduct'            => 'Sub Produit',
+    
+    'chats'              => 'Messages',
+    'chat'               => 'Message',
+    'admin.chats'        => 'Messages',
+    'admin.chat.list'  => 'Liste des conversations',
     
     'products'              => 'Produits',
     'product'               => 'Produit',
     'admin.products'        => 'Produits',
     'admin.product.list'    => 'Liste des produits',
-    'admin.product.add'     => 'Ajouter un produit',
+    'admin.product.add'     => 'Modifier un produit',
+    'admin.product.update'  => 'Ajouter un produit',
     'admin.product.ping'    => 'Produits en attente',
     'admin.product.archive' => 'Produits archivés',
     'admin.product.publish' => 'Produits publiés',
     'admin.product.trash'   => 'Produits aux corbeilles',
+    'admin.product.gestion'  => 'Gestion des blogs',
+    
+    'reference'   => 'Reference',
+    'status'      => 'Statut',
+    
+    'admin.location'   => 'Localisation',
+    'admin.locality'   => 'Localité',
+    'admin.zip'        => 'Zip',
+    'admin.postalCode' => 'Code Postal',
+    'admin.street'     => 'Rue',
+    'admin.address'    => 'Adresse',
+    'admin.suburb'     => 'Suburb',
+    'admin.city'       => 'Ville',
+    'admin.region'     => 'Région',
+    'admin.country'    => 'Pays',
+    'admin.state'      => 'Etat',
+    
+    'admin.parent'   => 'Parent',
+    'admin.language'   => 'Langue',
+    
+    'admin.title'   => 'Titre',
+    'admin.title.desc'   => 'Ajouter un nouveau titre',
+    
+    'admin.path'        => 'Lien URI',
+    'admin.path.desc'   => 'Ajouter un lien URI',
+    
+    'admin.page_order'        => 'Ordre de la page',
+    'admin.page_order.desc'   => 'Ajouter le numéro d\'ordre de la page',
+    
+    'admin.content'   => 'Contenu',
+    'admin.content.desc'   => 'Ajouter les paragraphes',
+    
+    'admin.link'   => 'Lien URL',
+    'admin.link.desc'   => 'Ajouter un lien URL',
+    
+    'admin.metatag'   => 'Meta Tag',
+    'admin.metatag.desc'   => 'Ajouter les meta-tags',
+    
+    'admin.metadesc'   => 'Meta Description',
+    'admin.metadesc.desc'   => 'Ajouter les metas descriptions',
+    
+    'admin.category'   => 'Selectionner les categories',
+    'admin.file'   => 'Uploader un fichier',
+    'admin.file.select'   => 'Selectionner un fichier',
+    'admin.file.change'   => 'Modifier',
+    'admin.file.remove'   => 'Supprimer',
     
     'productstosell'                => 'Produits a vendre',
     'producttosell'                 => 'Produit a vendre',
@@ -104,7 +161,9 @@ return [
     'admin.categories'          => 'Categories',
     'admin.category.list'       => 'Liste des categories',
     'admin.category.add'        => 'Ajouter une categorie',
+    'admin.category.update'     => 'Modifier une categorie',
     'admin.category.archive'    => 'Registre des categories',
+    'admin.category.gestion'    => 'Gestion des categories',
     
     'users'                 => 'Utilisateurs',
     'user'                  => 'Utilisateur',
@@ -113,11 +172,20 @@ return [
     'admin.user.add'        => 'Ajouter un utilisateurs',
     'admin.user.archive'    => 'Registre des utilisateurs',
     
+    'admin.page'           => 'Page',
+    'admin.pages'          => 'Pages',
+    'admin.page.list'      => 'Liste des pages',
+    'admin.page.add'       => 'Ajouter une page',
+    'admin.page.update'    => 'Modifier une page',
+    'admin.page.gestion'   => 'Gestion des pages',
+    
     'pubs'                 => 'Publicités',
     'pub'                  => 'Publicité',
     'admin.pubs'           => 'Publicités',
     'admin.pub.list'       => 'Liste des publicités',
     'admin.pub.add'        => 'Ajouter une publicité',
+    'admin.pub.update'     => 'Modifier une publicité',
+    'admin.pub.gestion'    => 'Gestion des publicités',
     
     'pages'                 => 'Pages',
     'page'                  => 'Page',
@@ -127,6 +195,7 @@ return [
     
     'admin.orders'          => 'Orders',
     'admin.carts'           => 'Carts',
+    'carts'                 => 'Carts',
     'admin.cart.list'       => 'Liste des commandes',
     'admin.cart.pinged'     => 'Cartes non attente',
     'admin.cart.ordered'    => 'Commandes',
@@ -145,6 +214,11 @@ return [
     'btn.delete'         => 'Supprimer',
     'btn.view'           => 'Voir',
     'btn.more'           => 'Plus',
+    'btn.reset'          => 'Annuler',
+    'btn.archive'        => 'Archiver',
+    'btn.trash'          => 'Ajouter aux corbeilles',
+    'btn.star'           => 'Ajouter aux favoris',
+    'btn.back'           => 'Allez au precedent',
     
     'inscription' => "Inscription",
     'trial_delay' => "Delai d'essai des membres",
