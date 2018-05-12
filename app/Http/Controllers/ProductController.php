@@ -25,6 +25,10 @@ class ProductController extends Controller
      */
     public function index(Request $request, Product $product)
     {
+        if($product->status != 'published'){
+            abort(404);
+        }
+        
         $products = Product::orderBy('created_at','desc')->take(3)->get();
         $categories = Category::orderBy('created_at', 'desc')->take(5)->get();
         if($page = Page::where('path', '=', '/products*')->first()){
@@ -33,11 +37,22 @@ class ProductController extends Controller
             $pubs = [];
         }
         $apls = User::ofRole('apl')->isActive()->get();
+        $product->load('images');
+        $data = [
+              'id' => $product->id,
+              'lat' => $product->location->latitude,
+              'lng' => $product->location->longitude,
+              'title' => $product->title,
+              'area' => 100,
+              'type' => 'product',
+            ];
         return view('product.index')
             ->with('item', $product)
+            ->with('location', $product->location)
             ->with('pubs', $pubs)
             ->with('products', $products)
             ->with('apls', $apls)
+            ->with('data', json_encode($data))
             ->with('categories', $categories); 
     }
     

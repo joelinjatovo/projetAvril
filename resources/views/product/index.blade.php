@@ -5,8 +5,8 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-7">
-                <section class="widget property-meta-wrapper common">
-                  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                @if(count($item->images))
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
                     <!-- Indicators -->
                     <ol class="carousel-indicators">
                       <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -34,64 +34,67 @@
                       <span class="glyphicon glyphicon-chevron-right"></span>
                       <span class="sr-only">Next</span>
                     </a>
-                  </div>
-                </section>
-
+                </div>
+                @else
+                <section class="property-meta-wrapper common">
+                    <figure class="feature-image"> 
+                        <img data-action="zoom" src="{{$item->imageUrl()}}" alt="{{$item->title}}" style="width:100%;"> 
+                    </figure>                     
+                </section>  
+                @endif
+                
                 <section class="property-meta-wrapper common">
                     @include('includes.alerts')
                     <div class="row">
                         <div class="col-sm-12">
-                          <a href="#" class="btn btn-warning col-sm-6"><i class="fa fa-envelope-open-o"></i> contacter l'administrateur</a>
-                          <a href="#" class="btn btn-success col-sm-6"><i class="fa fa-envelope-open-o"></i> contacter l'APL</a>
+                          <a href="#" class="btn btn-warning col-sm-6"><i class="fa fa-envelope-open-o"></i> @lang('app.btn.contact_admin')</a>
+                          <a href="#" class="btn btn-success col-sm-6"><i class="fa fa-envelope-open-o"></i> @lang('app.btn.contact_apl')</a>
                         </div>
                     </div>
-                    <form method="post" action="{{route('shop.add', ['product'=>$item])}}" class="form-inline">
-                        {{csrf_field()}}
-                      <div class="form-group mx-sm-3 mb-2 col-md-12">
-                          <input type="checkbox" name="is_default" value="true" {{(old('is_default'))?'checked':''}}>Choisir comme APL par defaut
-                      </div>
-                      <div class="form-group mx-sm-3 mb-2 col-md-6">
-                        <label for="apl" class="sr-only">Password</label>
-                        <select class="form-control" id="apl" name="apl">
-                            <option>@lang('app.select_one')</option>
-                            @foreach($apls as $apl)
-                            <option value="{{$apl->id}}" {{(old('apl')==$apl->id)?'selected':''}}>{{$apl->name}}</option>
-                            @endforeach
-                        </select>
-                      </div>
-                      <button type="submit" class="btn btn-primary mb-2  col-md-6">@lang('app.i_want_buy_this_item')</button>
-                    </form> 
+                    <div class="row">
+                        <a href="{{route('shop.select.apl', ['product'=>$item])}}" class="btn btn-warning col-sm-6"><i class="fa fa-envelope-open-o"></i>@lang('app.select_apl')</a>
+                    </div>
                     <div class="row">
                         <div class="col-sm-12">
-                          <a href="{{route('label.store', ['product'=>$item,'type'=>'saved'])}}" class="btn btn-info col-sm-6"><i class="fa fa-floppy-o" aria-hidden="true"></i> Sauvegarder</a>
-                          <a href="{{route('label.store', ['product'=>$item,'type'=>'starred'])}}" class="btn btn-info col-sm-6"><i class="fa fa-floppy-o" aria-hidden="true"></i> Ajouter aux favoris</a>
+                          <a href="{{route('label.store', ['product'=>$item,'type'=>'saved'])}}" class="btn btn-info col-sm-6"><i class="fa fa-floppy-o" aria-hidden="true"></i> @lang('app.btn.pin')</a>
+                          <a href="{{route('label.store', ['product'=>$item,'type'=>'starred'])}}" class="btn btn-info col-sm-6"><i class="fa fa-floppy-o" aria-hidden="true"></i>  @lang('app.btn.star')</a>
                         </div>
                     </div>
                 </section>
-                
                 
                 <section class="property-meta-wrapper common">
                     <h3 class="entry-title">@lang('app.detail')</h3>
                     <div class="property-single-meta">
                         <ul class="clearfix">
-                            <li><span>Réference_ID:</span> {{$item->reference}}</li>
-                            <li><span>Publication du</span> {{$item->created_at}}</li>
-                            <li><span>Prix:</span>{{$item->price}}</li>
-                            @if($item->location)
-                            <li><span>Adresse:</span> {{$item->location->toString()}}</li>
+                            <li><span>@lang('app.reference'):</span> {{$item->reference}}</li>
+                            <li><span>Publication du</span> {{$item->created_at->diffForHumans()}}</li>
+                            <li><span>@lang('app.price'):</span>{{$item->price}}</li>
+                            @if($location)
+                            <li><span>@lang('app.product_location'):</span> {{$location?$location->formatted:'Localisation inconnue'}}</li>
                             @endif
+                            
+                            <li><span>@lang('app.area'):</span> {{$item->area}}</li>
+                            <li><span>@lang('app.carport_spaces'):</span> {{$item->carport_spaces}}</li>
+                            <li><span>@lang('app.garage_spaces'):</span> {{$item->garage_spaces}}</li>
+                            <li><span>@lang('app.off_street_spaces'):</span> {{$item->off_street_spaces}}</li>
+                            <li><span>@lang('app.bathrooms'):</span> {{$item->bathrooms}}</li>
+                            <li><span>@lang('app.bedrooms'):</span> {{$item->bedrooms}}</li>
+                            <li><span>@lang('app.ensuite'):</span> {{$item->ensuite}}</li>
+                            <li><span>@lang('app.land_area'):</span> {{$item->land_area}}</li>
+                            <li><span>@lang('app.floor_area'):</span> {{$item->floor_area}}</li>
+                            <li><span>@lang('app.number_of_floors'):</span> {{$item->number_of_floors}}</li>
                         </ul>
                     </div>
                 </section>
+                
                 <section class="property-contents common">
-                    <div class="entry-title clearfix">
-                        <h4 class="pull-left">@lang('app.description') </h4><a class="pull-right print-btn" href="javascript:window.print()">Print This Property <i class="fa fa-print"></i></a>
-                    </div>
+                    <h3 class="entry-title">@lang('app.description')</h3>
                     <p>{{$item->content}}</p>
                 </section>
+                
                 <section class="property-nearby-places common">
-                    <h4 class="entry-title">Agglomérations</h4>
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d56365.45787293253!2d153.422381!3d-27.998757!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b910fe19fd1c2b7%3A0x502a35af3dea680!2sSurfers+Paradise+Queensland+4217%2C+Australie!5e0!3m2!1sfr!2sus!4v1509962436469" width="700" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    <h4 class="entry-title">@lang('app.product_location')</h4>
+                    <div id="map"></div>
                 </section>
             </div>
             <div class="col-lg-4 col-md-5">
@@ -104,7 +107,7 @@
         <section id="property-listing">
             <header class="section-header text-center">
                 <div class="container">
-                    <h2 class="pull-left">Produits enregistrés</h2>
+                    <h2 class="pull-left">@lang('app.latest_product')</h2>
                 </div>
             </header>
 
@@ -121,4 +124,74 @@
             </div>
         </section>
     </div>
+@endsection
+    
+@section('script')
+<script>
+    var _map;
+    var _geocoder;
+    var _marker;
+    var _circle;
+    var _lat = {{$location?$location->latitude:-25.647467468105795}};
+    var _long = {{$location?$location->longitude:146.89921517372136}};
+    var _btnSubmit = document.getElementById("submit");
+    var _inputApl = document.getElementById("apl");
+    var _contentApl = document.getElementById("apl-content");
+    var _titleApl = document.getElementById("apl-title");
+    
+    var iconBase = "{{url('')}}";
+    var icons = {
+      user: {
+        icon: iconBase + '/images/map/user.png'
+      },
+      member: {
+        icon: iconBase + '/images/map/member.png'
+      },
+      apl: {
+        icon: iconBase + '/images/map/apl.png'
+      },
+      afa: {
+        icon: iconBase + '/images/map/afa.png'
+      },
+      product: {
+        icon: iconBase + '/images/map/product.png'
+      }
+    };
+    
+    var data = {!!$data!!};
+    
+    function initMap() {
+        
+        _map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: _lat, lng:  _long},
+            zoom: 16
+        });
+        
+        _marker = new google.maps.Marker({
+          position: {lat: _lat, lng: _long},
+          icon: icons['product'].icon,
+          map: _map,
+          title: data.title
+        });
+
+        _marker.addListener('dragend', function() {
+             var lat = _marker.getPosition().lat();
+             var lng = _marker.getPosition().lng();
+        });
+        
+        _circle = new google.maps.Circle({
+          strokeColor: '#358bbc',
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: '#358bbc',
+          fillOpacity: 0.35,
+          map: _map,
+          center: {lat:parseFloat(data.lat), lng:parseFloat(data.lng)},
+          radius: data.area
+        });
+    
+    }
+
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtRuDbjjrHacZ6EqZySofNueLBLkrNxwI&callback=initMap"></script>
 @endsection

@@ -9,6 +9,8 @@ return [
     
     'rapid_link'      => 'Acces Rapide',
     
+    'your_location'     => 'Votre localisation',
+    
     'longitude'     => 'Longitude',
     'latitude'      => 'Latitude',
     'country'       => 'Pays',
@@ -31,6 +33,8 @@ return [
     'detail'                => 'Detail',
     'description'           => 'Description',
     'select_one'            => 'Selectionner un',
+    'select_apl'            => 'Selectionner une agence partenaire locale',
+    'choose_as_default_apl' => 'Choisir comme apl par defaut',
     'i_want_buy_this_item'  => 'Je veux acheter ce produit',
     'as'  => 'En tant que',
     'member'  => 'Membre',
@@ -215,6 +219,20 @@ return [
     'payment'  => 'Informations sur le paiement',
     'static_page'  => 'Pages statiques',
     
+    'latest_product'  => 'Produits enregistrés',
+    'product_location'  => 'Localisation du produit',
+    'price'  => 'Prix',
+    'area'  => 'Superficie',
+    'carport_spaces'  => 'Garage',
+    'garage_spaces'  => 'Garage',
+    'off_street_spaces'  => 'Garage',
+    'bathrooms'  => 'Salle de bain',
+    'bedrooms'  => 'Chambre',
+    'ensuite'  => 'Ensuite',
+    'land_area'  => 'Superficie land',
+    'floor_area'  => 'Superficie Etage',
+    'number_of_floors'  => 'Nombre d\'etage',
+    
     
     'btn.save'           => 'Sauvegarder',
     'btn.cancel'         => 'Annuler',
@@ -228,6 +246,10 @@ return [
     'btn.trash'          => 'Ajouter aux corbeilles',
     'btn.star'           => 'Ajouter aux favoris',
     'btn.back'           => 'Allez au precedent',
+    'btn.pin'            => 'Epingler ce produit',
+    'btn.select_apl'     => 'Selectionner cet APL',
+    'btn.contact_admin'  => "Contacter l'administrateur",
+    'btn.contact_apl'    => "Contacter l'APL",
     
     'inscription' => "Inscription",
     'trial_delay' => "Delai d'essai des membres",

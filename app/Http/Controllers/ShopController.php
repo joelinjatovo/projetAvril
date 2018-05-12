@@ -31,9 +31,15 @@ class ShopController extends Controller
         if(!$page) $page =1;
         
         if($category==null||$category->id==0){
-            $items = Product::paginate($this->pageSize);
+            $items = Product::ofStatus('published')
+                ->where('quantity', '>', 0)
+                ->orderBy('created_at','desc')
+                ->paginate($this->pageSize);
         }else{
             $items = Product::where("category_id","=", $category->id)
+                ->ofStatus('published')
+                ->where('quantity', '>', 0)
+                ->orderBy('created_at','desc')
                 ->paginate($this->pageSize);
         }
         
@@ -43,8 +49,14 @@ class ShopController extends Controller
             $pubs = [];
         }
         
-        $products = Product::orderBy('created_at','desc')->paginate(3);
-        $categories = Category::orderBy('created_at', 'desc')->paginate(5);
+        $products = Product::ofStatus('published')
+            ->where('quantity', '>', 0)
+            ->orderBy('created_at','desc')
+            ->take(3)
+            ->get();
+        $categories = Category::orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
 
         return view('shop.index')
             ->with('items', $items)
@@ -81,12 +93,23 @@ class ShopController extends Controller
               'lat' => $item->location->latitude,
               'lng' => $item->location->longitude,
               'title' => $item->name,
+              'content' => $item->get_meta('orga_description')?$item->get_meta('orga_description')->value:'',
+              'type' => $item->role,
             ];
         }
         
+        $data[] = [
+              'id' => $product->id,
+              'lat' => $product->location->latitude,
+              'lng' => $product->location->longitude,
+              'title' => $product->title,
+              'type' => 'product',
+            ];
+        
     	return view('shop.apl')
-            ->with(['location' => $product->location])
+            ->with(['location' => Auth::user()->location])
             ->with(['items' => $items])
+            ->with(['item' => $product])
             ->with(['data' => json_encode($data)]);
     }
     
@@ -113,7 +136,7 @@ class ShopController extends Controller
         
         // No APL selected
         if(!$apl && !Auth::user()->apl){
-    	   return back()->withInput()->with('error','Vous devez chosir un apl.');
+    	   return back()->withInput()->with('error','Vous devez choisir un apl.');
         }
         
         // Update APL
@@ -147,7 +170,7 @@ class ShopController extends Controller
         }
         
         if(!isset($afa) || $afa->id==0){
-    	   return back()->withInput()->with('error','Vous ne pouvez pas encore faire cet achat. Il n\'y a pas d\'agence dans la base');
+    	   return redirect()->route('product.index', $product)->withInput()->with('error','Vous ne pouvez pas encore faire cet achat. Il n\'y a pas d\'agence dans la base');
         }
         
     	$currentCart = Session::has('cart') ? Session::get('cart') : null;
@@ -156,14 +179,16 @@ class ShopController extends Controller
         try{
             $cart->add($product, $apl, $afa);
         }catch(\Exception $e){
-            return back()->with('error', $e->getMessage());
+            return redirect()->route('product.index', $product)
+                ->with('error', $e->getMessage());
         }
         
 
     	Session::put('cart', $cart);
     	Session::save();
 
-    	return back()->with('success', 'Nouvel article ajouter au panier!');
+    	return redirect()->route('product.index', $product)
+            ->with('success', 'Nouvel article ajoute au panier!');
     }
 
     /**
@@ -248,16 +273,16 @@ class ShopController extends Controller
 
         $currentCart = Session::has('cart') ? Session::get('cart') : null;
         $cart = Cart::getInstance($currentCart);
-        $cart->reduceByOne($id);
+        $cart->reduceByOne($product);
 
         Session::put('cart', $cart);
         Session::save();
 
-        if ($cart->items <= 0) {
+        if (count($cart->items) <= 0) {
             Session::forget('cart');
         }
 
-        return back()->with('success', "L'article a bien été supprimé !");
+        return redirect()->route('shop.cart')->with('success', "L'article a bien été supprimé !");
     }
 
     public function deleteAll(Product $product){
@@ -276,7 +301,7 @@ class ShopController extends Controller
             Session::forget('cart');
         }
 
-        return back()->with('success', "L'article a bien été supprimé !");
+        return redirect()->route('shop.cart')->with('success', "L'article a bien été supprimé !");
     }
 
 }

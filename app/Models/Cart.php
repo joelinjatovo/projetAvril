@@ -91,7 +91,7 @@ class Cart extends BaseModel
         
 		self::$instance->totalQuantity++;
 		self::$instance->totalPrice += $product->price;
-		self::$instance->totalTma += $product->price**option(Config::$RESERVATION, 0.10);
+		self::$instance->totalTma += $product->price*option(Config::$RESERVATION, 0.10);
         self::$instance->save();
 	}
 
