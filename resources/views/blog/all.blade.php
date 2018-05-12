@@ -41,7 +41,7 @@
                 </div>  
                 <div class="row">
                     <div class="ajax-load text-center" style="display:none">
-                        <p><img src="{{asset('images/loader.gif')}}">Loading More post</p>
+                        <p><img src="{{asset('images/loader.gif')}}">@lang('app.load_more_blog')</p>
                     </div>  
                 </div> 
             </div>
@@ -84,10 +84,9 @@ function loadMoreData(page){
     {
         if(data.html == ""){
             norecord = true;
-            $('.ajax-load').html("No more records found");
+            $('.ajax-load').html("@lang('app.no_more_data')");
             return;
         }
-        console.log(data.html);
         $('.ajax-load').hide();
         $(".blog-data").append(data.html);
         load = false;

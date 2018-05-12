@@ -5,22 +5,7 @@
 <div class="container">
     <header class="section-header text-center">
         <div class="container">
-            <h3 class="pull-left">Résidentiel - <small> 6 produits enregistrées </small></h3>
-            <div class="pull-right">
-                <div class="property-sorting pull-left">
-                    <label for="property-sort-dropdown"> Nombre de produits à afficher:   </label>
-                    <select name="property-sort-dropdown" id="property-sort-dropdown" onchange="showUser(this.value)">
-                        <option value="10">10 produits</option>
-                        <option value="20">20 produits</option>
-                        <option value="50">50 produits</option>
-                        <option value="100">100 produits</option>
-                    </select>
-                </div>
-                <p class="pull-left layout-view">
-                  Vue:
-                  <i class="fa fa-th-large selected" data-layout="6"></i>
-                  <i class="fa fa-list-ul" data-layout="12"></i> </p>
-            </div>
+            <h3 class="pull-left">@if($category&&$category->id>0) {{$category->title}} @else @lang('app.all_product') @endif</h3>
         </div>
     </header>
 
@@ -28,8 +13,13 @@
     <div class="row">
         <div class="col-md-12">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="{{route('home')}}">Accueil</a></li>
-              <li class="breadcrumb-item active">Résidentiel</li>
+              <li class="breadcrumb-item"><a href="{{route('home')}}">@lang('app.home')</a></li>
+              @if($category&&$category->id>0)
+                <li class="breadcrumb-item"><a href="{{route('shop.index')}}">@lang('app.all_product')</a></li>
+                <li class="breadcrumb-item active">{{$category->title}}</li>
+              @else
+                <li class="breadcrumb-item active">@lang('app.all_product')</li>
+              @endif
             </ol>
         </div>
     </div>
@@ -41,7 +31,7 @@
             </div>
             <div class="row">
                 <div class="ajax-load text-center" style="display:none">
-                    <p><img src="{{asset('images/loader.gif')}}">Loading More Procucts</p>
+                    <p><img src="{{asset('images/loader.gif')}}">@lang('app.load_more_product')</p>
                 </div>  
             </div>
         </div>
@@ -82,7 +72,7 @@ function loadMoreData(page){
     {
         if(data.html == ""){
             norecord = true;
-            $('.ajax-load').html("No more records found");
+            $('.ajax-load').html("@lang('app.no_more_data')");
             return;
         }
         $('.ajax-load').hide();

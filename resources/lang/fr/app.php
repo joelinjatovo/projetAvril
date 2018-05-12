@@ -219,7 +219,10 @@ return [
     'payment'  => 'Informations sur le paiement',
     'static_page'  => 'Pages statiques',
     
+    'all_product'     => 'Tous les produits',
     'latest_product'  => 'Produits enregistrés',
+    'latest_blog'  => 'Blogs enregistrés',
+    'all_blog'  => 'Toutes les articles',
     'product_location'  => 'Localisation du produit',
     'price'  => 'Prix',
     'area'  => 'Superficie',
@@ -232,6 +235,9 @@ return [
     'land_area'  => 'Superficie land',
     'floor_area'  => 'Superficie Etage',
     'number_of_floors'  => 'Nombre d\'etage',
+    'no_more_data'  => "Pas plus de donnee trouvee",
+    'load_more_product'  => "Chargement de plus de produit",
+    'load_more_blog'  => "Chargement de plus de blog",
     
     
     'btn.save'           => 'Sauvegarder',
