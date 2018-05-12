@@ -31,6 +31,36 @@ class UsersTableSeeder extends Seeder
             'location_id' => 2,
         ]);
         DB::table('users')->insert([
+            'name' => "apl1",
+            'email' => 'apl1@iea.com',
+            'password' => bcrypt('apl'),
+            'role' => 'apl',
+            'status' => 'active',
+            'author_id' => '0',
+            'created_at' => date("Y-m-d H:i:s"),
+            'location_id' => 1,
+        ]);
+        DB::table('users')->insert([
+            'name' => "apl2",
+            'email' => 'apl2@iea.com',
+            'password' => bcrypt('apl'),
+            'role' => 'apl',
+            'status' => 'active',
+            'author_id' => '0',
+            'created_at' => date("Y-m-d H:i:s"),
+            'location_id' => 3,
+        ]);
+        DB::table('users')->insert([
+            'name' => "apl3",
+            'email' => 'apl3@iea.com',
+            'password' => bcrypt('apl'),
+            'role' => 'apl',
+            'status' => 'active',
+            'author_id' => '0',
+            'created_at' => date("Y-m-d H:i:s"),
+            'location_id' => 3,
+        ]);
+        DB::table('users')->insert([
             'name' => "afa",
             'email' => 'afa@iea.com',
             'password' => bcrypt('afa'),

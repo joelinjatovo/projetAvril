@@ -9,6 +9,15 @@ return [
     
     'rapid_link'      => 'Acces Rapide',
     
+    'longitude'     => 'Longitude',
+    'latitude'      => 'Latitude',
+    'country'       => 'Pays',
+    'area_level_1'  => 'Etat',
+    'area_level_2'  => 'Suburb',
+    'locality'      => 'Localité',
+    'route'         => 'route',
+    'postalCode'    => 'Code Postal',
+    
     'home'      => 'Accueil',
     'language'      => 'Langue',
     'connexion'      => 'Connexion',

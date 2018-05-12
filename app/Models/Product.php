@@ -27,6 +27,15 @@ class Product extends BaseModel
         'title', 'content', 'reference', 'slug', 'price', 'tma', 'image_id', 'location_id', 'status',
     ];
     
+    /**
+     * The attributes that are in meta table.
+     *
+     * @var array
+     */
+    protected $metas = [
+        'title', 'content', 'reference', 'slug', 'price', 'tma', 'image_id', 'location_id', 'status',
+    ];
+    
     
     /**
      * Create a new model instance.
@@ -88,11 +97,39 @@ class Product extends BaseModel
     }
     
     /**
+     * Get the type record associated with the product.
+     */
+    public function type()
+    {
+        return $this->belongsTo(Type::class, 'type_id', 'id')
+            ->ofObject('type');
+    }
+    
+    /**
+     * Get the location type record associated with the product.
+     */
+    public function locationType()
+    {
+        return $this->belongsTo(Type::class, 'type_id', 'id')
+            ->ofObject('location');
+    }
+    
+    /**
      * Get the image record associated with the product.
      */
     public function image()
     {
         return $this->belongsTo(Image::class, 'image_id', 'id');
+    }
+    
+    /**
+     * A product can have many images
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
+     */
+    public function images()
+    {
+      return $this->belongsToMany(Image::class, 'products_images', 'product_id', 'image_id');
     }
     
     /**

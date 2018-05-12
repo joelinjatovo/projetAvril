@@ -20,25 +20,37 @@ class CreateProductsTable extends Migration
             $table->string('title', 150)->nullable();
             $table->longText('content')->nullable();
             $table->bigInteger('quantity')->default(1);
+            
+            $table->float('area', 20, 2)->nullable();
+            $table->integer('carport_spaces')->default(0);
+            $table->integer('garage_spaces')->default(0);
+            $table->integer('off_street_spaces')->default(0);
+            $table->integer('bathrooms')->default(0);
+            $table->integer('bedrooms')->default(0);
+            $table->integer('ensuite')->default(0);
+            $table->integer('land_area')->default(0);
+            $table->integer('floor_area')->default(0);
+            $table->integer('number_of_floors')->default(0);
+            $table->boolean('new_construction')->default(false);
+            $table->string('year_built', 10)->nullable();
+            
+            $table->string('display_address')->nullable();
+            
             $table->float('price', 20, 2)->nullable();
             $table->string('currency', 10)->nullable();
             $table->float('tma', 8, 2)->nullable();
-            $table->string('status', 20)->default('pinged')->index(); // pinged published blocked drafted trashed archived
+            
+            $table->string('status', 20)->default('published')->index(); // pinged published blocked drafted trashed archived
+            
+            $table->bigInteger('type_id')->default('0')->index(); // apartment, individual house, town house, ground
+            $table->bigInteger('location_type_id')->default('0')->index();  // in urban area, extra-urban, in campaign
+            
             $table->bigInteger('category_id')->default('0')->index();
             $table->bigInteger('seller_id')->default('0')->index();
             $table->bigInteger('author_id')->default('0')->index();
             $table->bigInteger('location_id')->default('0')->index();
             $table->bigInteger('image_id')->default('0')->index();
             $table->timestamps();
-
-            /*            
-            $table->string('state', 100)->nullable();
-            $table->string('city', 100)->nullable();
-            $table->string('suburb', 100)->nullable();
-            $table->string('longitude')->nullable();
-            $table->string('latitude')->nullable();
-            $table->string('altitude')->nullable();
-            */
         });
     }
 

@@ -20,7 +20,16 @@ class Localisation extends BaseModel
      * @var array
      */
     protected $fillable = [
-        'address', 'street', 'country', 'state',  'suburb', 'city', 'postalCode', 'locality', 'longitude', 'latitude', 'altitude',
+        'formatted', 
+        'country',
+        'area_level_1',  
+        'area_level_2', 
+        'locality', 
+        'route', 
+        'postalCode', 
+        'longitude',
+        'latitude', 
+        'altitude',
     ];
     
     

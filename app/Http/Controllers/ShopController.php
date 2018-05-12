@@ -61,6 +61,42 @@ class ShopController extends Controller
      * @param  \App\Models\Product
      * @return \Illuminate\Http\Response
      */
+    public function selectApl(Request $request, Product $product){
+        $this->middleware('auth');
+        $this->middleware('role:member');
+        
+        if(!$product->isDisponible()){
+    	   return redirect()->route('product.index', $product)->with('error','Stock en rupture');
+        }
+        
+        if(!$product->location){
+    	   return redirect()->route('product.index', $product)->with('error','Produit pas de localisation');
+        }
+        
+        $items = User::ofRole('apl')->isActive()->has('location')->with('location')->get();
+        $data = [];
+        foreach($items as $item){
+            $data[] = [
+              'id' => $item->id,
+              'lat' => $item->location->latitude,
+              'lng' => $item->location->longitude,
+              'title' => $item->name,
+            ];
+        }
+        
+    	return view('shop.apl')
+            ->with(['location' => $product->location])
+            ->with(['items' => $items])
+            ->with(['data' => json_encode($data)]);
+    }
+    
+    /**
+     * Add product in cart
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Product
+     * @return \Illuminate\Http\Response
+     */
     public function add(Request $request, Product $product){
         $this->middleware('auth');
         $this->middleware('role:member');

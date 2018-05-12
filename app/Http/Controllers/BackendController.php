@@ -394,7 +394,8 @@ class BackendController extends Controller
     public function location()
     {
         return view('backend.user.location')
-            ->with('item', Auth::user());
+            ->with('item', Auth::user()->with('location'))
+            ->with('location',  Auth::user()->location);
     }
 
     /**
@@ -406,8 +407,16 @@ class BackendController extends Controller
     public function updateLocation(Request $request)
     {
         // Validate request
-        $validator = Validator::make($request->all(),[
-                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        $validator = Validator::make($request->all(),[ 
+            'latitude'     => 'required',
+            'longitude'    => 'required',
+            'country'      => 'max:100',
+            'area_level_1' => 'max:100',
+            'area_level_2' => 'max:100',
+            'locality'     => 'max:100',
+            'route'       => 'max:100',
+            'formatted'    => 'max:100',
+            'postalCode'   => 'max:100',
             ]);
         
         if ($validator->fails()) {
@@ -416,10 +425,16 @@ class BackendController extends Controller
         }
         
         $user = Auth::user();
+        
+        // Create Localization
+        if($location = Localisation::create($datas)){
+            $user->location_id = $location->id>0?$location->id:0;
+        }
+        
         try{
             $user->save();
         }catch(\Exception $e){
-            return back()->with('success', $e->getMessage());
+            return back()->with('error', $e->getMessage());
         }
         
         // Success

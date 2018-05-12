@@ -30,4 +30,15 @@ class Image extends BaseModel
         $image->save();
         return $image;
     }
+    
+    
+    /**
+     * A image can have many products
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
+     */
+    public function products()
+    {
+      return $this->belongsToMany(Product::class, 'products_images', 'image_id', 'product_id');
+    }
 }

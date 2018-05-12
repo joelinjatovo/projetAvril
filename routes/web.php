@@ -133,6 +133,7 @@ Route::middleware(["auth"])->group(function(){
 
 Route::middleware(["auth", "role:member"])->group(function(){
     Route::post('product/{product}', 'ShopController@add')->name('shop.add');// Add product in cart
+    Route::get('select-apl/{product}', 'ShopController@selectApl')->name('shop.select.apl');// Add product in cart
     Route::get('cart', 'ShopController@cart')->name('shop.cart');// Show cart
     Route::get('shop/reduce/{product}', 'ShopController@reduceByOne')->name('shop.product.reduce');// Delete one unity or all the selected product in the cart
     Route::get('shop/delete/{product}', 'ShopController@deleteAll')->name('shop.product.delete');

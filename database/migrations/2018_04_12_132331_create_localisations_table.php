@@ -15,15 +15,13 @@ class CreateLocalisationsTable extends Migration
     {
         Schema::create('localizations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('address')->nullable();
-            $table->string('street')->nullable();
-            $table->string('suburb')->nullable();
-            $table->string('state')->nullable();
-            $table->string('region')->nullable();
+            $table->string('formatted')->nullable();
             $table->string('country')->nullable();
-            $table->string('city')->nullable();
-            $table->string('postalCode')->nullable();
+            $table->string('area_level_1')->nullable();
+            $table->string('area_level_2')->nullable();
             $table->string('locality')->nullable();
+            $table->string('route')->nullable();
+            $table->string('postalCode')->nullable();
             
             $table->string('longitude')->nullable();
             $table->string('latitude')->nullable();
