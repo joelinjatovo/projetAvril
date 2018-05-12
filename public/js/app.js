@@ -48290,6 +48290,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['initialThreads', 'user'],
@@ -48304,9 +48307,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         this.threads = this.initialThreads;
 
-        Bus.$on('threadCreated', function (thread) {
-            console.log(thread);
-            _this.threads.push(thread);
+        Bus.$on('threadCreated', function (e) {
+            console.log('threadCreated');
+            console.log(e);
+            if (e.state) {
+                _this.threads.push(e.data);
+            }
         });
 
         this.listenForNewThreads();
@@ -48318,8 +48324,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             Echo.private('users.' + this.user.id).listen('ThreadCreated', function (e) {
+                console.log("listen('ThreadCreated')");
                 console.log(e);
-                _this2.threads.push(e.thread);
+                if (e.state) {
+                    _this2.threads.push(e.data.thread);
+                }
             });
         }
     }
@@ -48621,8 +48630,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['thread'],
@@ -48653,8 +48660,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             Echo.private('threads.' + this.thread.id).listen('MessageSent', function (e) {
+                console.log('MessageSent');
                 console.log(e);
-                _this2.messages.push(e);
+                _this2.messages.push(e.message);
             });
         }
     }
@@ -48668,120 +48676,124 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "panel panel-primary" }, [
-      _c("div", { staticClass: "panel-heading", attrs: { id: "accordion" } }, [
-        _c("span", { staticClass: "glyphicon glyphicon-comment" }),
-        _vm._v("hjghghg\n            "),
-        _c("div", { staticClass: "btn-group pull-right" }, [
+  return _c("div", { staticClass: "panel panel-primary" }, [
+    _c("div", { staticClass: "panel-heading", attrs: { id: "accordion" } }, [
+      _c("span", { staticClass: "glyphicon glyphicon-comment" }),
+      _vm._v(
+        " " +
+          _vm._s(_vm.thread.userone.name) +
+          " " +
+          _vm._s(_vm.thread.usertwo.name) +
+          "\n        "
+      ),
+      _c("div", { staticClass: "btn-group pull-right" }, [
+        _c(
+          "a",
+          {
+            staticClass: "btn btn-default btn-xs",
+            attrs: {
+              type: "button",
+              "data-toggle": "collapse",
+              "data-parent": "#accordion-",
+              href: "#collapseOne-" + _vm.thread.id
+            }
+          },
+          [_c("span", { staticClass: "glyphicon glyphicon-chevron-down" })]
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "panel-collapse collapse",
+        attrs: { id: "collapseOne-" + _vm.thread.id }
+      },
+      [
+        _c("div", { staticClass: "panel-body chat-panel" }, [
           _c(
-            "a",
-            {
-              staticClass: "btn btn-default btn-xs",
-              attrs: {
-                type: "button",
-                "data-toggle": "collapse",
-                "data-parent": "#accordion-",
-                href: "#collapseOne-" + _vm.thread.id
-              }
-            },
-            [_c("span", { staticClass: "glyphicon glyphicon-chevron-down" })]
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "panel-collapse collapse",
-          attrs: { id: "collapseOne-" + _vm.thread.id }
-        },
-        [
-          _c("div", { staticClass: "panel-body chat-panel" }, [
-            _c(
-              "ul",
-              { staticClass: "chat" },
-              _vm._l(_vm.messages, function(message) {
-                return _c("li", [
-                  _c("div", { staticClass: "chat-body clearfix" }, [
-                    _c("div", { staticClass: "header" }, [
-                      _c("strong", { staticClass: "primary-font" }, [
-                        _vm._v(_vm._s(message.id))
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("p", [
-                      _vm._v(
-                        "\n                                " +
-                          _vm._s(message.message) +
-                          "\n                            "
-                      )
+            "ul",
+            { staticClass: "chat" },
+            _vm._l(_vm.messages, function(message) {
+              return _c("li", [
+                _c("div", { staticClass: "chat-body clearfix" }, [
+                  _c("div", { staticClass: "header" }, [
+                    _c("strong", { staticClass: "primary-font" }, [
+                      _vm._v(_vm._s(message.id))
                     ])
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(message.message) +
+                        "\n                        "
+                    )
                   ])
                 ])
-              })
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "panel-footer" }, [
-            _c("div", { staticClass: "input-group" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.message,
-                    expression: "message"
-                  }
-                ],
-                staticClass: "form-control input-sm",
-                attrs: {
-                  id: "btn-input",
-                  type: "text",
-                  placeholder: "Type your message here...",
-                  autofocus: ""
-                },
-                domProps: { value: _vm.message },
-                on: {
-                  keyup: function($event) {
-                    if (
-                      !("button" in $event) &&
-                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                    ) {
-                      return null
-                    }
-                    _vm.store()
-                  },
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.message = $event.target.value
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("span", { staticClass: "input-group-btn" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-warning btn-sm",
-                    attrs: { id: "btn-chat" },
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.store()
-                      }
-                    }
-                  },
-                  [_vm._v("\n                            Send")]
-                )
               ])
+            })
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "panel-footer" }, [
+          _c("div", { staticClass: "input-group" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.message,
+                  expression: "message"
+                }
+              ],
+              staticClass: "form-control input-sm",
+              attrs: {
+                id: "btn-input",
+                type: "text",
+                placeholder: "Type your message here...",
+                autofocus: ""
+              },
+              domProps: { value: _vm.message },
+              on: {
+                keyup: function($event) {
+                  if (
+                    !("button" in $event) &&
+                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                  ) {
+                    return null
+                  }
+                  _vm.store()
+                },
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.message = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "input-group-btn" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-warning btn-sm",
+                  attrs: { id: "btn-chat" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      _vm.store()
+                    }
+                  }
+                },
+                [_vm._v("\n                        Send")]
+              )
             ])
           ])
-        ]
-      )
-    ])
+        ])
+      ]
+    )
   ])
 }
 var staticRenderFns = []

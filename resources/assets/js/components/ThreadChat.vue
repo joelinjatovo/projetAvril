@@ -1,7 +1,7 @@
 <template>
     <div class="panel panel-primary">
         <div class="panel-heading" id="accordion">
-            <span class="glyphicon glyphicon-comment"></span>hjghghg
+            <span class="glyphicon glyphicon-comment"></span> {{thread.userone.name}} {{thread.usertwo.name}}
             <div class="btn-group pull-right">
                 <a type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-parent="#accordion-" :href="'#collapseOne-' + thread.id">
                     <span class="glyphicon glyphicon-chevron-down"></span>
@@ -65,8 +65,9 @@
             listenForNewMessage() {
                 Echo.private('threads.' + this.thread.id)
                     .listen('MessageSent', (e) => {
+                        console.log('MessageSent');
                         console.log(e);
-                        this.messages.push(e);
+                        this.messages.push(e.message);
                 });
             }
         }

@@ -20,9 +20,12 @@
         mounted() {
             this.threads = this.initialThreads;
 
-            Bus.$on('threadCreated', (thread) => {
-                console.log(thread);
-                this.threads.push(thread);
+            Bus.$on('threadCreated', (e) => {
+                console.log('threadCreated');
+                console.log(e);
+                if(e.state){
+                    this.threads.push(e.data);
+                }
             });
 
             this.listenForNewThreads();
@@ -32,8 +35,12 @@
             listenForNewThreads() {
                 Echo.private('users.' + this.user.id)
                     .listen('ThreadCreated', (e) => {
+                        console.log("listen('ThreadCreated')");
                         console.log(e);
-                        this.threads.push(e.thread);
+                        if(e.state){
+                            this.threads.push(e.data.thread);
+                        }
+                        
                     });
             }
         }

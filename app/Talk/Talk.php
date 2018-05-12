@@ -3,9 +3,11 @@ namespace App\Talk;
 
 use App\Repositories\MessageRepository;
 use App\Repositories\ThreadRepository;
+use App\Events\ThreadCreated;
 use App\Models\Message;
 use App\Models\Thread;
 use App\Models\User;
+use Auth;
 
 class Talk
 {
@@ -40,6 +42,7 @@ class Talk
     {
         $this->conversation = $conversation;
         $this->message = $message;
+        $this->authUserId = Auth::user()?Auth::user()->id:0;
     }
 
     /**
@@ -114,7 +117,7 @@ class Talk
      *
      * @return int
      */
-    protected function newConversation($receiverId)
+    public function newConversation($receiverId)
     {
         $conversationId = $this->isConversationExists($receiverId);
         $user = $this->getSerializeUser($this->authUserId, $receiverId);
@@ -240,6 +243,12 @@ class Talk
         }
 
         $convId = $this->newConversation($receiverId);
+        
+        $thread = Thread::find($convId);
+        if($thread){
+            broadcast(new ThreadCreated($thread))->toOthers();
+        }
+        
         $message = $this->makeMessage($convId, $message);
 
         return $message;

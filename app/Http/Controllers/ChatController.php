@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Talk\Facades\Talk;
+
 
 use App\Events\MessageSent;
 use App\Models\Message;
@@ -20,6 +22,7 @@ class ChatController extends Controller
     
     public function store(Request $request)
     {
+        
         $message = Message::create([
             'message' => $request->message,
             'thread_id' => $request->thread_id,
@@ -41,9 +44,26 @@ class ChatController extends Controller
      */
     public function show()
     {
-        $threads = Thread::all(); //auth()->user()->threads;
-        $users = User::where('id', '<>', auth()->user()->id)->get();
         $user = auth()->user();
+        
+        $threads = Thread::with('userone')
+            ->with('usertwo')
+            ->where('user_one', $user->id)
+            ->orWhere('user_two', $user->id)
+            ->get();
+        
+        $users = User::where('id', '<>', auth()->user()->id);
+        if($user->role=='member'){
+            $users->where('role', '<>', 'seller')
+                ->where('role', '<>', 'member')
+                ->where('role', '<>', 'afa');
+        }
+        
+        if($user->role=='seller'){
+            $users->where('role', '<>', 'member');
+        }
+        
+        $users = $users->get();
 
         return view('chat.thread', ['threads' => $threads, 'users' => $users, 'user' => $user]);
     }

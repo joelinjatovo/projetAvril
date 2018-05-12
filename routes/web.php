@@ -103,6 +103,8 @@ Route::middleware(["auth"])->group(function(){
     Route::resource('thread/threads', 'ThreadController');
     Route::resource('thread/messages', 'ChatController');
     
+    Route::get('thread/threads', 'ThreadController@store');
+    
     // Baintree
     Route::get('/plans', 'PlanController@index');
     

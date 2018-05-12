@@ -39,6 +39,13 @@ class ThreadRepository
         if ($conversation->exists()) {
             return $conversation->first()->id;
         }
+        
+        $conversation = Thread::where('user_two', $user1)
+            ->where('user_one', $user2);
+
+        if ($conversation->exists()) {
+            return $conversation->first()->id;
+        }
 
         return false;
     }
