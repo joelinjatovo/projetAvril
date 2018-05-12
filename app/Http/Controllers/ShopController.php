@@ -43,6 +43,12 @@ class ShopController extends Controller
                 ->paginate($this->pageSize);
         }
         
+        if($request->ajax()){
+            return response()->json(array(
+                'html' => view('ajax.product.all', compact('items'))->render()
+            ));
+        }
+        
         if($page2 = Page::where('path', '=', '/products*')->first()){
             $pubs = $page2->pubs;
         }else{
@@ -63,6 +69,7 @@ class ShopController extends Controller
             ->with('page', $page)
             ->with('pubs', $pubs)
             ->with('products', $products)
+            ->with('category', $category)
             ->with('categories', $categories); 
     }
     

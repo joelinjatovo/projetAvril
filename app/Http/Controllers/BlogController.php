@@ -41,6 +41,10 @@ class BlogController extends Controller
      */
     public function index(Request $request, Blog $blog)
     {
+        if($product->status != 'published'){
+            abort(404);
+        }
+        
         $products = Product::orderBy('created_at','desc')->take(3)->get();
         $categories = Category::orderBy('created_at', 'desc')->take(5)->get();
         if($page = Page::where('path', '=', '/blogs*')->first()){

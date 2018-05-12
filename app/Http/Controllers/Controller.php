@@ -18,7 +18,7 @@ class Controller extends BaseController
     /**
      * Pagination records per page
      */
-    protected $pageSize = 10;
+    protected $pageSize = 4;
     
     /**
      * Create a new controller instance.

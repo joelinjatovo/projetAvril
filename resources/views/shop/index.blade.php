@@ -36,24 +36,13 @@
     
     <div class="row">
         <div class="col-lg-8 col-md-7">
-            @php $i = 0; @endphp
-            @foreach($items as $item)
-                @if($i%2 === 0)
-                    <div class="row" id="txtHint">
-                @endif
-                <div class="col-md-6 layout-item-wrap">
-                    @include('product.single', ['item'=>$item])
-                </div>
-                @php $i++; @endphp
-                @if($i%2 === 0)
-                    </div>
-                @endif
-            @endforeach
-            @if((($i%2) > 0))
+            <div id="infinite-scroll" class="product-data"> 
+                @include('ajax.product.all',['items'=>$items])
             </div>
-            @endif
-            <div class="col-md-12 layout-item-wrap">
-                {{$items->links()}}
+            <div class="row">
+                <div class="ajax-load text-center" style="display:none">
+                    <p><img src="{{asset('images/loader.gif')}}">Loading More Procucts</p>
+                </div>  
             </div>
         </div>
         <div class="col-lg-4 col-md-5">
@@ -61,5 +50,51 @@
         </div>
     </div>
 </div>
-
 @endsection
+@section('script')
+<script type="text/javascript">
+var page = {{$page}};
+var norecord = false;
+var load = false;
+$(window).scroll(function() {
+    if($(window).scrollTop() + $(window).height() >= 
+       $('#infinite-scroll').height()) {
+        if(!load){
+            if(!norecord){
+                page++;
+                loadMoreData(page);
+            }else{
+                $('.ajax-load').show();
+            }
+        }
+    }
+});
+function loadMoreData(page){
+    $.ajax({
+        url: '<?php echo route('shop.index', ['category'=>$category]); ?>?page='+page,
+        type: "get",
+        beforeSend: function()
+        {
+            load = true;
+            $('.ajax-load').show();
+        }
+    }).done(function(data)
+    {
+        if(data.html == ""){
+            norecord = true;
+            $('.ajax-load').html("No more records found");
+            return;
+        }
+        $('.ajax-load').hide();
+        $(".product-data").append(data.html);
+        load = false;
+    }).fail(function(jqXHR, ajaxOptions, thrownError)
+    {
+        page--;
+        $('.ajax-load').html("Server not responding....");
+        load = false;
+    });
+}
+</script>
+@endsection
+
