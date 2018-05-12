@@ -6,7 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Cache-control" content="public">
 
-<meta name="_token" content="{!! csrf_token() !!}" />
+<!-- CSRF Token -->
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 <title>Investir en Australie</title>
 <!-- favicon and touch icons -->
@@ -39,7 +40,8 @@
 <link href="{{asset('css/theme.css')}}" rel="stylesheet">
 <link href="{{asset('css/head.css')}}" rel="stylesheet">
 <link href="{{asset('css/style.css')}}" rel="stylesheet">
-<link rel="stylesheet" href="{{asset('css/responsive.css')}}">
+<link href="{{asset('css/responsive.css')}}" rel="stylesheet">
+    
 
 @yield('style')
 
@@ -280,6 +282,8 @@
         });
     });
 </script>
+    
+    
 @yield('script')
 
 @yield('braintree')

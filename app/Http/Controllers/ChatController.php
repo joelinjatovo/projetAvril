@@ -65,6 +65,10 @@ class ChatController extends Controller
         
         $users = $users->get();
 
+        if(\Auth::user()->isAdmin()){
+            return view('chat.admin', ['threads' => $threads, 'users' => $users, 'user' => $user]);
+        }
+        
         return view('chat.thread', ['threads' => $threads, 'users' => $users, 'user' => $user]);
     }
     

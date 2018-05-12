@@ -13,7 +13,7 @@
     <!-- Styles -->
     @yield('style')
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <style>
+<style>
   .chat {
     list-style: none;
     margin: 0;

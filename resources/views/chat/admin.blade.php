@@ -1,4 +1,4 @@
-@extends('layouts.backend')
+@extends('layouts.app')
 
 @section('style')
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -42,8 +42,12 @@
 </style>
 @endsection
 
-@section('subcontent')
-<div id="app">
+
+@section('content')
+@component('includes.breadcrumb')
+    @lang('app.chats')
+@endcomponent
+<div  id="app" class="container">
     <div class="row">
         <div class="col-sm-6">
             <create-thread :initial-users="{{ $users }}"></create-thread>
