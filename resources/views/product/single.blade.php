@@ -13,12 +13,18 @@
                 <span class="property-location"><i class="fa fa-map-marker"></i> {{$item->location->toString()}}</span>
                 @endif
             </div>
-            </header>
-            <a href="{{route('product.index',['product'=>$item])}}" class="btn btn-default btn-price pull-right">
-                <strong>{{$item->currency}} {{$item->price}}</strong>
-            </a>
+        </header>
+        <div class="property-meta clearfix">
+            <span><i class="fa fa-arrows-alt"></i> {{$item->area}}</span>
+            <span><i class="fa fa-bed"></i> {{$item->bedrooms}}</span>
+            <span><i class="fa fa-bathtub"></i> {{$item->bathrooms}}</span>
+            <span><i class="fa fa-cab"></i> {{$item->garage_spaces}}</span>
+        </div>
         <div class="contents clearfix">
             <p> {{$item->excerpt()}} </p>
         </div>
+        <a href="{{route('product.index',['product'=>$item])}}" class="btn btn-default btn-price pull-right">
+            <strong>{{$item->currency}} {{$item->price}}</strong>
+        </a>
     </div>
 </article>
