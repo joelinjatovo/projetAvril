@@ -24,6 +24,6 @@ Broadcast::channel('users.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('threads.{thread}', function ($user, \App\Models\Thread $thread) {
-    return true; //\App\Talk\Facades\Talk::isAuthenticUser($thread, $user);
+    return \App\Talk\Facades\Talk::isAuthenticUser($thread->id, $user->id);
 });
 

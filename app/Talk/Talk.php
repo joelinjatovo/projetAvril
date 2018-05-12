@@ -3,6 +3,9 @@ namespace App\Talk;
 
 use App\Repositories\MessageRepository;
 use App\Repositories\ThreadRepository;
+use App\Models\Message;
+use App\Models\Thread;
+use App\Models\User;
 
 class Talk
 {
@@ -66,7 +69,7 @@ class Talk
      */
     protected function makeMessage($conversationId, $message)
     {
-        $message = $this->message->create([
+        $message = Message::create([
             'message' => $message,
             'thread_id' => $conversationId,
             'user_id' => $this->authUserId,
@@ -117,7 +120,7 @@ class Talk
         $user = $this->getSerializeUser($this->authUserId, $receiverId);
 
         if ($conversationId === false) {
-            $conversation = $this->conversation->create([
+            $conversation = Thread::create([
                 'user_one' => $user['one'],
                 'user_two' => $user['two'],
                 'status' => 1,
@@ -405,7 +408,7 @@ class Talk
      *
      * @param int $senderId
      *
-     * @return \Nahid\Talk\Messages\Message|bool
+     * @return \App\Models\Message|bool
      */
     public function getMessagesAllByUserId($userId, $offset = 0, $take = 20)
     {
@@ -417,12 +420,12 @@ class Talk
      *
      * @param int $messageId
      *
-     * @return \Nahid\Talk\Messages\Message|bool
+     * @return \App\Models\Message|bool
      */
     public function readMessage($messageId = null)
     {
         if (!is_null($messageId)) {
-            $message = $this->message->with(['sender', 'conversation'])->find($messageId);
+            $message = Message::with(['sender', 'conversation'])->find($messageId);
 
             if ($message->coversation->user_one == $this->authUserId || $message->coversation->user_two == $this->authUserId) {
                 return $message;
@@ -441,7 +444,7 @@ class Talk
      */
     public function makeSeen($messageId)
     {
-        $seen = $this->message->update($messageId, ['is_seen' => 1]);
+        $seen = Message::update($messageId, ['is_seen' => 1]);
         if ($seen) {
             return true;
         }
@@ -454,13 +457,13 @@ class Talk
      *
      * @param int $conversationId
      *
-     * @return UserModel
+     * @return \App\Models\User
      *
      * @deprecated since version 2.0.0 Remove it from version 2.0.2
      */
     public function getReceiverInfo($conversationId)
     {
-        $conversation = $this->conversation->find($conversationId);
+        $conversation = Thread::find($conversationId);
         $receiver = '';
         if ($conversation->user_one == $this->authUserId) {
             $receiver = $conversation->user_two;
@@ -492,7 +495,7 @@ class Talk
      */
     public function deleteForever($messageId)
     {
-        $deleteMessage = $this->message->delete($messageId);
+        $deleteMessage = Thread::delete($messageId);
         if ($deleteMessage) {
             return true;
         }
@@ -509,7 +512,7 @@ class Talk
      */
     public function deleteConversations($id)
     {
-        $deleteConversation = $this->conversation->delete($id);
+        $deleteConversation = Thread::delete($id);
         if ($deleteConversation) {
             return $this->message->deleteMessages($id);
         }

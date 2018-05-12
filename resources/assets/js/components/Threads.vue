@@ -1,6 +1,9 @@
 <template>
     <div>
-        <thread-chat v-for="thread in threads" :thread="thread" :key="thread.id"></thread-chat>
+        <thread-chat v-for="thread in threads" 
+                     :thread="thread" 
+                     :key="thread.id">
+        </thread-chat>
     </div>
 </template>
 
