@@ -31,6 +31,14 @@
                         <div class="property-single-metax">{!!$child->content!!}</div>
                     </div>
                 </section>
+                    @foreach($child->pubs as $pub)
+                    <section class="widget property-meta-wrapper clearfix">
+                        <h2 class="title wow slideInLeft">{{$pub->title}}</h2>
+                        <div class="content-box-large box-with-header">
+                            <a target="_blank" href="{{$pub->links?$pub->links:'#'}}"><img src="{{$pub->imageUrl()}}" class="img-rounded" alt="Cinque Terre" width="604" height="236"></a>
+                        </div>
+                    </section>
+                    @endforeach
                 @endforeach
            </div>
            <div class="col-lg-4 col-md-5">

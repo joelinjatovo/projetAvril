@@ -4,7 +4,6 @@
         <h2 class="title wow slideInLeft">{{$pub->title}}</h2>
         <div class="content-box-large box-with-header">
             <a target="_blank" href="{{$pub->links?$pub->links:'#'}}"><img src="{{$pub->imageUrl()}}" class="img-rounded" alt="Cinque Terre" width="604" height="236"></a>
-            <br><br>
         </div>
     </section>
     @endforeach
