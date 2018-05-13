@@ -95,13 +95,9 @@ Route::middleware('guest')->group(function(){
 Route::middleware(["auth"])->group(function(){
     //Chat
     Route::get('chat', 'ChatController@index');
-    Route::get('chat/messages', 'ChatController@fetchMessages');
-    Route::post('chat/messages', 'ChatController@sendMessage');
+    Route::post('chat/threads', 'ThreadController@store');
+    Route::post('chat/messages', 'ChatController@store');
     
-    // thread
-    Route::get('thread', 'ChatController@show');
-    Route::resource('thread/threads', 'ThreadController');
-    Route::resource('thread/messages', 'ChatController');
     
     Route::get('thread/threads', 'ThreadController@store');
     

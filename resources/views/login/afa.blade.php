@@ -15,23 +15,21 @@
 <div class="main-slider-wrapper clearfix content corps">
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <h3 class="page-title aligncenter">AUSTRALIAN FRANCOPHONE AGENTS</h3>
+            <div class="col-md-8">
+                <h3 class="page-title aligncenter">@lang('app.form.register.afa.title')</h3>
                 <div id="content">
                     <div role="main">
                         <div id="breadcrumbs" class="group font-size-14">
                             <div class="breadcrumb">
-                                <a href="https://www.propertyhq.com.au/">Home</a>
-                                <span class="aquo">&gt;</span> Australian francophone agents</div>
+                                <a href="{{route('home')}}">@lang('app.home')</a>
+                                <span class="aquo">&gt;</span> @lang('app.form.register.title')</div>
                             </div>
                             <div id="entry" class="group">
                                 <div class="hasfloat aligncenter">
-                                    <b>
-                                        Get your properties automatically sent to PropertyHQ.com platform from your CRM System. This means there is no extra work needed from your side for having your properties listed with us. Simply fill in the form below and our staff will contact your CRM to organise the feed.
-                                    </b>
+                                    <b>@lang('app.form.register.afa.desc')</b>
                                 </div>
                                 <div class="hasfloat">
-                                <form class="form-horizontal" role="form" method="post" action="" enctype="multipart/form-data">
+                                <form class="form-horizontal" role="form" method="post" action="{{route('register', ['role'=>'afa'])}}" enctype="multipart/form-data">
                                     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                                     <fieldset>
                                         <legend>Login Information</legend>
@@ -92,7 +90,7 @@
                                         <div class="form-group">
                                             <label for="image" class="col-sm-3 control-label">Logo *</label>
                                             <div class="col-md-3">
-                                                <input type="file" class="form-control" id="image" name="image" >
+                                                <input type="file" class="btn btn-default" id="image" name="image" >
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -120,27 +118,33 @@
                                     <fieldset>
                                         <legend>Locality Information</legend>
                                         <div class="form-group">
-                                            <label for="street" class="col-sm-3 control-label">Street Address *</label>
+                                            <label for="area_level_1" class="col-sm-3 control-label">State *</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="street" name="street" placeholder="Street Address" required>
+                                                <input type="text" class="form-control" id="area_level_1" name="area_level_1" placeholder="State" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="suburb" class="col-sm-3 control-label">Suburb *</label>
+                                            <label for="area_level_2" class="col-sm-3 control-label">Suburb *</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="suburb" name="suburb" placeholder="Suburb" required>
+                                                <input type="text" class="form-control" id="area_level_2" name="area_level_2" placeholder="Suburb" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="state" class="col-sm-3 control-label">State *</label>
+                                            <label for="locality" class="col-sm-3 control-label">City *</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="state" name="state" placeholder="State" required>
+                                                <input type="text" class="form-control" id="locality" name="locality" placeholder="City" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="postCode" class="col-sm-3 control-label">Post Code *</label>
+                                            <label for="route" class="col-sm-3 control-label">Street Address *</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="postCode" name="postCode" placeholder="Post Code" required>
+                                                <input type="text" class="form-control" id="route" name="route" placeholder="Street Address" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="postalCode" class="col-sm-3 control-label">Post Code *</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="postalCode" name="postalCode" placeholder="Post Code" required>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -179,11 +183,15 @@
                                                 <input type="text" class="form-control" id="crm_email" name="crm_email" placeholder="CRM Provider Email" required>
                                             </div>
                                         </div>
-                                        <em class="help-block">(*) Required field</em>
                                     </fieldset>
                                     <div class="form-group">
                                         <div class="col-sm-offset-3 col-sm-9">
-                                            <button type="submit" class="btn btn-primary">Valider mon inscription</button>
+                                            <em class="help-block">@lang('app.form.required')</em>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-3 col-sm-9">
+                                            <button type="submit" class="btn btn-primary">@lang('app.btn.register')</button>
                                         </div>
                                     </div>
                                 </form>

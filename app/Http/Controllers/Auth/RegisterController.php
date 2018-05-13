@@ -119,7 +119,6 @@ class RegisterController extends Controller
         }
         
         try {
-            
             $password = str_random(10);
             $user->password = bcrypt($password);
             $user->activation_code = md5(str_random(30).(time()*32));
@@ -261,93 +260,99 @@ class RegisterController extends Controller
                 $type=$request->input('type');
                 if($type=='person'){
                     $rules = [
-                        'name' => 'required|unique:users,name|max:100',
-                        'email' => 'required|unique:users,email|max:100',
+                        'name'     => 'required|unique:users,name|max:100',
+                        'email'    => 'required|unique:users,email|max:100',
                         'language' => 'required|max:100',
-                        'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                        'image'    => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
-                        'firstname' => 'nullable|max:100',
-                        'lastname' => 'nullable|max:100',
+                        'firstname' => 'required|max:100',
+                        'lastname'  => 'required|max:100',
 
-                        'country' => 'required|max:100',
+                        'country'      => 'required|max:100',
+                        'area_level_1' => 'nullable|max:100',
+                        'area_level_2' => 'nullable|max:100',
+                        'locality'     => 'nullable|max:100',
+                        'route'        => 'nullable|max:100',
+                        'postalCode'   => 'nullable|max:100',
                     ];
                 }else{
                     $rules = [
-                        'name' => 'required|unique:users,name|max:100',
-                        'email' => 'required|unique:users,email|max:100',
+                        'name'     => 'required|unique:users,name|max:100',
+                        'email'    => 'required|unique:users,email|max:100',
                         'language' => 'required|max:100',
-                        'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                        'image'    => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
                         'prefixPhone' => 'required|max:100',
-                        'phone' => 'required|max:100',
+                        'phone'       => 'required|max:100',
 
-                        'orga_name' => 'required|max:100',
+                        'orga_name'         => 'required|max:100',
                         'orga_presentation' => 'required|max:100',
 
-                        'address' => 'required|max:100',
-                        'city' => 'required|max:100',
-                        'country' => 'required|max:100',
-                        'state' => 'required|max:100',
-                        'postalCode' => 'required|max:100',
+                        'country'      => 'required|max:100',
+                        'area_level_1' => 'required|max:100',
+                        'area_level_2' => 'nullable|max:100',
+                        'locality'     => 'required|max:100',
+                        'route'        => 'nullable|max:100',
+                        'postalCode'   => 'nullable|max:100',
                     ];
                 }
                 break;
             case 'afa':
                 $rules = [
-                    'name' => 'required|unique:users,name|max:100',
-                    'email' => 'required|unique:users,email|max:100',
+                    'name'     => 'required|unique:users,name|max:100',
+                    'email'    => 'required|unique:users,email|max:100',
                     'language' => 'required|max:100',
-                    'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                    'image'    => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
-                    'orga_name' => 'required|max:100',
+                    'orga_name'         => 'required|max:100',
                     'orga_presentation' => 'required|max:100',
-                    'orga_email' => 'required|email|max:100',
-                    'orga_phone' => 'required|max:100',
-                    'orga_website' => 'required|url|max:100',
+                    'orga_email'        => 'required|email|max:100',
+                    'orga_phone'        => 'required|max:100',
+                    'orga_website'      => 'required|url|max:100',
+                    
                     'orga_operation_state' => 'required|max:100',
                     'orga_operation_range' => 'required|max:100',
 
-                    'address' => 'max:100',
-                    'street' => 'max:100',
-                    'suburb' => 'max:100',
-                    'city' => 'max:100',
-                    'country' => 'max:100',
-                    'state' => 'max:100',
-                    'postalCode' => 'max:100',
+                    'country'      => 'nullable|max:100',
+                    'area_level_1' => 'required|max:100',
+                    'area_level_2' => 'required|max:100',
+                    'locality'     => 'required|max:100',
+                    'route'        => 'nullable|max:100',
+                    'postalCode'   => 'nullable|max:100',
 
-                    'contact_name' => 'max:100',
-                    'contact_email' => 'max:100',
-                    'contact_phone' => 'max:100',
+                    'contact_name'  => 'required|max:100',
+                    'contact_email' => 'required|max:100',
+                    'contact_phone' => 'required|max:100',
 
-                    'crm_name' => 'max:100',
-                    'crm_email' => 'max:100',
+                    'crm_name'   => 'required|max:100',
+                    'crm_email'  => 'required|max:100',
                 ];
                 break;
             case 'apl':
                 $rules = [
-                    'name' => 'required|unique:users,name|max:100',
-                    'email' => 'required|unique:users,email|max:100',
+                    'name'     => 'required|unique:users,name|max:100',
+                    'email'    => 'required|unique:users,email|max:100',
                     'language' => 'required|max:100',
-                    'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                    'image'    => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
-                    'orga_name' => 'required|max:100',
+                    'orga_name'         => 'required|max:100',
                     'orga_presentation' => 'required|max:100',
-                    'orga_email' => 'required|email|max:100',
-                    'orga_phone' => 'required|max:100',
-                    'orga_website' => 'required|url|max:100',
+                    'orga_email'        => 'required|email|max:100',
+                    'orga_phone'        => 'required|max:100',
+                    'orga_website'      => 'required|url|max:100',
+                    
                     'orga_operation_range' => 'required|max:100',
 
-                    'address' => 'max:100',
-                    'street' => 'max:100',
-                    'suburb' => 'max:100',
-                    'city' => 'max:100',
-                    'country' => 'max:100',
-                    'state' => 'max:100',
-                    'postalCode' => 'max:100',
+                    'country'      => 'required|max:100',
+                    'area_level_1' => 'nullable|max:100',
+                    'area_level_2' => 'nullable|max:100',
+                    'locality'     => 'required|max:100',
+                    'route'        => 'nullable|max:100',
+                    'postalCode'   => 'nullable|max:100',
 
-                    'contact_name' => 'max:100',
-                    'contact_email' => 'max:100',
-                    'contact_phone' => 'max:100',
+                    'contact_name'  => 'required|max:100',
+                    'contact_email' => 'required|email|max:100',
+                    'contact_phone' => 'required|max:100',
 
                     'bank_iban' => 'max:100',
                     'bank_bic' => 'max:100',
@@ -355,32 +360,31 @@ class RegisterController extends Controller
                 break;
             case 'seller':
                 $rules = [
-                    'name' => 'required|unique:users,name|max:100',
-                    'email' => 'required|email|unique:users,email|max:100',
+                    'name'     => 'required|unique:users,name|max:100',
+                    'email'    => 'required|email|unique:users,email|max:100',
                     'language' => 'required|max:100',
-                    'type' => 'required|max:100',
-                    'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                    'type'     => 'required|max:100',
+                    'image'    => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
-                    'orga_name' => 'required|max:100',
+                    'orga_name'         => 'required|max:100',
                     'orga_presentation' => 'required|max:100',
-                    'orga_email' => 'required|email|max:100',
-                    'orga_phone' => 'required|max:100',
-                    'orga_website' => 'required|url|max:100',
+                    'orga_email'        => 'required|email|max:100',
+                    'orga_phone'        => 'required|max:100',
+                    'orga_website'      => 'required|url|max:100',
 
-                    'address' => 'max:100',
-                    'street' => 'max:100',
-                    'suburb' => 'max:100',
-                    'city' => 'max:100',
-                    'country' => 'max:100',
-                    'state' => 'max:100',
-                    'postalCode' => 'max:100',
+                    'country'      => 'nullable|max:100',
+                    'area_level_1' => 'required|max:100',
+                    'area_level_2' => 'required|max:100',
+                    'locality'     => 'required|max:100',
+                    'route'        => 'nullable|max:100',
+                    'postalCode'   => 'nullable|max:100',
 
-                    'contact_name' => 'max:100',
-                    'contact_email' => 'max:100',
-                    'contact_phone' => 'max:100',
+                    'contact_name'  => 'required|max:100',
+                    'contact_email' => 'required|max:100',
+                    'contact_phone' => 'required|max:100',
 
-                    'crm_name' => 'max:100',
-                    'crm_email' => 'max:100',
+                    'crm_name'   => 'required|max:100',
+                    'crm_email'  => 'required|max:100',
 
                 ];
                 break;
@@ -422,7 +426,7 @@ class RegisterController extends Controller
             $user = $this->create($datas);
         }catch (\Exception $exception) {
             logger()->error($exception);
-            return back()->with('info', 'Unable to create new user.<br>'.$exception->getMessage());
+            return back()->with('info', 'Unable to create new user.');
         }
         
         

@@ -3,9 +3,28 @@
 return [
 
     'app_name'            => 'Investir en Italie',
-    'footer_description'  => 'INVESTIR EN AUSTRALIE est un e-marketplace.',
+    
+    'footer_description'  => 'Investir en Italie est un e-marketplace.',
     'copyright'           => '© Copyright :year : ":app" - Tout droit reserve',
+    
     'last_update'         => 'Derniere Modification, :date',
+    
+    'form.register.title'      => "Formulaire d'insription",
+    
+    'form.register.member.title'      => "Formulaire d'insription de membre",
+    
+    'form.register.apl.title'      => "Formulaire d'insription de l'Agence Partenaire Locale",
+    'form.register.apl.desc'      => "Get your properties automatically sent to PropertyHQ.com platform from your CRM System. This means there is no extra work needed from your side for having your properties listed with us. Simply fill in the form below and our staff will contact your CRM to organise the feed",
+    
+    'form.register.afa.title'      => "Formulaire d'insription de l'Agence Fancophone Autsralienne",
+    'form.register.afa.desc'      => "Get your properties automatically sent to PropertyHQ.com platform from your CRM System. This means there is no extra work needed from your side for having your properties listed with us. Simply fill in the form below and our staff will contact your CRM to organise the feed",
+    
+    'form.register.seller.title'      => "Formulaire d'insription de vendeur",
+    'form.register.seller.desc'      => "Get your properties automatically sent to PropertyHQ.com platform from your CRM System. This means there is no extra work needed from your side for having your properties listed with us. Simply fill in the form below and our staff will contact your CRM to organise the feed",
+    
+    'form.register.newsletter'      => "M'inscrire à la Newsletter",
+    'form.register.shareinfo'      => "J'autorise le partage et la commercialisation de mes information avec les partenaires du site www.investirenaustralie.com",
+    'form.required'      => '(*) Required field',
     
     'rapid_link'      => 'Acces Rapide',
     
@@ -256,6 +275,7 @@ return [
     'btn.select_apl'     => 'Selectionner cet APL',
     'btn.contact_admin'  => "Contacter l'administrateur",
     'btn.contact_apl'    => "Contacter l'APL",
+    'btn.register'       => "Valider l'inscription",
     
     'inscription' => "Inscription",
     'trial_delay' => "Delai d'essai des membres",

@@ -9,9 +9,10 @@
 <!-- CSRF Token -->
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
-<title>Investir en Australie</title>
+<title>{{ config('app.name', 'IEA') }} @yield('title')</title>
+    
 <!-- favicon and touch icons -->
-<link rel="shortcut icon" href="{{ link_img('favicon.png') }}">
+<link rel="shortcut icon" href="{{asset('images/favicon.png')}}">
 
 <!-- Bootstrap -->
 <link href="{{asset('css/bootstrap.css')}}" rel="stylesheet">
