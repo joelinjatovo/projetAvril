@@ -10,10 +10,6 @@ body {
   padding-right: 30px;
 }
 
-
-
-
-
 /*Page Loader*/
 #page-loader {
   position: fixed;
@@ -365,6 +361,9 @@ img.zoom-img {
 }
 .contact-form .common:nth-of-type(even) {
   margin-right: -20px;
+}
+.contact-form .form-password:before {
+  content: "\f007";
 }
 .contact-form .form-author:before {
   content: "\f007";

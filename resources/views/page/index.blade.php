@@ -12,15 +12,18 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-7">
+                @if(!empty($item->content))
                 <section class="property-contents common">
-                    <div class="entry-title clearfix">
-                        <h4 class="pull-left">{{$item->title}}</h4>
+                    <header class="section-header home-section-header">
+                       <h4 class="wow slideInRight">{{$item->title}}</h4>
+                    </header>
+                    <div class="row">
+                        <div class="property-single-metax">{!!$item->content!!}</div>
                     </div>
-                    <p>{!!$item->content!!}</p>
                 </section>
-
+                @endif
                 @foreach($item->childs as $child)
-                <section class="property-contents common text-center">
+                <section class="property-contents common" id="page-{{$child->id}}">
                     <header class="section-header home-section-header">
                        <h4 class="wow slideInRight">{{$child->title}}</h4>
                     </header>

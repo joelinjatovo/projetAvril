@@ -35,10 +35,10 @@
         @endforeach
     </section>
     <section class="widget property-taxonomies clearfix">
-        <h5 class="title">@lang('app.categories')</h5>
+        <h5 class="title">@lang('app.products_category')</h5>
         <ul class="clearfix">
             @foreach($categories as $category)
-            <li><a href="#">{{$category->title}} </a><span class="pull-right">30</span></li>
+            <li><a href="{{route('shop.index',$category)}}">{{$category->title}} </a><span class="pull-right">{{$category->products_count}}</span></li>
             @endforeach
         </ul>
     </section>

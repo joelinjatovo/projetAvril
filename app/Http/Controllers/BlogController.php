@@ -239,9 +239,19 @@ class BlogController extends Controller
             ));
         }
         
+        $products = Product::ofStatus('published')
+            ->with('location')
+            ->where('quantity', '>', 0)
+            ->orderBy('created_at','desc')
+            ->take(3)
+            ->get();
         
-        $products = Product::orderBy('created_at','desc')->take(3)->get();
-        $categories = Category::orderBy('created_at', 'desc')->take(5)->get();
+        $categories = Category::orderBy('created_at', 'desc')
+            ->has('products')
+            ->withCount(['products'])
+            ->take(5)
+            ->get();
+        
         if($page2 = Page::where('path', '=', '/blogs*')->first()){
             $pubs = $page2->pubs;
         }else{

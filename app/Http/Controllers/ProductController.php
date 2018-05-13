@@ -40,10 +40,10 @@ class ProductController extends Controller
         $product->load('images');
         $data = [
               'id' => $product->id,
-              'lat' => $product->location->latitude,
-              'lng' => $product->location->longitude,
+              'lat' => $product->location?$product->location->latitude:0,
+              'lng' => $product->location?$product->location->longitude:0,
               'title' => $product->title,
-              'area' => 100,
+              'area' => $product->area,
               'type' => 'product',
             ];
         return view('product.index')

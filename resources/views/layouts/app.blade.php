@@ -53,9 +53,6 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3">
-                    <div class="clearfix">
-                        <p class="contanct">Appelez-nous: +61 00 000 000</p>
-                    </div>
                 </div>
                 <div class="col-md-9">
                     <div class="clearfix">
@@ -79,7 +76,7 @@
                         <div class="currency-in-header">
                             <i class="fa fa-sign-in"></i>
                             <label for="currency-dropdown"> S'inscrire: </label>
-                            <select name="currency" id="currency-dropdown" onChange="location.href=''+this.options[this.selectedIndex].value;">
+                            <select id="currency-dropdown" onChange="location.href=''+this.options[this.selectedIndex].value;">
                                 <option value="#">@lang('app.as')</option>
                                 <option value="{{route('register', ['role'=>'member'])}}">@lang('app.member')</option>
                                 <option value="{{route('register', ['role'=>'seller'])}}">@lang('app.seller')</option>
@@ -115,14 +112,14 @@
                     <ul class="nav navbar-nav ">
                         <li><a href="#">@lang('app.immobilier')</a>
                             <ul>
-                                <li><a href="{{route('shop.index', ['category'=>1])}}">@lang('app.residentiel')</a></li>
-                                <li><a href="{{route('shop.index', ['category'=>2])}}">@lang('app.foncier')</a></li>
+                                <li><a href="{{route('shop.index', \App\Models\Category::find(1))}}">@lang('app.residentiel')</a></li>
+                                <li><a href="{{route('shop.index', \App\Models\Category::find(2))}}">@lang('app.foncier')</a></li>
                             </ul>
                         </li>
                         <li><a href="#">@lang('app.business')</a>
                             <ul>
-                                <li><a href="{{route('shop.index', ['category'=>3])}}">@lang('app.industrial')</a></li>
-                                <li><a href="{{route('shop.index', ['category'=>4])}}">@lang('app.commercial')</a></li>
+                                <li><a href="{{route('shop.index', \App\Models\Category::find(3))}}">@lang('app.industrial')</a></li>
+                                <li><a href="{{route('shop.index', \App\Models\Category::find(4))}}">@lang('app.commercial')</a></li>
                             </ul>
                         </li>
                         <li><a href="{{route('services')}}">@lang('app.services')</a></li>

@@ -26,6 +26,8 @@ class Config extends BaseModel
     
     public static $TRIAL = "payment.trial_delay";
     public static $RESERVATION = "payment.percent_reservation";
+    public static $APP_LATITUDE = "site.latitude";
+    public static $APP_LONGITUDE = "site.longitude";
     
     public static function site(){
         return Config::findOrFail(self::SITE_ID);

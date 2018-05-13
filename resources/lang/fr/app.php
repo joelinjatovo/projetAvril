@@ -2,12 +2,17 @@
 
 return [
 
-    'app_name'            => 'Investir en Italie',
+    'app_name'            => 'Investir en Australie',
     
-    'footer_description'  => 'Investir en Italie est un e-marketplace.',
+    'footer_description'  => 'Investir en Australie est un e-marketplace.',
     'copyright'           => '© Copyright :year : ":app" - Tout droit reserve',
     
     'last_update'         => 'Derniere Modification, :date',
+    
+    'form.login.register'      => "Inscrivez-vous",
+    'form.login.have_not_account'  => "Vous n'avez pas un compte?",
+    'form.login.remember'      => "Souvenez de moi",
+    'form.login.forgot'        => "Mot de passe oublié?",
     
     'form.register.title'      => "Formulaire d'insription",
     
@@ -188,6 +193,7 @@ return [
     'admin.productstosell.add'      => 'Vendre un produit',
     'admin.productstosell.archive'  => 'Registre des produits a vendre',
     
+    'products_category'         => 'Categories de produit',
     'categories'                => 'Categories',
     'category'                  => 'Categorie',
     'admin.categories'          => 'Categories',
@@ -275,6 +281,7 @@ return [
     'btn.select_apl'     => 'Selectionner cet APL',
     'btn.contact_admin'  => "Contacter l'administrateur",
     'btn.contact_apl'    => "Contacter l'APL",
+    'btn.login'          => "Connexion",
     'btn.register'       => "Valider l'inscription",
     
     'inscription' => "Inscription",

@@ -18,17 +18,7 @@
 <div id="blog-listing" class="grid-style"> 
     <header class="section-header text-center"> 
         <div class="container"> 
-            <h2 class="pull-left">Blog</h2> 
-            <div class="pull-right"> 
-                <div class="property-sorting pull-left"> 
-                    <label for="property-sort-dropdown"> Trier par:   </label>                             
-                    <select name="property-sort-dropdown" id="property-sort-dropdown"> 
-                        <option value="croissant">Croissant </option>                                 
-                        <option value="décroissant">Décroissant</option>                                 
-                    </select>
-                </div>                         
-                <p class="pull-left layout-view"> Vue: <i class="fa fa-th-large selected" data-layout="6"></i> <i class="fa fa-list-ul" data-layout="12"></i> </p> 
-            </div>                     
+            <h2 class="pull-left">@lang('app.blogs')</h2>
         </div>                 
     </header>  
     <div class="container">
