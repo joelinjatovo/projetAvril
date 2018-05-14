@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div id="property-single">
+<div id="property-single" style="margin-top: 160px;">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-7">

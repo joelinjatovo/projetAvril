@@ -55,14 +55,4 @@ class AdminController extends Controller
         }
     }
 
-    /**
-     * Show the card config.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function card()
-    {
-        return view('admin.card');
-    }
-
 }

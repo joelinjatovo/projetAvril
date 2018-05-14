@@ -228,6 +228,7 @@ class PageController extends Controller
         $this->middleware('role:admin');
         
         $page->delete();
+        
         return redirect()->route('admin.dashboard')
             ->with('success',"La page a été supprimée avec succés");
     }

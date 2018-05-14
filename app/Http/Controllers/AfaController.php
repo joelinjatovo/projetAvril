@@ -16,19 +16,19 @@ class AfaController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:afa');
-        Auth::check();
     }
     
     /**
-     * 
+     * Render view with list of ordered products
      *
      * @return \Illuminate\Http\Response
      */
     public function orders()
     {
         $items = Auth::user()->sales()
-                ->wherePivot('status', 'ordered');
+            ->wherePivot('status', 'ordered');
         return view('backend.product.all')
+            ->with('title', __('app.orders'))
             ->with('items', $items);
     }
     
@@ -41,7 +41,9 @@ class AfaController extends Controller
     {
         $items = Auth::user()->sales()
                 ->wherePivot('status', 'paid');
+        
         return view('backend.product.all')
+            ->with('title', __('app.sales'))
             ->with('items', $items);
     }
 }

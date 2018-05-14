@@ -31,6 +31,9 @@ return [
     'form.register.shareinfo'      => "J'autorise le partage et la commercialisation de mes information avec les partenaires du site www.investirenaustralie.com",
     'form.required'      => '(*) Required field',
     
+    'list.product'      => 'Liste de produit',
+    'list.user'         => 'Liste de membre',
+    
     'rapid_link'      => 'Acces Rapide',
     
     'your_location'     => 'Votre localisation',
@@ -44,9 +47,9 @@ return [
     'route'         => 'route',
     'postalCode'    => 'Code Postal',
     
-    'home'      => 'Accueil',
-    'language'      => 'Langue',
-    'connexion'      => 'Connexion',
+    'home'         => 'Accueil',
+    'language'     => 'Langue',
+    'connexion'    => 'Connexion',
     'account'      => 'Mon Compte',
     'profile'      => 'Profile',
     'dashboard'    => 'Dashboard',
@@ -67,6 +70,7 @@ return [
     'apl'  => 'Agence Partenaire Locale',
     'favorites'  => 'Favoris',
     'pin'  => 'Epingle',
+    'pins'  => 'Epingles',
     'order'  => 'Commande',
     'orders'  => 'Commandes',
     'customer'  => 'Client',

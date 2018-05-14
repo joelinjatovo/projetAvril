@@ -16,7 +16,6 @@ class AplController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:apl');
-        Auth::check();
     }
     
     /**
@@ -28,7 +27,9 @@ class AplController extends Controller
     {
         $items = Auth::user()->sales()
                 ->wherePivot('status', 'ordered');
+        
         return view('backend.product.all')
+            ->with('title', __('app.orders'))
             ->with('items', $items);
     }
     
@@ -41,7 +42,9 @@ class AplController extends Controller
     {
         $items = Auth::user()->sales()
                 ->wherePivot('status', 'paid');
+        
         return view('backend.product.all')
+            ->with('title', __('app.sales'))
             ->with('items', $items);
     }
     
@@ -52,8 +55,11 @@ class AplController extends Controller
      */
     public function customers()
     {
+        $items = Auth::user()->customers;
+        
         return view('backend.user.all')
-            ->with('items', Auth::user()->customers);
+            ->with('title', __('app.customers'))
+            ->with('items', $items);
     }
     
 }

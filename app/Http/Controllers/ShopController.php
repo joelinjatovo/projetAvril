@@ -49,24 +49,17 @@ class ShopController extends Controller
             ));
         }
         
-        if($page2 = Page::where('path', '=', '/products*')->first()){
-            $pubs = $page2->pubs;
-        }else{
-            $pubs = [];
-        }
-        
-        $products = Product::ofStatus('published')
-            ->with('location')
-            ->where('quantity', '>', 0)
-            ->orderBy('created_at','desc')
-            ->take(3)
+        $products = Product::orderBy('created_at','desc')
+            ->ofStatus('published')
+            ->take($this->recentSize)
             ->get();
         
         $categories = Category::orderBy('created_at', 'desc')
-            ->has('products')
-            ->withCount(['products'])
-            ->take(5)
+            ->take($this->recentSize)
             ->get();
+        
+        $page = Page::where('path', '=', '/products*')
+            ->first();
 
         return view('shop.index')
             ->with('items', $items)
@@ -93,7 +86,7 @@ class ShopController extends Controller
         }
         
         if(!$product->location){
-    	   return redirect()->route('product.index', $product)->with('error','Le systeme ne peut pas de localisation');
+    	   return redirect()->route('product.index', $product)->with('error','Le systeme ne peut pas localiser le produit');
         }
         
         $apls = User::ofRole('apl')
@@ -279,8 +272,6 @@ class ShopController extends Controller
         $cart->setAsOrdered();
 
         Session::forget('cart');
-        
-        //Fire event
         
         return redirect()->route('profile')->with('success', 'Votre commande a été éffectué');
     }

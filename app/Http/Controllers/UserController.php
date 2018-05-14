@@ -17,19 +17,9 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        //$this->middleware('auth');
+        //
     }
-
-    /**
-     * Show the user dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(User $user)
-    {
-        return view('user.'.$user->role, ['item'=>$user]);
-    }
-
+    
     /**
      * Show the user info in Admin Panel.
      *
@@ -59,70 +49,8 @@ class UserController extends Controller
                 ->with('item', Auth::user());
         }
         return view('backend.user.profile')
+                ->with('title', __('app.profile'))
                 ->with('item', Auth::user());
-    }
-    
-    /**
-     * Render form to edit a User
-     *
-     * @param  Illuminate\Http\Request  $request
-     * @param  App\Models\User  $user
-     * @return Illuminate\Http\Response
-     */
-    public function edit(Request $request, User $user)
-    {
-        $this->middleware('auth');
-        $this->middleware('role:admin');
-        
-        if($name = $request->old('name')){
-            $user->name = $name;
-        }
-        if($email = $request->old('email')){
-            $user->email = $email;
-        }
-        $action = route('admin.user.update', ['user'=>$user]);
-        return view('admin.user.update', ['item'=>$user, 'action'=>$action]);
-    }
-    
-    /**
-     * Update User
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
-    {
-        $this->middleware('auth');
-        $this->middleware('role:admin');
-        
-        // Validate request
-        $validator = Validator::make($request->all(),[
-                            'password' => 'confirmed|max:100',
-                            'firstname' => 'nullable|max:100',
-                            'lastname' => 'nullable|max:100',
-                            'genre' => 'nullable|max:100',
-                            'phone' => 'nullable|max:100',
-                            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                        ]);
-        
-        if ($validator->fails()) {
-            return redirect()->route('admin.user.edit', ['user'=>$user])
-                        ->withErrors($validator)
-                        ->withInput();
-        }
-        
-        if($firstname = $request->input('firstname'))   $user->update_meta("firstname", $firstname);
-        if($lastname = $request->input('lastname'))     $user->update_meta("lastname", $lastname);
-        if($genre = $request->input('genre'))           $user->update_meta("genre", $genre);
-        if($phone = $request->input('phone'))           $user->update_meta("phone", $phone);
-        
-        if($file=$request->file('image')){
-            $image = $file->store('uploads');
-            $user->update_meta("image", $image);
-        }
-        $user->save();
-        return back()->with('success',"L'utilisateur a été bien modifié.");
     }
     
     /**
@@ -180,12 +108,14 @@ class UserController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
+        
         if($user->id==1){
             return back()->with('error',"Cette action ne peut pas etre réalisée.");
         }
         
         $user->status = 'active';
         $user->save();
+        
         return back()->with('success',"L'utilsateur a été supprimé avec succés");
     }
     
@@ -200,6 +130,7 @@ class UserController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
+        
         if($user->id==1){
             return back()->with('error',"Cette action ne peut pas etre réalisée.");
         }
@@ -208,6 +139,7 @@ class UserController extends Controller
         $this->middleware('role:admin');
         $user->status = 'blocked';
         $user->save();
+        
         return back()->with('success',"L'utilsateur a été blocké avec succés");
     }
     
@@ -222,12 +154,14 @@ class UserController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
+        
         if($user->id==1){
             return back()->with('error',"Cette action ne peut pas etre réalisée.");
         }
         
         $user->status = 'disabled';
         $user->save();
+        
         return back()->with('success',"L'utilsateur a été desactivé avec succés");
     }
     
@@ -242,11 +176,13 @@ class UserController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
+        
         if($user->id==1){
             return back()->with('error',"Cette action ne peut pas etre réalisée.");
         }
         
         $user->delete();
+        
         return redirect()->route('admin.dashboard')
             ->with('success',"L'utilsateur a été supprimé avec succés");
     }

@@ -18,7 +18,6 @@ class MemberController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:member');
-        Auth::check();
     }
 
     /**
@@ -29,7 +28,8 @@ class MemberController extends Controller
     public function showCart(Cart $cart)
     {
         return view('backend.cart.index')
-                ->with('item', $cart);
+            ->with('title', __('app.cart'))
+            ->with('item', $cart);
     }
 
     /**
@@ -40,10 +40,12 @@ class MemberController extends Controller
     public function orders()
     {
         $items = Auth::user()->purchases()
-            ->where('carts_items.status', 'pinged')
+            ->wherePivot('status', 'ordered')
             ->get();
+        
         return view('backend.product.all')
-                ->with('items', $items);
+            ->with('title', __('app.orders'))
+            ->with('items', $items);
     }
 
     /**
@@ -54,9 +56,10 @@ class MemberController extends Controller
     public function purchases()
     {
         $items = Auth::user()->purchases()
-            ->where('carts_items.status', 'paid')
+            ->wherePivot('status', 'paid')
             ->get();
         return view('backend.product.all')
-                ->with('items', $items);
+            ->with('title', __('app.purchases'))
+            ->with('items', $items);
     }
 }

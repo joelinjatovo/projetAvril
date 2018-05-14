@@ -10,7 +10,7 @@
 <!-- CSRF Token -->
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
-<title>Admin - @yield('title') - {{ config('app.name', 'IEA') }}</title>
+<title>Admin{{isset($title)?' - '.$title:''}} - {{ config('app.name', 'IEA') }}</title>
 
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="{{asset('images/favicon.png')}}">

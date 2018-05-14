@@ -17,24 +17,10 @@ class CategoryController extends Controller
      */
     public function __construct()
     {
-        //$this->middleware('auth');
-    }
-
-    /**
-     * Show a category
-     *
-     * @param  Illuminate\Http\Request  $request
-     * @param  App\Models\Category $category
-     * @return Illuminate\Http\Response
-     */
-    public function index(Request $request, Category $category)
-    {
         $this->middleware('auth');
         $this->middleware('role:admin');
-        
-        return view('admin.category.index')
-                ->with('item', $category); 
     }
+
 
     /**
      * Show a category
@@ -46,9 +32,6 @@ class CategoryController extends Controller
      */
     public function show(Request $request, Category $category)
     {
-        $this->middleware('auth');
-        $this->middleware('role:admin');
-        
         return view('admin.category.index')
                 ->with('item', $category); 
     }
@@ -61,9 +44,6 @@ class CategoryController extends Controller
      */
     public function create(Request $request)
     {
-        $this->middleware('auth');
-        $this->middleware('role:admin');
-
         $item = new Category();
         if($value = $request->old('title'))     $item->title = $value;
         if($value = $request->old('content'))   $item->content = $value;
@@ -86,8 +66,8 @@ class CategoryController extends Controller
         // Validate request
         $datas = $request->all();
         $validator = Validator::make($datas,[
-                            'title' => 'required|max:100',
-                            'content' => 'required',
+                            'title'   => 'required|max:100',
+                            'content' => 'nullable',
                         ]);
 
         if ($validator->fails()) {
@@ -96,7 +76,14 @@ class CategoryController extends Controller
         }
 
         $category = new Category();
-        $category->slug = generateSlug($request->title);
+
+        $slug = $slugOriginal = generateSlug($request->title);
+        $i = 1;
+        while(Category::where('slug', $slug)->exists()){
+            $slug = $slugOriginal + '-' + $i++;
+        }
+        
+        $category->slug = $slug;
         $category->title = $request->title;
         $category->content = $request->content;
         $category->save();
@@ -113,9 +100,6 @@ class CategoryController extends Controller
      */
     public function edit(Request $request, Category  $category)
     {
-        $this->middleware('auth');
-        $this->middleware('role:admin');
-
         if($value = $request->old('title'))     $item->title = $value;
         if($value = $request->old('content'))   $item->content = $value;
 
@@ -133,13 +117,10 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        $this->middleware('auth');
-        $this->middleware('role:admin');
-
         // Validate request
         $validator = Validator::make($request->all(),[
-                            'title' => 'required|max:100',
-                            'content' => 'required',
+                            'title'   => 'required|max:100',
+                            'content' => 'nullable',
                         ]);
 
         if ($validator->fails()) {
@@ -147,7 +128,13 @@ class CategoryController extends Controller
                         ->withInput();
         }
 
-        $category->slug = generateSlug($request->title);
+        $slug = $slugOriginal = generateSlug($request->title);
+        $i = 1;
+        while(Category::where('slug', $slug)->where('id', '<>', $category->id)->exists()){
+            $slug = $slugOriginal + '-' + $i++;
+        }
+        
+        $category->slug = $slug;
         $category->title = $request->title;
         $category->content = $request->content;
         $category->save();
@@ -165,9 +152,6 @@ class CategoryController extends Controller
      */
     public function allAdmin(Request $request, $filter='all')
     {
-        $this->middleware('auth');
-        $this->middleware('role:admin');
-
         $page = $request->get('page');
         if(!$page) $page = 1;
 
@@ -186,9 +170,6 @@ class CategoryController extends Controller
     */
     public function delete(Request $request,Category $category)
     {
-        $this->middleware('auth');
-        $this->middleware('role:admin');
-        
         $category->delete();
         return redirect()->route('admin.dashboard')
             ->with('success',"La categorie a été supprimée avec succés");

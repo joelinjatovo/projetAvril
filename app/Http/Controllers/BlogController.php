@@ -41,22 +41,113 @@ class BlogController extends Controller
      */
     public function index(Request $request, Blog $blog)
     {
-        if($product->status != 'published'){
+        if($blog->status != 'published'){
             abort(404);
         }
         
-        $products = Product::orderBy('created_at','desc')->take(3)->get();
-        $categories = Category::orderBy('created_at', 'desc')->take(5)->get();
-        if($page = Page::where('path', '=', '/blogs*')->first()){
-            $pubs = $page->pubs;
-        }else{
-            $pubs = [];
-        }
+        $products = Product::orderBy('created_at','desc')
+            ->ofStatus('published')
+            ->take($this->recentSize)
+            ->get();
+        
+        $categories = Category::orderBy('created_at', 'desc')
+            ->take($this->recentSize)
+            ->get();
+        
+        $page = Page::where('path', '=', '/blogs*')
+            ->first();
+        
+        if($page){$pubs = $page->pubs;}else{$pubs = [];}
+        
         return view('blog.index')
                 ->with('item', $blog)
                 ->with('pubs', $pubs)
                 ->with('products', $products)
                 ->with('categories', $categories); 
+    }
+
+    /**
+     * Show the list of blog.
+     * Public Acces
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  String $filter
+     * @return \Illuminate\Http\Response
+     */
+    public function all(Request $request, $filter='all')
+    {
+        $page = $request->get('page');
+        if(!$page) $page = 1;
+        
+        $items = Blog::ofStatus('published')
+            ->where('post_type','=', $this->post_type)
+            ->paginate($this->pageSize);
+        
+        if($request->ajax()){
+            return response()->json(array(
+                'html' => view('ajax.blog.all', compact('items'))->render()
+            ));
+        }
+        
+        $products = Product::ofStatus('published')
+            ->with('location')
+            ->where('quantity', '>', 0)
+            ->orderBy('created_at','desc')
+            ->take($this->recentSize)
+            ->get();
+        
+        $categories = Category::orderBy('created_at', 'desc')
+            ->has('products')
+            ->withCount(['products'])
+            ->take($this->recentSize)
+            ->get();
+        
+        $page2 = Page::where('path', '=', '/blogs*')
+            ->first();
+        
+        if($page2){$pubs = $page->pubs;}else{$pubs = [];}
+
+        return view('blog.all')
+                ->with('items', $items)
+                ->with('filter', $filter)
+                ->with('page', $page)
+                ->with('pubs', $pubs)
+                ->with('products', $products)
+                ->with('categories', $categories); 
+    }
+
+    /**
+     * Show the list of blog.
+     * Admin Only
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  String $filter
+     * @return \Illuminate\Http\Response
+     */
+    public function allAdmin(Request $request, $filter='all')
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+
+        $page = $request->get('page');
+        if(!$page){$page = 1;}
+
+        $items = Blog::where('post_type','=', $this->post_type);
+        
+        switch($filter){
+            case 'starred':
+                $items = $items->where('starred', 1);
+                break;
+            case 'archived':
+            case 'published':
+            case 'trashed':
+            case 'pinged':
+                $items = $items->ofStatus($filter);
+                break;
+        }
+        
+        $items = $items->paginate($this->pageSize);
+        return view('admin.blog.all', compact('items', 'filter', 'page'));
     }
 
     /**
@@ -112,6 +203,12 @@ class BlogController extends Controller
             $blog->image_id = $image->id;
         }
         
+        $slug = $slugOriginal = generateSlug($request->title);
+        $i = 1;
+        while(Blog::where('slug', $slug)->exists()){
+            $slug = $slugOriginal + '-' + $i++;
+        }
+        
         $blog->title = $request->title;
         $blog->content = $request->content;
         $blog->meta_tag = $request->meta_tag;
@@ -131,6 +228,7 @@ class BlogController extends Controller
                 $row->save();
             }
         }
+        
         return back()->with('success',"L'article a été bien enregistré.");
     }
 
@@ -169,6 +267,7 @@ class BlogController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
+        
         // Validate request
         $validator = Validator::make($request->all(),[
                             'title' => 'required|max:100',
@@ -187,7 +286,13 @@ class BlogController extends Controller
             $blog->image_id = $image->id;
         }
         
-        $blog->slug = generateSlug($request->title);
+        $slug = $slugOriginal = generateSlug($request->title);
+        $i = 1;
+        while(Blog::where('slug', $slug)->where('id', '<>', $blog->id)->exists()){
+            $slug = $slugOriginal + '-' + $i++;
+        }
+        
+        $blog->slug = $slug;
         $blog->title = $request->title;
         $blog->content = $request->content;
         $blog->meta_tag = $request->meta_tag;
@@ -197,8 +302,8 @@ class BlogController extends Controller
         $blog->save();
 
         // Delete Old Category
-        ObjectCategory::where('object_id','=',$blog->id)
-            ->where('object_type','=', get_class($blog))
+        ObjectCategory::where('object_id','=', $blog->id)
+            ->where('object_type', '=', get_class($blog))
             ->delete();
 
         // Add Blog to the selected category
@@ -216,99 +321,6 @@ class BlogController extends Controller
         return back()->with('success',"L'article a été bien modifié.");
     }
 
-    /**
-     * Show the list of blog.
-     * Public Acces
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  String $filter
-     * @return \Illuminate\Http\Response
-     */
-    public function all(Request $request, $filter='all')
-    {
-        $page = $request->get('page');
-        if(!$page) $page =1;
-        
-        $items = Blog::ofStatus('published')
-            ->where('post_type','=', $this->post_type)
-            ->paginate($this->pageSize);
-        
-        if($request->ajax()){
-            return response()->json(array(
-                'html' => view('ajax.blog.all', compact('items'))->render()
-            ));
-        }
-        
-        $products = Product::ofStatus('published')
-            ->with('location')
-            ->where('quantity', '>', 0)
-            ->orderBy('created_at','desc')
-            ->take(3)
-            ->get();
-        
-        $categories = Category::orderBy('created_at', 'desc')
-            ->has('products')
-            ->withCount(['products'])
-            ->take(5)
-            ->get();
-        
-        if($page2 = Page::where('path', '=', '/blogs*')->first()){
-            $pubs = $page2->pubs;
-        }else{
-            $pubs = [];
-        }
-
-        return view('blog.all')
-                ->with('items', $items)
-                ->with('filter', $filter)
-                ->with('page', $page)
-                ->with('pubs', $pubs)
-                ->with('products', $products)
-                ->with('categories', $categories); 
-    }
-
-    /**
-     * Show the list of blog.
-     * Admin Only
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  String $filter
-     * @return \Illuminate\Http\Response
-     */
-    public function allAdmin(Request $request, $filter='all')
-    {
-        $this->middleware('auth');
-        $this->middleware('role:admin');
-
-        $page = $request->get('page');
-        if(!$page){
-            $page =1;
-        }
-
-        switch($filter){
-            case 'starred':
-                $items = Blog::where('starred','=', 1)
-                    ->where('post_type','=', $this->post_type)
-                    ->paginate($this->pageSize);
-                break;
-            case 'archived':
-            case 'published':
-            case 'trashed':
-            case 'pinged':
-                $items = Blog::ofStatus($filter)
-                    ->where('post_type','=', $this->post_type)
-                    ->paginate($this->pageSize);
-                break;
-            default:
-            case 'all':
-                $items = Blog::where('post_type','=', $this->post_type)
-                        ->paginate($this->pageSize);
-                break;
-        }
-
-        return view('admin.blog.all', compact('items', 'filter', 'page'));
-    }
-
 
     /**
     * Mark as starred the Blog
@@ -324,6 +336,7 @@ class BlogController extends Controller
 
         $blog->starred = 1;
         $blog->save();
+        
         return back()->with('success',"L'article a été ajouté aux favoris avec succés");
     }
 
@@ -378,6 +391,7 @@ class BlogController extends Controller
 
         $blog->status = "trashed";
         $blog->save();
+        
         return back()->with('success',"L'article a été ajouté aux corbeilles avec succés");
     }
 
@@ -396,6 +410,7 @@ class BlogController extends Controller
 
         $blog->status = "pinged";
         $blog->save();
+        
         return back()->with('success',"L'article a été restoré avec succés");
     }
 
@@ -413,6 +428,7 @@ class BlogController extends Controller
         $this->middleware('role:admin');
         
         $blog->delete();
+        
         return redirect()->route('admin.dashboard')
             ->with('success',"L'article a été supprimé avec succés");
     }

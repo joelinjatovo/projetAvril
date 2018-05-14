@@ -9,7 +9,7 @@
 <!-- CSRF Token -->
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
-<title>{{ config('app.name', 'IEA') }} @yield('title')</title>
+<title>{{config('app.name', 'IEA')}} {{isset($title)?' - '.$title:''}}</title>
     
 <!-- favicon and touch icons -->
 <link rel="shortcut icon" href="{{asset('images/favicon.png')}}">

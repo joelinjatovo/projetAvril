@@ -53,7 +53,11 @@ class PubController extends Controller
         $action = route('admin.pub.store');
         $pages = Page::all();
         
-        return view('admin.pub.update', ['item'=>$item, 'action'=>$action, 'pages'=>$pages]);
+        return view('admin.pub.update', [
+            'item'=>$item, 
+            'action'=>$action, 
+            'pages'=>$pages
+        ]);
     }
     
     /**
@@ -83,10 +87,12 @@ class PubController extends Controller
         
         
         $pub = new Pub();
+        
         if($file=$request->file('image')){
             $image = Image::storeAndSave($file);
             $pub->image_id = $image->id;
         }
+        
         $pub->title = $request->title;
         $pub->content = $request->content;
         $pub->links = $request->links;
@@ -103,7 +109,7 @@ class PubController extends Controller
             }
         }
         
-        return back()->with('success',"La publicite a été bien enregistrée.");
+        return back()->with('success',"La publicité a été bien enregistrée.");
     }
     
     /**
@@ -123,7 +129,9 @@ class PubController extends Controller
         if($value = $request->old('links'))      $item->links = $value;
         
         $action = route('admin.pub.update', ['pub'=>$pub]);
+        
         $pages = Page::all();
+        
         return view('admin.pub.update', ['item'=>$pub, 'action'=>$action, 'pages'=>$pages]);
     }
     
@@ -156,6 +164,7 @@ class PubController extends Controller
             $image = Image::storeAndSave($file);
             $pub->image_id = $image->id;
         }
+        
         $pub->title = $request->title;
         $pub->content = $request->content;
         $pub->links = $request->links;
@@ -176,7 +185,7 @@ class PubController extends Controller
             }
         }
         
-        return back()->with('success',"La publicte a été bien modifiée.");
+        return back()->with('success',"La publicité a été bien modifiée.");
     }
     
     /**
@@ -193,9 +202,7 @@ class PubController extends Controller
         $this->middleware('role:admin');
         
         $page = $request->get('page');
-        if(!$page){
-            $page =1;
-        }
+        if(!$page){$page =1;}
         
         $items = Pub::paginate($this->pageSize);
         return view('admin.pub.all', compact('items', 'filter', 'page')); 
@@ -214,7 +221,8 @@ class PubController extends Controller
         $this->middleware('role:admin');
         
         $pub->delete();
+        
         return redirect()->route('admin.dashboard')
-            ->with('success',"La categorie a été supprimée avec succés");
+            ->with('success',"La publicité a été supprimée avec succés");
     }
 }
