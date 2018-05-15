@@ -1,16 +1,5 @@
 @extends('layouts.app')
 
-@section('style')
-<style>
-.modal {
-    display: none;
-    overflow: scroll;
-    position: fixed;
-    top: 0px;
-}
-</style>
-@endsection
-
 @section('content')
 <div id="contact-page" class="contact-page-var-two" style="margin-top: 160px;">
     <div class="container">
@@ -50,27 +39,5 @@
             </div>
         </div>
     </div>
-    <div id="map-canvas"></div>
 </div>
-@endsection
-
-@section('script')
-<script>
-    var _map;
-    var _marker;
-    var _lat = {{isset($latitude)?floatval($latitude):-25.647467468105795}};
-    var _long = {{isset($longitude)?floatval($longitude):146.89921517372136}};
-    function initMap() {
-        _map = new google.maps.Map(document.getElementById('map-canvas'), {
-            center: {lat: _lat, lng:  _long},
-            zoom: 2
-        });
-        _marker = new google.maps.Marker({
-          position: {lat: _lat, lng: _long},
-          map: _map
-        });
-    }
-</script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtRuDbjjrHacZ6EqZySofNueLBLkrNxwI&callback=initMap"></script>
-</script>
 @endsection

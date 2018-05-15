@@ -53,6 +53,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3">
+                    <div class="clearfix">
+                        <p class="contanct">@lang('app.contact_us_phone', ['phone'=>option('site.phone', '+61 33 333 33')])</p>
+                    </div>
                 </div>
                 <div class="col-md-9">
                     <div class="clearfix">
@@ -173,7 +176,7 @@
                 <div class="col-md-4 col-sm-6">
                     <section class="widget about-widget clearfix">
                         <h4 class="title hide">@lang('app.about_us')</h4>
-                        <a class="footer-logo" href="#">
+                        <a class="footer-logo" href="{{route('home')}}">
                             <img src="{{asset('images/footer-logo.png')}}" alt="Footer Logo">
                         </a>
                         <ul class="social-icons clearfix">
@@ -259,9 +262,6 @@
             }
         });
     });
-</script>
-<!-- Slider Range -->
-<script type='text/javascript'>
     $(document).ready(function () {
         $("#ex3").slider({
             formatter: function (value) {
@@ -269,9 +269,6 @@
             }
         });
     });
-</script>
- <!-- Slider Range -->
-<script type='text/javascript'>
     $(document).ready(function () {
         $("#ex4").slider({
             formatter: function (value) {
@@ -280,11 +277,7 @@
         });
     });
 </script>
-    
-    
 @yield('script')
-
 @yield('braintree')
-
 </body>
 </html>

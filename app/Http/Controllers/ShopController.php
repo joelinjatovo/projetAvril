@@ -60,6 +60,7 @@ class ShopController extends Controller
         
         $page = Page::where('path', '=', '/products*')
             ->first();
+        if($page){$pubs = $page->pubs;}else{$pubs=[];}
 
         return view('shop.index')
             ->with('items', $items)

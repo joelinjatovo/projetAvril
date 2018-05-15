@@ -8,6 +8,7 @@ return [
     'copyright'           => '© Copyright :year : ":app" - Tout droit reserve',
     
     'last_update'         => 'Derniere Modification, :date',
+    'contact_us_phone'    => 'Contactez-nous: :phone',
     
     'form.login.register'      => "Inscrivez-vous",
     'form.login.have_not_account'  => "Vous n'avez pas un compte?",
