@@ -20,7 +20,7 @@
         </div>
     </section>
     <section class="widget recent-properties clearfix">
-        <h5 class="title">Produits Récents</h5>
+        <h5 class="title">@lang('app.recent.product')</h5>
         @foreach($products as $product)
         <div class="property clearfix">
             <a href="{{route('product.index',['product'=>$product])}}">
@@ -34,7 +34,7 @@
         @endforeach
     </section>
     <section class="widget property-taxonomies clearfix">
-        <h5 class="title">@lang('app.products_category')</h5>
+        <h5 class="title">@lang('app.recent.category')</h5>
         <ul class="clearfix">
             @foreach($categories as $category)
             <li><a href="{{route('shop.index',$category)}}">{{$category->title}} </a><span class="pull-right">{{$category->products_count}}</span></li>

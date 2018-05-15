@@ -35,6 +35,10 @@ return [
     'list.product'      => 'Liste de produit',
     'list.user'         => 'Liste de membre',
     
+    'recent.product'  => 'Produits recents',
+    'recent.category' => 'Categories recents',
+    'recent.type'     => 'Type de produit recents',
+    
     'rapid_link'      => 'Acces Rapide',
     
     'your_location'     => 'Votre localisation',

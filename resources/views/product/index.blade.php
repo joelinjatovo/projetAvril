@@ -47,17 +47,19 @@
                     @include('includes.alerts')
                     <div class="row">
                         <div class="col-sm-12">
-                          <a href="#" class="btn btn-warning col-sm-6"><i class="fa fa-envelope-open-o"></i> @lang('app.btn.contact_admin')</a>
-                          <a href="#" class="btn btn-success col-sm-6"><i class="fa fa-envelope-open-o"></i> @lang('app.btn.contact_apl')</a>
+                          <a href="#" class="btn btn-default col-sm-6"><i class="fa fa-envelope-open-o"></i> @lang('app.btn.contact_admin')</a>
+                          <a href="#" class="btn btn-default col-sm-6"><i class="fa fa-envelope-open-o"></i> @lang('app.btn.contact_apl')</a>
                         </div>
                     </div>
                     <div class="row">
-                        <a href="{{route('shop.select.apl', ['product'=>$item])}}" class="btn btn-warning col-sm-6"><i class="fa fa-envelope-open-o"></i>@lang('app.select_apl')</a>
+                        <div class="col-sm-12">
+                            <a href="{{route('shop.select.apl', ['product'=>$item])}}" class="btn btn-default col-sm-12"><i class="fa fa-envelope-open-o"></i>@lang('app.select_apl')</a>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                          <a href="{{route('label.store', ['product'=>$item,'type'=>'saved'])}}" class="btn btn-info col-sm-6"><i class="fa fa-floppy-o" aria-hidden="true"></i> @lang('app.btn.pin')</a>
-                          <a href="{{route('label.store', ['product'=>$item,'type'=>'starred'])}}" class="btn btn-info col-sm-6"><i class="fa fa-floppy-o" aria-hidden="true"></i>  @lang('app.btn.star')</a>
+                          <a href="{{route('label.store', ['product'=>$item,'type'=>'saved'])}}" class="btn btn-default col-sm-6"><i class="fa fa-floppy-o" aria-hidden="true"></i> @lang('app.btn.pin')</a>
+                          <a href="{{route('label.store', ['product'=>$item,'type'=>'starred'])}}" class="btn btn-default col-sm-6"><i class="fa fa-floppy-o" aria-hidden="true"></i>  @lang('app.btn.star')</a>
                         </div>
                     </div>
                 </section>
@@ -66,8 +68,8 @@
                     <h3 class="entry-title">@lang('app.detail')</h3>
                     <div class="property-single-meta">
                         <ul class="clearfix">
+                            <li>{{$item->created_at->diffForHumans()}}</li>
                             <li><span>@lang('app.reference'):</span> {{$item->reference}}</li>
-                            <li><span>Publication du</span> {{$item->created_at->diffForHumans()}}</li>
                             <li><span>@lang('app.price'):</span>{{$item->price}}</li>
                             @if($location)
                             <li><span>@lang('app.product_location'):</span> {{$location?$location->formatted:'Localisation inconnue'}}</li>

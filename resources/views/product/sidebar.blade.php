@@ -9,11 +9,11 @@
     </section>
     @endforeach
     <section class="widget recent-properties clearfix">
-        <h5 class="title">Récents</h5>
+        <h5 class="title">@lang('app.recent.product')</h5>
         @foreach($products as $product)
         <div class="property clearfix">
             <a href="#" class="feature-image zoom">
-                <img data-action="zoom" src="{{asset('images/property/1.jpg')}}" alt="Property Image">
+                <img data-action="zoom" src="{{$product->imageUrl()}}" alt="{{$product->title}}">
             </a>
             <div class="property-contents">
                 <h6 class="entry-title"> <a href="{{route('product.index',['product'=>$product])}}">{{$product->title}}</a></h6>
@@ -24,10 +24,10 @@
     </section>
     
     <section class="widget property-taxonomies clearfix">
-        <h5 class="title">Types récents</h5>
+        <h5 class="title">@lang('app.recent.category')</h5>
         <ul class="clearfix">
             @foreach($categories as $category)
-            <li><a href="#">{{$category->title}} </a><span class="pull-right">{{count($category->products)}}</span></li>
+            <li><a href="{{route('shop.index',$category)}}">{{$category->title}} </a><span class="pull-right">{{$category->products_count}}</span></li>
             @endforeach
         </ul>
     </section>

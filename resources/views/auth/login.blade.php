@@ -28,9 +28,11 @@
                     <p class="form-author common form-group {{ $errors->has('email') ? ' has-error' : '' }}">
                          <input name="password"  type="password" placeholder="Votre mot de passe *" aria-required="true" required="required">
                     </p>
-                    <p><input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> @lang('app.form.login.remember')</p>
-                    <p>@lang('app.form.login.have_not_account') <a href="{{ route('register',['role'=>'member']) }}"> @lang('app.form.login.register') </a></p>
-                        <a href="{{ route('password.request')}}" class="pull-right">@lang('app.form.login.forgot')</a>
+                    <p>
+                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> @lang('app.form.login.remember')
+                    </p>
+                    <p>
+                        <a href="{{ route('password.request')}}">@lang('app.form.login.forgot')</a>
                     </p>
                     <p class="form-submit">
                         <button type="submit" class="pull-right btn btn-default btn-lg" data-hover="Connexion">@lang('app.btn.login')</button>
