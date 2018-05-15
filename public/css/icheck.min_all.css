@@ -420,10 +420,10 @@
     vertical-align: middle;
     margin: 0;
     padding: 0;
-    width: 22px;
-    height: 22px;
-    background: url(../../assets/img/skin/yellow.png) no-repeat;
-    border: none;
+    width: 20px;
+    height: 20px;
+    /* background: url(../../assets/img/skin/yellow.png) no-repeat; */
+    border: groove;
     cursor: pointer;
 }
 
