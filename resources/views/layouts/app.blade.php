@@ -54,7 +54,7 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="clearfix">
-                        <p class="contanct">@lang('app.contact_us_phone', ['phone'=>option('site.phone', '+61 33 333 33')])</p>
+                        <p class="contanct">@lang('app.contact_us_phone', ['phone'=>option('site.app_phone', '+61 33 333 33')])</p>
                     </div>
                 </div>
                 <div class="col-md-9">

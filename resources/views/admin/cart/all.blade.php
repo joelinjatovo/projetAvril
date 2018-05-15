@@ -13,6 +13,7 @@
                 </div>
             </div>
         </section>
+        {{$items->links()}}
     </div>
 </div>
 @endsection

@@ -244,7 +244,7 @@ return [
     'admin.carts'           => 'Carts',
     'carts'                 => 'Carts',
     'admin.cart.list'       => 'Liste des commandes',
-    'admin.cart.pinged'     => 'Cartes non attente',
+    'admin.cart.pinged'     => 'Cartes en attente',
     'admin.cart.ordered'    => 'Commandes',
     'admin.cart.paid'       => 'Vendus',
     

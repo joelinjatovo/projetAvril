@@ -6,7 +6,7 @@
     <div id="page-content" class="page-content tab-content overflow-y">
         <div id="TabTop1" class="tab-pane padding-bottom30 active fade in">
             <div class="page-header">
-                <h3>Profil du vendeur</h3>
+                <h3>@lang('app.seller')</h3>
             </div>
             <div class="row-fluid">
                 <div class="grider">
@@ -62,6 +62,20 @@
                                                         </label>
                                                         <div class="controls">
                                                             {{$item->get_meta('orga_website')?$item->get_meta('orga_website')->value:''}}
+                                                        </div>
+                                                    </li>
+                                                    <li class="control-group">
+                                                        <label for="prenom" class="control-label">Site Web
+                                                        </label>
+                                                        <div class="controls">
+                                                            {{$item->get_meta('orga_operation_state')?$item->get_meta('orga_operation_state')->value:''}}
+                                                        </div>
+                                                    </li>
+                                                    <li class="control-group">
+                                                        <label for="prenom" class="control-label">Site Web
+                                                        </label>
+                                                        <div class="controls">
+                                                            {{$item->get_meta('orga_operation_range')?$item->get_meta('orga_operation_range')->value:''}}
                                                         </div>
                                                     </li>
                                                     <li class="section-form">
@@ -158,35 +172,24 @@
                             </div>
                         </div>
                     </div>
-                    <!-- // Widget -->
                     
                     <div class="widget widget-simple">
                         <div class="widget-header">
-                            <h4><small>Observations</small></h4>
+                            <h4><small>@lang('app.observations')</small></h4>
                         </div>
                         @include('admin.table.observation',['item'=>$item])
                     </div>
-                    <!-- // Widget -->
-                        
+                    
                     <div class="widget widget-simple">
                         <div class="widget-header">
-                            <h4><small>Produits mis en vente sur le site</small></h4>
+                            <h4><small>@lang('app.products')</small></h4>
                         </div>
                         @include('admin.table.product',['products'=>$item->products])
                     </div>
-                    <!-- // Widget -->
-                    
                 </div>
-                <!-- // Column -->
-                <!-- // Column -->
             </div>
-            <!-- // Example row -->
         </div>
-
     </div>
-    <!-- // page content -->
 </div>
-<!-- // main-content -->
-
 @endsection
 

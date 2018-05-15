@@ -23,7 +23,7 @@
                 <div class="well well-nice">
                     <h4 class="simple-header">@lang('app.admin.content')</h4>
                     <div class="control-group">
-                        <textarea id="wysiBooEditor" class="input-block-level" style="height: 560px" name="content" placeholder="@lang('app.admin.content.desc')">{{$item->content}}</textarea>
+                        <textarea id="wysiBooEditor" class="input-block-level" style="height: 560px" name="content" placeholder="@lang('app.admin.content.desc')">{!!$item->content!!}</textarea>
                     </div>
                 </div>
             </section>

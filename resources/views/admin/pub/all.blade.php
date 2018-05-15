@@ -11,7 +11,7 @@
         <div class="row-fluid">
             <div class="span12">
                 @include('includes.alerts')
-                <table id="exampleDT" class="table table-striped table-hover">
+                <table class="table table-striped table-hover">
                     <thead>
                         <tr>
                             <th scope="col">ID <span class="column-sorter"></span></th>
@@ -48,6 +48,7 @@
                 </table>
             </div>
         </div>
+        {{$items->links()}}
     </section>
 </div>
 </div>

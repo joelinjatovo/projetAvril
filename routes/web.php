@@ -188,7 +188,7 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
     Route::get('/chart/{type}', 'AdminController@chart')->name('admin.chart');
 
     Route::get('card', 'AdminController@card')->name('admin.card');
-    Route::get('carts', 'CartController@allAdmin')->name('admin.cart.list');
+    Route::get('carts/{filter?}', 'CartController@allAdmin')->name('admin.cart.list');
     Route::get('cart/{cart}', 'CartController@index')->name('admin.cart.show');
 
     // Blog Controller Groups

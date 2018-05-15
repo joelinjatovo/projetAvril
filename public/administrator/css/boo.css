@@ -6090,7 +6090,8 @@ filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ff59B14F', en
 
 .page-head {
   position: relative;
-  margin: 0 -20px;
+  /*margin: 0 -20px;*/
+  margin-bottom: 10px;
   padding: 0 20px;
   min-height: 100px;
   border-bottom: 1px solid #babecc;

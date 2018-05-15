@@ -7,14 +7,15 @@
             <div class="page-header">
                 <h3>@lang('app.admin.product.list')</h3>
             </div>
-             <div class="row-fluid margin-bottom16">
+            <div class="row-fluid margin-bottom16">
                  <div class="span12">
                      @include('includes.alerts')
                      <div class="widget widget-simple widget-table">
                          @include('admin.table.product', ['products'=>$items])
                      </div>
                  </div>
-             </div>
+                 {{$items->links()}}
+            </div>
         </section>
     </div>
 </div>

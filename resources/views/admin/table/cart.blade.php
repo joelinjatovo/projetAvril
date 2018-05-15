@@ -1,4 +1,4 @@
-<table id="exampleDT" class="table table-striped table-hover">
+<table class="table table-striped table-hover">
     <thead>
         <tr>
             <th scope="col">ID <span class="column-sorter"></span></th>

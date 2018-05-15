@@ -7,7 +7,7 @@
         <h2 class="page-title"><i class="aweso-icon-list-alt"></i> @lang('app.admin.blog.gestion') <small>@if($item->id>0) @lang('app.admin.blog.update') @else @lang('app.admin.blog.add') @endif</small></h2>
     </div>
     <!-- // page head -->
-    <div id="page-content" class="page-content">
+    <div id="page-content" class="row-fluid page-content">
         <form method="post" action="{{$action}}" enctype="multipart/form-data" >
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <section>
@@ -20,7 +20,7 @@
                 <div class="well well-nice">
                     <h4 class="simple-header">@lang('app.admin.content')</h4>
                     <div class="control-group">
-                        <textarea id="wysiBooEditor" class="input-block-level" style="height: 560px" name="content" placeholder="@lang('app.admin.content.desc')">{{$item->content}}</textarea>
+                        <textarea id="wysiBooEditor" class="input-block-level" style="height: 560px" name="content" placeholder="@lang('app.admin.content.desc')">{!!$item->content!!}</textarea>
                     </div>
                 </div>
                 <div class="row-fluid">

@@ -1,4 +1,4 @@
-<table id="exampleDTA" class="table boo-table table-striped table-hover">
+<table class="table boo-table table-striped table-hover">
  <thead>
      <tr>
        <th scope="col">

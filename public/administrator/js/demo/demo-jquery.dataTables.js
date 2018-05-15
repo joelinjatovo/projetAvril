@@ -43,7 +43,7 @@ $(document)
                                         sPrevious: '<i class="arrowicon-l-black"></i>'
                                 }
                         },
-                        iDisplayLength: 3,
+                        iDisplayLength: 10,
                         aaSorting: [
                                 [0, 'desc']
                         ],
@@ -116,7 +116,7 @@ $(document)
                                 sLengthMenu: "_MENU_ entries to page",
                                 sZeroRecords: 'No record found <button class="btn btn-danger resetTable">Reset filter</button>'
                         },
-                        iDisplayLength: 3,
+                        iDisplayLength: 10,
                         aaSorting: [
                                 [1, 'asc']
                         ],
@@ -158,7 +158,7 @@ $(document)
                                 sLengthMenu: "Show _MENU_ entries",
                                 sZeroRecords: 'No record found <button class="btn btn-danger resetTable">Reset filter</button>'
                         },
-                        iDisplayLength: 5,
+                        iDisplayLength: 10,
                         aaSorting: [
                                 [1, 'asc']
                         ],
@@ -350,7 +350,7 @@ $(document)
 			$('#lastLogedTable')
 					.dataTable({
 					bAutoWidth: false,
-                                        oLanguage: {
+					oLanguage: {
 							sSearch: 'Global search:',
 							sLengthMenu: '_MENU_ to page',
 							sZeroRecords: 'No record found <button class="btn btn-danger resetTable">Reset filter</button>',

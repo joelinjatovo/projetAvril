@@ -14,14 +14,9 @@
 
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="{{asset('images/favicon.png')}}">
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{asset('administrator/assets/ico/apple-touch-icon-144-precomposed.png')}}">
-<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{asset('administrator/assets/ico/apple-touch-icon-114-precomposed.png')}}">
-<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{asset('administrator/assets/ico/apple-touch-icon-72-precomposed.png')}}">
-<link rel="apple-touch-icon-precomposed" href="{{asset('administrator/assets/ico/apple-touch-icon-57-precomposed.png')}}">
-
 
 <!-- Le styles -->
-<link href="{{asset('administrator/css/lib/bootstrap.css')}}" rel="stylesheet" type="text/css" >
+<link href="{{asset('css/bootstrap.css')}}" rel="stylesheet" type="text/css" >
 <link href="{{asset('administrator/css/lib/bootstrap-responsive.css')}}" rel="stylesheet" type="text/css" >
 <link href="{{asset('administrator/css/boo-extension.css')}}" rel="stylesheet" type="text/css" >
 <link href="{{asset('administrator/css/boo.css')}}" rel="stylesheet" type="text/css" >
@@ -42,7 +37,7 @@
                               <span class="icon-bar"></span>
                               <span class="icon-bar"></span>
                           </button> -->
-                          <a class="brand" href="#">
+                          <a class="brand" href="{{route('home')}}">
                               <img src="{{asset('administrator/img/logo.png')}}" width="100" height="50">
                           </a>
                           <div class="search-global">
@@ -204,9 +199,9 @@
                   </div>
                   <ul class="accordion-content nav nav-list collapse" id="accCarts">
                       <li><a href="{{route('admin.cart.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.cart.list')</a></li>
-                      <li><a href="{{route('admin.cart.list', ['type'=>'pinged'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.cart.pinged')</a></li>
-                      <li><a href="{{route('admin.cart.list', ['type'=>'ordered'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.cart.ordered')</a></li>
-                      <li><a href="{{route('admin.cart.list', ['type'=>'paid'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.cart.paid')</a></li>
+                      <li><a href="{{route('admin.cart.list', ['filter'=>'pinged'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.cart.pinged')</a></li>
+                      <li><a href="{{route('admin.cart.list', ['filter'=>'ordered'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.cart.ordered')</a></li>
+                      <li><a href="{{route('admin.cart.list', ['filter'=>'paid'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.cart.paid')</a></li>
                   </ul>
               </li>
               <li class="accordion-group">
@@ -240,54 +235,6 @@
 <!-- // main-container -->
 
 @yield('content')
-    
-<footer id="footer-fix">
-    <div id="footer-sidebar" class="footer-sidebar">
-        <div class="navbar">
-            <div class="btn-toolbar"><a class="btn btn-glyph btn-link" href="javascript:void(0);"><i class="fontello-icon-up-open-1"></i></a></div>
-        </div>
-    </div>
-    <!-- // footer sidebar -->
-
-    <div id="footer-content" class="footer-content">
-        <div class="navbar navbar-inverse">
-            <div class="navbar-inner">
-                <ul class="nav pull-left">
-                    <li class="divider-vertical hidden-phone"></li>
-                    <li><a id="btnToggleSidebar" class="btn-glyph fontello-icon-resize-full-2 tip hidden-phone" href="javascript:void(0);" title="show hide sidebar"></a></li>
-                    <li class="divider-vertical hidden-phone"></li>
-                    <li><a id="btnChangeSidebar" class="btn-glyph fontello-icon-login tip hidden-phone" href="javascript:void(0);" title="change sidebar position"></a></li>
-                    <li class="divider-vertical"></li>
-                    <li><a id="btnChangeSidebarColor" class="btn-glyph fontello-icon-palette tip" href="javascript:void(0);" title="change sidebar color"></a></li>
-                    <li class="divider-vertical"></li>
-                    <li><a class="btn-glyph fontello-icon-cw" href="javascript:void(0);"></a></li>
-                    <li class="divider-vertical"></li>
-                    <li><a class="fontello-icon-home-3" href="dashboard-one.html"></a></li>
-                    <li class="divider-vertical"></li>
-                </ul>
-                <ul class="nav pull-right">
-                    <li class="divider-vertical"></li>
-                    <li><a class="btn-glyph fontello-icon-help-2 tip" href="javascript:void(0);" title="help to page"></a></li>
-                    <li class="divider-vertical"></li>
-                    <li><a class="btn-glyph fontello-icon-cog-4 tip" href="javascript:void(0);" title="settings app"></a></li>
-                    <li class="divider-vertical"></li>
-                    <li>
-                        <a id="btnLogout" class="btn-glyph fontello-icon-logout-1 tip" title="logout" href="{{route('logout')}}"
-                            onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                        </a>
-                        <form id="logout-form" action="{{route('logout')}}" method="POST" style="display: none;">
-                            {{csrf_field()}}
-                        </form>
-                    </li>
-                    <li class="divider-vertical"></li>
-                    <li><a id="btnScrollup" class="scrollup btn-glyph fontello-icon-up-open-1" href="javascript:void(0);"><span class="hidden-phone">Scroll</span></a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!-- // footer content -->
-</footer>
-<!-- // footer-fix  -->
     
 <script src="{{asset('administrator/js/lib/jquery.js')}}"></script>
 <script src="{{asset('administrator/js/lib/jquery-ui.js')}}"></script>

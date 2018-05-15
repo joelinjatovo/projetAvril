@@ -6,7 +6,7 @@
         <h2 class="page-title"><i class="fontello-icon-monitor"></i> @lang('app.admin.blog.list')</h2>
     </div>
     <div class="page-content">
-        <section>
+        <section  class="span12">
             @include('includes.alerts')
             <ul class="thumbnails equal-height">
                 <!-- item -->
@@ -100,6 +100,7 @@
                 @endforeach
             </ul>
         </section>
+        {{$items->links()}}
     </div>
 </div>
 @endsection
