@@ -59,7 +59,6 @@
 }
 
 /* red */
-
 .icheckbox_square-red,
 .iradio_square-red {
     display: inline-block;
@@ -423,8 +422,8 @@
     padding: 0;
     width: 20px;
     height: 20px;
-    /* background: url(../images/skin/yellow.png) no-repeat; */
-    border: groove;
+    background: url(../images/skin/red.png) no-repeat;
+    border: none;
     cursor: pointer;
 }
 
@@ -588,4 +587,5 @@
         -webkit-background-size: 240px 24px;
         background-size: 240px 24px;
     }
+}
 }
