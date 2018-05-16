@@ -152,27 +152,30 @@ $(function () {
     /*****************************************************
      * Properties Layout Function
      *****************************************************/
-    var propertyItem =$(".layout-item-wrap"),
-        layoutLinks= $('.layout-view .fa'),
-        listStyle= $('.layout-item');
+    function layoutLinks(){
+        var propertyItem =$(".layout-item-wrap"),
+            layoutLinks= $('.layout-view .fa'),
+            listStyle= $('.layout-item');
 
-    layoutLinks.on('click', function () {
-        var targetClass = 'col-xs-' + $(this).data('layout');
+        layoutLinks.on('click', function () {
+            var targetClass = 'col-xs-' + $(this).data('layout');
 
-        propertyItem.removeClass(function (index, className) {
-            return (className.match (/\bcol-\S+/g) || []).join(' ');
+            propertyItem.removeClass(function (index, className) {
+                return (className.match (/\bcol-\S+/g) || []).join(' ');
+            });
+            propertyItem.addClass(targetClass);
+
+            if (propertyItem.hasClass('col-xs-12')) {
+                //listStyle.addClass('list-style');
+            } else {
+                //listStyle.removeClass('list-style');
+            }
+            layoutLinks.removeClass('selected');
+            $(this).addClass('selected');
+            return false;
         });
-        propertyItem.addClass(targetClass);
-
-        if (propertyItem.hasClass('col-xs-12')) {
-            listStyle.addClass('list-style');
-        } else {
-            listStyle.removeClass('list-style');
-        }
-        layoutLinks.removeClass('selected');
-        $(this).addClass('selected');
-        return false;
-    });
+    }
+    layoutLinks();
 
 
 

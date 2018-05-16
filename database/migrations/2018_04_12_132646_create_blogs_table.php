@@ -20,7 +20,7 @@ class CreateBlogsTable extends Migration
             $table->longText('content')->nullable();
             $table->string('meta_tag')->nullable();
             $table->string('meta_description')->nullable();
-            $table->string('view_count')->default("0");
+            $table->bigInteger('view_count')->default(0);
             $table->string('status', 20)->default('pinged')->index(); // pinged published drafted trashed blocked archived
             $table->integer('starred')->default(0)->index();
             $table->string('post_type', 150)->default('blog')->index(); // page pub post

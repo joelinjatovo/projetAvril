@@ -32,6 +32,13 @@ return [
     'form.register.shareinfo'      => "J'autorise le partage et la commercialisation de mes information avec les partenaires du site www.investirenaustralie.com",
     'form.required'      => '(*) Required field',
     
+    'form.filterBy'      => 'Filtré par',
+    'form.order'      => 'Ordre',
+    'form.asc'      => 'Croissant',
+    'form.desc'      => 'Décroissant',
+    'pub_date'      => 'Date de publication',
+    'most_view'      => 'Plus de vue',
+    
     'list.product'      => 'Liste de produit',
     'list.user'         => 'Liste de membre',
     

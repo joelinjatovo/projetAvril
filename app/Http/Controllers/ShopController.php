@@ -28,20 +28,23 @@ class ShopController extends Controller
     public function index(Request $request, Category $category = null)
     {
         $page = $request->get('page');
-        if(!$page) $page =1;
+        if(empty($page)) $page = 1;
         
-        if($category==null||$category->id==0){
-            $items = Product::ofStatus('published')
-                ->where('quantity', '>', 0)
-                ->orderBy('created_at','desc')
-                ->paginate($this->pageSize);
-        }else{
-            $items = Product::where("category_id","=", $category->id)
-                ->ofStatus('published')
-                ->where('quantity', '>', 0)
-                ->orderBy('created_at','desc')
-                ->paginate($this->pageSize);
+        $orderBy = $request->get('orderBy');
+        if(!in_array($orderBy, ['price', 'created_at', 'view_count'])) $orderBy = 'price';
+        
+        $order = $request->get('order');
+        if(!in_array($order, ['desc', 'asc'])) $order = 'desc';
+        
+        $items = Product::ofStatus('published')
+                ->where('quantity', '>', 0);
+        
+        if($category&&$category->id>0){
+            $items = $items->where("category_id", $category->id);
         }
+        
+        $items = $items->orderBy($orderBy, $order)
+                ->paginate($this->pageSize);
         
         if($request->ajax()){
             return response()->json(array(
@@ -58,12 +61,13 @@ class ShopController extends Controller
             ->take($this->recentSize)
             ->get();
         
-        $page = Page::where('path', '=', '/products*')
-            ->first();
-        if($page){$pubs = $page->pubs;}else{$pubs=[];}
+        $page2 = Page::where('path', '=', '/products*')->first();
+        if($page2){$pubs = $page2->pubs;}else{$pubs=[];}
 
         return view('shop.index')
             ->with('items', $items)
+            ->with('orderBy', $orderBy)
+            ->with('order', $order)
             ->with('page', $page)
             ->with('pubs', $pubs)
             ->with('products', $products)

@@ -16,19 +16,47 @@
 @endcomponent
 
 <div id="blog-listing" class="grid-style"> 
-    <header class="section-header text-center"> 
-        <div class="container"> 
-            <h2 class="pull-left">@lang('app.blogs')</h2>
-        </div>                 
-    </header>  
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-8">
+                <header class="section-header text-center"> 
+                    <div class="container"> 
+                        <h2 class="pull-left">@lang('app.blogs')</h2>
+                    </div>                 
+                </header>  
+            
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="property-sorting">        
+                            <form id="filter-form" method="get" action="">
+                                <div  class="pull-left">
+                                    <label for="orderBy"> @lang('app.form.filterBy'):   </label>  
+                                    <select name="orderBy" id="orderBy" onchange="document.getElementById('filter-form').submit();"> 
+                                        <option value="created_at" {{$orderBy=='created_at'?'selected':''}}>@lang('app.pub_date')</option>  
+                                        <option value="view_count" {{$orderBy=='view_count'?'selected':''}}>@lang('app.most_view')</option>
+                                    </select>
+                                </div>
+                                <div  class="pull-left">
+                                    <label for="order"> @lang('app.form.order'):   </label>  
+                                    <select name="order" id="order" onchange="document.getElementById('filter-form').submit();"> 
+                                        <option value="asc" {{$order=='asc'?'selected':''}}>@lang('app.form.asc')</option> 
+                                        <option value="desc" {{$order=='desc'?'selected':''}}>@lang('app.form.desc')</option> 
+                                    </select>
+                                </div>
+                                <div  class="pull-right">
+                                    <p class="layout-view"> Vue:<i class="fa fa-th-large selected" data-layout="6"></i> <i class="fa fa-list-ul" data-layout="12"></i> </p> 
+                                </div>
+                            </form>
+                        </div>           
+                    </div>
+                </div>
+
                 <div id="infinite-scroll" class="row"> 
                     <div id="filter-container" class="blog-data">
                         @include('ajax.blog.all',['items'=>$items])
                     </div> 
                 </div>  
+                
                 <div class="row">
                     <div class="ajax-load text-center" style="display:none">
                         <p><img src="{{asset('images/loader.gif')}}">@lang('app.load_more_blog')</p>
@@ -63,7 +91,7 @@ $(window).scroll(function() {
 });
 function loadMoreData(page){
     $.ajax({
-        url: '<?php echo route('blog.all', ['filter'=>$filter]); ?>?page='+page,
+        url: "{!!route("blog.all", ["filter"=>$filter, "order"=>$order, "orderBy"=>$orderBy])!!}&page="+page,
         type: "get",
         beforeSend: function()
         {

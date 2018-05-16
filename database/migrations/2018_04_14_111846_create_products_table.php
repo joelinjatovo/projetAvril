@@ -21,6 +21,8 @@ class CreateProductsTable extends Migration
             $table->longText('content')->nullable();
             $table->bigInteger('quantity')->default(1);
             
+            $table->bigInteger('view_count')->default(0);
+            
             $table->float('area', 20, 2)->nullable();
             $table->integer('carport_spaces')->default(0);
             $table->integer('garage_spaces')->default(0);

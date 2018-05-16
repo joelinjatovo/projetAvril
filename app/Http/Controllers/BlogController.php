@@ -81,8 +81,15 @@ class BlogController extends Controller
         $page = $request->get('page');
         if(!$page) $page = 1;
         
+        $orderBy = $request->get('orderBy');
+        if(!in_array($orderBy, ['created_at', 'view_count'])) $orderBy = 'created_at';
+        
+        $order = $request->get('order');
+        if(!in_array($order, ['desc', 'asc'])) $order = 'desc';
+        
         $items = Blog::ofStatus('published')
             ->where('post_type','=', $this->post_type)
+            ->orderBy($orderBy, $order)
             ->paginate($this->pageSize);
         
         if($request->ajax()){
@@ -111,6 +118,8 @@ class BlogController extends Controller
 
         return view('blog.all')
                 ->with('items', $items)
+                ->with('orderBy', $orderBy)
+                ->with('order', $order)
                 ->with('filter', $filter)
                 ->with('page', $page)
                 ->with('pubs', $pubs)
