@@ -89,8 +89,8 @@
                                  <p class="help-block">
                                         <em>(*) Required field</em>
                                  </p>
-                                <a class="pull-left btn btn-danger text-center" href="/">Annuler</a>
-                                <button type="submit" class="btn btn-danger text-center pull-right">Continuer</button>
+                                <a class="pull-left btn btn-danger btn-lg text-center" href="/">Annuler</a>
+                                <button type="submit" class="btn btn-danger btn-lg text-center pull-right">Continuer</button>
                                 </form>
                             </div>
                         </div>
