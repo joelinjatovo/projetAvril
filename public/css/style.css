@@ -2403,7 +2403,7 @@ count-area
 }
 .search-form .form-inline .form-group {
     width: 235px;
-    /* text-align: left; */
+    text-align: left;
     letter-spacing: 0.5px;
 }
 .slider-selection {
