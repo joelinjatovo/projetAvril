@@ -25,7 +25,8 @@ class SellerController extends Controller
      */
     public function products()
     {
-        $items = Auth::user()->products;
+        $items = Auth::user()->products()
+            ->paginate($this->pageSize);
         
         return view('backend.product.all')
             ->with('title', __('app.products'))
@@ -39,8 +40,9 @@ class SellerController extends Controller
      */
     public function orders()
     {
-        $items = Auth::user()->products
-            ->where('products.status', 'ordered');
+        $items = Auth::user()->products()
+            ->where('products.status', 'ordered')
+            ->paginate($this->pageSize);
         
         return view('backend.product.all')
             ->with('title', __('app.orders'))
@@ -54,8 +56,9 @@ class SellerController extends Controller
      */
     public function sales()
     {
-        $items = Auth::user()->products
-            ->where('products.status', 'paid');
+        $items = Auth::user()->products()
+            ->where('products.status', 'paid')
+            ->paginate($this->pageSize);
         
         return view('backend.product.all')
             ->with('title', __('app.sales'))

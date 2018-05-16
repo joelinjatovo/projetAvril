@@ -11,6 +11,7 @@
                 @include('backend.product.item', ['product'=>$item])
             @endforeach
         </section>
+        {{$items->links()}}
     </div>
 </div>
 @endsection

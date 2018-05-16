@@ -26,7 +26,9 @@ class AfaController extends Controller
     public function orders()
     {
         $items = Auth::user()->sales()
-            ->wherePivot('status', 'ordered');
+            ->wherePivot('status', 'ordered')
+            ->paginate($this->pageSize);
+        
         return view('backend.product.all')
             ->with('title', __('app.orders'))
             ->with('items', $items);
@@ -40,7 +42,8 @@ class AfaController extends Controller
     public function sales()
     {
         $items = Auth::user()->sales()
-                ->wherePivot('status', 'paid');
+            ->wherePivot('status', 'paid')
+            ->paginate($this->pageSize);
         
         return view('backend.product.all')
             ->with('title', __('app.sales'))

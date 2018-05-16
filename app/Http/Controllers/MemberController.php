@@ -41,7 +41,7 @@ class MemberController extends Controller
     {
         $items = Auth::user()->purchases()
             ->wherePivot('status', 'ordered')
-            ->get();
+            ->paginate($this->pageSize);
         
         return view('backend.product.all')
             ->with('title', __('app.orders'))
@@ -57,7 +57,8 @@ class MemberController extends Controller
     {
         $items = Auth::user()->purchases()
             ->wherePivot('status', 'paid')
-            ->get();
+            ->paginate($this->pageSize);
+        
         return view('backend.product.all')
             ->with('title', __('app.purchases'))
             ->with('items', $items);

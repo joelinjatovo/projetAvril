@@ -4,8 +4,8 @@
 <div class="content corps" style="margin-top: 160px;">
     <div class="container">
         <div class="row">
-          <div class="col-md-3">
-            <div class="sidebar content-box" style="display: block;">
+          <div class="col-md-2">
+            <div class="sidebar content-box" style="display: block; background: #fff; margin-bottom: 10px;">
                 <ul class="nav nav-side">
                     <li><a href="{{url(Auth::user()->role)}}"><i class="fa fa-tachometer" aria-hidden="true"></i> @lang('app.dashboard')</a></li>
                     <li><a href="{{route('profile')}}"><i class="fa fa-pencil-square" aria-hidden="true"></i> @lang('app.profile')</a></li>
@@ -34,7 +34,7 @@
                 </ul>
              </div>
           </div>
-          <div class="col-md-8">
+          <div class="col-md-10">
               @include('includes.alerts')
               @yield('subcontent')
           </div>

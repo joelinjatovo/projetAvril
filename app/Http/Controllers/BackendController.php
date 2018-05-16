@@ -42,12 +42,14 @@ class BackendController extends Controller
         $count['pins']  = 110;
         $recent['pins'] = $user->pins()
             ->orderBy('created_at', 'desc')
-            ->take($this->recentSize);
+            ->take($this->recentSize)
+            ->get();
 
         $count['favorites']  = 300;
         $recent['favorites'] = $user->favorites()
             ->orderBy('created_at', 'desc')
-            ->take($this->recentSize);
+            ->take($this->recentSize)
+            ->get();
         
         switch($user->role){
             case 'member':
@@ -59,13 +61,15 @@ class BackendController extends Controller
                 $recent['orders'] = $user->purchases()
                     ->wherePivot('status', 'ordered')
                     ->orderBy('created_at', 'desc')
-                    ->take($this->recentSize);
+                    ->take($this->recentSize)
+                    ->get();
                 
                 $count['purchases']  = 30;
                 $recent['purchases'] = $user->purchases()
                     ->wherePivot('status', 'paid')
                     ->orderBy('created_at', 'desc')
-                    ->take($this->recentSize);
+                    ->take($this->recentSize)
+                    ->get();
                 break;
             case 'apl':
                 $count['customers']  = 10;
@@ -73,50 +77,58 @@ class BackendController extends Controller
                     ->isActive()
                     ->ofRole('member')
                     ->orderBy('created_at', 'desc')
-                    ->take($this->recentSize);
+                    ->take($this->recentSize)
+                    ->get();
                 
                 $count['orders']  = 20;
                 $recent['orders'] = $user->sales()
                     ->wherePivot('status', 'ordered')
                     ->orderBy('created_at', 'desc')
-                    ->take($this->recentSize);
+                    ->take($this->recentSize)
+                    ->get();
                 
                 $count['sales']  = 30;
                 $recent['sales'] = $user->sales()
                     ->wherePivot('status', 'paid')
                     ->orderBy('created_at', 'desc')
-                    ->take($this->recentSize);
+                    ->take($this->recentSize)
+                    ->get();
                 break;
             case 'afa':
                 $count['orders']  = 5;
                 $recent['orders'] = $user->sales()
                     ->wherePivot('status', 'ordered')
                     ->orderBy('created_at', 'desc')
-                    ->take($this->recentSize);
+                    ->take($this->recentSize)
+                    ->get();
                 
                 $count['sales']  = 20;
                 $recent['sales'] = $user->sales()
                     ->wherePivot('status', 'paid')
                     ->orderBy('created_at', 'desc')
-                    ->take($this->recentSize);
+                    ->take($this->recentSize)
+                    ->get();
                 break;
             case 'seller':
                 $count['products']  = 50;
                 $recent['products.'] = $user->products()
                     ->orderBy('products.created_at', 'desc')
-                    ->take($this->recentSize);
+                    ->take($this->recentSize)
+                    ->get();
                 
                 $count['orders']  = 50;
                 $recent['orders'] = $user->products()
                     ->wherePivot('products.status', 'ordered')
                     ->orderBy('products.created_at', 'desc')
-                    ->take($this->recentSize);
+                    ->take($this->recentSize)
+                    ->get();
                 
                 $count['sales']  = 200;
                 $recent['sales'] = $user->products()
                     ->where('products.status', 'paid')
                     ->orderBy('products.created_at', 'desc')
-                    ->take($this->recentSize);
+                    ->take($this->recentSize)
+                    ->get();
                 break;
         } 
         
@@ -166,85 +178,99 @@ class BackendController extends Controller
                 $type=$request->input('type');
                 if($type=='person'){
                     $rules = [
+                        'name'     => 'required|unique:users,name|max:100',
+                        'email'    => 'required|unique:users,email|max:100',
                         'language' => 'required|max:100',
-                        'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                        'image'    => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
-                        'firstname' => 'nullable|max:100',
-                        'lastname' => 'nullable|max:100',
+                        'firstname' => 'required|max:100',
+                        'lastname'  => 'required|max:100',
 
-                        'country' => 'required|max:100',
+                        'country'      => 'required|max:100',
+                        'area_level_1' => 'nullable|max:100',
+                        'area_level_2' => 'nullable|max:100',
+                        'locality'     => 'nullable|max:100',
+                        'route'        => 'nullable|max:100',
+                        'postalCode'   => 'nullable|max:100',
                     ];
                 }else{
                     $rules = [
+                        'name'     => 'required|unique:users,name|max:100',
+                        'email'    => 'required|unique:users,email|max:100',
                         'language' => 'required|max:100',
-                        'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                        'image'    => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
                         'prefixPhone' => 'required|max:100',
-                        'phone' => 'required|max:100',
+                        'phone'       => 'required|max:100',
 
-                        'orga_name' => 'required|max:100',
+                        'orga_name'         => 'required|max:100',
                         'orga_presentation' => 'required|max:100',
 
-                        'address' => 'required|max:100',
-                        'city' => 'required|max:100',
-                        'country' => 'required|max:100',
-                        'state' => 'required|max:100',
-                        'postalCode' => 'required|max:100',
+                        'country'      => 'required|max:100',
+                        'area_level_1' => 'required|max:100',
+                        'area_level_2' => 'nullable|max:100',
+                        'locality'     => 'required|max:100',
+                        'route'        => 'nullable|max:100',
+                        'postalCode'   => 'nullable|max:100',
                     ];
                 }
                 break;
             case 'afa':
                 $rules = [
+                    'name'     => 'required|unique:users,name|max:100',
+                    'email'    => 'required|unique:users,email|max:100',
                     'language' => 'required|max:100',
-                    'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                    'image'    => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
-                    'orga_name' => 'required|max:100',
+                    'orga_name'         => 'required|max:100',
                     'orga_presentation' => 'required|max:100',
-                    'orga_email' => 'required|email|max:100',
-                    'orga_phone' => 'required|max:100',
-                    'orga_website' => 'required|url|max:100',
+                    'orga_email'        => 'required|email|max:100',
+                    'orga_phone'        => 'required|max:100',
+                    'orga_website'      => 'required|url|max:100',
+                    
                     'orga_operation_state' => 'required|max:100',
                     'orga_operation_range' => 'required|max:100',
 
-                    'address' => 'max:100',
-                    'street' => 'max:100',
-                    'suburb' => 'max:100',
-                    'city' => 'max:100',
-                    'country' => 'max:100',
-                    'state' => 'max:100',
-                    'postalCode' => 'max:100',
+                    'country'      => 'nullable|max:100',
+                    'area_level_1' => 'required|max:100',
+                    'area_level_2' => 'required|max:100',
+                    'locality'     => 'required|max:100',
+                    'route'        => 'nullable|max:100',
+                    'postalCode'   => 'nullable|max:100',
 
-                    'contact_name' => 'max:100',
-                    'contact_email' => 'max:100',
-                    'contact_phone' => 'max:100',
+                    'contact_name'  => 'required|max:100',
+                    'contact_email' => 'required|max:100',
+                    'contact_phone' => 'required|max:100',
 
-                    'crm_name' => 'max:100',
-                    'crm_email' => 'max:100',
+                    'crm_name'   => 'required|max:100',
+                    'crm_email'  => 'required|max:100',
                 ];
                 break;
             case 'apl':
                 $rules = [
+                    'name'     => 'required|unique:users,name|max:100',
+                    'email'    => 'required|unique:users,email|max:100',
                     'language' => 'required|max:100',
-                    'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                    'image'    => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
-                    'orga_name' => 'required|max:100',
+                    'orga_name'         => 'required|max:100',
                     'orga_presentation' => 'required|max:100',
-                    'orga_email' => 'required|email|max:100',
-                    'orga_phone' => 'required|max:100',
-                    'orga_website' => 'required|url|max:100',
+                    'orga_email'        => 'required|email|max:100',
+                    'orga_phone'        => 'required|max:100',
+                    'orga_website'      => 'required|url|max:100',
+                    
                     'orga_operation_range' => 'required|max:100',
 
-                    'address' => 'max:100',
-                    'street' => 'max:100',
-                    'suburb' => 'max:100',
-                    'city' => 'max:100',
-                    'country' => 'max:100',
-                    'state' => 'max:100',
-                    'postalCode' => 'max:100',
+                    'country'      => 'required|max:100',
+                    'area_level_1' => 'nullable|max:100',
+                    'area_level_2' => 'nullable|max:100',
+                    'locality'     => 'required|max:100',
+                    'route'        => 'nullable|max:100',
+                    'postalCode'   => 'nullable|max:100',
 
-                    'contact_name' => 'max:100',
-                    'contact_email' => 'max:100',
-                    'contact_phone' => 'max:100',
+                    'contact_name'  => 'required|max:100',
+                    'contact_email' => 'required|email|max:100',
+                    'contact_phone' => 'required|max:100',
 
                     'bank_iban' => 'max:100',
                     'bank_bic' => 'max:100',
@@ -252,30 +278,31 @@ class BackendController extends Controller
                 break;
             case 'seller':
                 $rules = [
+                    'name'     => 'required|unique:users,name|max:100',
+                    'email'    => 'required|email|unique:users,email|max:100',
                     'language' => 'required|max:100',
-                    'type' => 'required|max:100',
-                    'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                    'type'     => 'required|max:100',
+                    'image'    => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
-                    'orga_name' => 'required|max:100',
+                    'orga_name'         => 'required|max:100',
                     'orga_presentation' => 'required|max:100',
-                    'orga_email' => 'required|email|max:100',
-                    'orga_phone' => 'required|max:100',
-                    'orga_website' => 'required|url|max:100',
+                    'orga_email'        => 'required|email|max:100',
+                    'orga_phone'        => 'required|max:100',
+                    'orga_website'      => 'required|url|max:100',
 
-                    'address' => 'max:100',
-                    'street' => 'max:100',
-                    'suburb' => 'max:100',
-                    'city' => 'max:100',
-                    'country' => 'max:100',
-                    'state' => 'max:100',
-                    'postalCode' => 'max:100',
+                    'country'      => 'nullable|max:100',
+                    'area_level_1' => 'required|max:100',
+                    'area_level_2' => 'required|max:100',
+                    'locality'     => 'required|max:100',
+                    'route'        => 'nullable|max:100',
+                    'postalCode'   => 'nullable|max:100',
 
-                    'contact_name' => 'max:100',
-                    'contact_email' => 'max:100',
-                    'contact_phone' => 'max:100',
+                    'contact_name'  => 'required|max:100',
+                    'contact_email' => 'required|max:100',
+                    'contact_phone' => 'required|max:100',
 
-                    'crm_name' => 'max:100',
-                    'crm_email' => 'max:100',
+                    'crm_name'   => 'required|max:100',
+                    'crm_email'  => 'required|max:100',
 
                 ];
                 break;
@@ -291,13 +318,13 @@ class BackendController extends Controller
         }
         
         // Create Localization
-        $datas['location_id'] = '';
+        $datas['location_id'] = 0;
         if($location = Localisation::create($datas)){
             $datas['location_id'] = $location->id;
         }
         
         // Store image file
-        $datas['image_id'] = '';
+        $datas['image_id'] = 0;
         if($file=$request->file('image')){
             $image = Image::storeAndSave($file);
             $datas['image_id'] = $image->id;
@@ -382,7 +409,6 @@ class BackendController extends Controller
                 if($value = $request->input('crm_email'))      $user->update_meta("crm_email", $value);
                 break;
         }
-        
 
         // Common datas
         if($value = $request->input('newsletter')) $user->update_meta("newsletter", $value);
@@ -540,9 +566,12 @@ class BackendController extends Controller
      */
     public function favorites()
     {
+        $items = Auth::user()->favorites()
+            ->paginate($this->pageSize);
+        
         return view('backend.product.all')
             ->with('title', __('app.favorites'))
-            ->with('items', Auth::user()->favorites);
+            ->with('items', $items);
     }
 
     /**
@@ -552,9 +581,13 @@ class BackendController extends Controller
      */
     public function pins()
     {
+        $items = Auth::user()->pins()
+            ->paginate($this->pageSize);
+        
         return view('backend.product.all')
             ->with('title', __('app.pins'))
-            ->with('items', Auth::user()->pins);
+            ->with('items', Auth::user()->pins)
+            ->with('items', $items);
     }
 
 }

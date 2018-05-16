@@ -11,6 +11,7 @@
                 @include('backend.user.item', ['user'=>$item])
             @endforeach
         </section>
+        {{$items->links()}}
     </div>
 </div>
 @endsection
