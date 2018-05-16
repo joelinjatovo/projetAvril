@@ -46,9 +46,18 @@ class CartController extends Controller
         $this->middleware('role:admin');
         
         $page = $request->get('page');
-        if(!$page) $page =1;
+        if(!$page) $page = 1;
         
-        $items = Cart::paginate($this->pageSize);
+        switch($filter){
+            case 'paid':
+            case 'ordered':
+                $items = Cart::where('status', $filter)
+                    ->paginate($this->pageSize);
+                break;
+            case 'all':
+                $items = Cart::paginate($this->pageSize);
+                break;
+        }
         return view('admin.cart.all', compact('items', 'filter', 'page')); 
     }
 }

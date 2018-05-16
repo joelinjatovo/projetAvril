@@ -16,7 +16,7 @@ class ChartController extends Controller
     {
         
         $items = Category::has('products')
-            ->withCount(['products' ])
+            ->withCount(['products'])
             ->get();
         $data = array();
         foreach($items as $item){

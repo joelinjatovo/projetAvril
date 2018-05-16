@@ -272,7 +272,7 @@ class User extends Authenticatable
      */
     public function carts()
     {
-      return $this->hasMany(User::class, 'author_id', 'id');
+      return $this->hasMany(Cart::class, 'author_id', 'id');
     }
     
     /**
@@ -307,7 +307,7 @@ class User extends Authenticatable
         if($this->hasRole('afa')){
             return $this->belongsToMany(Product::class, 'carts_items', 'afa_id', 'product_id');
         }
-        
+        // else APL
         return $this->belongsToMany(Product::class, 'carts_items', 'apl_id', 'product_id');
     }
     

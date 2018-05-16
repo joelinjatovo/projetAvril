@@ -36,13 +36,12 @@ class ChatController extends Controller
         return $result;
     }
 
-
     /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function index()
     {
         $user = auth()->user();
         
@@ -70,49 +69,5 @@ class ChatController extends Controller
         }
         
         return view('chat.thread', ['threads' => $threads, 'users' => $users, 'user' => $user]);
-    }
-    
-    /**
-     * Show chats
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return view('chat.index');
-    }
-
-    /**
-     * Fetch all messages
-     *
-     * @return Message
-     */
-    public function fetchMessages()
-    {
-        return Message::with('user')->get();
-    }
-
-    /**
-     * Persist message to database
-     *
-     * @param  Request $request
-     * @return Response
-     */
-    public function sendMessage(Request $request)
-    {
-            
-        $user = \Auth::user();
-
-        $message = Message::create([
-            'message' => $request->message,
-            'user_id' => $user->id,
-            'thread_id' => 0
-        ]);
-
-
-        broadcast(new MessageSent($user, $message))->toOthers();
-            
-
-        return ['status' => 'Message Sent!'];
     }
 }

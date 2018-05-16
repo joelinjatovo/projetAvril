@@ -95,26 +95,20 @@ Route::middleware('guest')->group(function(){
 Route::middleware(["auth"])->group(function(){
     //Chat
     Route::get('chat', 'ChatController@index');
-    Route::get('chat/messages', 'ChatController@fetchMessages');
-    Route::post('chat/messages', 'ChatController@sendMessage');
+    Route::post('chat/threads', 'ThreadController@store');
+    Route::post('chat/messages', 'ChatController@store');
     
-    // thread
-    Route::get('thread', 'ChatController@show');
-    Route::resource('thread/threads', 'ThreadController');
-    Route::resource('thread/messages', 'ChatController');
     
     Route::get('thread/threads', 'ThreadController@store');
-    
-    // Baintree
-    Route::get('/plans', 'PlanController@index');
     
     // Label
     Route::get('product/{product}/{type}', 'LabelController@storeOrUpdate')->name('label.store');// Save OR Star Product
     Route::get('products/{type}', 'LabelController@all')->name('label.list');// List saved products OR starred Product
 
     // Braintree
+    Route::get('/plans', 'PlanController@index');
     Route::get('/plan/{plan}', 'PlanController@show');
-    Route::post('/subscribe', 'SubscriptionController@store');
+    Route::post('/subscribe', 'PlanController@subscribe');
     
     // Profile
     Route::prefix('profile')->group(function(){
@@ -134,6 +128,7 @@ Route::middleware(["auth"])->group(function(){
 
 
 Route::middleware(["auth", "role:member"])->group(function(){
+    
     Route::post('product/{product}', 'ShopController@add')->name('shop.add');// Add product in cart
     Route::get('select-apl/{product}', 'ShopController@selectApl')->name('shop.select.apl');// Add product in cart
     Route::get('cart', 'ShopController@cart')->name('shop.cart');// Show cart
@@ -151,18 +146,22 @@ Route::middleware(["auth", "role:member"])->group(function(){
         Route::get('orders', 'MemberController@orders')->name('member.orders');
         Route::get('cart/{cart}', 'MemberController@showCart')->name('member.cart');
     });
+    
 });
 
 Route::prefix('afa')->middleware(["auth","role:afa"])->group(function(){
+    
     Route::get('/', 'BackendController@dashboard');
     Route::get('favorites', 'BackendController@favorites');
     Route::get('pins', 'BackendController@pins');
     
     Route::get('orders', 'AfaController@orders')->name('afa.orders');
     Route::get('sales', 'AfaController@sales')->name('afa.sales');
+    
 });
 
 Route::prefix('apl')->middleware(["auth","role:apl"])->group(function(){
+    
     Route::get('/', 'BackendController@dashboard');
     Route::get('favorites', 'BackendController@favorites');
     Route::get('pins', 'BackendController@pins');
@@ -170,14 +169,17 @@ Route::prefix('apl')->middleware(["auth","role:apl"])->group(function(){
     Route::get('orders', 'AplController@orders')->name('apl.orders');
     Route::get('sales', 'AplController@sales')->name('apl.sales');
     Route::get('customers', 'AplController@customers')->name('apl.customers');
+    
 });
 
 Route::prefix('seller')->middleware(["auth","role:seller"])->group(function(){
+    
     Route::get('/', 'BackendController@dashboard');
     Route::get('favorites', 'BackendController@favorites');
     Route::get('pins', 'BackendController@pins');
     
     Route::get('products', 'SellerController@products')->name('seller.products');
+    
 });
 
 Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
@@ -186,7 +188,7 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
     Route::get('/chart/{type}', 'AdminController@chart')->name('admin.chart');
 
     Route::get('card', 'AdminController@card')->name('admin.card');
-    Route::get('carts', 'CartController@allAdmin')->name('admin.cart.list');
+    Route::get('carts/{filter?}', 'CartController@allAdmin')->name('admin.cart.list');
     Route::get('cart/{cart}', 'CartController@index')->name('admin.cart.show');
 
     // Blog Controller Groups
@@ -207,11 +209,7 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
     // Product Controller Groups
     Route::get('products/{filter?}', 'ProductController@all')->name('admin.product.list');
     Route::prefix('product')->group(function(){
-        Route::get('/', 'ProductController@create')->name('admin.product.create');
-        Route::post('/', 'ProductController@store')->name('admin.product.store');
         Route::get('show/{product}', 'ProductController@show')->name('admin.product.show');
-        Route::get('update/{product}', 'ProductController@edit')->name('admin.product.edit');
-        Route::post('update/{product}', 'ProductController@update')->name('admin.product.update');
         Route::get('publish/{product}', 'ProductController@publish')->name('admin.product.publish');
         Route::get('archive/{product}', 'ProductController@archive')->name('admin.product.archive');
         Route::get('trash/{product}', 'ProductController@trash')->name('admin.product.trash');

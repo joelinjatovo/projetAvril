@@ -66,7 +66,8 @@ class ThreadController extends Controller
      */
     public function all(Request $request, $filter='all')
     {
-      $items = Thread::orderBy('created_at', 'desc')->get();
+      $items = Thread::orderBy('created_at', 'desc')
+          ->paginate($this->pageSize);
       return view('admin.chat.all')
           ->with('items', $items);
     }

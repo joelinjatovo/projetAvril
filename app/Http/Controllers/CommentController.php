@@ -33,7 +33,7 @@ class CommentController extends Controller
         // Validate request
         $datas = $request->all();
         $validator = Validator::make($datas,[
-                            'title' => 'required|max:100',
+                            'title'   => 'required|max:100',
                             'content' => 'required',
                         ]);
         
@@ -41,10 +41,16 @@ class CommentController extends Controller
             return back()->withErrors($validator)
                         ->withInput();
         }
+        
         $datas['blog_id'] = $blog->id;
         $comment = Comment::create($datas);
-        $view = view('comment.index');
-        return response()->json(array('html'=>$view, 'msg'=>'Le commentaire a été bien  enregistré'));
+        
+        $view = view('comment.index')->render();
+        
+        return response()->json(array(
+            'html'=>$view, 
+            'msg'=>'Le commentaire a été bien  enregistré'
+        ));
     }
     
     /**
@@ -57,8 +63,11 @@ class CommentController extends Controller
     public function edit(Request $request, Blog $blog, Comment $comment)
     {
         if($value = $request->old('content'))   $comment->content = $value;
+        
         $action = route('comment.update', ['blog'=>$blog,'comment'=>$comment]);
-        $view = view('comment.update', ['item'=>$blog, 'action'=>$action, 'comment'=>$comment]);
+        
+        $view = view('comment.update', ['item'=>$blog, 'action'=>$action, 'comment'=>$comment])->render();
+        
         return response()->json(array('html'=>$view));
     }
     
@@ -86,7 +95,7 @@ class CommentController extends Controller
         $comment->content = $request->input('content');
         $comment->save();
         
-        $view = view('comment.index');
+        $view = view('comment.index')->render();
         return response()->json(array('html'=>$view, 'msg'=>'Le commentaire a été bien modifié'));
     }
     

@@ -1,28 +1,59 @@
-<div class="widget widget-simple widget-table">
-    <table id="exampleDTA" class="table boo-table table-striped table-hover">
-        <thead>
-            <tr>
-                <th scope="col">Id <span class="column-sorter"></span></th>
-                <th scope="col">Image</th>
-                <th scope="col">Login</th>
-                <th scope="col">E-mail <span class="column-sorter"></span></th>
-                <th scope="col">Role<span class="column-sorter"></span></th>
-                <th scope="col">Type<span class="column-sorter"></span></th>
-                <th scope="col">Status<span class="column-sorter"></span></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($users as $client)
-            <tr>
-                <td>{{$client->id}}</td>
-                <td><img class="thumb" width="50" src="{{$client->imageUrl()}}"></td>
-                <td>{{$client->name}}</td>
-                <td>{{$client->email}}</td>
-                <td>{{$client->role}}</td>
-                <td>{{$client->type}}</td>
-                <td>{{$client->status}}</td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
+<table class="table boo-table table-striped table-hover">
+ <thead>
+     <tr>
+       <th scope="col">
+         <label class="checkbox">
+             <input class="checkbox" type="checkbox" value="option1">
+         </label>
+       </th>
+         <th scope="col">Id <span class="column-sorter"></span></th>
+         <th scope="col">Photo / Avatar <span class="column-sorter"></span></th>
+         <th scope="col">Nom <span class="column-sorter"></span></th>
+         <th scope="col">Email <span class="column-sorter"></span></th>
+         <th scope="col">Date d'inscription <span class="column-sorter"></span></th>
+         <th scope="col">Role <span class="column-sorter"></span></th>
+         <th scope="col">Type <span class="column-sorter"></span></th>
+         <th scope="col">Statut <span class="column-sorter"></span></th>
+         <th scope="col">Actions <span class="column-sorter"></span></th>
+     </tr>
+ </thead>
+ <tbody>
+     @foreach($users as $item)
+     <tr class="user-item-{{$item->id}}">
+       <td>
+           <label class="checkbox">
+               <input class="checkbox" type="checkbox" value="{{$item->id}}">
+           </label>
+       </td>
+         <td>{{$item->id}}</td>
+         <td>
+             <a href="{{route('admin.user.show', $item)}}"><img class="thumb" src="{{$item->imageUrl()}}" width="50"></a>
+         </td>
+         <td>{{$item->name}}</td>
+         <td>{{$item->email}}</td>
+         <td>{{$item->created_at->diffForHumans()}}</td>
+         <td><a href="{{route('admin.user.list', ['filter'=>$item->role])}}"><span class="label label-warning">{{$item->role}}</span></a></td>
+         <td><a href="{{route('admin.user.list', ['filter'=>$item->typed])}}"><span class="label label-info">{{$item->type}}</span></a></td>
+         <td>
+             <a href="{{route('admin.user.list', ['filter'=>$item->status])}}">
+             @if($item->status=='active')
+             <span class="label label-success">{{$item->status}}</span>
+             @else
+             <span class="label label-warning">{{$item->status}}</span>
+             @endif
+             </a>
+         </td>
+         <td>
+         @if($item->status!='blocked')
+            <a href="{{route('admin.user.block', $item)}}" class="btn btn-small btn-info">Bloquer</a>
+         @endif
+         @if($item->status=='active')
+            <a href="{{route('admin.user.disable', $item)}}" class="btn btn-small btn-warning">Desactiver</a>
+         @else
+            <a href="{{route('admin.user.active', $item)}}" class="btn btn-small btn-warning">Activer</a>
+         @endif
+         </td>
+     </tr>
+     @endforeach
+ </tbody>
+</table>

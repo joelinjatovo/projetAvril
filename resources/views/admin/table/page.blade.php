@@ -5,6 +5,7 @@
                 <th scope="col">ID <span class="column-sorter"></span></th>
                 <th scope="col">Titre<span class="column-sorter"></span></th>
                 <th scope="col">Path<span class="column-sorter"></span></th>
+                <th scope="col">Language<span class="column-sorter"></span></th>
                 <th scope="col">Parent<span class="column-sorter"></span></th>
                 <th scope="col">Ordre<span class="column-sorter"></span></th>
                 <th scope="col">Auteur<span class="column-sorter"></span></th>
@@ -21,6 +22,7 @@
                     {{$page->excerpt()}}
                 </td>
                 <td>{{$page->path}}</td>
+                <td>{{$page->language}}</td>
                 <td>@if($page->parent)<a href="{{route('admin.page.show', $page->parent)}}">{{$page->parent->title}}</a>@endif</td>
                 <td>{{$page->page_order}}</td>
                 <td>@if($page->author)<a href="{{route('admin.user.show', $page->author)}}">{{$page->author->name}}</a>@endif</td>

@@ -20,7 +20,6 @@ class BackendController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        Auth::check();
     }
 
     /**
@@ -30,12 +29,100 @@ class BackendController extends Controller
      */
     public function dashboard()
     {
-        $currentCart = Session::has('cart') ? Session::get('cart') : null;
-        $cart = Cart::getInstance($currentCart);
+        $user = Auth::user();
         
-        return view('backend.dashboard.'.Auth::user()->role)
-            ->with('item',Auth::user())
-            ->with(['cart' => $cart]);
+        $view = view('backend.dashboard.'.$user->role)
+            ->with('title', __('app.dashboard'))
+            ->with('item', $user);
+        
+        $recent = [];
+        $count  = [];
+        
+                
+        $count['pins']  = 110;
+        $recent['pins'] = $user->pins()
+            ->orderBy('created_at', 'desc')
+            ->take($this->recentSize);
+
+        $count['favorites']  = 300;
+        $recent['favorites'] = $user->favorites()
+            ->orderBy('created_at', 'desc')
+            ->take($this->recentSize);
+        
+        switch($user->role){
+            case 'member':
+                $currentCart = Session::has('cart') ? Session::get('cart') : null;
+                $cart = Cart::getInstance($currentCart);
+                $view->with('cart', $cart);
+                
+                $count['orders']  = 20;
+                $recent['orders'] = $user->purchases()
+                    ->wherePivot('status', 'ordered')
+                    ->orderBy('created_at', 'desc')
+                    ->take($this->recentSize);
+                
+                $count['purchases']  = 30;
+                $recent['purchases'] = $user->purchases()
+                    ->wherePivot('status', 'paid')
+                    ->orderBy('created_at', 'desc')
+                    ->take($this->recentSize);
+                break;
+            case 'apl':
+                $count['customers']  = 10;
+                $recent['customers'] = $user->customers()
+                    ->isActive()
+                    ->ofRole('member')
+                    ->orderBy('created_at', 'desc')
+                    ->take($this->recentSize);
+                
+                $count['orders']  = 20;
+                $recent['orders'] = $user->sales()
+                    ->wherePivot('status', 'ordered')
+                    ->orderBy('created_at', 'desc')
+                    ->take($this->recentSize);
+                
+                $count['sales']  = 30;
+                $recent['sales'] = $user->sales()
+                    ->wherePivot('status', 'paid')
+                    ->orderBy('created_at', 'desc')
+                    ->take($this->recentSize);
+                break;
+            case 'afa':
+                $count['orders']  = 5;
+                $recent['orders'] = $user->sales()
+                    ->wherePivot('status', 'ordered')
+                    ->orderBy('created_at', 'desc')
+                    ->take($this->recentSize);
+                
+                $count['sales']  = 20;
+                $recent['sales'] = $user->sales()
+                    ->wherePivot('status', 'paid')
+                    ->orderBy('created_at', 'desc')
+                    ->take($this->recentSize);
+                break;
+            case 'seller':
+                $count['products']  = 50;
+                $recent['products.'] = $user->products()
+                    ->orderBy('products.created_at', 'desc')
+                    ->take($this->recentSize);
+                
+                $count['orders']  = 50;
+                $recent['orders'] = $user->products()
+                    ->wherePivot('products.status', 'ordered')
+                    ->orderBy('products.created_at', 'desc')
+                    ->take($this->recentSize);
+                
+                $count['sales']  = 200;
+                $recent['sales'] = $user->products()
+                    ->where('products.status', 'paid')
+                    ->orderBy('products.created_at', 'desc')
+                    ->take($this->recentSize);
+                break;
+        } 
+        
+        $view->with('count', $count);
+        $view->with('recent', $recent);
+        return $view;
     }
 
     /**
@@ -47,8 +134,9 @@ class BackendController extends Controller
     {
         $action = url(Auth::user()->role.'/edit');
         return view('backend.user.update')
-            ->with('action',$action)
-            ->with('item',Auth::user());
+            ->with('title', __('app.profile'))
+            ->with('action', $action)
+            ->with('item', Auth::user());
     }
 
     /**
@@ -312,7 +400,8 @@ class BackendController extends Controller
      */
     public function password()
     {
-        return view('backend.user.password');
+        return view('backend.user.password')
+            ->with('title', __('app.password'));
     }
 
     /**
@@ -351,6 +440,7 @@ class BackendController extends Controller
     public function avatar()
     {
         return view('backend.user.avatar')
+            ->with('title', __('app.avatar'))
             ->with('item', Auth::user());
     }
 
@@ -394,6 +484,7 @@ class BackendController extends Controller
     public function location()
     {
         return view('backend.user.location')
+            ->with('title', __('app.location'))
             ->with('item', Auth::user()->with('location'))
             ->with('location',  Auth::user()->location);
     }
@@ -450,6 +541,7 @@ class BackendController extends Controller
     public function favorites()
     {
         return view('backend.product.all')
+            ->with('title', __('app.favorites'))
             ->with('items', Auth::user()->favorites);
     }
 
@@ -461,6 +553,7 @@ class BackendController extends Controller
     public function pins()
     {
         return view('backend.product.all')
+            ->with('title', __('app.pins'))
             ->with('items', Auth::user()->pins);
     }
 

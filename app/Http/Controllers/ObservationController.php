@@ -34,6 +34,7 @@ class ObservationController extends Controller
         if($value = $request->old('content'))   $item->content = $value;
 
         $action = route('admin.observation.store');
+        
         return view('admin.observation.update', ['item'=>$item, 'action'=>$action]);
     }
 
@@ -73,7 +74,9 @@ class ObservationController extends Controller
     public function edit(Request $request, Observation  $observation)
     {
         if($value = $request->old('content'))   $item->content = $value;
+        
         $action = route('admin.observation.update', ['observation'=>$observation]);
+        
         return view('admin.observation.update', ['item'=>$observation, 'action'=>$action]);
     }
 
@@ -88,6 +91,7 @@ class ObservationController extends Controller
     {
         // Validate request
         $validator = Validator::make($request->all(),['content' => 'required']);
+        
         if ($validator->fails()) {
             return back()->withErrors($validator)
                         ->withInput();
@@ -95,6 +99,7 @@ class ObservationController extends Controller
 
         $observation->content = $request->content;
         $observation->save();
+        
         return back()->with('success',"L'observation a été bien modifié.");
     }
 

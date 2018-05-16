@@ -26,9 +26,11 @@ class Config extends BaseModel
     
     public static $TRIAL = "payment.trial_delay";
     public static $RESERVATION = "payment.percent_reservation";
+    public static $APP_LATITUDE = "site.latitude";
+    public static $APP_LONGITUDE = "site.longitude";
     
     public static function site(){
-        return Config::findOrFail(self::SITE_ID);
+        return Config::findOrFail(self::$SITE_ID);
     }
     
     public static function siteRules(){
@@ -36,6 +38,7 @@ class Config extends BaseModel
             'identifiant' => 'required|max:100',
             'app_name' => 'required|max:100',
             'app_email' => 'required|max:100',
+            'app_phone' => 'required|max:100',
             'meta_title' => 'required|max:100',
             'latitude' => 'required|max:100',
             'longitude' => 'required|max:100',

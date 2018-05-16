@@ -45,6 +45,9 @@
                       <label for="app_email">Adressse email</label>
                       <input id="app_email" class="input-block-level" type="text" name="app_email" 
                              value="{{old('app_email')?old('app_email'):($item->get_meta('app_email')?$item->get_meta('app_email')->value:'')}}">
+                      <label for="app_phone">Phone</label>
+                      <input id="app_phone" class="input-block-level" type="text" name="app_phone" 
+                             value="{{old('app_phone')?old('app_phone'):($item->get_meta('app_phone')?$item->get_meta('app_phone')->value:'')}}">
                       <label for="latitude">Latitude</label>
                       <input id="latitude" class="input-block-level" type="text" name="latitude" 
                              value="{{old('latitude')?old('latitude'):($item->get_meta('latitude')?$item->get_meta('latitude')->value:'')}}">

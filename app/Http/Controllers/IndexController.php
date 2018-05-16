@@ -68,7 +68,7 @@ class IndexController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function guide(Request $request)
+    public function help(Request $request)
     {
         return $this->render($request, 8);
     }

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Session;
 
 use App\Models\Page;
+use App\Models\Config;
 
 class LoginController extends Controller
 {
@@ -81,7 +82,11 @@ class LoginController extends Controller
         $page = Page::where('path', '/login')
             ->locale()
             ->first();
+        $latitude = option(Config::$APP_LATITUDE, -25.647467468105795);
+        $longitude = option(Config::$APP_LONGITUDE, 146.89921517372136);
         return view('auth.login')
+            ->with('latitude', $latitude)
+            ->with('longitude', $longitude)
             ->with('item', $page);
     }
     

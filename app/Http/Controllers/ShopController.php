@@ -49,20 +49,18 @@ class ShopController extends Controller
             ));
         }
         
-        if($page2 = Page::where('path', '=', '/products*')->first()){
-            $pubs = $page2->pubs;
-        }else{
-            $pubs = [];
-        }
+        $products = Product::orderBy('created_at','desc')
+            ->ofStatus('published')
+            ->take($this->recentSize)
+            ->get();
         
-        $products = Product::ofStatus('published')
-            ->where('quantity', '>', 0)
-            ->orderBy('created_at','desc')
-            ->take(3)
-            ->get();
         $categories = Category::orderBy('created_at', 'desc')
-            ->take(5)
+            ->take($this->recentSize)
             ->get();
+        
+        $page = Page::where('path', '=', '/products*')
+            ->first();
+        if($page){$pubs = $page->pubs;}else{$pubs=[];}
 
         return view('shop.index')
             ->with('items', $items)
@@ -89,16 +87,21 @@ class ShopController extends Controller
         }
         
         if(!$product->location){
-    	   return redirect()->route('product.index', $product)->with('error','Produit pas de localisation');
+    	   return redirect()->route('product.index', $product)->with('error','Le systeme ne peut pas localiser le produit');
         }
         
-        $items = User::ofRole('apl')->isActive()->has('location')->with('location')->get();
+        $apls = User::ofRole('apl')
+            ->isActive()
+            ->has('location')
+            ->with('location')
+            ->get();
+        
         $data = [];
-        foreach($items as $item){
+        foreach($apls as $item){
             $data[] = [
               'id' => $item->id,
-              'lat' => $item->location->latitude,
-              'lng' => $item->location->longitude,
+              'lat' => $item->location?$item->location->latitude:0,
+              'lng' => $item->location?$item->location->longitude:0,
               'title' => $item->name,
               'content' => $item->get_meta('orga_description')?$item->get_meta('orga_description')->value:'',
               'type' => $item->role,
@@ -107,8 +110,8 @@ class ShopController extends Controller
         
         $data[] = [
               'id' => $product->id,
-              'lat' => $product->location->latitude,
-              'lng' => $product->location->longitude,
+              'lat' => $product->location?$product->location->latitude:0,
+              'lng' => $product->location?$product->location->longitude:0,
               'title' => $product->title,
               'type' => 'product',
             ];
@@ -138,7 +141,10 @@ class ShopController extends Controller
         
         $apl = null;
         if($request->has('apl')){
-            $apl = User::ofRole('apl')->isActive()->where('id', '=', $request->apl)->first();
+            $apl = User::ofRole('apl')
+                ->isActive()
+                ->where('id', '=', $request->apl)
+                ->first();
         }
         
         // No APL selected
@@ -159,10 +165,9 @@ class ShopController extends Controller
         
         // Get AFA
         if($product->location){
-            $afas = User::ofRole('afa')
-                ->isActive()
-                ->hasLocation()
-                ->get();
+            $afas = User::ofRole('afa')->isActive()
+                ->hasLocation()->get();
+            
             $dists = [];
             $value = 10000000000;
             foreach($afas as $item){
@@ -268,8 +273,6 @@ class ShopController extends Controller
         $cart->setAsOrdered();
 
         Session::forget('cart');
-        
-        //Fire event
         
         return redirect()->route('profile')->with('success', 'Votre commande a été éffectué');
     }

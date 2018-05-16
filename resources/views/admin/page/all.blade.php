@@ -13,6 +13,7 @@
                 @include('admin.table.page',['pages'=>$items])
             </div>
         </div>
+        {{$items->links()}}
     </section>
 </div>
 </div>

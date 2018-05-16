@@ -21,6 +21,11 @@ class Controller extends BaseController
     protected $pageSize = 4;
     
     /**
+     * Recent records size
+     */
+    protected $recentSize = 4;
+    
+    /**
      * Create a new controller instance.
      *
      * @return void

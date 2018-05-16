@@ -32,11 +32,13 @@ class LabelController extends Controller
     public function storeOrUpdate(Request $request, Product $product, $type)
     {
         $label = Label::where('product_id','=', $product->id)
-            ->where('label','=', $type)
+            ->where('label', $type)
             ->first();
+        
         if(!$label){
             $label = new Label();
         }
+        
         $label->label = $type;
         $label->product_id = $product->id;
         $label->save();
@@ -57,8 +59,10 @@ class LabelController extends Controller
     {
         $page = $request->get('page');
         if(!$page){ $page =1; }
-        $items = Label::where('label','=', $type)
+        
+        $items = Label::where('label', $type)
                         ->paginate($this->pageSize);
+        
         return view('label.all', compact('items', 'filter', 'page')); 
     }
 }

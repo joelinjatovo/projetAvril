@@ -6,7 +6,7 @@
     <div id="page-content" class="page-content tab-content overflow-y">
         <div id="TabTop1" class="tab-pane padding-bottom30 active fade in">
             <div class="page-header">
-                <h3>Profil du APL</h3>
+                <h3>@lang('app.apl')</h3>
             </div>
             <div class="row-fluid">
                 <div class="grider">
@@ -172,31 +172,27 @@
                             </div>
                         </div>
                     </div>
-                    <!-- // Widget -->
                     
                     <div class="widget widget-simple">
                         <div class="widget-header">
-                            <h4><small>Observations</small></h4>
+                            <h4><small>@lang('app.observations')</small></h4>
                         </div>
                         @include('admin.table.observation',['item'=>$item])
                     </div>
-                    <!-- // Widget -->
                         
                     <div class="widget widget-simple">
                         <div class="widget-header">
-                            <h4><small>Clients de l'agence</small></h4>
+                            <h4><small>@lang('app.customers')</small></h4>
                         </div>
-                        @include('admin.table.user',['users'=>$item->clients])
+                        @include('admin.table.user',['users'=>$item->customers])
                     </div>
-                    <!-- // Widget -->
                         
                     <div class="widget widget-simple">
                         <div class="widget-header">
-                            <h4><small>Produits traites par l'agence</small></h4>
+                            <h4><small>@lang('app.sales')</small></h4>
                         </div>
-                        @include('admin.table.product',['products'=>$item->selledProducts])
+                        @include('admin.table.product',['products'=>$item->sales])
                     </div>
-                    <!-- // Widget -->
                     
                 </div>
             </div>

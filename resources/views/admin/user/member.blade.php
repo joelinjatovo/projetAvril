@@ -6,7 +6,7 @@
     <div id="page-content" class="page-content tab-content overflow-y">
         <div id="TabTop1" class="tab-pane padding-bottom30 active fade in">
             <div class="page-header">
-                <h3>Profil client</h3>
+                <h3>@lang('app.member')</h3>
             </div>
             <div class="row-fluid">
                 <div class="grider">
@@ -144,43 +144,28 @@
                             </div>
                         </div>
                     </div>
-                    <!-- // Widget -->
-                        
                     <div class="widget widget-simple">
                         <div class="widget-header">
-                            <h4><small>Produits achetes</small></h4>
+                            <h4><small>@lang('app.purchases')</small></h4>
                         </div>
-                        @include('admin.table.product',['products'=>$item->boughtProducts])
+                        @include('admin.table.product',['products'=>$item->purchases])
                     </div>
-                    <!-- // Widget -->
-                        
                     <div class="widget widget-simple">
                         <div class="widget-header">
-                            <h4><small>Produits enregistres</small></h4>
+                            <h4><small>@lang('app.pins')</small></h4>
                         </div>
-                        @include('admin.table.product',['products'=>$item->savedProducts])
+                        @include('admin.table.product',['products'=>$item->pins])
                     </div>
-                    <!-- // Widget -->
-                        
                     <div class="widget widget-simple">
                         <div class="widget-header">
-                            <h4><small>Produits favoris</small></h4>
+                            <h4><small>@lang('app.favorites')</small></h4>
                         </div>
-                        @include('admin.table.product',['products'=>$item->starredProducts])
+                        @include('admin.table.product',['products'=>$item->favorites])
                     </div>
-                    <!-- // Widget -->
-                    
                 </div>
-                <!-- // Column -->
-                <!-- // Column -->
             </div>
-            <!-- // Example row -->
         </div>
-
     </div>
-    <!-- // page content -->
 </div>
-<!-- // main-content -->
-
 @endsection
 
