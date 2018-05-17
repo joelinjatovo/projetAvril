@@ -43,31 +43,31 @@ class ChatController extends Controller
      */
     public function index()
     {
-        $user = auth()->user();
+        $currentUser = auth()->user();
         
         $threads = Thread::with('userone')
             ->with('usertwo')
-            ->where('user_one', $user->id)
-            ->orWhere('user_two', $user->id)
+            ->where('user_one', $currentUser->id)
+            ->orWhere('user_two', $currentUser->id)
             ->get();
         
-        $users = User::where('id', '<>', auth()->user()->id);
-        if($user->role=='member'){
+        $users = User::where('id', '<>', $currentUser->id);
+        if($currentUser->role=='member'){
             $users->where('role', '<>', 'seller')
                 ->where('role', '<>', 'member')
                 ->where('role', '<>', 'afa');
         }
         
-        if($user->role=='seller'){
+        if($currentUser->role=='seller'){
             $users->where('role', '<>', 'member');
         }
         
         $users = $users->get();
 
         if(\Auth::user()->isAdmin()){
-            return view('chat.admin', ['threads' => $threads, 'users' => $users, 'user' => $user]);
+            return view('chat.admin', ['threads' => $threads, 'users' => $users, 'user' => $currentUser]);
         }
         
-        return view('chat.thread', ['threads' => $threads, 'users' => $users, 'user' => $user]);
+        return view('chat.thread', ['threads' => $threads, 'users' => $users, 'user' => $currentUser]);
     }
 }

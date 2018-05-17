@@ -47,8 +47,8 @@
                     @include('includes.alerts')
                     <div class="row">
                         <div class="col-sm-12">
-                          <a href="#" class="btn btn-default col-sm-6"><i class="fa fa-envelope-open-o"></i> @lang('app.btn.contact_admin')</a>
-                          <a href="#" class="btn btn-default col-sm-6"><i class="fa fa-envelope-open-o"></i> @lang('app.btn.contact_apl')</a>
+                          <a href="{{route('contact')}}" class="btn btn-default col-sm-6"><i class="fa fa-envelope-open-o"></i> @lang('app.btn.contact_admin')</a>
+                          <a href="{{route('contact')}}" class="btn btn-default col-sm-6"><i class="fa fa-envelope-open-o"></i> @lang('app.btn.contact_apl')</a>
                         </div>
                     </div>
                     <div class="row">

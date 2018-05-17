@@ -8,21 +8,32 @@
         <fieldset>
             <legend>@lang('app.select_apl')</legend>
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-sm-9">
                     <div id="map"></div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                     <div class="panel panel-default">
                       <div class="panel-heading" id="apl-title"></div>
                       <div class="panel-body" id="apl-content"></div>
                     </div>
                     <div class="form-group">
-                        <input type="checkbox" name="is_default">@lang('app.choose_as_default_apl')
+                        <div class="col-sm-12">
+                            <select name="apl" type="text" class="form-control">
+                                @foreach($items as $item)
+                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <button id="submit" type="submit" class="btn btn-primary">@lang('app.btn.select_apl')</button>
+                        <div class="col-sm-12">
+                            <input type="checkbox" name="is_default"> @lang('app.choose_as_default_apl')
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button id="submit" type="submit" class="btn btn-primary">@lang('app.btn.select_apl')</button>
+                        </div>
                     </div>
                 </div>
             </div>

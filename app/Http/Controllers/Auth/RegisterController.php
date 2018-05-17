@@ -506,10 +506,16 @@ class RegisterController extends Controller
         if($value = $request->input('newsletter')) $user->update_meta("newsletter", $value);
         if($value = $request->input('allow_sharing')) $user->update_meta("allow_sharing", $value);
 
-        // Notify User
-        $user->notify(new AccountCreated($user, $password));
-        
         $request->session()->forget("step");
+
+        // Notify User
+        try{
+            $user->notify(new AccountCreated($user, $password));
+        }catch(\Exception $e){
+            $error = $e->getMessage();
+            return redirect()->route('login')
+                ->with('error', $error);
+        }
 
         // Success
         return redirect()->route('login')

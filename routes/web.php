@@ -17,6 +17,7 @@ Route::get('mail/basic','MailController@basic_email');
 Route::get('mail/html','MailController@html_email');
 Route::get('mail/attachment','MailController@attachment_email');
 
+
 Auth::routes();
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
@@ -93,14 +94,15 @@ Route::middleware('guest')->group(function(){
 });
 
 Route::middleware(["auth"])->group(function(){
+    // Mail
+    Route::get('contact/{user?}','MailController@contact')->name('contact');
+    Route::post('contact/{user?}','MailController@sendMail');
+
     //Chat
     Route::get('chat', 'ChatController@index');
     Route::post('chat/threads', 'ThreadController@store');
     Route::post('chat/messages', 'ChatController@store');
-    
-    
-    Route::get('thread/threads', 'ThreadController@store');
-    
+
     // Label
     Route::get('product/{product}/{type}', 'LabelController@storeOrUpdate')->name('label.store');// Save OR Star Product
     Route::get('products/{type}', 'LabelController@all')->name('label.list');// List saved products OR starred Product

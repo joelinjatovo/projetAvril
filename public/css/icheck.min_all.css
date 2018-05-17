@@ -68,8 +68,8 @@
     padding: 0;
     width: 20px;
     height: 20px;
-    /* background: url(../images/skin/red.png) no-repeat; */
-    border: groove;
+    background: url(../images/skin/red.png) no-repeat;
+    border: none;
     cursor: pointer;
 }
 
@@ -422,8 +422,8 @@
     padding: 0;
     width: 20px;
     height: 20px;
-    /* background: url(../images/skin/yellow.png) no-repeat; */
-    border: groove;
+    background: url(../images/skin/yellow.png) no-repeat;
+    border: none;
     cursor: pointer;
 }
 

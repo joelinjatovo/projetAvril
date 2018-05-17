@@ -119,10 +119,10 @@ class ShopController extends Controller
               'title' => $product->title,
               'type' => 'product',
             ];
-        
+        $product = null;
     	return view('shop.apl')
             ->with(['location' => Auth::user()->location])
-            ->with(['items' => $items])
+            ->with(['items' => $apls])
             ->with(['item' => $product])
             ->with(['data' => json_encode($data)]);
     }
