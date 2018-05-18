@@ -54,7 +54,7 @@
 
         methods: {
             store() {
-                axios.post('/thread/messages', {message: this.message, thread_id: this.thread.id})
+                axios.post('/chat/messages', {message: this.message, thread_id: this.thread.id})
                 .then((response) => {
                     this.message = '';
                     console.log(response);

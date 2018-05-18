@@ -4,7 +4,6 @@
 <div class="row">
     <form class="form-horizontal" role="form" method="post" action="{{route('shop.add', $item)}}">
         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-        <input type="hidden" name="apl" id="apl">
         <fieldset>
             <legend>@lang('app.select_apl')</legend>
             <div class="row">
@@ -12,13 +11,9 @@
                     <div id="map"></div>
                 </div>
                 <div class="col-sm-3">
-                    <div class="panel panel-default">
-                      <div class="panel-heading" id="apl-title"></div>
-                      <div class="panel-body" id="apl-content"></div>
-                    </div>
                     <div class="form-group">
                         <div class="col-sm-12">
-                            <select name="apl" type="text" class="form-control">
+                            <select name="apl" class="form-control">
                                 @foreach($items as $item)
                                 <option value="{{$item->id}}">{{$item->name}}</option>
                                 @endforeach

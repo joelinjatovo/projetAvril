@@ -267,11 +267,18 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::get('delete/{pub}', 'PubController@delete')->name('admin.pub.delete');
     });
 
-    // Chats Controller Groups
+    // Chat Controller Groups
     Route::get('chats/{filter?}', 'ThreadController@all')->name('admin.chat.list');
     Route::prefix('chat')->group(function(){
         Route::get('show/{thread}', 'ThreadController@show')->name('admin.thread.show');
         Route::get('delete/{thread}', 'ThreadController@delete')->name('admin.thread.delete');
+    });
+
+    // Mail Controller Groups
+    Route::get('mails/{filter?}', 'MailController@all')->name('admin.mail.list');
+    Route::prefix('mail')->group(function(){
+        Route::get('show/{mail}', 'MailController@show')->name('admin.mail.show');
+        Route::get('delete/{mail}', 'MailController@delete')->name('admin.mail.delete');
     });
 
     // Observation Controller Groups

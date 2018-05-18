@@ -26,13 +26,13 @@
                 <h4 id="comments-title">Commentaires</h4>
                 <ol class="commentlist">
                     @forelse($item->comments as $comment)
-                        <li>@include('comment.index')</li>
+                        <li>@include('comment.index', ['comment'=>$comment])</li>
                     @empty
                         <p>No comments</p>
                     @endforelse
                 </ol>
                 @if(Auth::check())
-                    @include('comment.form')
+                    @include('comment.form', ['item'=>$item])
                 @endif
                 <!-- #respond -->                         
             </section>                     

@@ -146,12 +146,12 @@ class PageController extends Controller
         $this->middleware('auth');
         $this->middleware('role:admin');
         
-        if($value = $request->old('title'))      $item->title = $value;
-        if($value = $request->old('content'))    $item->content = $value;
-        if($value = $request->old('path'))       $item->path = $value;
-        if($value = $request->old('page_order')) $item->page_order = $value;
-        if($value = $request->old('parent_id'))  $item->parent_id = $value;
-        if($value = $request->old('language'))   $item->language = $value;
+        if($value = $request->old('title'))      $page->title = $value;
+        if($value = $request->old('content'))    $page->content = $value;
+        if($value = $request->old('path'))       $page->path = $value;
+        if($value = $request->old('page_order')) $page->page_order = $value;
+        if($value = $request->old('parent_id'))  $page->parent_id = $value;
+        if($value = $request->old('language'))   $page->language = $value;
         
         $action = route('admin.page.update', ['page'=>$page]);
         $pages = Page::where('parent_id', 0)->get();
@@ -185,8 +185,8 @@ class PageController extends Controller
         
         $page->title = $request->title;
         $page->content = $request->content;
-        $page->parent_id = $request->parent_id;
-        $page->page_order = $request->page_order;
+        $page->parent_id = $request->parent_id?$request->parent_id:0;
+        $page->page_order = $request->page_order?$request->page_order:0;
         $page->path = $request->path;
         $page->language = $request->language;
         $page->save();

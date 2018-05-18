@@ -7,6 +7,7 @@ use Auth;
 use Validator;
 
 use App\Models\User;
+use App\Models\Mail;
 
 class MailController extends Controller
 {
@@ -46,23 +47,60 @@ class MailController extends Controller
                     ->isActive()
                     ->first();
         }
+        
+        if(!$user){
+            return back()->with('error', 'No admin');
+        }
 
-        $subject = $request->subject;
-        $content = $request->content;
+        $item = new Mail();
+        $item->subject = $request->subject;
+        $item->content = $request->content;
+        $item->receiver_id = $user->id;
+        $item->save();
 
         $data = array('name'=>"Virat Gandhi");
 
         try{
-            \Mail::send('mail', $data, function($message) use($user, $current, $subject) {
-                $message->to($user->email, $user->name)
-                        ->subject($subject)
-                        ->from($current->email, $current->name);
+            \Mail::send('mail', $data, function($message) use($item) {
+                $message->to($item->receiver->email, $item->receiver->name)
+                        ->subject($item->subject)
+                        ->from($item->sender->email, $item->sender->name);
             });
         }catch(\Exception $e){
             return back()->with('error', $e->getMessage());
         }
 
         return back()->with('success', 'Message envoyé avec succes.');
+    }
+
+    /**
+     * Show a category
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @param  App\Models\Category $category
+     * @return Illuminate\Http\Response
+     */
+    public function show(Request $request, Mail $mail)
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        return view('admin.mail.index')
+                ->with('item', $mail->load('sender')->load('receiver')); 
+    }
+
+    /**
+     * Show all conversation in admin panel
+     *
+     * @param  Request $request
+     * @return Response
+     */
+    public function all(Request $request, $filter='all')
+    {
+      $items = Mail::orderBy('created_at', 'desc')
+          ->paginate($this->pageSize);
+      return view('admin.mail.all')
+          ->with('items', $items);
     }
 
 

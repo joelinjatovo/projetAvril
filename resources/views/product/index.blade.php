@@ -48,7 +48,11 @@
                     <div class="row">
                         <div class="col-sm-12">
                           <a href="{{route('contact')}}" class="btn btn-default col-sm-6"><i class="fa fa-envelope-open-o"></i> @lang('app.btn.contact_admin')</a>
-                          <a href="{{route('contact')}}" class="btn btn-default col-sm-6"><i class="fa fa-envelope-open-o"></i> @lang('app.btn.contact_apl')</a>
+                            
+                          @if(Auth::check()&&Auth::user()->hasApl())
+                            <a href="{{route('contact', Auth::user()->apl)}}" class="btn btn-default col-sm-6"><i class="fa fa-envelope-open-o"></i> @lang('app.btn.contact_apl')</a>
+                          @endif
+                          
                         </div>
                     </div>
                     <div class="row">

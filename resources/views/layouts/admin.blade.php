@@ -104,9 +104,9 @@
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="#accDashboard" data-parent="#mainSideMenu"  data-toggle="collapse" class="accordion-toggle"><i class="fontello-icon-chart"></i><i class="chevron fontello-icon-right-open-3"></i>Statistiques</a>
+                      <a href="#accDashboard" data-parent="#mainSideMenu"  data-toggle="collapse" class="accordion-toggle {{\Route::is('*admin.chart*')?'collapsed':''}}"><i class="fontello-icon-chart"></i><i class="chevron fontello-icon-right-open-3"></i>Statistiques</a>
                   </div>
-                  <ul class="accordion-content nav nav-list collapse" id="accDashboard">
+                  <ul class="accordion-content nav nav-list collapse {{\Route::is('*admin.chart*')?'in':''}}" id="accDashboard">
                       <li><a href="{{route('admin.chart', ['type'=>'product'])}}"> <i class="fontello-icon-right-dir"></i>@lang('app.products')</a></li>
                       <li><a href="{{route('admin.chart', ['type'=>'user'])}}"> <i class="fontello-icon-right-dir"></i>@lang('app.users')</a></li>
                       <li><a href="{{route('admin.chart', ['type'=>'member'])}}"> <i class="fontello-icon-right-dir"></i>@lang('app.members')</a></li>
@@ -118,9 +118,9 @@
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="#accMembres" data-parent="#mainSideMenu"  data-toggle="collapse" class="accordion-toggle"><i class="fontello-icon-users-1"></i><i class="chevron fontello-icon-right-open-3"></i>Parties Prenantes</a>
+                      <a href="#accMembres" data-parent="#mainSideMenu"  data-toggle="collapse" class="accordion-toggle {{\Route::is('*admin.user*')?'collapsed':''}}"><i class="fontello-icon-users-1"></i><i class="chevron fontello-icon-right-open-3"></i>Parties Prenantes</a>
                   </div>
-                  <ul class="accordion-content nav nav-list collapse" id="accMembres">
+                  <ul class="accordion-content nav nav-list collapse {{\Route::is('*admin.chart*')?'in':''}}" id="accMembres">
                       <li><a href="{{route('admin.user.list')}}"> <i class="fontello-icon-right-dir"></i>Tous</a></li>
                       <li><a href="{{route('admin.user.list', ['filter'=>'admin'])}}"> <i class="fontello-icon-right-dir"></i>Admin</a></li>
                       <li><a href="{{route('admin.user.list', ['filter'=>'seller'])}}"> <i class="fontello-icon-right-dir"></i>Vendeurs</a></li>
@@ -131,11 +131,11 @@
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="#accProducts" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle">
+                      <a href="#accProducts" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Route::is('*admin.product*')?'collapsed':''}}">
                         <i class="fontello-icon-users-1"></i>
                         <i class="chevron fontello-icon-right-open-3"></i>@lang('app.admin.products')</a>
                   </div>
-                  <ul class="accordion-content nav nav-list collapse" id="accProducts">
+                  <ul class="accordion-content nav nav-list collapse {{\Route::is('*admin.chart*')?'in':''}}" id="accProducts">
                       <li><a href="{{route('admin.product.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.list')</a></li>
                       <li><a href="{{route('admin.product.list', ['filter'=>'published'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.publish')</a></li>
                       <li><a href="{{route('admin.product.list', ['filter'=>'pinged'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.ping')</a></li>
@@ -145,11 +145,11 @@
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="#accBlogs" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle">
+                      <a href="#accBlogs" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Route::is('*admin.blog*')?'collapsed':''}}">
                         <i class="fontello-icon-users-1"></i>
                         <i class="chevron fontello-icon-right-open-3"></i>@lang('app.admin.blogs')</a>
                   </div>
-                  <ul class="accordion-content nav nav-list collapse" id="accBlogs">
+                  <ul class="accordion-content nav nav-list collapse {{\Route::is('*admin.blog*')?'in':''}}" id="accBlogs">
                       <li><a href="{{route('admin.blog.create')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.blog.add')</a></li>
                       <li><a href="{{route('admin.blog.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.blog.list')</a></li>
                        <li><a href="{{route('admin.blog.list', ['filter'=>'published'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.blog.publish')</a></li>
@@ -160,44 +160,44 @@
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="#accCategories" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle">
+                      <a href="#accCategories" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Route::is('*admin.category*')?'collapsed':''}}">
                         <i class="fontello-icon-users-1"></i>
                         <i class="chevron fontello-icon-right-open-3"></i>@lang('app.admin.categories')</a>
                   </div>
-                  <ul class="accordion-content nav nav-list collapse" id="accCategories">
+                  <ul class="accordion-content nav nav-list collapse {{\Route::is('*admin.category*')?'in':''}}" id="accCategories">
                       <li><a href="{{route('admin.category.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.category.list')</a></li>
                       <li><a href="{{route('admin.category.create')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.category.add')</a></li>
                   </ul>
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="#accPubs" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle">
+                      <a href="#accPubs" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Route::is('*admin.pub*')?'collapsed':''}}">
                         <i class="fontello-icon-users-1"></i>
                         <i class="chevron fontello-icon-right-open-3"></i>@lang('app.admin.pubs')</a>
                   </div>
-                  <ul class="accordion-content nav nav-list collapse" id="accPubs">
+                  <ul class="accordion-content nav nav-list collapse {{\Route::is('*admin.pub*')?'in':''}}" id="accPubs">
                       <li><a href="{{route('admin.pub.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.pub.list')</a></li>
                       <li><a href="{{route('admin.pub.create')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.pub.add')</a></li>
                   </ul>
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="#accPages" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle">
+                      <a href="#accPages" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Route::is('*admin.page*')?'collapsed':''}}">
                         <i class="fontello-icon-users-1"></i>
                         <i class="chevron fontello-icon-right-open-3"></i>@lang('app.admin.pages')</a>
                   </div>
-                  <ul class="accordion-content nav nav-list collapse" id="accPages">
+                  <ul class="accordion-content nav nav-list collapse {{\Route::is('*admin.page*')?'in':''}}" id="accPages">
                       <li><a href="{{route('admin.page.create')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.page.add')</a></li>
                       <li><a href="{{route('admin.page.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.page.list')</a></li>
                   </ul>
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="#accCarts" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle">
+                      <a href="#accCarts" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Route::is('*admin.cart*')?'collapsed':''}}">
                         <i class="fontello-icon-users-1"></i>
                         <i class="chevron fontello-icon-right-open-3"></i>@lang('app.admin.carts')</a>
                   </div>
-                  <ul class="accordion-content nav nav-list collapse" id="accCarts">
+                  <ul class="accordion-content nav nav-list collapse {{\Route::is('*admin.cart*')?'in':''}}" id="accCarts">
                       <li><a href="{{route('admin.cart.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.cart.list')</a></li>
                       <li><a href="{{route('admin.cart.list', ['filter'=>'pinged'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.cart.pinged')</a></li>
                       <li><a href="{{route('admin.cart.list', ['filter'=>'ordered'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.cart.ordered')</a></li>
@@ -206,17 +206,22 @@
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
+                      <a href="{{route('admin.mail.list')}}" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fontello-icon-left-1"></i>@lang('app.admin.mail.list')</a>
+                  </div>
+              </li>
+              <li class="accordion-group">
+                  <div class="accordion-heading">
                       <a href="{{route('admin.chat.list')}}" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fontello-icon-left-1"></i>@lang('app.admin.chat.list')</a>
                   </div>
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="#accReglages" data-parent="#mainSideMenu"  data-toggle="collapse" class="accordion-toggle">
+                      <a href="#accReglages" data-parent="#mainSideMenu"  data-toggle="collapse" class="accordion-toggle {{\Route::is('*config*')?'collapsed':''}}">
                         <i class="fontello-icon-tools"></i>
                         <i class="chevron fontello-icon-right-open-3"></i>@lang('app.configs')
                       </a>
                   </div>
-                  <ul class="accordion-content nav nav-list collapse" id="accReglages">
+                  <ul class="accordion-content nav nav-list collapse {{\Route::is('*config*')?'in':''}}" id="accReglages">
                     <li><a href="{{route('config.site')}}"> <i class="fontello-icon-right-dir"></i>@lang('app.config.site')</a></li>
                     <li><a href="{{route('config.social')}}"> <i class="fontello-icon-right-dir"></i>@lang('app.config.social')</a></li>
                     <li><a href="{{route('config.payment')}}"> <i class="fontello-icon-right-dir"></i>@lang('app.config.payment')</a></li>
@@ -239,7 +244,9 @@
 <script src="{{asset('administrator/js/lib/jquery.js')}}"></script>
 <script src="{{asset('administrator/js/lib/jquery-ui.js')}}"></script>
 <script src="{{asset('administrator/js/lib/jquery.cookie.js')}}"></script>
+    <!-- 
 <script src="{{asset('administrator/js/lib/jquery.date.js')}}"></script>
+-->
 <script src="{{asset('administrator/js/lib/jquery.mousewheel.js')}}"></script>
 <script src="{{asset('administrator/js/lib/jquery.load-image.min.js')}}"></script>
 <script src="{{asset('administrator/js/lib/bootstrap/bootstrap.js')}}"></script>
@@ -247,10 +254,16 @@
 <!-- Plugins Bootstrap -->
 <script src="{{asset('administrator/plugins/bootstrap-wysihtml5/lib/js/wysihtml5-0.3.0.min.js')}}"></script>
 <script src="{{asset('administrator/plugins/bootstrap-wysihtml5/src/bootstrap-wysihtml5.js')}}"></script>
+    <!-- 
 <script src="{{asset('administrator/plugins/bootstrap-fuelux/all-fuelux.min.js')}}"></script>
+-->
+    <!-- 
 <script src="{{asset('administrator/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
+-->
+    <!-- 
 <script src="{{asset('administrator/plugins/bootstrap-timepicker/js/bootstrap-timepicker.js')}}"></script>
 <script src="{{asset('administrator/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js')}}"></script>
+-->
 <script src="{{asset('administrator/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js')}}"></script>
 <script src="{{asset('administrator/plugins/bootstrap-daterangepicker/js/bootstrap-daterangepicker.js')}}"></script>
 <script src="{{asset('administrator/plugins/bootstrap-toggle-button/js/bootstrap-toggle-button.js')}}"></script>
@@ -310,7 +323,9 @@
 
 <!-- Plugins data visualization -->
 <script src="{{asset('administrator/plugins/pl-visualization/sparkline/jquery.sparkline.min.js')}}"></script>
+<!-- 
 <script src="{{asset('administrator/plugins/pl-visualization/easy-pie-chart/jquery.easy-pie-chart.js')}}"></script>
+-->
 <script src="{{asset('administrator/plugins/pl-visualization/percentageloader/percentageloader.min.js')}}"></script>
 <script src="{{asset('administrator/plugins/pl-visualization/knob/knob.js')}}"></script>
 <script src="{{asset('administrator/plugins/pl-visualization/flot/jquery.flot.js')}}"></script>
@@ -453,7 +468,9 @@ $(document).ready(function () {
 
 <!-- Only This Demo Page -->
 <script src="{{asset('administrator/js/demo/demo-wisyhtml5.js')}}"></script>
+    <!-- 
 <script src="{{asset('administrator/js/demo/d3.js')}}"></script>
+-->
 <script>
 $(function() {
      $.configureBoxes({selectOnSubmit: false});

@@ -87,11 +87,13 @@ class ShopController extends Controller
         $this->middleware('role:member');
         
         if(!$product->isDisponible()){
-    	   return redirect()->route('product.index', $product)->with('error','Stock en rupture');
+    	   return redirect()->route('product.index', $product)
+               ->with('error','Stock en rupture');
         }
         
         if(!$product->location){
-    	   return redirect()->route('product.index', $product)->with('error','Le systeme ne peut pas localiser le produit');
+    	   return redirect()->route('product.index', $product)
+                ->with('error','Le systeme ne peut pas localiser le produit');
         }
         
         $apls = User::ofRole('apl')
@@ -119,11 +121,11 @@ class ShopController extends Controller
               'title' => $product->title,
               'type' => 'product',
             ];
-        $product = null;
+        
     	return view('shop.apl')
             ->with(['location' => Auth::user()->location])
             ->with(['items' => $apls])
-            ->with(['item' => $product])
+            ->with('item', $product)
             ->with(['data' => json_encode($data)]);
     }
     
@@ -140,7 +142,9 @@ class ShopController extends Controller
         Auth::check();
         
         if(!$product->isDisponible()){
-    	   return back()->withInput()->with('error','Stock en rupture');
+    	   return redirect()
+               ->route('product.index', $product)
+               ->withInput()->with('error','Stock en rupture');
         }
         
         $apl = null;
@@ -153,11 +157,13 @@ class ShopController extends Controller
         
         // No APL selected
         if(!$apl && !Auth::user()->apl){
-    	   return back()->withInput()->with('error','Vous devez choisir un apl.');
+    	   return redirect()->route('product.index', $product)
+               ->withInput()
+               ->with('error','Vous devez choisir un apl.');
         }
         
         // Update APL
-        if($apl && $apl->id>0 && $request->is_default){
+        if($apl && ($apl->id>0) && $request->is_default){
             Auth::user()->apl_id = $apl->id;
             Auth::user()->save();
         }
@@ -186,7 +192,9 @@ class ShopController extends Controller
         }
         
         if(!isset($afa) || $afa->id==0){
-    	   return redirect()->route('product.index', $product)->withInput()->with('error','Vous ne pouvez pas encore faire cet achat. Il n\'y a pas d\'agence dans la base');
+    	   return redirect()->route('product.index', $product)
+               ->withInput()
+               ->with('error','Vous ne pouvez pas encore faire cet achat. Il n\'y a pas d\'agence dans la base');
         }
         
     	$currentCart = Session::has('cart') ? Session::get('cart') : null;

@@ -48652,7 +48652,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         store: function store() {
             var _this = this;
 
-            axios.post('/thread/messages', { message: this.message, thread_id: this.thread.id }).then(function (response) {
+            axios.post('/chat/messages', { message: this.message, thread_id: this.thread.id }).then(function (response) {
                 _this.message = '';
                 console.log(response);
                 _this.messages.push(response.data);

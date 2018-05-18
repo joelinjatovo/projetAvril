@@ -139,6 +139,16 @@ class User extends Authenticatable
     }
     
     /**
+     * A user is member and has apl
+     *
+     * @return Boolean
+     */
+    public function hasApl()
+    {
+      return ($this->hasRole('member')&&$this->apl&&($this->apl->id>0));
+    }
+    
+    /**
      * Get Url of Attached Image OR Default Image
      *
      * @param Boolean $thumb

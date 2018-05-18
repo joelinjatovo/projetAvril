@@ -77,6 +77,7 @@ return [
     'i_want_buy_this_item'  => 'Je veux acheter ce produit',
     'as'  => 'En tant que',
     'member'  => 'Membre',
+    'members'  => 'Membres',
     'seller'  => 'Vendeur',
     'afa'  => 'Agence Francophone Australienne',
     'apl'  => 'Agence Partenaire Locale',
@@ -246,6 +247,11 @@ return [
     'admin.pages'           => 'Pages',
     'admin.page.list'       => 'Liste des pages',
     'admin.page.add'        => 'Ajouter une page',
+    
+    'mails'                 => 'Mails',
+    'mail'                  => 'Mail',
+    'admin.mails'           => 'Mails',
+    'admin.mail.list'       => 'Liste des mails',
     
     'admin.orders'          => 'Orders',
     'admin.carts'           => 'Carts',

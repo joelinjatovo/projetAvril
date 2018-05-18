@@ -1,10 +1,10 @@
 @if(Auth::check())
 <div id="respond" class="comment-respond contact-form"> 
     <h4 id="reply-title" class="comment-reply-title">Laissez un commentaire</h4> 
-    <form action="#" method="post" id="commentform" class="comment-form">
+    <form action="{{route('comment.store', $item)}}" method="post" id="commentform" class="comment-form">
         {{csrf_field()}}
         <p class="form-content"><textarea id="comment" name="content" placeholder="Commentaire" cols="45" rows="8" aria-required="true" required="required"></textarea></p> 
-        <p id="submit-comment" class="comment-submit btn btn-default btn-lg" onclick="postComment();">Poster un Commentaire</p> 
+        <button type="submit" id="submit-comment" class="comment-submit btn btn-default btn-lg" onclick="">Poster un Commentaire</p> 
     </form>                             
 </div>
 <script>

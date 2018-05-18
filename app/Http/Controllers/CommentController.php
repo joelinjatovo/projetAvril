@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use Validator;
 use Auth;
 
-use Illuminate\Http\Request;
+use App\Models\Blog;
+use App\Models\Comment;
+use App\Models\User;
 
 class CommentController extends Controller
 {
@@ -33,70 +35,28 @@ class CommentController extends Controller
         // Validate request
         $datas = $request->all();
         $validator = Validator::make($datas,[
-                            'title'   => 'required|max:100',
-                            'content' => 'required',
-                        ]);
+                'content' => 'required',
+            ]);
         
         if ($validator->fails()) {
             return back()->withErrors($validator)
                         ->withInput();
         }
         
-        $datas['blog_id'] = $blog->id;
-        $comment = Comment::create($datas);
-        
-        $view = view('comment.index')->render();
-        
-        return response()->json(array(
-            'html'=>$view, 
-            'msg'=>'Le commentaire a été bien  enregistré'
-        ));
-    }
-    
-    /**
-     * Render form to edit a blog
-     *
-     * @param  Illuminate\Http\Request  $request
-     * @param  App\Models\Blog  $blog
-     * @return Illuminate\Http\Response
-     */
-    public function edit(Request $request, Blog $blog, Comment $comment)
-    {
-        if($value = $request->old('content'))   $comment->content = $value;
-        
-        $action = route('comment.update', ['blog'=>$blog,'comment'=>$comment]);
-        
-        $view = view('comment.update', ['item'=>$blog, 'action'=>$action, 'comment'=>$comment])->render();
-        
-        return response()->json(array('html'=>$view));
-    }
-    
-    /**
-     * Update User
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Blog  $blog
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Blog $blog, Comment $comment)
-    {
-        // Validate request
-        $validator = Validator::make($request->all(),[
-                            'title' => 'required|max:100',
-                            'content' => 'required',
-                        ]);
-        
-        if ($validator->fails()) {
-            return back()->withErrors($validator)
-                        ->withInput();
-        }
-        
-        $comment->title = $request->input('title');
-        $comment->content = $request->input('content');
+        $comment = new Comment();
+        $comment->content = $request->content;
+        $comment->blog_id = $blog->id;
         $comment->save();
         
-        $view = view('comment.index')->render();
-        return response()->json(array('html'=>$view, 'msg'=>'Le commentaire a été bien modifié'));
+        if($request->ajax()){
+            $view = view('comment.index')->with('item', $comment)->render();
+            return response()->json(array(
+                'html'=>$view, 
+                'msg'=>'Le commentaire a été bien  enregistré'
+            ));
+        }
+        
+        return back()->with('success', 'Le commentaire a été bien  enregistré');
     }
     
     /**
