@@ -171,7 +171,7 @@
         
         _map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: _lat, lng:  _long},
-            zoom: 16
+            zoom: 10
         });
         
         _marker = new google.maps.Marker({
