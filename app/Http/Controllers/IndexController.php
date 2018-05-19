@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\User;
 use App\Models\Product;
 use App\Models\Page;
 use App\Models\Pub;
@@ -31,6 +32,39 @@ class IndexController extends Controller
     public function index(Request $request)
     {
         return $this->render($request, 1);
+    }
+
+    /**
+     * Show home page
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @return Illuminate\Http\Response
+     */
+    public function apl(Request $request)
+    {
+        $apls = User::ofRole('apl')
+            ->isActive()
+            ->has('location')
+            ->with('location')
+            ->get();
+        
+        $data = [];
+        foreach($apls as $item){
+            $html = view('user.map')->with('item', $item)->render();
+            $data[] = [
+              'id' => $item->id,
+              'lat' => $item->location?$item->location->latitude:0,
+              'lng' => $item->location?$item->location->longitude:0,
+              'title' => $item->name,
+              'content' => $item->get_meta('orga_description')?$item->get_meta('orga_description')->value:'',
+              'type' => $item->role,
+              'html' => $html,
+            ];
+        }
+        
+    	return view('index.apl')
+            ->with('items', $apls)
+            ->with(['data' => json_encode($data)]);
     }
 
     /**

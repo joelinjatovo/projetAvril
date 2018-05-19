@@ -85,19 +85,20 @@ class Cart extends BaseModel
         
 		$storedItem->quantity++;
 		$storedItem->price = $storedItem->quantity * $product->price;
-		$storedItem->tma = $storedItem->price*option(Config::$RESERVATION, 0.10);
+		$storedItem->tma = $storedItem->price*option(Config::$RESERVATION, 0.33);
 		$storedItem->currency = $product->currency;
         $storedItem->save();
         
 		self::$instance->totalQuantity++;
 		self::$instance->totalPrice += $product->price;
-		self::$instance->totalTma += $product->price*option(Config::$RESERVATION, 0.10);
+		self::$instance->totalTma += $product->price*option(Config::$RESERVATION, 0.33);
         self::$instance->save();
 	}
 
 	public static function reduceByOne($product){
 		self::$instance->totalQuantity--;
 		self::$instance->totalPrice -= $product->price;
+        self::$instance->save();
         
         foreach(self::$instance->items as $item){
             if($item->product_id==$product->id){
@@ -107,11 +108,9 @@ class Cart extends BaseModel
                     $item->save();
                 else
                     $item->delete();
-                return true;
             }
         }
         
-        return false;
 	}
 
 	public static function deleteAll($product){
@@ -119,11 +118,11 @@ class Cart extends BaseModel
             if($item->product_id==$product->id){
                 self::$instance->totalQuantity-=$item->quantity;
                 self::$instance->totalPrice-=$item->price;
-                self::$instance->delete();
-                return true;
+                self::$instance->save();
+                
+                $item->delete();
             }
         }
-        return false;
 	}
     
     

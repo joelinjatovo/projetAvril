@@ -22,26 +22,21 @@
                 </div>                       
             </article>  
 
-            <section id="comments"> 
-                <h4 id="comments-title">Commentaires</h4>
-                <ol class="commentlist">
-                    @forelse($item->comments as $comment)
-                        <li>@include('comment.index', ['comment'=>$comment])</li>
-                    @empty
-                        <p>No comments</p>
-                    @endforelse
-                </ol>
-                @if(Auth::check())
-                    @include('comment.form', ['item'=>$item])
-                @endif
-                <!-- #respond -->                         
-            </section>                     
+            <section id="app"> 
+                <div class="row">
+                    <div class="col-md-12" style="background:white;">
+                        <comment comment-url="{{ $item->id }}"></comment>
+                    </div>      
+                </div>
+            </section>          
         </div>
         <div class="col-lg-4 col-md-4"> 
             @include('includes.sidebar')
         </div>
     </div> 
 </div> 
+@endsection
 
-
+@section('script')
+<script src="{{ asset('js/app.js') }}"></script>
 @endsection

@@ -104,7 +104,7 @@
                 </section>
             </div>
             <div class="col-lg-4 col-md-5">
-                @include('product.sidebar')
+                @include('includes.sidebar')
             </div>
         </div>
     </div>

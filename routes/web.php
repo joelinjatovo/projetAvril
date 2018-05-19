@@ -64,11 +64,17 @@ Route::get('terms', 'IndexController@terms')->name('terms');
 Route::get('help', 'IndexController@help')->name('help');
 Route::get('publicities', 'IndexController@publicities')->name('publicities');
 Route::get('confidentialities', 'IndexController@confidentialities')->name('confidentialities');
+Route::get('apls', 'IndexController@apl')->name('apls');
 
 // Blog
 Route::get('blogs/{filter?}', 'BlogController@all')->name('blog.all');
 Route::get('blog/{blog}', 'BlogController@index')->name('blog.index');
 Route::post('blog/{blog}', 'CommentController@store')->name('comment.store');
+
+
+Route::get('comments/{blog}', 'CommentController@index');
+Route::post('comments', 'CommentController@store');
+Route::post('comments/{comment}/{type}', 'CommentController@update');
 
 // Shop and Product
 Route::get('shop/{category?}', 'ShopController@index')->name('shop.index');// List product by Category OR no

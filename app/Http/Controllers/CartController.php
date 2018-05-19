@@ -49,6 +49,7 @@ class CartController extends Controller
         if(!$page) $page = 1;
         
         switch($filter){
+            case 'pinged':
             case 'paid':
             case 'ordered':
                 $items = Cart::where('status', $filter)
@@ -57,6 +58,8 @@ class CartController extends Controller
             case 'all':
                 $items = Cart::paginate($this->pageSize);
                 break;
+            default:
+                abort(404);
         }
         return view('admin.cart.all', compact('items', 'filter', 'page')); 
     }

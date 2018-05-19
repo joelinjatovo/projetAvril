@@ -14,13 +14,26 @@ class CreateCommentsTable extends Migration
     public function up()
     {
         Schema::create('comments', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->longText('content')->nullable();
-            $table->bigInteger('blog_id')->default(0)->index();
-            $table->bigInteger('author_id')->default(0)->index();
-            $table->string('status', 20)->default('pinged')->index(); // pinged published blocked drafted trashed archived
-            $table->timestamps();
-        });
+           $table->bigIncrements('id');
+           $table->longText('content')->nullable();
+           $table->string('status', 20)->default('pinged')->index();
+           $table->integer('votes')->default(0);
+           $table->integer('spam')->default(0);
+           $table->bigInteger('reply_id')->default(0)->index();
+           $table->bigInteger('blog_id')->default(0)->index();
+           $table->bigInteger('user_id')->default(0)->index();
+           $table->timestamps();
+       });
+        
+        Schema::create('comment_user_vote', function (Blueprint $table) {
+           $table->bigInteger('comment_id')->default(0)->index();
+           $table->bigInteger('user_id')->default(0)->index();
+           $table->string('vote',11);
+       });
+        Schema::create('comment_spam', function (Blueprint $table) {
+           $table->bigInteger('comment_id')->default(0)->index();
+           $table->bigInteger('user_id')->default(0)->index();
+       });
     }
 
     /**
@@ -31,5 +44,7 @@ class CreateCommentsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('comments');
+        Schema::dropIfExists('comment_user_vote');
+        Schema::dropIfExists('comment_spam');
     }
 }

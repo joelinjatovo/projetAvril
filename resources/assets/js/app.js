@@ -22,6 +22,7 @@ Vue.component('create-thread', require('./components/CreateThread.vue'));
 Vue.component('thread-chat', require('./components/ThreadChat.vue'));
 Vue.component('user-item', require('./components/UserItem.vue'));
 Vue.component('users', require('./components/Users.vue'));
+Vue.component('comment', require('./components/Comments.vue'));
 
 const app = new Vue({
     el: '#app'

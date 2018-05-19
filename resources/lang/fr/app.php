@@ -9,6 +9,8 @@ return [
     
     'last_update'         => 'Derniere Modification, :date',
     'contact_us_phone'    => 'Contactez-nous: :phone',
+    'list_apl'    => 'Lister les APL',
+    'read_more'    => 'Continuer de lire',
     
     'form.login.register'      => "Inscrivez-vous",
     'form.login.have_not_account'  => "Vous n'avez pas un compte?",

@@ -42,7 +42,11 @@
 <link href="{{asset('css/head.css')}}" rel="stylesheet">
 <link href="{{asset('css/style.css')}}" rel="stylesheet">
 <link href="{{asset('css/responsive.css')}}" rel="stylesheet">
-    
+@if(Auth::check())
+<script>
+window.user = {!! json_encode(['user' => Auth::user()]) !!};
+</script>
+@endif
 
 @yield('style')
 

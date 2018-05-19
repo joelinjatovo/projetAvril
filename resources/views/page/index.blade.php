@@ -19,6 +19,9 @@
                     </header>
                     <div class="row">
                         <div class="property-single-metax">{!!$item->content!!}</div>
+                        @if(Auth::check()&&Auth::user()->isAdmin())
+                        <a href="{{route('admin.page.update',$item)}}" class="more pull-right"><i class="fa fa-pencil"></i> @lang('app.btn.edit')</a> 
+                        @endif
                     </div>
                 </section>
                 @endif
@@ -29,6 +32,9 @@
                     </header>
                     <div class="row">
                         <div class="property-single-metax">{!!$child->content!!}</div>
+                        @if(Auth::check()&&Auth::user()->isAdmin())
+                        <a href="{{route('admin.page.update',$child)}}" class="more pull-right"><i class="fa fa-pencil"></i> @lang('app.btn.edit')</a> 
+                        @endif
                     </div>
                 </section>
                     @foreach($child->pubs as $pub)

@@ -87,6 +87,8 @@ class Page extends BaseModel
     public function childs()
     {
         return $this->hasMany(Page::class, 'parent_id', 'id')
+            ->orderBy('page_order' , 'asc')
+            ->orderBy('title' , 'asc')
             ->locale($this->language);
     }
     

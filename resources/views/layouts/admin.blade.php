@@ -183,8 +183,8 @@
               <li class="accordion-group">
                   <div class="accordion-heading">
                       <a href="#accPages" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Request::is('admin/*admin.page*')?'collapsed':''}}">
-                        <i class="fontello-icon-users-1"></i>
-                        <i class="chevron fontello-icon-right-open-3"></i>@lang('app.admin.pages')</a>
+                        <i class="fa fa-book"></i>
+                        <i class="chevron fontello-icon-right-open-3"></i> @lang('app.admin.pages')</a>
                   </div>
                   <ul class="accordion-content nav nav-list collapse {{\Request::is('admin/page*')?'in':''}}" id="accPages">
                       <li><a href="{{route('admin.page.create')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.page.add')</a></li>
@@ -194,8 +194,8 @@
               <li class="accordion-group">
                   <div class="accordion-heading">
                       <a href="#accCarts" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Request::is('admin/cart*')?'collapsed':''}}">
-                        <i class="fontello-icon-users-1"></i>
-                        <i class="chevron fontello-icon-right-open-3"></i>@lang('app.admin.carts')</a>
+                        <i class="fa fa-shopping-cart"></i>
+                        <i class="chevron fontello-icon-right-open-3"></i> @lang('app.admin.carts')</a>
                   </div>
                   <ul class="accordion-content nav nav-list collapse {{\Request::is('admin/cart*')?'in':''}}" id="accCarts">
                       <li><a href="{{route('admin.cart.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.cart.list')</a></li>
@@ -206,19 +206,19 @@
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="{{route('admin.mail.list')}}" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fontello-icon-left-1"></i>@lang('app.admin.mail.list')</a>
+                      <a href="{{route('admin.mail.list')}}" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fa fa-envelope"></i> @lang('app.admin.mail.list')</a>
                   </div>
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="{{route('admin.chat.list')}}" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fontello-icon-left-1"></i>@lang('app.admin.chat.list')</a>
+                      <a href="{{route('admin.chat.list')}}" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fa fa-comments"></i> @lang('app.admin.chat.list')</a>
                   </div>
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
                       <a href="#accReglages" data-parent="#mainSideMenu"  data-toggle="collapse" class="accordion-toggle {{\Request::is('config*')?'collapsed':''}}">
                         <i class="fontello-icon-tools"></i>
-                        <i class="chevron fontello-icon-right-open-3"></i>@lang('app.configs')
+                        <i class="chevron fontello-icon-right-open-3"></i> @lang('app.configs')
                       </a>
                   </div>
                   <ul class="accordion-content nav nav-list collapse {{\Request::is('config*')?'in':''}}" id="accReglages">
@@ -229,7 +229,7 @@
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="{{route('logout')}}" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fontello-icon-left-1"></i>@lang('app.logout')</a>
+                      <a href="{{route('logout')}}" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fontello-icon-left-1"></i> @lang('app.logout')</a>
                   </div>
               </li>
           </ul>

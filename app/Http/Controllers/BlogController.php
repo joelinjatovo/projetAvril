@@ -90,6 +90,7 @@ class BlogController extends Controller
         $items = Blog::ofStatus('published')
             ->where('post_type','=', $this->post_type)
             ->orderBy($orderBy, $order)
+            ->withCount('comments')
             ->paginate($this->pageSize);
         
         if($request->ajax()){

@@ -46,7 +46,7 @@
                 <div class="well well-nice">
                     <h4 class="simple-header">@lang('app.admin.page_order')</h4>
                     <div class="control-group">
-                        <input type="number" min="0" class="input-block-level" value="{{$item->order}}" name="order" placeholder="@lang('app.admin.page_order.desc')">
+                        <input type="number" min="0" class="input-block-level" value="{{$item->page_order}}" name="page_order" placeholder="@lang('app.admin.page_order.desc')">
                     </div>
                 </div>
             </section>

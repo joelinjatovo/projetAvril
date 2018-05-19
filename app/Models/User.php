@@ -145,7 +145,7 @@ class User extends Authenticatable
      */
     public function hasApl()
     {
-      return ($this->hasRole('member')&&$this->apl&&($this->apl->id>0));
+      return ($this->hasRole('member')&&$this->apl);
     }
     
     /**
@@ -181,7 +181,7 @@ class User extends Authenticatable
      */
     public function author()
     {
-      return $this->hasOne(User::class, 'author_id', 'id');
+      return $this->hasOne(User::class, 'id', 'author_id');
     }
     
     /**
@@ -191,7 +191,7 @@ class User extends Authenticatable
      */
     public function apl()
     {
-      return $this->hasOne(User::class, 'apl_id', 'id');
+      return $this->hasOne(User::class, 'id', 'apl_id');
     }
     
     /**

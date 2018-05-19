@@ -40,7 +40,7 @@ class Localisation extends BaseModel
      */
     public function toString()
     {
-        return $this->address.', '. $this->city.', '. $this->country;
+        return $this->formatted.', '. $this->locality.', '. $this->country;
     }
     
     /*

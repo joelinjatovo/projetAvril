@@ -58,6 +58,8 @@ class ShopController extends Controller
             ->get();
         
         $categories = Category::orderBy('created_at', 'desc')
+            ->has('products')
+            ->withCount('products')
             ->take($this->recentSize)
             ->get();
         
@@ -86,6 +88,9 @@ class ShopController extends Controller
         $this->middleware('auth');
         $this->middleware('role:member');
         
+        $distance = $request->get('distance');
+        if(empty($distance)) $distance = 100;
+        
         if(!$product->isDisponible()){
     	   return redirect()->route('product.index', $product)
                ->with('error','Stock en rupture');
@@ -102,9 +107,13 @@ class ShopController extends Controller
             ->with('location')
             ->get();
         
+        $userApl = Auth::user()->apl;
+        
+        $selected = null;
+        
         $data = [];
         foreach($apls as $item){
-            $data[] = [
+            $dataTemp = [
               'id' => $item->id,
               'lat' => $item->location?$item->location->latitude:0,
               'lng' => $item->location?$item->location->longitude:0,
@@ -112,6 +121,12 @@ class ShopController extends Controller
               'content' => $item->get_meta('orga_description')?$item->get_meta('orga_description')->value:'',
               'type' => $item->role,
             ];
+            
+            $data[] = $dataTemp;
+            
+            if($userApl && ($item->id == $userApl->id)){
+                $selected = $dataTemp;
+            }
         }
         
         $data[] = [
@@ -123,10 +138,13 @@ class ShopController extends Controller
             ];
         
     	return view('shop.apl')
-            ->with(['location' => Auth::user()->location])
-            ->with(['items' => $apls])
+            ->with('location', Auth::user()->location)
+            ->with('items', $apls)
             ->with('item', $product)
-            ->with(['data' => json_encode($data)]);
+            ->with('distance', $distance)
+            ->with('distances', $this->distances)
+            ->with('selected', json_encode($selected))
+            ->with('data', json_encode($data));
     }
     
     /**
@@ -139,7 +157,6 @@ class ShopController extends Controller
     public function add(Request $request, Product $product){
         $this->middleware('auth');
         $this->middleware('role:member');
-        Auth::check();
         
         if(!$product->isDisponible()){
     	   return redirect()
@@ -163,7 +180,7 @@ class ShopController extends Controller
         }
         
         // Update APL
-        if($apl && ($apl->id>0) && $request->is_default){
+        if($apl && $request->input('is_default')){
             Auth::user()->apl_id = $apl->id;
             Auth::user()->save();
         }

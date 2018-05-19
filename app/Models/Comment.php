@@ -20,9 +20,7 @@ class Comment extends BaseModel
      *
      * @var array
      */
-    protected $fillable = [
-        'title', 'content', 'blog_id', 
-    ];
+   protected $fillable = ['content','votes','spam','reply_id','blog_id','user_id'];
     
     /**
      * Create a new model instance.
@@ -31,7 +29,7 @@ class Comment extends BaseModel
      */
     public function __construct()
     {
-        $this->author_id = (Auth::check()?Auth::user()->id:0);
+        $this->user_id = (Auth::check()?Auth::user()->id:0);
     }
     
     /**
@@ -43,6 +41,14 @@ class Comment extends BaseModel
     public function excerpt($length = 100)
     {
         return substr($this->content, 0, $length);
+    }
+    
+    /**
+     * Get the comment's replies
+     */
+    public function replies()
+    {
+       return $this->hasMany(Comment::class, 'id', 'reply_id');
     }
    
     /**
@@ -58,6 +64,14 @@ class Comment extends BaseModel
      */
     public function author()
     {
-        return $this->belongsTo(User::class, 'author_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+    
+    /**
+     * Get the author who owns comment.
+     */
+    public function user()
+    {
+        return $this->author();
     }
 }

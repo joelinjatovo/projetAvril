@@ -18,13 +18,7 @@
 <div id="blog-listing" class="grid-style"> 
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-md-8">
-                <header class="section-header text-center"> 
-                    <div class="container"> 
-                        <h2 class="pull-left">@lang('app.blogs')</h2>
-                    </div>                 
-                </header>  
-            
+            <div class="col-lg-12 col-md-12">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="property-sorting">        
@@ -62,9 +56,6 @@
                         <p><img src="{{asset('images/loader.gif')}}">@lang('app.load_more_blog')</p>
                     </div>  
                 </div> 
-            </div>
-            <div class="col-lg-4 col-md-4"> 
-                @include('includes.sidebar')
             </div>
         </div>             
     </div>             

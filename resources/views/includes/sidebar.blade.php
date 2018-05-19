@@ -1,4 +1,7 @@
 <div id="property-sidebar">
+    <a href="{{route('apls')}}" class="btn btn-default col-md-12">@lang('app.list_apl')</a>
+    <br>
+    <br>
     @foreach($pubs as $pub)
     <section class="widget property-meta-wrapper clearfix">
         <h2 class="title wow slideInLeft">{{$pub->title}}</h2>
@@ -7,18 +10,6 @@
         </div>
     </section>
     @endforeach
-    <section class="widget property-meta-wrapper clearfix">
-        <div class="col-md-12">
-            <!-- google maps API -->
-            <div class="content-box-large box-with-header">
-                <div id="map"></div>
-            </div>
-            <h6><img src="{{asset('images/features/bleu.png')}}" width="10" height="10"> Résidentiel </h6>
-            <h6><img src="{{asset('images/features/vert.png')}}" width="10" height="10"> Foncier </h6>
-            <h6><img src="{{asset('images/features/rouge.png')}}" width="10" height="10"> Industriel </h6>
-            <h6><img src="{{asset('images/features/jaune.png')}}" width="10" height="10"> Commercial</h6>
-        </div>
-    </section>
     <section class="widget recent-properties clearfix">
         <h5 class="title">@lang('app.recent.product')</h5>
         @foreach($products as $product)
