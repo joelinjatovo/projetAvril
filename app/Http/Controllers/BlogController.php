@@ -147,7 +147,8 @@ class BlogController extends Controller
         $page = $request->get('page');
         if(!$page){$page = 1;}
 
-        $items = Blog::where('post_type','=', $this->post_type);
+        $items = Blog::where('post_type','=', $this->post_type)
+            ->withCount('comments');
         
         switch($filter){
             case 'starred':
@@ -162,7 +163,7 @@ class BlogController extends Controller
         }
         
         $items = $items->paginate($this->pageSize);
-        return view('admin.blog.all', compact('items', 'filter', 'page'));
+        return view('admin.blog.list', compact('items', 'filter', 'page'));
     }
 
     /**

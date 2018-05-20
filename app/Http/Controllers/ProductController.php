@@ -167,8 +167,8 @@ class ProductController extends Controller
         $this->middleware('auth');
         $this->middleware('role:admin');
         
-        $user->status = 'pinged';
-        $user->save();
+        $product->status = 'pinged';
+        $product->save();
         
         return back()->with('success',"Le produit a été restoré avec succés");
     }
@@ -185,8 +185,8 @@ class ProductController extends Controller
         $this->middleware('auth');
         $this->middleware('role:admin');
         
-        $user->status = 'trashed';
-        $user->save();
+        $product->status = 'trashed';
+        $product->save();
         
         return back()->with('success',"Le produit a été ajouté au corbeille avec succés");
     }

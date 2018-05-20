@@ -16,7 +16,10 @@
                     <h4 class="entry-title">{{$item->title}}</h4> 
                     <span class="author">Publié par<a href="#">{{$item->author->name}}</a></span> 
                     <span>Commentaire<a href="#" style="font-size: inherit; background-color: rgb(255, 255, 255);">{{count($item->comments)}}</a></span>
-                </div>                         
+                </div>      
+                @if(Auth::check()&&Auth::user()->isAdmin())
+                <a href="{{route('admin.blog.update',$item)}}" class="more pull-right"><i class="fa fa-pencil"></i> @lang('app.btn.edit')</a> 
+                @endif                   
                 <div class="contents clearfix"> 
                     <p>{{$item->content}}</p>                                                          
                 </div>                       
@@ -25,7 +28,7 @@
             <section id="app"> 
                 <div class="row">
                     <div class="col-md-12" style="background:white;">
-                        <comment comment-url="{{ $item->id }}"></comment>
+                        <comment :blog="{{$item}}"></comment>
                     </div>      
                 </div>
             </section>          

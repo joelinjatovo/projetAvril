@@ -69,12 +69,11 @@ Route::get('apls', 'IndexController@apl')->name('apls');
 // Blog
 Route::get('blogs/{filter?}', 'BlogController@all')->name('blog.all');
 Route::get('blog/{blog}', 'BlogController@index')->name('blog.index');
-Route::post('blog/{blog}', 'CommentController@store')->name('comment.store');
 
-
+// Action
 Route::get('comments/{blog}', 'CommentController@index');
 Route::post('comments', 'CommentController@store');
-Route::post('comments/{comment}/{type}', 'CommentController@update');
+Route::post('comments/{comment}/{action}', 'CommentController@update');
 
 // Shop and Product
 Route::get('shop/{category?}', 'ShopController@index')->name('shop.index');// List product by Category OR no
@@ -212,6 +211,18 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::get('restore/{blog}', 'BlogController@restore')->name('admin.blog.restore');
         Route::get('star/{blog}', 'BlogController@star')->name('admin.blog.star');
         Route::get('delete/{blog}', 'BlogController@delete')->name('admin.blog.delete');
+    });
+
+    // Comment Controller Groups
+    Route::get('comments/{blog}/{filter?}', 'CommentController@all')->name('admin.comment.list');
+    Route::prefix('comment')->group(function(){
+        Route::get('show/{comment}', 'CommentController@show')->name('admin.comment.show');
+        Route::get('publish/{comment}', 'CommentController@publish')->name('admin.comment.publish');
+        Route::get('archive/{comment}', 'CommentController@archive')->name('admin.comment.archive');
+        Route::get('trash/{comment}', 'CommentController@trash')->name('admin.comment.trash');
+        Route::get('restore/{comment}', 'CommentController@restore')->name('admin.comment.restore');
+        Route::get('star/{comment}', 'CommentController@star')->name('admin.comment.star');
+        Route::get('delete/{comment}', 'CommentController@delete')->name('admin.comment.delete');
     });
 
     // Product Controller Groups

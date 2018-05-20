@@ -1,14 +1,11 @@
 <template>
-<div class="comments-app">
+<div class="comments-app" id="comments">
    <!-- From -->
    <div class="comment-form" v-if="user">
         <div id="respond" class="comment-respond contact-form"> 
             <h4 id="reply-title" class="comment-reply-title">Laissez un commentaire</h4> 
-            <form class="form" name="form" id="commentform"> 
-                <p class="form-author">
-                    <input id="author" name="name" type="text" disabled :value="user.name">
-                </p>
-                <p class="form-comment"><textarea v-model="message"id="comment" name="comment" placeholder="Commentaire" cols="45" rows="8" aria-required="true" required="required"></textarea></p> 
+            <form class="form" name="form" id="commentform">
+                <p class="form-comment"><textarea v-model="message" id="comment" name="comment" placeholder="Commentaire" cols="45" rows="8" aria-required="true" required="required"></textarea></p> 
                 <p class="form-submit"><input @click="saveComment" name="submit" type="button"  id="submit" class="submit-btn btn btn-default btn-lg" value="Poster un Commentaire"></p> 
             </form>                             
         </div>
@@ -18,127 +15,98 @@
        <div id="respond" class="comment-respond contact-form"> 
             <h4 id="reply-title" class="comment-reply-title">Laissez un commentaire</h4> 
             <form class="form" name="form" id="commentform">
-                <a href="/login" class="form-comment"><textarea v-model="message"id="comment" name="comment" placeholder="Commentaire" cols="45" rows="8" aria-required="true" required="required"></textarea></a>
+                <a href="/login" class="form-comment"><textarea v-model="message" id="comment" name="comment" placeholder="Commentaire" cols="45" rows="8" aria-required="true" required="required"></textarea></a>
             </form>                             
         </div>
    </div>
  
    <!-- Comments List -->
-   <div class="comments" v-if="comments" v-for="(comment,index) in commentsData">
+   <ol class="commentlist" v-if="comments"> 
        <!-- Comment -->
-       <div v-if="!spamComments[index] || !comment.spam" class="comment">
-           <!-- Comment Avatar -->
-           <div class="comment-avatar">
-               <img src="storage/comment.png">
-           </div>
- 
+       <li class="comment even thread-even depth-1" v-for="(comment, index) in commentsData">
+           
            <!-- Comment Box -->
-           <div class="comment-box">
-               <div class="comment-text">{{comment.comment}}</div>
-               <div class="comment-footer">
-                   <div class="comment-info">
-                       <span class="comment-author">
-                               <em>{{ comment.name}}</em>
-                           </span>
-                       <span class="comment-date">{{ comment.date}}</span>
-                   </div>
- 
+           <article class="clearfix" v-if="!spamComments[index] || !comment.spam"> 
+                <a class="author-img" href="#"> 
+                    <img src="/images/avatar.png" alt="Author">
+                </a>                                     
+                <div class="comment-detail-wrap"> 
+                    <div class="comment-meta clearfix"> 
+                        <h5 class="author"> <cite class="fn"> <cite class="fn"> <a href="#" rel="external nofollow" class="url">{{comment.name}}</a> </cite> </cite> </h5> 
+                        <time datetime="2013-08-01T19:22:45+00:00">{{comment.date}}</time>                                             
+                    </div>                                         
+                    <div class="comment-body"> 
+                        <p>{{comment.content}}</p> 
+                        <a  v-on:click="openComment(index)" rel="nofollow" class="comment-reply-link btn btn-default btn-3d" href="#" data-hover="Reply">Repondre</a> 
+                    </div>  
+                    
                    <div class="comment-actions">
                        <ul class="list">
                            <li>Votes: {{comment.votes}}
-                               <a v-if="!comment.votedByUser" v-on:click="voteComment(comment.commentid,'directcomment',index,0,'up')">Up Votes</a>
-                               <a v-if="!comment.votedByUser" v-on:click="voteComment(comment.commentid,'directcomment',index,0,'down')">Down Votes</a>
+                               <a v-if="!comment.votedByUser" v-on:click="voteComment(comment.id,'directcomment',index,0,'up')">Up Votes</a>
+                               <a v-if="!comment.votedByUser" v-on:click="voteComment(comment.id,'directcomment',index,0,'down')">Down Votes</a>
                            </li>
                            <li>
-                               <a v-on:click="spamComment(comment.commentId,'directcomment',index,0)">Spam</a>
-                           </li>
-                           <li>
-                               <a v-on:click="openComment(index)">Reply</a>
+                               <a v-on:click="spamComment(comment.id,'directcomment',index,0)">Spam</a>
                            </li>
                        </ul>
                    </div>
-               </div>
-           </div>
- 
-           <!-- From -->
-           <div class="comment-form comment-v" v-if="commentBoxs[index]">
-               <!-- Comment Avatar -->
-               <div class="comment-avatar">
-                   <img src="storage/comment.png">
-               </div>
-               <form class="form" name="form">
-                   <div class="form-row">
-                       <textarea class="input" placeholder="Add comment..." required v-model="message"></textarea>
-                       <span class="input" v-if="errorReply" style="color:red">{{errorReply}}</span>
-                   </div>
-                   <div class="form-row">
-                       <input class="input" placeholder="Email" type="text" :value="user.name">
-                   </div>
-                   <div class="form-row">
-                       <input type="button" class="btn btn-success" v-on:click="replyComment(comment.commentid,index)" value="Add Comment">
-                   </div>
-               </form>
+                </div>
+           </article>
+           
+           <!-- form -->
+           <div id="respond" class="comment-respond contact-form" v-if="commentBoxs[index]"> 
+                <form class="form" name="form" id="commentform">
+                    <p class="form-comment"><textarea v-model="message" id="comment" name="comment" placeholder="Commentaire" cols="45" rows="8" aria-required="true" required="required"></textarea></p> 
+                    <p class="form-submit"><input @click="replyComment(comment.id,index)" name="submit" type="button"  id="submit" class="submit-btn btn btn-default btn-lg" value="Poster un Commentaire"></p> 
+                </form>                             
            </div>
  
            <!-- Comment - Reply -->
-           <div v-if="comment.replies">
-               <div class="comments" v-for="(replies,index2) in comment.replies">
-                   <div v-if="!spamCommentsReply[index2] || !replies.spam" class="comment reply">
-                       <!-- Comment Avatar -->
-                       <div class="comment-avatar">
-                           <img src="storage/comment.png">
-                       </div>
- 
-                       <!-- Comment Box -->
-                       <div class="comment-box" style="background: grey;">
-                           <div class="comment-text" style="color: white">{{replies.comment}}</div>
-                           <div class="comment-footer">
-                               <div class="comment-info">
-                                   <span class="comment-author">
-                                           {{replies.name}}
-                                       </span>
-                                   <span class="comment-date">{{replies.date}}</span>
-                               </div>
-                               <div class="comment-actions">
-                                   <ul class="list">
-                                       <li>Total votes: {{replies.votes}}
-                                           <a v-if="!replies.votedByUser" v-on:click="voteComment(replies.commentid,'replycomment',index,index2,'up')">Up Votes</a>
-                                           <a v-if="!replies.votedByUser" v-on:click="voteComment(comment.commentid,'replycomment',index,index2,'down')">Down Votes</a>
-                                       </li>
-                                       <li>
-                                           <a v-on:click="spamComment(replies.commentid,'replycomment',index,index2)">Spam</a>
-                                       </li>
-                                       <li>
-                                           <a v-on:click="replyCommentBox(index2)">Reply</a>
-                                       </li>
-                                   </ul>
-                               </div>
-                           </div>
-                       </div>
-                       <!-- From -->
-                       <div class="comment-form reply" v-if="replyCommentBoxs[index2]">
-                           <!-- Comment Avatar -->
-                           <div class="comment-avatar">
-                               <img src="/images/avatar.png">
-                           </div>
-                           <form class="form" name="form">
-                               <div class="form-row">
-                                   <textarea class="input" placeholder="Add comment..." required v-model="message"></textarea>
-                                   <span class="input" v-if="errorReply" style="color:red">{{errorReply}}</span>
-                               </div>
-                               <div class="form-row">
-                                   <input class="input" placeholder="Email" type="text" :value="user.name">
-                               </div>
-                               <div class="form-row">
-                                   <input type="button" class="btn btn-success" v-on:click="replyComment(comment.commentid,index)" value="Add Comment">
-                               </div>
-                           </form>
-                       </div>
+           <ol class="children" v-if="comment.replies">
+               <li class="comment" v-for="(replies,index2) in comment.replies">
+                   <!-- Comment Box -->
+                   <article class="clearfix" v-if="!spamCommentsReply[index2] || !replies.spam"> 
+                        <a class="author-img" href="#"> 
+                            <img src="/images/avatar.png" alt="Author">
+                        </a>                                     
+                        <div class="comment-detail-wrap"> 
+                            <div class="comment-meta clearfix"> 
+                                <h5 class="author"> <cite class="fn"> <cite class="fn"> <a href="#" rel="external nofollow" class="url">{{replies.name}}</a> </cite> </cite> </h5> 
+                                <time datetime="2013-08-01T19:22:45+00:00">{{replies.date}}</time>
+                            </div>                                         
+                            
+                            <div class="comment-body"> 
+                                <p>{{replies.content}}</p> 
+                                <a  v-on:click="replyCommentBox(index2)" rel="nofollow" class="comment-reply-link btn btn-default btn-3d" href="#" data-hover="Reply" style="display: none;">Repondre</a> 
+                            </div>
+                            
+                            <div class="comment-actions">
+                               <ul class="list">
+                                   <li>Total votes: {{replies.votes}}
+                                       <a v-if="!replies.votedByUser" v-on:click="voteComment(replies.id,'replycomment',index,index2,'up')">Up Votes</a>
+                                       <a v-if="!replies.votedByUser" v-on:click="voteComment(comment.id,'replycomment',index,index2,'down')">Down Votes</a>
+                                   </li>
+                                   <li>
+                                       <a v-on:click="spamComment(replies.id,'replycomment',index,index2)">Spam</a>
+                                   </li>
+                               </ul>
+                            </div>
+                            
+                        </div>
+                   </article>
+                   
+                   <!-- Reply form -->
+                   <div id="respond" class="comment-respond contact-form" v-if="replyCommentBoxs[index2]"> 
+                        <form class="form" name="form" id="commentform">
+                            <p class="form-comment"><textarea v-model="message" id="comment" name="comment" placeholder="Commentaire" cols="45" rows="8" aria-required="true" required="required"></textarea></p> 
+                            <p class="form-submit"><input @click="replyComment(comment.id,index)" name="submit" type="button"  id="submit" class="submit-btn btn btn-default btn-lg" value="Poster un Commentaire"></p> 
+                        </form>                             
                    </div>
-               </div>
-           </div>
-       </div>
-   </div>
+               </li>
+           </ol>
+       </li>
+   </ol>
 </div>
 </template>
 
@@ -147,7 +115,7 @@
 var _ = require('lodash');
  
 export default {
-   props: ['commentUrl'],
+   props: ['blog'],
  
    data() {
        return {
@@ -176,7 +144,10 @@ export default {
  
    methods: {
        fetchComments() {
-           axios.get('/comments/' + this.commentUrl).then(res => {
+           axios.get('/comments/' + this.blog.id).then(res => {
+               console.log("---------fetchComments---------");
+               console.log(res);
+               console.log("-//------fetchComments----------");
                this.commentData = res.data;
                this.commentsData = _.orderBy(res.data, ['votes'], ['desc']);
                this.comments = 1;
@@ -217,12 +188,22 @@ export default {
            if (this.message != null && this.message != ' ') {
                this.errorComment = null;
                axios.post('/comments', {
-                   page_id: this.commentUrl,
+                   blog_id: this.blog.id,
                    content: this.message,
                    user_id: this.user.id
                }).then(res => {
+                   console.log("---------saveComment---------");
+                   console.log(res);
+                   console.log("-//------saveComment----------");
                    if (res.data.status) {
-                       this.commentsData.push({ "commentid": res.data.commentId, "name": this.user.name, "comment": this.message, "votes": 0, "reply": 0, "replies": [] });
+                       this.commentsData.push({ 
+                           "id": res.data.id, 
+                           "name": this.user.name,
+                           "content": this.message, 
+                           "votes": 0, 
+                           "reply": 0, 
+                           "replies": [] 
+                       });
                        this.message = null;
                    }
                });
@@ -239,14 +220,27 @@ export default {
                    user_id: this.user.id,
                    reply_id: commentId
                }).then(res => {
+                   console.log("---------replyComment---------");
+                   console.log(res);
+                   console.log("-//------replyComment----------");
                    if (res.data.status) {
                        if (!this.commentsData[index].reply) {
-                           this.commentsData[index].replies.push({ "commentid": res.data.commentId, "name": this.user.name, "comment": this.message, "votes": 0 });
+                           this.commentsData[index].replies.push({ 
+                               "id": res.data.id, 
+                               "name": this.user.name,
+                               "content": this.message, 
+                               "votes": 0 
+                           });
                            this.commentsData[index].reply = 1;
                            Vue.set(this.replyCommentBoxs, index, 0);
                            Vue.set(this.commentBoxs, index, 0);
                        } else {
-                           this.commentsData[index].replies.push({ "commentid": res.data.commentId, "name": this.user.name, "comment": this.message, "votes": 0 });
+                           this.commentsData[index].replies.push({ 
+                               "id": res.data.id, 
+                               "name": this.user.name, 
+                               "content": this.message, 
+                               "votes": 0
+                           });
                            Vue.set(this.replyCommentBoxs, index, 0);
                            Vue.set(this.commentBoxs, index, 0);
  
@@ -266,6 +260,9 @@ export default {
                    user_id: this.user.id,
                    vote: voteType
                }).then(res => {
+                   console.log("---------voteComment---------");
+                   console.log(res);
+                   console.log("-//------voteComment----------");
                    if (res.data) {
                        if (commentType == 'directcomment') {
                            if (voteType == 'up') {
@@ -291,6 +288,9 @@ export default {
                axios.post('/comments/' + commentId + '/spam', {
                    user_id: this.user.id,
                }).then(res => {
+                   console.log("---------spamComment---------");
+                   console.log(res);
+                   console.log("-//------spamComment----------");
                    if (commentType == 'directcomment') {
                        Vue.set(this.spamComments, index, 1);
                        Vue.set(this.viewcomment, index, 1);

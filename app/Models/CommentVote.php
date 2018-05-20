@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Auth;
 
 class CommentVote extends BaseModel
 {
@@ -20,4 +21,15 @@ class CommentVote extends BaseModel
      * @var array
      */
     protected $fillable = ['comment_id', 'user_id', 'vote'];
+    
+    /**
+     * Create a new model instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->user_id = (Auth::check()?Auth::user()->id:0);
+    }
+    
 }

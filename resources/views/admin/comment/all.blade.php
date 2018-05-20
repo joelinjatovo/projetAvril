@@ -5,13 +5,13 @@
     <div id="page-content" class="page-content">
         <section>
             <div class="page-header">
-                <h3>@lang('app.admin.blog.list')</h3>
+                <h3>@lang('app.admin.comment.list')</h3>
             </div>
             <div class="row-fluid margin-bottom16">
                  <div class="span12">
                      @include('includes.alerts')
                      <div class="widget widget-simple widget-table">
-                         @include('admin.table.blog', ['blogs'=>$items])
+                         @include('admin.table.comment', ['comments'=>$items])
                      </div>
                  </div>
                  {{$items->links()}}

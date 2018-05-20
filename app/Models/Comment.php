@@ -48,7 +48,7 @@ class Comment extends BaseModel
      */
     public function replies()
     {
-       return $this->hasMany(Comment::class, 'id', 'reply_id');
+       return $this->hasMany(Comment::class, 'reply_id', 'id');
     }
    
     /**
