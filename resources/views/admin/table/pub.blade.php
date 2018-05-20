@@ -1,5 +1,5 @@
 <div class="widget widget-simple widget-table">
-    <table id="exampleDT" class="table table-striped table-hover">
+    <table class="table table-striped table-hover">
         <thead>
             <tr>
                 <th scope="col">ID <span class="column-sorter"></span></th>
@@ -25,10 +25,13 @@
                 <td>{{$pub->links}}</td>
                 <td>{{count($pub->pages)}}</td>
                 <td>{{$pub->created_at->diffForHumans()}}</td>
-                <td><a href="{{route('admin.user.show', $item->author)}}">{{$pub->author->name}}</a></td>
+                <td><a href="{{route('admin.user.show', $pub->author)}}">{{$pub->author->name}}</a></td>
                 <td>
-                    <a href="{{route('admin.pub.edit', $item)}}" class="btn btn-small btn-info btn-update">Modifier</a>
-                    <a href="{{route('admin.pub.delete', $item)}}" class="btn btn-small btn-warning btn-delete">Supprimer</a>
+                    <a href="{{route('admin.pub.edit', $pub)}}" class="btn btn-small btn-info btn-update">@lang('app.btn.edit')</a>
+                    @if(isset($page))
+                    <a href="{{route('admin.pub.detach', ['pub'=>$pub, 'page'=>$page])}}" class="btn btn-small btn-success btn-delete">@lang('app.btn.detach')</a>
+                    @endif
+                    <a href="{{route('admin.pub.delete', $pub)}}" class="btn btn-small btn-warning btn-delete">@lang('app.btn.delete')</a>
                 </td>
             </tr>
            @endforeach

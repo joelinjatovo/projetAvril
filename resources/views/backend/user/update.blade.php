@@ -23,7 +23,7 @@
                 <div class="col-sm-9">
                     <select name="language" class="form-control" id="language">
                         <option value="fr" {{$item->language=='fr'?'selected':''}}>Français</option>
-                        <option value="en" {{$item->language=='en'?'selected':''}}>Anglais</option>
+                        <option value="en" {{$item->language=='en'?'selected':''}}>English</option>
                     </select>
                 </div>
             </div>
@@ -85,33 +85,6 @@
                         <option value="100"> 100km</option>
                         <option value="250"> 250km</option>
                     </select>
-                </div>
-            </div>
-        </fieldset>
-        <fieldset>
-            <legend>Locality Information</legend>
-            <div class="form-group">
-                <label for="street" class="col-sm-3 control-label">Street Address *</label>
-                <div class="col-sm-9">
-                    <input value="{{$item->location?$item->location->street:''}}" type="text" class="form-control" id="street" name="street" placeholder="Street Address" required>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="suburb" class="col-sm-3 control-label">Suburb *</label>
-                <div class="col-sm-9">
-                    <input value="{{$item->location?$item->location->suburb:''}}" type="text" class="form-control" id="suburb" name="suburb" placeholder="Suburb" required>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="state" class="col-sm-3 control-label">State *</label>
-                <div class="col-sm-9">
-                    <input value="{{$item->location?$item->location->state:''}}" type="text" class="form-control" id="state" name="state" placeholder="State" required>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="postCode" class="col-sm-3 control-label">Postal Code *</label>
-                <div class="col-sm-9">
-                    <input value="{{$item->location?$item->location->postalCode:''}}" type="text" class="form-control" id="postCode" name="postalCode" placeholder="Postal Code" required>
                 </div>
             </div>
         </fieldset>

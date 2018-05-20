@@ -48,7 +48,7 @@
                 @endforeach
            </div>
            <div class="col-lg-4 col-md-5">
-                @include('page.sidebar')
+                @include('includes.sidebar')
            </div>
         </div>
     </div>

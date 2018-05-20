@@ -14,161 +14,34 @@
                         @include('includes.alerts')
                         <div class="widget-content">
                             <div class="widget-body">
-                                <div id="accounForm" class="form-horizontal">
-                                    <div class="row-fluid">
-                                        <div class="span12">
-                                            <div class="control-group no-margin-bootom">
-                                                <label class="control-label label-left">
-                                                    <img src="{{$item->imageUrl(true)}}" class="thumbnail" width="96" height="96">
-                                                </label>
-                                                <div class="controls">
-                                                    <h2>{{$item->name}}</h2>
-                                                    <strong>{{$item->role}}</strong> at <strong><a href="#">IEA</a></strong><br> 
-                                                    <abbr title="Work email">e-mail:</abbr> <a href="mailto:#">{{$item->email}}</a><br>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row-fluid">
-                                        <div class="span12 form-dark">
-                                            <fieldset>
-                                                <ul class="form-list label-left list-bordered dotted">
-                                                    <li class="section-form">
-                                                        <h4>Informations de l'organisation</h4>
-                                                    </li>
-                                                    <li class="control-group">
-                                                        <label for="nom" class="control-label">Nom
-                                                        </label>
-                                                        <div class="controls">
-                                                            {{$item->get_meta('orga_name')?$item->get_meta('orga_name')->value:''}}
-                                                        </div>
-                                                    </li>
-                                                    <li class="control-group">
-                                                        <label for="prenom" class="control-label">E-mail
-                                                        </label>
-                                                        <div class="controls">
-                                                            {{$item->get_meta('orga_email')?$item->get_meta('orga_email')->value:''}}
-                                                        </div>
-                                                    </li>
-                                                    <li class="control-group">
-                                                        <label for="prenom" class="control-label">Telephone
-                                                        </label>
-                                                        <div class="controls">
-                                                            {{$item->get_meta('orga_phone')?$item->get_meta('orga_phone')->value:''}}
-                                                        </div>
-                                                    </li>
-                                                    <li class="control-group">
-                                                        <label for="prenom" class="control-label">Site Web
-                                                        </label>
-                                                        <div class="controls">
-                                                            {{$item->get_meta('orga_website')?$item->get_meta('orga_website')->value:''}}
-                                                        </div>
-                                                    </li>
-                                                    <li class="control-group">
-                                                        <label for="prenom" class="control-label">Operation State
-                                                        </label>
-                                                        <div class="controls">
-                                                            {{$item->get_meta('orga_operation_state')?$item->get_meta('orga_operation_state')->value:''}}
-                                                        </div>
-                                                    </li>
-                                                    <li class="control-group">
-                                                        <label for="prenom" class="control-label">Operation range
-                                                        </label>
-                                                        <div class="controls">
-                                                            {{$item->get_meta('orga_operation_range')?$item->get_meta('orga_operation_range')->value:''}}
-                                                        </div>
-                                                    </li>
-                                                    <li class="section-form">
-                                                        <h4>Informations sur le contact</h4>
-                                                    </li>
-                                                    <li class="control-group">
-                                                        <label for="referenceBancaire" class="control-label">Nom du contact</label>
-                                                        <div class="controls">
-                                                            {{$item->get_meta('contact_name')?$item->get_meta('contact_name')->value:''}}
-                                                        </div>
-                                                    </li>
-                                                    <li class="control-group">
-                                                        <label for="referenceBancaire" class="control-label">Email du contact</label>
-                                                        <div class="controls">
-                                                            {{$item->get_meta('contact_email')?$item->get_meta('contact_email')->value:''}}
-                                                        </div>
-                                                    </li>
-                                                    <li class="control-group">
-                                                        <label for="referenceBancaire" class="control-label">Telephone du contact</label>
-                                                        <div class="controls">
-                                                            {{$item->get_meta('contact_phone')?$item->get_meta('contact_phone')->value:''}}
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </fieldset>
-                                            <fieldset>
-                                                <legend class="section-form">CRM Provider Information</legend>
-                                                <ul class="form-list label-left list-bordered dotted">
-                                                    <li class="control-group">
-                                                        <label for="adresse" class="control-label">Nom du CRM
-                                                        </label>
-                                                        <div class="controls controls-row">
-                                                            {{$item->get_meta('crm_name')?$item->get_meta('crm_name')->value:''}}
-                                                        </div>
-                                                    </li>
-                                                    <li class="control-group">
-                                                        <label for="adresse" class="control-label">Email du CRM
-                                                        </label>
-                                                        <div class="controls controls-row">
-                                                            {{$item->get_meta('crm_email')?$item->get_meta('crm_email')->value:''}}
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </fieldset>
-                                            <fieldset>
-                                                <legend class="section-form">Adresse</legend>
-                                                <ul class="form-list label-left list-bordered dotted">
-                                                    <li class="control-group">
-                                                        <label for="adresse" class="control-label">Address
-                                                        </label>
-                                                        <div class="controls controls-row">
-                                                            {{$item->location?$item->location->address:''}}
-                                                        </div>
-                                                        <div class="controls margin-s0">
-                                                        </div>
-                                                    </li>
-                                                    <!-- // form item -->
-                                                    <li class="control-group">
-                                                        <label for="cite" class="control-label">City
-                                                        </label>
-                                                        <div class="controls">
-                                                            {{$item->location?$item->location->city:''}}
-                                                        </div>
-                                                    </li>
-                                                    <!-- // form item -->
-                                                    <li class="control-group">
-                                                        <label for="paysList" class="control-label">Pays
-                                                        </label>
-                                                        <div class="controls">
-                                                            {{$item->location?$item->location->country:''}}
-                                                        </div>
-                                                    </li>
-                                                    <!-- // form item -->
-                                                    <li class="control-group">
-                                                        <label for="etatList" class="control-label">Etat
-                                                        </label>
-                                                        <div class="controls">
-                                                            {{$item->location?$item->location->state:''}}
-                                                        </div>
-                                                    </li>
-                                                    <!-- // form item -->
-                                                    <li class="control-group">
-                                                        <label for="zipCode" class="control-label">Zip / Code postal
-                                                        </label>
-                                                        <div class="controls">
-                                                            {{$item->location?$item->location->postCode:''}}
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </fieldset>
-                                        </div>
-                                    </div>
-                                </div>
+                                
+        <fieldset>
+            <legend>Login Information</legend>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="col-sm-4">
+                        <section class="widget">
+                            <img src="{{$item->imageUrl(false)}}" alt="{{$item->name}}"  width="100%">
+                        </section>
+                    </div>
+                    <div class="col-sm-8">
+                        <p><strong>@lang('app.form.login')</strong>: {{$item->name}}</p>
+                        <p><strong>@lang('app.form.email')</strong>: {{$item->email}}</p>
+                        <p><strong>@lang('app.form.first_name')</strong>: {{$item->get_meta('first_name')?$item->get_meta('first_name')->value:''}}</p>
+                        <p><strong>@lang('app.form.last_name')</strong>: {{$item->get_meta('last_name')?$item->get_meta('last_name')->value:''}}</p>
+                        <p><strong>@lang('app.form.language')</strong>: {{$item->language=='en'?'Anglais':'Français'}}</p>
+                        <div>
+                            <div class="form-group">
+                                <a href="{{route('profile.edit')}}" class="btn btn-default">Modifier Profile</a>
+                                <a href="{{route('avatar.edit')}}"  class="btn btn-warning">Modifier Avatar</a>
+                                <a href="{{route('password.edit')}}"  class="btn btn-success">Modifier Mot de passe</a>
+                                <a href="{{route('location.edit')}}" class="btn btn-info">Modifier Localisation</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
                             </div>
                         </div>
                     </div>

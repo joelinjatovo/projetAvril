@@ -209,6 +209,26 @@ class PubController extends Controller
     }
     
     /**
+    * Detach Pub from Page
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  \App\Models\Pub $pub
+    * @param  \App\Models\Page $page
+    * @return \Illuminate\Http\Response
+    */
+    public function detach(Request $request,Pub $pub, Page $page)
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        PubPage::where('pub_id', $pub->id)
+            ->where('page_id', $page->id)
+            ->delete();
+        
+        return redirect()->back()->with('success',"La publicité a été supprimée avec succés");
+    }
+    
+    /**
     * Delete Pub
     *
     * @param  \Illuminate\Http\Request  $request

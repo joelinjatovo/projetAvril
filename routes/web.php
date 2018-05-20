@@ -89,7 +89,7 @@ Route::get('api/chart/categories', 'ChartController@categories')->name('chart.ca
 Route::get('api/chart/locations/{type?}', 'ChartController@locations')->name('chart.locations');
 Route::get('api/chart/prices', 'ChartController@prices')->name('chart.prices');
 Route::get('api/chart/sellers', 'ChartController@sellers')->name('chart.sellers');
-Route::get('api/chart/dates/{role}', 'ChartController@dates')->name('chart.dates');
+Route::get('api/chart/dates/{role?}', 'ChartController@dates')->name('chart.dates');
 Route::get('api/chart/carts', 'ChartController@carts')->name('chart.carts');
 
 Route::middleware('guest')->group(function(){
@@ -120,15 +120,15 @@ Route::middleware(["auth"])->group(function(){
     
     // Profile
     Route::prefix('profile')->group(function(){
-        Route::get('/', 'UserController@profile')->name('profile');
-        Route::get('edit', 'BackendController@profile')->name('profile.edit');
-        Route::post('edit', 'BackendController@editProfile');
-        Route::get('password', 'BackendController@password')->name('password.edit');
-        Route::post('password', 'BackendController@updatePassword');
-        Route::get('avatar', 'BackendController@avatar')->name('avatar.edit');
-        Route::post('avatar', 'BackendController@updateAvatar');
-        Route::get('location', 'BackendController@location')->name('location.edit');
-        Route::post('location', 'BackendController@updateLocation');
+        Route::get('/', 'ProfileController@index')->name('profile');
+        Route::get('edit', 'ProfileController@profile')->name('profile.edit');
+        Route::post('edit', 'ProfileController@editProfile');
+        Route::get('password', 'ProfileController@password')->name('password.edit');
+        Route::post('password', 'ProfileController@updatePassword');
+        Route::get('avatar', 'ProfileController@avatar')->name('avatar.edit');
+        Route::post('avatar', 'ProfileController@updateAvatar');
+        Route::get('location', 'ProfileController@location')->name('location.edit');
+        Route::post('location', 'ProfileController@updateLocation');
     });
     
 
@@ -270,6 +270,7 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::get('show/{pub}', 'PubController@show')->name('admin.pub.show');
         Route::get('update/{pub}', 'PubController@edit')->name('admin.pub.edit');
         Route::post('update/{pub}', 'PubController@update')->name('admin.pub.update');
+        Route::get('detach/{pub}/{page}', 'PubController@detach')->name('admin.pub.detach');
         Route::get('delete/{pub}', 'PubController@delete')->name('admin.pub.delete');
     });
 

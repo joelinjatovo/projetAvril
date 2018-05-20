@@ -29,6 +29,9 @@
                 <td>{{$page->created_at->diffForHumans()}}</td>
                 <td>
                     <a href="{{route('admin.page.edit', $page)}}" class="btn btn-small btn-info btn-update">@lang('app.btn.edit')</a>
+                    @if(isset($pub))
+                    <a href="{{route('admin.pub.detach', ['pub'=>$pub, 'page'=>$page])}}" class="btn btn-small btn-success btn-delete">@lang('app.btn.detach')</a>
+                    @endif
                     <a href="{{route('admin.page.delete', $page)}}" class="btn btn-small btn-warning btn-delete">@lang('app.btn.delete')</a>
                 </td>
             </tr>

@@ -46,16 +46,16 @@
          <td><a href="{{route('admin.user.show', $product->author)}}">{{$product->author->name}}</a></td>
          <td>
          @if($product->status=='pinged' || $product->status=='archived')
-            <a href="{{route('admin.product.publish', $product)}}" class="btn btn-small btn-info btn-publish">Publier</a>
-            <a href="{{route('admin.product.trash', $product)}}" class="btn btn-small btn-info btn-trash">Trash</a>
+            <a href="{{route('admin.product.publish', $product)}}" class="btn btn-small btn-success btn-publish">@lang('app.btn.publish')</a>
+            <a href="{{route('admin.product.trash', $product)}}" class="btn btn-small btn-info btn-trash">@lang('app.btn.trash')</a>
          @elseif($product->status=='trashed')
             <a href="{{route('admin.product.restore', $product)}}" class="btn btn-small btn-info btn-restore">Restore</a>
          @endif
          @if($product->status=='published')
-            <a href="{{route('admin.product.archive', $product)}}" class="btn btn-small btn-warning  btn-archive">Archiver</a>
-            <a href="{{route('admin.product.trash', $product)}}" class="btn btn-small btn-warning btn-trash">Trash</a>
+            <a href="{{route('admin.product.archive', $product)}}" class="btn btn-small btn-default  btn-archive">@lang('app.btn.archive')</a>
+            <a href="{{route('admin.product.trash', $product)}}" class="btn btn-small btn-info btn-trash">@lang('app.btn.trash')</a>
          @endif
-            <a href="{{route('admin.product.delete', $product)}}" class="btn btn-small btn-warning btn-delete">Supprimer</a>
+            <a href="{{route('admin.product.delete', $product)}}" class="btn btn-small btn-warning btn-delete">@lang('app.btn.delete')</a>
          </td>
      </tr>
      @endforeach

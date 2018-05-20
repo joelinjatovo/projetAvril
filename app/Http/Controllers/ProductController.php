@@ -29,6 +29,9 @@ class ProductController extends Controller
             abort(404);
         }
         
+        $product->view_count++;
+        $product->save();
+        
         $products = Product::orderBy('created_at','desc')
             ->ofStatus('published')
             ->take($this->recentSize)
@@ -98,6 +101,8 @@ class ProductController extends Controller
         if(!$page) $page = 1;
         
         switch($filter){
+            case 'ordered':
+            case 'paid':
             case 'published':
             case 'pinged':
             case 'archived':

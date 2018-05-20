@@ -138,6 +138,8 @@
                   <ul class="accordion-content nav nav-list collapse {{\Request::is('admin/product*')?'in':''}}" id="accProducts">
                       <li><a href="{{route('admin.product.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.list')</a></li>
                       <li><a href="{{route('admin.product.list', ['filter'=>'published'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.publish')</a></li>
+                      <li><a href="{{route('admin.product.list', ['filter'=>'paid'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.paid')</a></li>
+                      <li><a href="{{route('admin.product.list', ['filter'=>'ordered'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.ordered')</a></li>
                       <li><a href="{{route('admin.product.list', ['filter'=>'pinged'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.ping')</a></li>
                       <li><a href="{{route('admin.product.list', ['filter'=>'archived'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.archive')</a></li>
                       <li><a href="{{route('admin.product.list', ['filter'=>'trashed'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.trash')</a></li>

@@ -12,6 +12,14 @@ return [
     'list_apl'    => 'Lister les APL',
     'read_more'    => 'Continuer de lire',
     
+    'form.login'      => "Nom d'utilisateur",
+    'form.email'      => "Addresse Email",
+    'form.language'      => "Langage",
+    'form.first_name'      => "Nom",
+    'form.last_name'      => "Prénom",
+    
+    
+    
     'form.login.register'      => "Inscrivez-vous",
     'form.login.have_not_account'  => "Vous n'avez pas un compte?",
     'form.login.remember'      => "Souvenez de moi",
@@ -157,6 +165,8 @@ return [
     'admin.product.ping'    => 'Produits en attente',
     'admin.product.archive' => 'Produits archivés',
     'admin.product.publish' => 'Produits publiés',
+    'admin.product.paid'    => 'Produits vendus',
+    'admin.product.ordered' => 'Produits commandés',
     'admin.product.trash'   => 'Produits aux corbeilles',
     'admin.product.gestion'  => 'Gestion des blogs',
     
@@ -289,6 +299,11 @@ return [
     'load_more_blog'  => "Chargement de plus de blog",
     
     
+    'childs'            => 'Fils',
+    
+    
+    'btn.add'            => 'Ajouter',
+    'btn.detach'         => 'Detacher',
     'btn.save'           => 'Sauvegarder',
     'btn.cancel'         => 'Annuler',
     'btn.edit'           => 'Modifier',

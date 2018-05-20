@@ -45,6 +45,9 @@ class BlogController extends Controller
             abort(404);
         }
         
+        $blog->view_count++;
+        $blog->save();
+        
         $products = Product::orderBy('created_at','desc')
             ->ofStatus('published')
             ->take($this->recentSize)
