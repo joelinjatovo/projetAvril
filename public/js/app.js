@@ -49222,20 +49222,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 var _ = __webpack_require__(4);
@@ -49406,66 +49392,156 @@ var render = function() {
     "div",
     { staticClass: "comments-app" },
     [
-      _c("h1", [_vm._v("Comments")]),
-      _vm._v(" "),
       _vm.user
         ? _c("div", { staticClass: "comment-form" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c("form", { staticClass: "form", attrs: { name: "form" } }, [
-              _c("div", { staticClass: "form-row" }, [
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.message,
-                      expression: "message"
-                    }
-                  ],
-                  staticClass: "input",
-                  attrs: { placeholder: "Add comment...", required: "" },
-                  domProps: { value: _vm.message },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.message = $event.target.value
-                    }
-                  }
-                }),
+            _c(
+              "div",
+              {
+                staticClass: "comment-respond contact-form",
+                attrs: { id: "respond" }
+              },
+              [
+                _c(
+                  "h4",
+                  {
+                    staticClass: "comment-reply-title",
+                    attrs: { id: "reply-title" }
+                  },
+                  [_vm._v("Laissez un commentaire")]
+                ),
                 _vm._v(" "),
-                _vm.errorComment
-                  ? _c(
-                      "span",
-                      { staticClass: "input", staticStyle: { color: "red" } },
-                      [_vm._v(_vm._s(_vm.errorComment))]
-                    )
-                  : _vm._e()
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-row" }, [
-                _c("input", {
-                  staticClass: "input",
-                  attrs: { placeholder: "Email", type: "text", disabled: "" },
-                  domProps: { value: _vm.user.name }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-row" }, [
-                _c("input", {
-                  staticClass: "btn btn-success",
-                  attrs: { type: "button", value: "Add Comment" },
-                  on: { click: _vm.saveComment }
-                })
-              ])
-            ])
+                _c(
+                  "form",
+                  {
+                    staticClass: "form",
+                    attrs: { name: "form", id: "commentform" }
+                  },
+                  [
+                    _c("p", { staticClass: "form-author" }, [
+                      _c("input", {
+                        attrs: {
+                          id: "author",
+                          name: "name",
+                          type: "text",
+                          disabled: ""
+                        },
+                        domProps: { value: _vm.user.name }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "form-comment" }, [
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.message,
+                            expression: "message"
+                          }
+                        ],
+                        attrs: {
+                          id: "comment",
+                          name: "comment",
+                          placeholder: "Commentaire",
+                          cols: "45",
+                          rows: "8",
+                          "aria-required": "true",
+                          required: "required"
+                        },
+                        domProps: { value: _vm.message },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.message = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "form-submit" }, [
+                      _c("input", {
+                        staticClass: "submit-btn btn btn-default btn-lg",
+                        attrs: {
+                          name: "submit",
+                          type: "button",
+                          id: "submit",
+                          value: "Poster un Commentaire"
+                        },
+                        on: { click: _vm.saveComment }
+                      })
+                    ])
+                  ]
+                )
+              ]
+            )
           ])
         : _c("div", { staticClass: "comment-form" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _vm._m(2)
+            _c(
+              "div",
+              {
+                staticClass: "comment-respond contact-form",
+                attrs: { id: "respond" }
+              },
+              [
+                _c(
+                  "h4",
+                  {
+                    staticClass: "comment-reply-title",
+                    attrs: { id: "reply-title" }
+                  },
+                  [_vm._v("Laissez un commentaire")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "form",
+                  {
+                    staticClass: "form",
+                    attrs: { name: "form", id: "commentform" }
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "form-comment",
+                        attrs: { href: "/login" }
+                      },
+                      [
+                        _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.message,
+                              expression: "message"
+                            }
+                          ],
+                          attrs: {
+                            id: "comment",
+                            name: "comment",
+                            placeholder: "Commentaire",
+                            cols: "45",
+                            rows: "8",
+                            "aria-required": "true",
+                            required: "required"
+                          },
+                          domProps: { value: _vm.message },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.message = $event.target.value
+                            }
+                          }
+                        })
+                      ]
+                    )
+                  ]
+                )
+              ]
+            )
           ]),
       _vm._v(" "),
       _vm._l(_vm.commentsData, function(comment, index) {
@@ -49473,7 +49549,7 @@ var render = function() {
           ? _c("div", { staticClass: "comments" }, [
               !_vm.spamComments[index] || !comment.spam
                 ? _c("div", { staticClass: "comment" }, [
-                    _vm._m(3, true),
+                    _vm._m(0, true),
                     _vm._v(" "),
                     _c("div", { staticClass: "comment-box" }, [
                       _c("div", { staticClass: "comment-text" }, [
@@ -49579,7 +49655,7 @@ var render = function() {
                     _vm._v(" "),
                     _vm.commentBoxs[index]
                       ? _c("div", { staticClass: "comment-form comment-v" }, [
-                          _vm._m(4, true),
+                          _vm._m(1, true),
                           _vm._v(" "),
                           _c(
                             "form",
@@ -49657,7 +49733,7 @@ var render = function() {
                             return _c("div", { staticClass: "comments" }, [
                               !_vm.spamCommentsReply[index2] || !replies.spam
                                 ? _c("div", { staticClass: "comment reply" }, [
-                                    _vm._m(5, true),
+                                    _vm._m(2, true),
                                     _vm._v(" "),
                                     _c(
                                       "div",
@@ -49827,7 +49903,7 @@ var render = function() {
                                           "div",
                                           { staticClass: "comment-form reply" },
                                           [
-                                            _vm._m(6, true),
+                                            _vm._m(3, true),
                                             _vm._v(" "),
                                             _c(
                                               "form",
@@ -49963,37 +50039,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "comment-avatar" }, [
-      _c("img", { attrs: { src: "storage/commentbox.png" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "comment-avatar" }, [
-      _c("img", { attrs: { src: "storage/commentbox.png" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("form", { staticClass: "form", attrs: { name: "form" } }, [
-      _c("div", { staticClass: "form-row" }, [
-        _c("a", { attrs: { href: "/login" } }, [
-          _c("textarea", {
-            staticClass: "input",
-            attrs: { placeholder: "Add comment...", required: "" }
-          })
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "comment-avatar" }, [
       _c("img", { attrs: { src: "storage/comment.png" } })
     ])
   },
@@ -50018,7 +50063,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "comment-avatar" }, [
-      _c("img", { attrs: { src: "storage/comment.png" } })
+      _c("img", { attrs: { src: "/images/avatar.png" } })
     ])
   }
 ]

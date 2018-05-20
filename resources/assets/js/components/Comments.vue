@@ -1,39 +1,26 @@
 <template>
 <div class="comments-app">
-   <h1>Comments</h1>
    <!-- From -->
    <div class="comment-form" v-if="user">
-       <!-- Comment Avatar -->
-       <div class="comment-avatar">
-           <img src="storage/commentbox.png">
-       </div>
-       <form class="form" name="form">
-           <div class="form-row">
-               <textarea class="input" placeholder="Add comment..." required v-model="message"></textarea>
-               <span class="input" v-if="errorComment" style="color:red">{{errorComment}}</span>
-           </div>
-           <div class="form-row">
-               <input class="input" placeholder="Email" type="text" disabled :value="user.name">
-           </div>
-           <div class="form-row">
-               <input type="button" class="btn btn-success" @click="saveComment" value="Add Comment">
-           </div>
-       </form>
+        <div id="respond" class="comment-respond contact-form"> 
+            <h4 id="reply-title" class="comment-reply-title">Laissez un commentaire</h4> 
+            <form class="form" name="form" id="commentform"> 
+                <p class="form-author">
+                    <input id="author" name="name" type="text" disabled :value="user.name">
+                </p>
+                <p class="form-comment"><textarea v-model="message"id="comment" name="comment" placeholder="Commentaire" cols="45" rows="8" aria-required="true" required="required"></textarea></p> 
+                <p class="form-submit"><input @click="saveComment" name="submit" type="button"  id="submit" class="submit-btn btn btn-default btn-lg" value="Poster un Commentaire"></p> 
+            </form>                             
+        </div>
    </div>
  
    <div class="comment-form" v-else>
-       <!-- Comment Avatar -->
-       <div class="comment-avatar">
-           <img src="storage/commentbox.png">
-       </div>
-       <form class="form" name="form">
-           <div class="form-row">
-               <a href="/login"><textarea
-                 class="input"
-                 placeholder="Add comment..."
-                 required></textarea></a>
-           </div>
-       </form>
+       <div id="respond" class="comment-respond contact-form"> 
+            <h4 id="reply-title" class="comment-reply-title">Laissez un commentaire</h4> 
+            <form class="form" name="form" id="commentform">
+                <a href="/login" class="form-comment"><textarea v-model="message"id="comment" name="comment" placeholder="Commentaire" cols="45" rows="8" aria-required="true" required="required"></textarea></a>
+            </form>                             
+        </div>
    </div>
  
    <!-- Comments List -->
@@ -117,7 +104,6 @@
                                        <li>Total votes: {{replies.votes}}
                                            <a v-if="!replies.votedByUser" v-on:click="voteComment(replies.commentid,'replycomment',index,index2,'up')">Up Votes</a>
                                            <a v-if="!replies.votedByUser" v-on:click="voteComment(comment.commentid,'replycomment',index,index2,'down')">Down Votes</a>
-                                           </a>
                                        </li>
                                        <li>
                                            <a v-on:click="spamComment(replies.commentid,'replycomment',index,index2)">Spam</a>
@@ -133,7 +119,7 @@
                        <div class="comment-form reply" v-if="replyCommentBoxs[index2]">
                            <!-- Comment Avatar -->
                            <div class="comment-avatar">
-                               <img src="storage/comment.png">
+                               <img src="/images/avatar.png">
                            </div>
                            <form class="form" name="form">
                                <div class="form-row">
