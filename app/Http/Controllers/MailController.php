@@ -8,6 +8,7 @@ use Validator;
 
 use App\Models\User;
 use App\Models\Mail;
+use App\Notifications\NewMail;
 
 class MailController extends Controller
 {
@@ -32,37 +33,44 @@ class MailController extends Controller
             ->with('item', $user);
     }
 
-    public function sendMail(Request $request, User $user = null){
+    public function sendMail(Request $request)
+    {
+        $current = Auth::user();
+
         // Validate request
         $datas = $request->all();
         $validator = Validator::make($datas,[
             'subject' => 'required|max:100',
             'content' => 'required|max:1000'
         ]);
-
-        $current = Auth::user();
-
-        if(!$user||$user->id==0){
-            $user = User::ofRole('admin')
+        
+        if($request->has('receiver_id')){
+            $receiver = User::find($request->get('receiver_id'));
+            $to = $receiver->email;
+        }else{
+            $receiver = User::ofRole('admin')
                     ->isActive()
                     ->first();
+            $to = option('site.admin', $receiver->email);
         }
         
-        if(!$user){
-            return back()->with('error', 'No admin');
+        if(!$receiver){
+            return back()->with('error', 'No user selected');
         }
 
         $item = new Mail();
         $item->subject = $request->subject;
         $item->content = $request->content;
-        $item->receiver_id = $user->id;
+        $item->receiver_id = $receiver->id;
+        
         $item->save();
+        $receiver->notify(new NewMail($item));
 
         $data = array('name'=>"Virat Gandhi");
 
         try{
-            \Mail::send('mail', $data, function($message) use($item) {
-                $message->to($item->receiver->email, $item->receiver->name)
+            \Mail::send('mail', $data, function($message) use($item, $to) {
+                $message->to($to)
                         ->subject($item->subject)
                         ->from($item->sender->email, $item->sender->name);
             });
@@ -74,19 +82,25 @@ class MailController extends Controller
     }
 
     /**
-     * Show a category
+     * Show a mail
      *
      * @param  Illuminate\Http\Request  $request
-     * @param  App\Models\Category $category
+     * @param  App\Models\Mail $mail
      * @return Illuminate\Http\Response
      */
-    public function show(Request $request, Mail $mail)
+    public function index(Request $request, Mail $mail)
     {
         $this->middleware('auth');
-        $this->middleware('role:admin');
         
-        return view('admin.mail.index')
-                ->with('item', $mail->load('sender')->load('receiver')); 
+        $mail->load('sender')->load('receiver');
+        
+        if(\Auth::user()->isAdmin()){
+            return view('admin.mail.index')
+                ->with('item', $mail); 
+        }
+        
+        return view('backend.mail.index')
+                ->with('item', $mail); 
     }
 
     /**
@@ -97,14 +111,34 @@ class MailController extends Controller
      */
     public function all(Request $request, $filter='all')
     {
-      $items = Mail::orderBy('created_at', 'desc')
-          ->paginate($this->pageSize);
-      return view('admin.mail.all')
+        $user = Auth::user();
+        
+        $items = Mail::orderBy('created_at', 'desc');
+        switch($filter){
+            case "inbox":
+                $items = $items->where('receiver_id', $user->id);
+                break;
+            case "outbox":
+                $items = $items->where('sender_id', $user->id);
+                break;
+            case "draft":
+                $items = $items->where('receiver_id', $user->id)
+                    ->orWhere('sender_id', $user->id);
+                break;
+            case "all":
+                $this->middleware('role:admin');
+                break;
+        }
+        $items = $items->paginate($this->pageSize);
+        
+        if($user->isAdmin()){
+            return view('admin.mail.all')
+                ->with('items', $items);
+        }
+        
+        return view('backend.mail.all')
           ->with('items', $items);
     }
-
-
-
 
     public function basic_email(){
         $data = array('name'=>"Virat Gandhi");

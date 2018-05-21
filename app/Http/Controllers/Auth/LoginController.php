@@ -79,15 +79,21 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        $page = Page::where('path', '/login')
-            ->locale()
-            ->first();
         $latitude = option(Config::$APP_LATITUDE, -25.647467468105795);
         $longitude = option(Config::$APP_LONGITUDE, 146.89921517372136);
+        
+        $locale = \App::getLocale();
+        $title = Config::login()->get_meta_array('title', $locale, __('app.connexion'));
+        $content = Config::login()->get_meta_array('content', $locale);
+        $address = Config::login()->get_meta_array('address', $locale);
+        $contact = Config::login()->get_meta_array('contact', $locale);
         return view('auth.login')
             ->with('latitude', $latitude)
             ->with('longitude', $longitude)
-            ->with('item', $page);
+            ->with('title', $title)
+            ->with('content', $content)
+            ->with('address', $address)
+            ->with('contact', $contact);
     }
     
     

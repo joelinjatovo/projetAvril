@@ -9,11 +9,16 @@
 <!-- CSRF Token -->
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
-<title>{{config('app.name', 'IEA')}} {{isset($title)?' - '.$title:''}}</title>
+<title>{{option('site.meta_title', 'IEA')}} {{isset($title)?' - '.$title:''}}</title>
+<meta name="description" content="{{option('site.meta_desc', 'IEA')}}">
+<meta name="keywords" content="{{option('site.meta_keywords', 'IEA, Investir')}}">
     
 <!-- favicon and touch icons -->
 <link rel="shortcut icon" href="{{asset('images/favicon.png')}}">
-
+    
+<!-- App -->
+<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    
 <!-- Bootstrap -->
 <link href="{{asset('css/bootstrap.css')}}" rel="stylesheet">
 <link href="{{asset('css/bootstrap-slider.min.css')}}" rel="stylesheet" />
@@ -46,6 +51,20 @@
 <script>
 window.user = {!! json_encode(['user' => Auth::user()]) !!};
 </script>
+@endif
+    
+<!-- Scripts -->
+<script>
+    window.Laravel = <?php echo json_encode([
+        'csrfToken' => csrf_token(),
+    ]); ?>
+</script>
+
+<!-- This makes the current user's id available in javascript -->
+@if(!auth()->guest())
+    <script>
+        window.Laravel.userId = <?php echo auth()->user()->id; ?>
+    </script>
 @endif
 
 @yield('style')
@@ -146,9 +165,20 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
                                 </li>
                             </ul>
                         </li>
+                        
                             @if(Session::has('cart'))
-                        <li><a href="{{route('shop.cart')}}">@lang('app.cart')<i class="badge badge-info">{{Session::get('cart')->totalQuantity}}</i></a></li>
+                            <li><a href="{{route('shop.cart')}}">@lang('app.cart')<i class="badge badge-info">{{Session::get('cart')->totalQuantity}}</i></a></li>
                             @endif
+                        
+                            <!-- // add this dropdown // -->
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    <span class="fa fa-user"></span>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="notificationsMenu" id="notificationsMenu">
+                                    <li class="dropdown-header">No notifications</li>
+                                </ul>
+                            </li>
                         @endif
                     </ul>
                 </nav>
@@ -281,6 +311,10 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
         });
     });
 </script>
+    
+    
+<script src="{{ asset('js/app.js') }}"></script>
+    
 @yield('script')
 @yield('braintree')
 </body>

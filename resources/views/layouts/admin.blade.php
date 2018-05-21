@@ -20,9 +20,10 @@
 <link href="{{asset('administrator/css/lib/bootstrap-responsive.css')}}" rel="stylesheet" type="text/css" >
 <link href="{{asset('administrator/css/boo-extension.css')}}" rel="stylesheet" type="text/css" >
 <link href="{{asset('administrator/css/boo.css')}}" rel="stylesheet" type="text/css" >
-<link href="{{asset('administrator/css/style.css')}}" rel="stylesheet" type="text/css" >
 <link href="{{asset('administrator/css/boo-coloring.css')}}" rel="stylesheet" type="text/css" >
 <link href="{{asset('administrator/css/boo-utility.css')}}" rel="stylesheet" type="text/css" >
+    
+<link href="{{asset('administrator/css/style.css')}}" rel="stylesheet" type="text/css" >
 <link href="{{asset('css/font-awesome.min.css')}}" rel="stylesheet" type="text/css" >
 
 </head>
@@ -30,36 +31,44 @@
 <div id="header-container">
     <div id="header">
         <div class="navbar navbar-inverse navbar-fixed-top">
-                  <div class="navbar-inner">
-                      <div class="container-fluid">
-                          <!-- <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                              <span class="icon-bar"></span>
-                              <span class="icon-bar"></span>
-                              <span class="icon-bar"></span>
-                          </button> -->
-                          <a class="brand" href="{{route('home')}}">
-                              <img src="{{asset('administrator/img/logo.png')}}" width="100" height="50">
-                          </a>
-                          <div class="search-global">
-                              <input id="globalSearch" class="search search-query input-medium" type="search">
-                              <a class="search-button" href="#"><i class="fontello-icon-search-5"></i></a>
-                          </div>
-                          <div class="nav-collapse collapse">
-                              <ul class="nav user-menu visible-desktop">
-                                  <li>
-                                      <a class="btn-glyph fontello-icon-edit tip-bc" href="#" title="Messages"><span class="badge badge-important">8</span></a>
-                                  </li>
-                                  <li>
-                                      <a class="btn-glyph fontello-icon-mail-1 tip-bc" href="#" title="Emails"></a>
-                                  </li>
-                                  <li>
-                                      <a class="btn-glyph fontello-icon-lifebuoy tip-bc" href="#" title="Support"><span class="badge badge-important">4</span></a>
-                                  </li>
-                              </ul>
-                          </div>
-                      </div>
+          <div class="navbar-inner">
+              <div class="container-fluid">
+                  <!-- <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                  </button> -->
+                  <a class="brand" href="{{route('home')}}">
+                      <img src="{{asset('administrator/img/logo.png')}}" width="100" height="50">
+                  </a>
+                  <div class="search-global">
+                      <input id="globalSearch" class="search search-query input-medium" type="search">
+                      <a class="search-button" href="#"><i class="fontello-icon-search-5"></i></a>
                   </div>
+                  @if(Auth::check())
+                  <div class="nav-collapse collapse">
+                      <ul class="nav user-menu visible-desktop">
+                          <li class="dropdown">
+                              <a class="dropdown-toogle btn-glyph fontello-icon-edit tip-bc" href="#" data-toggle="dropdown" title="Messages"><span class="badge badge-important">8</span></a>
+                              <ul>
+                                  @foreach(Auth::user()->notifications as $notification)
+                                    <li>{{$notification->type}}</li>
+                                  @endforeach
+                                <li class="divider"></li>
+                              </ul>
+                          </li>
+                          <li>
+                              <a class="btn-glyph fontello-icon-mail-1 tip-bc" href="#" title="Emails"></a>
+                          </li>
+                          <li>
+                              <a class="btn-glyph fontello-icon-lifebuoy tip-bc" href="#" title="Support"><span class="badge badge-important">4</span></a>
+                          </li>
+                      </ul>
+                  </div>
+                  @endif
               </div>
+          </div>
+        </div>
         <!-- // navbar -->
         
         <div class="header-drawer">
@@ -208,8 +217,17 @@
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="{{route('admin.mail.list')}}" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fa fa-envelope"></i> @lang('app.admin.mail.list')</a>
+                      <a href="#accMails" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Request::is('admin/mail*')?'collapsed':''}}">
+                        <i class="fa fa-envelope"></i>
+                        <i class="chevron fontello-icon-right-open-3"></i> @lang('app.admin.mail.list')</a>
                   </div>
+                  <ul class="accordion-content nav nav-list collapse {{\Request::is('admin/category*')?'in':''}}" id="accMails">
+                      <li><a href="{{route('mail.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.mail.list')</a></li>
+                      <li><a href="{{route('mail.list',['filter'=>'inbox'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.mail.inbox')</a></li>
+                      <li><a href="{{route('mail.list',['filter'=>'outbox'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.mail.outbox')</a></li>
+                      <li><a href="{{route('mail.list',['filter'=>'draft'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.mail.draft')</a></li>
+                      <li><a href="{{route('mail.list',['filter'=>'spam'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.mail.spam')</a></li>
+                  </ul>
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
@@ -218,13 +236,14 @@
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="#accReglages" data-parent="#mainSideMenu"  data-toggle="collapse" class="accordion-toggle {{\Request::is('config*')?'collapsed':''}}">
+                      <a href="#accReglages" data-parent="#mainSideMenu"  data-toggle="collapse" class="accordion-toggle {{\Request::is('*config*')?'collapsed':''}}">
                         <i class="fontello-icon-tools"></i>
                         <i class="chevron fontello-icon-right-open-3"></i> @lang('app.configs')
                       </a>
                   </div>
-                  <ul class="accordion-content nav nav-list collapse {{\Request::is('config*')?'in':''}}" id="accReglages">
+                  <ul class="accordion-content nav nav-list collapse {{\Request::is('*config*')?'in':''}}" id="accReglages">
                     <li><a href="{{route('config.site')}}"> <i class="fontello-icon-right-dir"></i>@lang('app.config.site')</a></li>
+                    <li><a href="{{route('config.login')}}"> <i class="fontello-icon-right-dir"></i>@lang('app.config.login')</a></li>
                     <li><a href="{{route('config.social')}}"> <i class="fontello-icon-right-dir"></i>@lang('app.config.social')</a></li>
                     <li><a href="{{route('config.payment')}}"> <i class="fontello-icon-right-dir"></i>@lang('app.config.payment')</a></li>
                   </ul>
@@ -266,6 +285,7 @@
 <script src="{{asset('administrator/plugins/bootstrap-timepicker/js/bootstrap-timepicker.js')}}"></script>
 <script src="{{asset('administrator/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js')}}"></script>
 -->
+<script src="{{asset('administrator/js/lib/bootstrap/bootstrap-dropdown.js')}}"></script>
 <script src="{{asset('administrator/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js')}}"></script>
 <script src="{{asset('administrator/plugins/bootstrap-daterangepicker/js/bootstrap-daterangepicker.js')}}"></script>
 <script src="{{asset('administrator/plugins/bootstrap-toggle-button/js/bootstrap-toggle-button.js')}}"></script>

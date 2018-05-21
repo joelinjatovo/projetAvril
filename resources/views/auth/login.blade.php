@@ -3,18 +3,55 @@
 @section('content')
 <div id="contact-page" class="contact-page-var-two" style="margin-top: 160px;">
     <div class="container">
-        <h3 class="entry-title">@lang('app.connexion')</h3>
+        <h3 class="entry-title">{{$title}}</h3>
         <div class="row">
             <div class="col-md-6">
                 <div class="contact-form-wrapper">
                     <div class="contents">
-                        <p>{!!$item->content!!}</p>
+                        <p>
+                            @if(empty($content))
+                                Sed perspiciatis unde natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae.
+                            @else
+                                {{$content}}
+                            @endif
+                        </p>
                     </div>
-                    @foreach($item->childs as $child)
                     <div class="contact-page-contents clearfix">
-                        {!!$child->content!!}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <i class="fa fa-map-marker"></i>
+                                <div class="contents">
+                                    <h6 class="title">@lang('app.form.login.address')</h6>
+                                    <address>
+                                        @if(empty($address))
+                                            95 Amphitheatre Parkway
+                                            Mountain View CA,
+                                            United States
+                                        @else
+                                            {{$address}}
+                                        @endif
+                                    </address>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <i class="fa fa-phone"></i>
+                                <div class="contents">
+                                    <h5 class="title">@lang('app.form.login.contact')</h5>
+                                    @if(empty($contact))
+                                        <ul>
+                                            <li>Phone: (123) 45678910</li>
+                                            <li>Mail: company@domain.com</li>
+                                            <li>Fax: +84 962 216 601</li>
+                                        </ul>
+                                    @else
+                                        {{$contact}}
+                                    @endif
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
-                    @endforeach
 
                 </div>
             </div>

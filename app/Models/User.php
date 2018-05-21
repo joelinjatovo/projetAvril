@@ -30,8 +30,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-    
-
 
     /**
      * The attributes that should be a date
@@ -49,6 +47,18 @@ class User extends Authenticatable
         //'saved' => UserSaved::class,
         //'deleted' => UserDeleted::class,
     ];
+
+    /**
+     * The channels the user receives notification broadcasts on.
+     *
+     * @return string
+     */
+    /*
+    public function receivesBroadcastNotificationsOn()
+    {
+        return 'users.'.$this->id;
+    }
+    */
     
     /**
      * Scope a query to only include users of a given $role.

@@ -40,6 +40,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\Language::class,
             \App\Http\Middleware\EditPassword::class,
+            \App\Http\Middleware\MarkNotificationAsRead::class,
         ],
 
         'api' => [

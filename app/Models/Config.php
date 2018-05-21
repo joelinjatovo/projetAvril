@@ -23,9 +23,12 @@ class Config extends BaseModel
     public static $SOCIAL_ID = 2;
     public static $PAYMENT_ID = 3;
     public static $STYLE_ID = 4;
+    public static $LOGIN_ID = 5;
+    public static $SMTP_ID = 6;
     
     public static $TRIAL = "payment.trial_delay";
     public static $RESERVATION = "payment.percent_reservation";
+    
     public static $APP_LATITUDE = "site.latitude";
     public static $APP_LONGITUDE = "site.longitude";
     
@@ -35,13 +38,48 @@ class Config extends BaseModel
     
     public static function siteRules(){
         return [
-            'identifiant' => 'required|max:100',
-            'app_name' => 'required|max:100',
-            'app_email' => 'required|max:100',
-            'app_phone' => 'required|max:100',
-            'meta_title' => 'required|max:100',
             'latitude' => 'required|max:100',
             'longitude' => 'required|max:100',
+            
+            'admin_email' => 'required|max:100',
+            'admin_phone' => 'required|max:100',
+            'admin_name' => 'required|max:100',
+            
+            'meta_title'    => 'required|max:100',
+            'meta_desc'     => 'required|max:500',
+            'meta_keywords' => 'required|max:500',
+        ];
+    }
+    
+    public static function login(){
+        return Config::findOrFail(self::$LOGIN_ID);
+    }
+    
+    public static function loginRules(){
+        return [
+            'title.*' => 'required|max:100',
+            'content.*' => 'required|max:100',
+            'address.*' => 'required|max:100',
+            'contact.*' => 'required|max:100',
+        ];
+    }
+    
+    public static function loginKeys(){
+        return [
+            'title',
+            'content',
+            'address',
+            'contact',
+        ];
+    }
+    
+    public static function smtp(){
+        return Config::findOrFail(self::$SMTP_ID);
+    }
+    
+    public static function smtpRules(){
+        return [
+            'title' => 'required|max:100',
         ];
     }
     
@@ -98,5 +136,21 @@ class Config extends BaseModel
             'disable_payed_inscription' => 'max:100',
             'trial_delay' => 'required|max:100',
         ];
+    }
+    
+    public function get_meta_array($key, $index, $default = ''){
+        $meta = $this->get_meta($key);
+        if(!$meta) return $default;
+        
+        $value = unserialize($meta->value);
+        if(!isset($value[$index])) return $default;
+
+        return $value[$index];
+        
+    }
+    
+    public function update_meta_array($key, $value){
+        $value = serialize($value);
+        $meta = $this->update_meta($key, $value);
     }
 }

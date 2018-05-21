@@ -21,6 +21,8 @@ return [
     
     
     'form.login.register'      => "Inscrivez-vous",
+    'form.login.address'      => "Addresse",
+    'form.login.contact'      => "Contact",
     'form.login.have_not_account'  => "Vous n'avez pas un compte?",
     'form.login.remember'      => "Souvenez de moi",
     'form.login.forgot'        => "Mot de passe oublié?",
@@ -51,6 +53,7 @@ return [
     
     'list.product'      => 'Liste de produit',
     'list.user'         => 'Liste de membre',
+    'list.mail'         => 'Liste de message',
     
     'recent.product'  => 'Produits recents',
     'recent.category' => 'Categories recents',
@@ -132,6 +135,7 @@ return [
     'configs'       => 'Configurations',
     'config.site'   => 'Information du site',
     'config.social' => 'Reseaux Sociaux',
+    'config.login'  => 'Ecran de connexion',
     'config.payment'   => 'Paiement',
     'config.static_page'   => 'Page Statique',
     
@@ -239,6 +243,22 @@ return [
     'admin.user.add'        => 'Ajouter un utilisateurs',
     'admin.user.archive'    => 'Registre des utilisateurs',
     
+    'admin.mail'           => 'Mail',
+    'admin.mails'          => 'Mails',
+    'admin.mail.list'      => 'Liste des mails',
+    'admin.mail.inbox'     => 'Boite de reception',
+    'admin.mail.outbox'    => "Boite d'envoie",
+    'admin.mail.draft'     => "Brouillon",
+    'admin.mail.spam'      => "Spam",
+    
+    'mail'           => 'Mail',
+    'mails'          => 'Mails',
+    'mail.list'      => 'Liste des mails',
+    'mail.inbox'     => 'Boite de reception',
+    'mail.outbox'    => "Boite d'envoie",
+    'mail.draft'     => "Brouillon",
+    'mail.spam'      => "Spam",
+    
     'admin.page'           => 'Page',
     'admin.pages'          => 'Pages',
     'admin.page.list'      => 'Liste des pages',
@@ -299,7 +319,8 @@ return [
     'load_more_blog'  => "Chargement de plus de blog",
     
     
-    'childs'            => 'Fils',
+    'childs' => 'Fils',
+    'reply'  => "Repondre",
     
     
     'btn.add'            => 'Ajouter',
@@ -321,6 +342,8 @@ return [
     'btn.contact_admin'  => "Contacter l'administrateur",
     'btn.contact_apl'    => "Contacter l'APL",
     'btn.login'          => "Connexion",
+    'btn.send'           => "Envoyer",
+    'btn.reply'          => "Repondre",
     'btn.register'       => "Valider l'inscription",
     
     'inscription' => "Inscription",

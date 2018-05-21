@@ -103,6 +103,16 @@ Route::middleware(["auth"])->group(function(){
     Route::get('contact/{user?}','MailController@contact')->name('contact');
     Route::post('contact/{user?}','MailController@sendMail');
 
+    // Notification
+    Route::get('notifications/{filter?}', 'NotificationController@all')->name('notification.list');
+
+    // Mail Controller Groups
+    Route::get('mails/{filter?}', 'MailController@all')->name('mail.list');
+    Route::prefix('mail')->group(function(){
+        Route::get('{mail}', 'MailController@index')->name('mail.index');
+        Route::get('delete/{mail}', 'MailController@delete')->name('mail.delete');
+    });
+
     //Chat
     Route::get('chat', 'ChatController@index');
     Route::post('chat/threads', 'ThreadController@store');
@@ -291,14 +301,7 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::get('show/{thread}', 'ThreadController@show')->name('admin.thread.show');
         Route::get('delete/{thread}', 'ThreadController@delete')->name('admin.thread.delete');
     });
-
-    // Mail Controller Groups
-    Route::get('mails/{filter?}', 'MailController@all')->name('admin.mail.list');
-    Route::prefix('mail')->group(function(){
-        Route::get('show/{mail}', 'MailController@show')->name('admin.mail.show');
-        Route::get('delete/{mail}', 'MailController@delete')->name('admin.mail.delete');
-    });
-
+    
     // Observation Controller Groups
     Route::get('observations/{filter?}', 'ObservationController@allAdmin')->name('admin.observation.list');
     Route::prefix('observation')->group(function(){
@@ -312,6 +315,8 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
     Route::prefix('config')->group(function () {
         Route::get('site', 'ConfigController@site')->name('config.site');
         Route::post('site', 'ConfigController@site')->name('config.site.update');
+        Route::get('login', 'ConfigController@login')->name('config.login');
+        Route::post('login', 'ConfigController@login')->name('config.login.update');
         Route::get('social', 'ConfigController@social')->name('config.social');
         Route::post('social', 'ConfigController@social')->name('config.social.update');
         Route::get('payment', 'ConfigController@payment')->name('config.payment');

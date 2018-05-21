@@ -55,6 +55,41 @@ class ConfigController extends Controller
         
         return view('config.site',compact('item', 'keys'));
     }
+    /**
+     * Show login config
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function login(Request $request)
+    {
+        $item = Config::login();
+        $rules = Config::loginRules();
+        $keys = Config::loginKeys();
+        
+        if ($request->isMethod('post')) {
+            // Validate request
+            $datas = $request->all();
+            $validator = Validator::make($datas, $rules);
+            
+            // Check validation
+            if ($validator->fails()) {
+                return back()->withErrors($validator)
+                            ->withInput();
+            }
+            
+            // Save Config into MetaData By Validator rules key
+            foreach($keys as $key){
+                if($value = $request->input($key)){
+                    $item->update_meta_array($key, $value);
+                } 
+            }
+            
+            // Go back with notification
+            return back()->with('success','La configuration a été modifiée avec succés ! ');
+        }
+        
+        return view('config.login',compact('item'));
+    }
 
     /**
      * Show social config page.

@@ -8350,3 +8350,7 @@ button.close {
   }
 }
 
+#notifications.has-notifications {
+  color: #bf5329;
+}
+

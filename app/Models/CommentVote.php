@@ -21,6 +21,13 @@ class CommentVote extends BaseModel
      * @var array
      */
     protected $fillable = ['comment_id', 'user_id', 'vote'];
+
+    /**
+     * The attributes that should be a date
+     *
+     * @var array
+     */
+    protected $dates = false;
     
     /**
      * Create a new model instance.

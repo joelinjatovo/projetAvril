@@ -34,6 +34,11 @@ class Category extends BaseModel
         $this->author_id = (Auth::check()?Auth::user()->id:0);
     }
     
+    public function getRouteKeyName()
+    {
+      return 'slug';
+    }
+    
     /**
      * Get the author record associated with the blog.
      */
