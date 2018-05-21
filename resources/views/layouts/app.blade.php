@@ -77,7 +77,7 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
             <div class="row">
                 <div class="col-md-3">
                     <div class="clearfix">
-                        <p class="contanct">@lang('app.contact_us_phone', ['phone'=>option('site.app_phone', '+61 33 333 33')])</p>
+                        <p class="contanct">@lang('app.contact_us_phone', ['phone'=>option('site.admin_phone', '+61 33 333 33')])</p>
                     </div>
                 </div>
                 <div class="col-md-9">
@@ -262,6 +262,9 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
 </footer>
 <a href="#top" id="scroll-top"><i class="fa fa-angle-up"></i></a>
 
+    
+<script src="{{ asset('js/app.js') }}"></script>
+    
 <!-- javascript search-bar -->
 <script src="{{asset('js/jquery-1.10.2.min.js')}}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
@@ -312,8 +315,6 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
     });
 </script>
     
-    
-<script src="{{ asset('js/app.js') }}"></script>
     
 @yield('script')
 @yield('braintree')
