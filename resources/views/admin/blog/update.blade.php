@@ -4,7 +4,16 @@
 <div id="main-content" class="main-content container-fluid">
     @include('includes.notification')
     <div class="row-fluid page-head">
-        <h2 class="page-title"><i class="aweso-icon-list-alt"></i> @lang('app.admin.blog.gestion') <small>@if($item->id>0) @lang('app.admin.blog.update') @else @lang('app.admin.blog.add') @endif</small></h2>
+        <h2 class="page-title"><i class="aweso-icon-list-alt"></i> 
+            @if($item->id>0) 
+                @lang('app.admin.blog.update') 
+            @else 
+                @lang('app.admin.blog.add') 
+            @endif
+            <small>
+            @lang('app.admin.blog.gestion') 
+            </small>
+        </h2>
     </div>
     <!-- // page head -->
     <div id="page-content" class="row-fluid page-content">
@@ -43,9 +52,10 @@
                 </div>
                 <div class="well well-nice">
                     <h4 class="simple-header">@lang('app.admin.category')</h4>
-                    <select multiple name="category[]" style="width:100%;">
                         @foreach($categories as $category)
-                            <option value="{{$category->id}}">{{$category->title}}</option>
+                        <div class="control-group">
+                            <input type="checkbox" name="category[]" value="{{$category->id}}"  {{in_array($category->id, $categoryIds)?'checked':''}}> {{$category->title}}
+                        </div>
                         @endforeach
                     </select>
                 </div>

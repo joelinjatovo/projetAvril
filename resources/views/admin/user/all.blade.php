@@ -5,7 +5,13 @@
     <div id="page-content" class="page-content">
         <section>
             <div class="page-header">
-                <h3>Parties Prenantes. <small>Tous les utilisateurs </small></h3>
+                <h3>
+                    @if(isset($title))
+                        {{$title}}
+                    @else
+                        @lang('app.admin.user.list')
+                    @endif
+                </h3>
             </div>
             <div class="row-fluid margin-bottom16">
                  <div class="span12">

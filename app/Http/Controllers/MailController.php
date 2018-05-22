@@ -29,7 +29,7 @@ class MailController extends Controller
                     ->first();
         }
 
-        return view('contact.index')
+        return view('backend.mail.contact')
             ->with('item', $user);
     }
 
@@ -64,16 +64,20 @@ class MailController extends Controller
         $item->receiver_id = $receiver->id;
         
         $item->save();
-        $receiver->notify(new NewMail($item));
-
-        $data = array('name'=>"Virat Gandhi");
 
         try{
+
+            $data = array('name'=>"Virat Gandhi");
+            
             \Mail::send('mail', $data, function($message) use($item, $to) {
                 $message->to($to)
                         ->subject($item->subject)
                         ->from($item->sender->email, $item->sender->name);
             });
+            
+        
+            $receiver->notify(new NewMail($item));
+            
         }catch(\Exception $e){
             return back()->with('error', $e->getMessage());
         }

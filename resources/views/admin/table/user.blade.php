@@ -6,15 +6,15 @@
              <input class="checkbox" type="checkbox" value="option1">
          </label>
        </th>
-         <th scope="col">Id <span class="column-sorter"></span></th>
-         <th scope="col">Photo / Avatar <span class="column-sorter"></span></th>
-         <th scope="col">Nom <span class="column-sorter"></span></th>
-         <th scope="col">Email <span class="column-sorter"></span></th>
-         <th scope="col">Date d'inscription <span class="column-sorter"></span></th>
-         <th scope="col">Role <span class="column-sorter"></span></th>
-         <th scope="col">Type <span class="column-sorter"></span></th>
-         <th scope="col">Statut <span class="column-sorter"></span></th>
-         <th scope="col">Actions <span class="column-sorter"></span></th>
+         <th scope="col">@lang('app.table.id') <span class="column-sorter"></span></th>
+         <th scope="col">@lang('app.table.photo') <span class="column-sorter"></span></th>
+         <th scope="col">@lang('app.table.name') <span class="column-sorter"></span></th>
+         <th scope="col">@lang('app.table.email') <span class="column-sorter"></span></th>
+         <th scope="col">@lang('app.table.date') <span class="column-sorter"></span></th>
+         <th scope="col">@lang('app.table.role') <span class="column-sorter"></span></th>
+         <th scope="col">@lang('app.table.type') <span class="column-sorter"></span></th>
+         <th scope="col">@lang('app.table.status') <span class="column-sorter"></span></th>
+         <th scope="col">@lang('app.table.actions') <span class="column-sorter"></span></th>
      </tr>
  </thead>
  <tbody>
@@ -44,14 +44,15 @@
              </a>
          </td>
          <td>
-         @if($item->status!='blocked')
-            <a href="{{route('admin.user.block', $item)}}" class="btn btn-small btn-info">Bloquer</a>
-         @endif
-         @if($item->status=='active')
-            <a href="{{route('admin.user.disable', $item)}}" class="btn btn-small btn-warning">Desactiver</a>
-         @else
-            <a href="{{route('admin.user.active', $item)}}" class="btn btn-small btn-warning">Activer</a>
-         @endif
+             @if($item->status!='blocked')
+                <a href="{{route('admin.user.block', $item)}}" class="btn btn-small btn-default">@lang('app.btn.block')</a>
+             @endif
+             @if($item->status=='active')
+                <a href="{{route('admin.user.disable', $item)}}" class="btn btn-small btn-success">@lang('app.btn.disable')</a>
+             @else
+                <a href="{{route('admin.user.active', $item)}}" class="btn btn-small btn-info">@lang('app.btn.active')</a>
+             @endif
+                <a href="{{route('admin.user.delete', $item)}}" class="btn btn-small btn-warning">@lang('app.btn.delete')</a>
          </td>
      </tr>
      @endforeach

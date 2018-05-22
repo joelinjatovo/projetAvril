@@ -63,7 +63,8 @@ class NewMail extends Notification implements ShouldQueue
             'data' => [
                 'mail_id' => $this->mail->id,
                 'sender_id' => $this->mail->sender->id,
-                'message' => 'New Mail received',
+                'sender_name' => $this->mail->sender->name,
+                'message' => $this->mail->sender->name.' vous a envoyé un mail',
             ],
         ];
     }

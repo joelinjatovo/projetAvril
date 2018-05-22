@@ -144,26 +144,29 @@ class BlogController extends Controller
         $this->middleware('auth');
         $this->middleware('role:admin');
 
-        $page = $request->get('page');
-        if(!$page){$page = 1;}
-
         $items = Blog::where('post_type','=', $this->post_type)
             ->withCount('comments');
         
+        $title = __('app.blog.list');
         switch($filter){
             case 'starred':
                 $items = $items->where('starred', 1);
+                $title = __('app.blog.list.starred');
                 break;
             case 'archived':
             case 'published':
             case 'trashed':
             case 'pinged':
                 $items = $items->ofStatus($filter);
+                $title = __('app.blog.list.status', ['status'=>__('app.'.$filter)]);
                 break;
         }
         
         $items = $items->paginate($this->pageSize);
-        return view('admin.blog.list', compact('items', 'filter', 'page'));
+        
+        return view('admin.blog.list')
+            ->with('title', $title)
+            ->with('items', $items);
     }
 
     /**
@@ -178,15 +181,22 @@ class BlogController extends Controller
         $this->middleware('role:admin');
 
         $blog = new Blog();
+        $categoryIds = [];
         if($value = $request->old('title'))             $blog->title = $value;
         if($value = $request->old('content'))           $blog->content = $value;
         if($value = $request->old('meta_tag'))          $blog->meta_tag = $value;
         if($value = $request->old('meta_description'))  $blog->meta_description = $value;
+        if($value = $request->old('category'))          $categoryIds = $value;
 
         $categories = Category::all();
         $action = route('admin.blog.store');
         
-        return view('admin.blog.update', ['item'=>$blog, 'action'=>$action, 'categories'=>$categories]);
+        return view('admin.blog.update')
+            ->with('title', __('app.blog.create'))
+            ->with('item', $blog)
+            ->with('action', $action)
+            ->with('categoryIds', $categoryIds)
+            ->with('categories', $categories);;
     }
 
     /**
@@ -260,16 +270,27 @@ class BlogController extends Controller
         $this->middleware('auth');
         $this->middleware('role:admin');
 
-        $blog = new Blog();
+        $categoryIds = [];
+        foreach($blog->categories as $category){
+            $categoryIds[] = $category->id;
+        }
+        
+        
         if($value = $request->old('title'))             $blog->title = $value;
         if($value = $request->old('content'))           $blog->content = $value;
         if($value = $request->old('meta_tag'))          $blog->meta_tag = $value;
         if($value = $request->old('meta_description'))  $blog->meta_description = $value;
+        if($value = $request->old('category'))          $categoryIds = $value;
 
         $categories = Category::all();
         $action = route('admin.blog.update', ['blog'=>$blog]);
         
-        return view('admin.blog.update', ['item'=>$blog, 'action'=>$action, 'categories'=>$categories]);
+        return view('admin.blog.update')
+            ->with('title', __('app.blog.update'))
+            ->with('item', $blog)
+            ->with('action', $action)
+            ->with('categoryIds', $categoryIds)
+            ->with('categories', $categories);
     }
 
     /**

@@ -138,8 +138,11 @@ class Cart extends BaseModel
         foreach($this->items as $item){
             $item->status = 'ordered';
             $item->save();
-            $item->product->quantity--;
-            $item->product->save();
+            if($item->product){
+                $item->product->quantity -= $item->quantity;
+                $item->product->buyer_id = $this->author_id;
+                $item->product->save();
+            }
         }
         
         if($this->author){

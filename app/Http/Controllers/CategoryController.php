@@ -170,6 +170,9 @@ class CategoryController extends Controller
     */
     public function delete(Request $request,Category $category)
     {
+        if($category->id<5){
+            return back()->with('error',"Cette action ne peut pas etre réalisée.");
+        }
         $category->delete();
         return redirect()->route('admin.dashboard')
             ->with('success',"La categorie a été supprimée avec succés");

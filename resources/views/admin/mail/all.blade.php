@@ -34,8 +34,8 @@
                                 <td>{{$item->receiver->name}} <span class="badge badge-info">{{$item->receiver->role}}</span></td>
                                 <td>{{$item->created_at->diffForHumans()}}</td>
                                 <td>
-                                    <a href="{{route('admin.mail.show', $item)}}"  class="btn btn-small btn-info">@lang('app.btn.view')</a>
-                                    <a href="{{route('admin.mail.delete', $item)}}" class="btn btn-small btn-warning btn-delete">@lang('app.btn.delete')</a>
+                                    <a href="{{route('mail.index', $item)}}"  class="btn btn-small btn-info">@lang('app.btn.view')</a>
+                                    <a href="{{route('mail.delete', $item)}}" class="btn btn-small btn-warning btn-delete">@lang('app.btn.delete')</a>
                                 </td>
                             </tr>
                            @endforeach

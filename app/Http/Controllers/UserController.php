@@ -33,24 +33,14 @@ class UserController extends Controller
         if(!in_array($user->role, ['admin', 'member', 'afa', 'apl', 'seller'])){
             return back()->with('error', 'Un probleme a survenu');
         }
-        return view('admin.user.'.$user->role, ['item'=>$user]);
-    }
-
-    /**
-     * Show the user profile.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function profile()
-    {
-        $this->middleware('auth');
-        if(Auth::user()->isAdmin()){
-            return view('admin.user.profile')
-                ->with('item', Auth::user());
+        
+        if(Auth::user()->id == $user->id){
+            return redirect()->route('profile');
         }
-        return view('backend.user.profile')
-                ->with('title', __('app.profile'))
-                ->with('item', Auth::user());
+        
+        return view('admin.user.index')
+            ->with('item', $user)
+            ->with('title', __('app.'.$user->role));
     }
     
     /**
@@ -71,12 +61,14 @@ class UserController extends Controller
             case 'afa':
             case 'member':
             case 'seller':
+                $title = __('app.user.list.role', ['role'=>__('app.'.$filter)]);
                 $items = User::ofRole($filter)
                     ->isActive()
                     ->paginate($this->pageSize);
                 break;
             case 'person':
             case 'organization':
+                $title = __('app.user.list.type', ['type'=>__('app.'.$filter)]);
                 $items = User::ofType($filter)
                     ->isActive()
                     ->paginate($this->pageSize);
@@ -85,16 +77,20 @@ class UserController extends Controller
             case 'pinged':
             case 'disabled':
             case 'blocked':
+                $title = __('app.user.list.status', ['status'=>__('app.'.$filter)]);
                 $items = User::ofStatus($filter)
                     ->paginate($this->pageSize);
                 break;
             default:
             case 'all':
+                $title = __('app.admin.user.list');
                 $items = User::paginate($this->pageSize);
                 break;
         }
         
-        return view('admin.user.all', compact('items')); 
+        return view('admin.user.all')
+            ->with('items',$items)
+            ->with('title', $title); 
     }
     
     /**
@@ -116,7 +112,7 @@ class UserController extends Controller
         $user->status = 'active';
         $user->save();
         
-        return back()->with('success',"L'utilsateur a été supprimé avec succés");
+        return back()->with('success',"L'utilsateur a été activé avec succés");
     }
     
     /**
@@ -140,7 +136,7 @@ class UserController extends Controller
         $user->status = 'blocked';
         $user->save();
         
-        return back()->with('success',"L'utilsateur a été blocké avec succés");
+        return back()->with('success',"L'utilsateur a été bloqué avec succés");
     }
     
     /**

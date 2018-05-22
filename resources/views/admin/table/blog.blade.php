@@ -2,29 +2,37 @@
     <table class="table table-striped table-hover">
         <thead>
             <tr>
-                <th scope="col">ID <span class="column-sorter"></span></th>
-                <th scope="col">Photo <span class="column-sorter"></span></th>
-                <th scope="col">Titre <span class="column-sorter"></span></th>
-                <th scope="col">Descripition <span class="column-sorter"></span></th>
-                <th scope="col">Commentaires <span class="column-sorter"></span></th>
-                <th scope="col">Meta Tag <span class="column-sorter"></span></th>
-                <th scope="col">Meta Description <span class="column-sorter"></span></th>
-                <th scope="col">Statut <span class="column-sorter"></span></th>
-                <th scope="col">Date de publication <span class="column-sorter"></span></th>
-                <th scope="col">Actions</th>
+                <th scope="col">@lang('app.table.photo') <span class="column-sorter"></span></th>
+                <th scope="col">@lang('app.table.title')/@lang('app.table.content') <span class="column-sorter"></span></th>
+                <th scope="col">@lang('app.table.comment') <span class="column-sorter"></span></th>
+                <th scope="col">@lang('app.table.meta_tag') <span class="column-sorter"></span></th>
+                <th scope="col">@lang('app.table.meta_desc') <span class="column-sorter"></span></th>
+                <th scope="col">@lang('app.table.status') <span class="column-sorter"></span></th>
+                <th scope="col">@lang('app.table.date') <span class="column-sorter"></span></th>
+                <th scope="col">@lang('app.table.actions')</th>
             </tr>
         </thead>
         <tbody>
           @foreach($blogs as $blog) 
             <tr>
-                <td>{{$blog->id}}</td>
-                <td><a href="{{route('blog.index', $blog)}}">{{$blog->imageUrl(true)}}</a></td>
-                <td>{{$blog->title}}</td>
-                <td>{{$blog->excerpt()}}</td>
+                <td>
+                    <a href="{{route('blog.index', ['blog'=>$blog])}}"><img class="thumb" src="{{$blog->imageUrl(true)}}" width="50"></a>
+                <td>
+                    <a href="{{route('blog.index', ['blog'=>$blog])}}">{{$blog->title}}</a><br>
+                     {{$blog->excerpt()}}
+                </td>
                 <td><a href="{{route('admin.comment.list', $blog)}}">{{$blog->comments_count}}</a></td>
                 <td>{{$blog->meta_tag}}</td>
                 <td>{{$blog->meta_description}}</td>
-                <td>{{$blog->status}}</td>
+                <td>
+                     <a href="{{route('admin.blog.list', ['filter'=>$blog->status])}}">
+                         @if($blog->status=='published')
+                         <span class="label label-success">{{$blog->status}}</span>
+                         @else
+                         <span class="label label-warning">{{$blog->status}}</span>
+                         @endif
+                     </a>
+                </td>
                 <td>{{$blog->created_at->diffForHumans()}}</td>
                 <td>
                     <a href="{{route('admin.blog.edit', $blog)}}" class="btn btn-small btn-default btn-delete">@lang('app.btn.edit')</a>

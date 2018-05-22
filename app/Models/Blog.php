@@ -71,6 +71,16 @@ class Blog extends BaseModel
         return asset('images/blog.png');
     }
     
+    /**
+     * A blog can have many categories
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
+     */
+    public function categories()
+    {
+      return $this->belongsToMany(Category::class, 'objects_categories', 'object_id', 'category_id')
+          ->wherePivot('object_type', Blog::class);
+    }
     
     /**
      * A blog can have many comments

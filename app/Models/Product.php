@@ -133,6 +133,14 @@ class Product extends BaseModel
     }
     
     /**
+     * Get the buyer record associated with the product.
+     */
+    public function buyer()
+    {
+        return $this->belongsTo(User::class, 'buyer_id', 'id');
+    }
+    
+    /**
      * Get the seller record associated with the product.
      */
     public function seller()
@@ -165,7 +173,8 @@ class Product extends BaseModel
      */
     public function categories()
     {
-      return $this->belongsToMany(Product::class, 'objects_categories', 'product_id', 'category_id');
+      return $this->belongsToMany(Category::class, 'objects_categories', 'object_id', 'category_id')
+          ->wherePivot('object_type', Product::class);
     }
     
     

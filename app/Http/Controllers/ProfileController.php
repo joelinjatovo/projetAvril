@@ -50,9 +50,9 @@ class ProfileController extends Controller
         $action = route('profile.edit');
         
         if(Auth::user()->isAdmin()){
-            $view = view('admin.user.update');
+            $view = view('admin.user.edit.update');
         }else{
-            $view = view('backend.user.update');
+            $view = view('backend.user.edit.update');
         }
         
         return $view->with('title', __('app.profile'))
@@ -308,9 +308,9 @@ class ProfileController extends Controller
     public function password()
     {
         if(Auth::user()->isAdmin()){
-            $view = view('admin.user.password');
+            $view = view('admin.user.edit.password');
         }else{
-            $view = view('backend.user.password');
+            $view = view('backend.user.edit.password');
         }
         
         return $view->with('title', __('app.password'));
@@ -352,9 +352,9 @@ class ProfileController extends Controller
     public function avatar()
     {
         if(Auth::user()->isAdmin()){
-            $view = view('admin.user.avatar');
+            $view = view('admin.user.edit.avatar');
         }else{
-            $view = view('backend.user.avatar');
+            $view = view('backend.user.edit.avatar');
         }
         
         return $view->with('title', __('app.avatar'))
@@ -402,9 +402,9 @@ class ProfileController extends Controller
     {
         
         if(Auth::user()->isAdmin()){
-            $view = view('admin.user.location');
+            $view = view('admin.user.edit.location');
         }else{
-            $view = view('backend.user.location');
+            $view = view('backend.user.edit.location');
         }
         
         return $view->with('title', __('app.location'))

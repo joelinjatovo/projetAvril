@@ -109,14 +109,17 @@ class ProductController extends Controller
             case 'trashed':
                 $items = Product::ofStatus($filter)
                     ->paginate($this->pageSize);
+                $title = __('app.product.list.status', ['status'=>__('app.'.$filter)]);
                 break;
             default:
             case 'all':
                 $items = Product::paginate($this->pageSize);
+                $title = __('app.product.list');
                 break;
         }
         
-        return view('admin.product.all', compact('items', 'filter', 'page')); 
+        return view('admin.product.all', compact('items', 'filter', 'page'))
+            ->with('title', $title); 
     }
     
     /**

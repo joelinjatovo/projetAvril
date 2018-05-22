@@ -48,6 +48,7 @@ class CreateProductsTable extends Migration
             $table->bigInteger('location_type_id')->default('0')->index();  // in urban area, extra-urban, in campaign
             
             $table->bigInteger('category_id')->default('0')->index();
+            $table->bigInteger('buyer_id')->default('0')->index();
             $table->bigInteger('seller_id')->default('0')->index();
             $table->bigInteger('author_id')->default('0')->index();
             $table->bigInteger('location_id')->default('0')->index();

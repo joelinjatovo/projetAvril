@@ -3,7 +3,13 @@
 @section('content')
 <div id="main-content" class="main-content container-fluid">
     <div class="row-fluid page-head">
-        <h2 class="page-title"><i class="fontello-icon-monitor"></i> @lang('app.admin.blog.list')</h2>
+        <h2 class="page-title">
+            @if(isset($title))
+                {{$title}}
+            @else
+                @lang('app.admin.blog.list')
+            @endif
+        </h2>
     </div>
     <div class="page-content">
         <section  class="span12">

@@ -6,15 +6,15 @@
              <input class="checkbox" type="checkbox" value="option1">
          </label>
        </th>
-         <th scope="col">ID <span class="column-sorter"></span></th>
-         <th scope="col">Photo <span class="column-sorter"></span></th>
-         <th scope="col">Title/Description <span class="column-sorter"></span></th>
-         <th scope="col">Prix/TMA <span class="column-sorter"></span></th>
-         <th scope="col">Date <span class="column-sorter"></span></th>
-         <th scope="col">Statut <span class="column-sorter"></span></th>
-         <th scope="col">Vendeur <span class="column-sorter"></span></th>
-         <th scope="col">Auteur <span class="column-sorter"></span></th>
-         <th scope="col">Actions </th>
+         <th scope="col">@lang('app.table.id') <span class="column-sorter"></span></th>
+         <th scope="col">@lang('app.table.photo') <span class="column-sorter"></span></th>
+         <th scope="col">@lang('app.table.title')/@lang('app.table.content') <span class="column-sorter"></span></th>
+         <th scope="col">@lang('app.table.price')/@lang('app.table.tma') <span class="column-sorter"></span></th>
+         <th scope="col">@lang('app.table.date') <span class="column-sorter"></span></th>
+         <th scope="col">@lang('app.table.status') <span class="column-sorter"></span></th>
+         <th scope="col">@lang('app.table.seller') <span class="column-sorter"></span></th>
+         <th scope="col">@lang('app.table.author') <span class="column-sorter"></span></th>
+         <th scope="col">@lang('app.table.actions') </th>
      </tr>
  </thead>
  <tbody>
@@ -26,7 +26,9 @@
            </label>
          </td>
          <td>{{$product->id}}</td>
-         <td><a href="{{route('admin.product.show', ['product'=>$product])}}"><img class="thumb" src="{{$product->imageUrl()}}" width="50"></a></td>
+         <td>
+             <a href="{{route('admin.product.show', ['product'=>$product])}}"><img class="thumb" src="{{$product->imageUrl()}}" width="50"></a>
+         </td>
          <td>
              <a href="{{route('admin.product.show', ['product'=>$product])}}">{{$product->title}}</a><br>
              {{$product->excerpt()}}
@@ -35,15 +37,23 @@
          <td>{{$product->created_at->diffForHumans()}}</td>
          <td>
              <a href="{{route('admin.product.list', ['filter'=>$product->status])}}">
-             @if($product->status=='published')
-             <span class="label label-success">{{$product->status}}</span>
-             @else
-             <span class="label label-warning">{{$product->status}}</span>
-             @endif
+                 @if($product->status=='published')
+                 <span class="label label-success">{{$product->status}}</span>
+                 @else
+                 <span class="label label-warning">{{$product->status}}</span>
+                 @endif
              </a>
          </td>
-         <td>@if($product->seller)<a href="{{route('admin.user.show', $product->seller)}}">{{$product->seller->name}}</a>@endif</td>
-         <td><a href="{{route('admin.user.show', $product->author)}}">{{$product->author->name}}</a></td>
+         <td>
+             @if($product->seller)
+             <a href="{{route('admin.user.show', $product->seller)}}">{{$product->seller->name}}</a>
+             @endif
+         </td>
+         <td>
+             @if($product->author)
+             <a href="{{route('admin.user.show', $product->author)}}">{{$product->author->name}}</a>
+             @endif
+         </td>
          <td>
          @if($product->status=='pinged' || $product->status=='archived')
             <a href="{{route('admin.product.publish', $product)}}" class="btn btn-small btn-success btn-publish">@lang('app.btn.publish')</a>
