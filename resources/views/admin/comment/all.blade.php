@@ -5,7 +5,13 @@
     <div id="page-content" class="page-content">
         <section>
             <div class="page-header">
-                <h3>@lang('app.admin.comment.list')</h3>
+                <h3>
+                @if(isset($title))
+                    {{$title}}
+                @else
+                    @lang('app.comment.list')
+                @endif
+                </h3>
             </div>
             <div class="row-fluid margin-bottom16">
                  <div class="span12">

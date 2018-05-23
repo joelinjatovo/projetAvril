@@ -29,15 +29,13 @@
                         <textarea id="wysiBooEditor" class="input-block-level" style="height: 320px" name="content" placeholder="@lang('app.admin.content.desc')">{{$item->content}}</textarea>
                     </div>
                 </div>
-                <div class="row-fluid">
-                    <div class="well well-nice">
-                        <h4 class="simple-header">@lang('app.admin.page')</h4>
-                        <select multiple name="page[]" style="width:100%;">
-                            @foreach($pages as $page)
-                                <option value="{{$page->id}}">{{$page->title}}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                <div class="well well-nice">
+                    <h4 class="simple-header">@lang('app.admin.page')</h4>
+                        @foreach($pages as $page)
+                        <div class="control-group">
+                            <input type="checkbox" name="page[]" value="{{$page->id}}"  {{in_array($page->id, $pageIds)?'checked':''}}> {{$page->title}} ({{$page->language}})
+                        </div>
+                        @endforeach
                 </div>
                 <div class="page-header">
                     <h3><i class="fontello-icon-monitor opaci35"></i> @lang('app.admin.file')</h3>

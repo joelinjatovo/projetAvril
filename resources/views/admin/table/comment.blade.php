@@ -16,13 +16,13 @@
             <tr>
                 <td>{{$comment->id}}</td>
                 <td>{{$comment->content}}</td>
-                <td><a href="#">{{$comment->status}}</a></td>
+                <td><a href="{{route('admin.comment.list', ['blog'=>$comment->blog, 'filter'=>$comment->status])}}">{{$comment->status}}</a></td>
                 <td>{{$comment->user?$comment->user->name:''}}</td>
                 <td>{{$comment->replies_count}}</td>
                 <td>{{$comment->created_at->diffForHumans()}}</td>
                 <td>
                     <a href="{{route('admin.comment.show', $comment)}}" class="btn btn-small btn-default btn-delete">@lang('app.btn.view')</a>
-                 @if($comment->status=='pinged' || $comment->blog=='archived')
+                 @if($comment->status=='pinged' || $comment->status=='archived')
                     <a href="{{route('admin.comment.publish', $comment)}}" class="btn btn-small btn-success btn-publish">@lang('app.btn.publish')</a>
                     <a href="{{route('admin.comment.trash', $comment)}}" class="btn btn-small btn-info btn-trash">@lang('app.btn.trash')</a>
                  @elseif($comment->status=='trashed')

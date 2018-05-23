@@ -19,6 +19,7 @@
                  @endif
                     <a href="{{route('admin.comment.delete', $item)}}" class="btn btn-small btn-warning btn-delete">@lang('app.btn.delete')</a>
             </div>
+            <br>
             <div class="row-fluid">
                 <div class="grider">
                     <div class="widget widget-simple">

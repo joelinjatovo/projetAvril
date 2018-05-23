@@ -3,7 +3,7 @@
         <tr>
             <th scope="col">ID <span class="column-sorter"></span></th>
             <th scope="col">Client<span class="column-sorter"></span></th>
-            <th scope="col">Prix Total<span class="column-sorter"></span></th>
+            <th scope="col">TMA Total<span class="column-sorter"></span></th>
             <th scope="col">Nombre de produit<span class="column-sorter"></span></th>
             <th scope="col">Date <span class="column-sorter"></span></th>
             <th scope="col">Status<span class="column-sorter"></span></th>

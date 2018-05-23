@@ -231,7 +231,6 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::get('archive/{comment}', 'CommentController@archive')->name('admin.comment.archive');
         Route::get('trash/{comment}', 'CommentController@trash')->name('admin.comment.trash');
         Route::get('restore/{comment}', 'CommentController@restore')->name('admin.comment.restore');
-        Route::get('star/{comment}', 'CommentController@star')->name('admin.comment.star');
         Route::get('delete/{comment}', 'CommentController@delete')->name('admin.comment.delete');
     });
 
@@ -293,6 +292,16 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::post('update/{pub}', 'PubController@update')->name('admin.pub.update');
         Route::get('detach/{pub}/{page}', 'PubController@detach')->name('admin.pub.detach');
         Route::get('delete/{pub}', 'PubController@delete')->name('admin.pub.delete');
+    });
+
+    // Pub Controller Groups
+    Route::get('badwords', 'BadWordController@all')->name('admin.badword.list');
+    Route::prefix('badword')->group(function(){
+        Route::get('/', 'BadWordController@create')->name('admin.badword.create');
+        Route::post('/', 'BadWordController@store')->name('admin.badword.store');
+        Route::get('update/{badword}', 'BadWordController@edit')->name('admin.badword.edit');
+        Route::post('update/{badword}', 'BadWordController@update')->name('admin.badword.update');
+        Route::get('delete/{badword}', 'BadWordController@delete')->name('admin.badword.delete');
     });
 
     // Chat Controller Groups

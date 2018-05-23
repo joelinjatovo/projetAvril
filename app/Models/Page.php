@@ -66,7 +66,7 @@ class Page extends BaseModel
      */
     public function author()
     {
-        return $this->hasOne(User::class, 'author_id', 'id');
+        return $this->hasOne(User::class, 'id', 'author_id');
     }
     
     /**
@@ -76,7 +76,7 @@ class Page extends BaseModel
      */
     public function parent()
     {
-        return $this->hasOne(Page::class, 'parent_id', 'id');
+        return $this->hasOne(Page::class, 'id', 'parent_id');
     }
     
     /**

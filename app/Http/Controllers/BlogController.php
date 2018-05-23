@@ -196,7 +196,7 @@ class BlogController extends Controller
             ->with('item', $blog)
             ->with('action', $action)
             ->with('categoryIds', $categoryIds)
-            ->with('categories', $categories);;
+            ->with('categories', $categories);
     }
 
     /**
@@ -274,7 +274,6 @@ class BlogController extends Controller
         foreach($blog->categories as $category){
             $categoryIds[] = $category->id;
         }
-        
         
         if($value = $request->old('title'))             $blog->title = $value;
         if($value = $request->old('content'))           $blog->content = $value;
@@ -450,7 +449,6 @@ class BlogController extends Controller
         
         return back()->with('success',"L'article a été restoré avec succés");
     }
-
 
     /**
     * Delete Blog

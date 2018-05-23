@@ -221,7 +221,7 @@
                         <i class="fa fa-envelope"></i>
                         <i class="chevron fontello-icon-right-open-3"></i> @lang('app.admin.mail.list')</a>
                   </div>
-                  <ul class="accordion-content nav nav-list collapse {{\Request::is('admin/category*')?'in':''}}" id="accMails">
+                  <ul class="accordion-content nav nav-list collapse {{\Request::is('admin/mail*')?'in':''}}" id="accMails">
                       <li><a href="{{route('mail.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.mail.list')</a></li>
                       <li><a href="{{route('mail.list',['filter'=>'inbox'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.mail.inbox')</a></li>
                       <li><a href="{{route('mail.list',['filter'=>'outbox'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.mail.outbox')</a></li>
@@ -231,8 +231,14 @@
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="{{route('admin.chat.list')}}" data-parent="#mainSideMenu" class="accordion-toggle"><i class="fa fa-comments"></i> @lang('app.admin.chat.list')</a>
+                      <a href="#accBadWords" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Request::is('admin/badword*')?'collapsed':''}}">
+                        <i class="fa fa-envelope"></i>
+                        <i class="chevron fontello-icon-right-open-3"></i> @lang('app.admin.badword.list')</a>
                   </div>
+                  <ul class="accordion-content nav nav-list collapse {{\Request::is('admin/badword*')?'in':''}}" id="accBadWords">
+                      <li><a href="{{route('admin.badword.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.badword.list')</a></li>
+                      <li><a href="{{route('admin.badword.create')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.badword.create')</a></li>
+                  </ul>
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">

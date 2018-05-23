@@ -262,8 +262,7 @@ class CommentController extends Controller
     }
     
     /**
-     * Show the list of blog.
-     * Public Acces
+     * Show the list of comments
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  String $filter
@@ -275,10 +274,28 @@ class CommentController extends Controller
         if(!$page){ $page =1; }
         
         $items = Comment::where('blog_id','=', $blog->id)
-            ->withCount('replies')
-            ->paginate($this->pageSize);
+            ->withCount('replies');
+        switch($filter){
+            case 'archived':
+            case 'trashed':
+            case 'published':
+            case 'pinged':
+                $items = $items->where('status', $filter);
+                $title = __('app.comment.list.status', ['status'=>__('app.'.$filter)]);
+                break;
+            case 'all':
+                $title = __('app.comment.list');
+                break;
+        }
         
-        return view('admin.comment.all', compact('items', 'filter', 'page')); 
+        $items = $items->paginate($this->pageSize);
+        
+        return view('admin.comment.all')
+            ->with('title', $title)
+            ->with('items', $items)
+            ->with('filter', $filter)
+            ->with('blog', $blog)
+            ->with('page', $page);
     }
     
     

@@ -57,7 +57,6 @@
                             <input type="checkbox" name="category[]" value="{{$category->id}}"  {{in_array($category->id, $categoryIds)?'checked':''}}> {{$category->title}}
                         </div>
                         @endforeach
-                    </select>
                 </div>
                 <div class="page-header">
                     <h3><i class="fontello-icon-monitor opaci35"></i> @lang('app.admin.file')</h3>

@@ -13,13 +13,23 @@ return [
     'read_more'    => 'Continuer de lire',
     
     'login_info'    => 'Login Information',
+    'user_info'     => 'Information personnelle',
     'orga_info'     => 'Information sur l\'organisation',
     'contact_info' => 'Contact',
     'location_info' => 'Localisation',
     'observation' => 'Observation',
+    'observations' => 'Observations',
     
     'crm.name'     => 'Nom du CRM',
     'crm.email'    => 'Email du CRM',
+    
+    'user.ontrial' => 'En Essai',
+    'user.trial_end_at' => 'Periode d\'essai jusqu\'au',
+    
+    'person.first_name' => 'Nom',
+    'person.last_name' => 'Prénom',
+    'person.email' => 'Email',
+    'person.phone' => 'Téléphone',
     
     'orga.name'     => 'Nom',
     'orga.desc'     => 'Description',
@@ -219,6 +229,16 @@ return [
     'admin.chats'        => 'Messages',
     'admin.chat.list'  => 'Liste des conversations',
     
+    'badwords'              => 'Mots interdits',
+    'badword'               => 'Mot interdit',
+    'admin.badwords'        => 'Mots interdits',
+    'admin.badword.list'    => 'Liste des mots interdits',
+    'badword.create'  => 'Ajouter un mot interdit',
+    'admin.badword.create'  => 'Ajouter un mot interdit',
+    'admin.badword.add'  => 'Ajouter un mot interdit',
+    'badword.update'  => 'Modifier un mot interdit',
+    'admin.badword.update'  => 'Modifier un mot interdit',
+    
     'products'              => 'Produits',
     'product'               => 'Produit',
     'admin.products'        => 'Produits',
@@ -302,6 +322,14 @@ return [
     'product.list' => 'Liste des produits',
     'product.list.status' => 'Liste des produits ":status"',
     
+    'cart.list' => 'Liste des cartes',
+    'cart.list.status' => 'Liste des cartes ":status"',
+    
+    'replies' => 'Reponses',
+    'comment' => 'Commentaire',
+    'comment.list' => 'Liste des commentaires',
+    'comment.list.status' => 'Liste des commentaires ":status"',
+    
     'blog.list.starred' => 'Liste des articles aux favoris',
     'blog.list.status' => 'Liste des articles ":status"',
     'blog.create' => 'Ajouter un article',
@@ -356,6 +384,8 @@ return [
     'admin.mails'           => 'Mails',
     'admin.mail.list'       => 'Liste des mails',
     
+    'admin.comment.list'    => 'Commentaires',
+    
     'admin.orders'          => 'Orders',
     'admin.carts'           => 'Carts',
     'carts'                 => 'Carts',
@@ -398,6 +428,7 @@ return [
     'btn.detach'         => 'Detacher',
     'btn.save'           => 'Sauvegarder',
     'btn.cancel'         => 'Annuler',
+    'btn.publish'        => 'Publier',
     'btn.block'          => 'Bloquer',
     'btn.disable'        => 'Desactiver',
     'btn.edit'           => 'Modifier',

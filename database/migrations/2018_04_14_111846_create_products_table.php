@@ -21,6 +21,8 @@ class CreateProductsTable extends Migration
             $table->longText('content')->nullable();
             $table->bigInteger('quantity')->default(1);
             
+            $table->integer('is_new')->default(0);
+            
             $table->bigInteger('view_count')->default(0);
             
             $table->float('area', 20, 2)->nullable();
@@ -40,7 +42,10 @@ class CreateProductsTable extends Migration
             
             $table->float('price', 20, 2)->nullable();
             $table->string('currency', 10)->nullable();
+            
             $table->float('tma', 8, 2)->nullable();
+            $table->float('commision', 8, 2)->nullable();
+            $table->integer('commision_edited')->default(0);
             
             $table->string('status', 20)->default('published')->index(); // pinged published blocked drafted trashed archived
             

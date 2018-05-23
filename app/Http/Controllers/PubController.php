@@ -46,9 +46,11 @@ class PubController extends Controller
         $this->middleware('role:admin');
         
         $item = new Pub();
+        $pageIds = [];
         if($value = $request->old('title'))     $item->title = $value;
         if($value = $request->old('content'))   $item->content = $value;
-        if($value = $request->old('links'))      $item->links = $value;
+        if($value = $request->old('links'))     $item->links = $value;
+        if($value = $request->old('page'))      $pageIds = $value;
         
         $action = route('admin.pub.store');
         $pages = Page::all();
@@ -56,7 +58,8 @@ class PubController extends Controller
         return view('admin.pub.update', [
             'item'=>$item, 
             'action'=>$action, 
-            'pages'=>$pages
+            'pages'=>$pages,
+            'pageIds'=>$pageIds
         ]);
     }
     
@@ -123,16 +126,24 @@ class PubController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
+
+        $pageIds = [];
+        foreach($pub->pages as $page){
+            $pageIds[] = $page->id;
+        }
+        
         
         if($value = $request->old('title'))     $item->title = $value;
         if($value = $request->old('content'))   $item->content = $value;
-        if($value = $request->old('links'))      $item->links = $value;
+        if($value = $request->old('links'))     $item->links = $value;
+        if($value = $request->old('page'))      $pageIds = $value;
         
         $action = route('admin.pub.update', ['pub'=>$pub]);
         
         $pages = Page::all();
         
-        return view('admin.pub.update', ['item'=>$pub, 'action'=>$action, 'pages'=>$pages]);
+        return view('admin.pub.update', ['item'=>$pub, 'action'=>$action, 'pages'=>$pages])
+            ->with('pageIds', $pageIds);
     }
     
     /**

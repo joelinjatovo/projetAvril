@@ -54,13 +54,16 @@ class CartController extends Controller
             case 'ordered':
                 $items = Cart::where('status', $filter)
                     ->paginate($this->pageSize);
+                $title = __('app.cart.list.status', ['status'=>__('app.'.$filter)]);
                 break;
             case 'all':
                 $items = Cart::paginate($this->pageSize);
+                $title = __('app.cart.list');
                 break;
             default:
                 abort(404);
         }
-        return view('admin.cart.all', compact('items', 'filter', 'page')); 
+        return view('admin.cart.all', compact('items', 'filter', 'page'))
+            ->with('title', $title); 
     }
 }
