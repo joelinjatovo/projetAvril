@@ -8,9 +8,6 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Session;
 
-use App\Models\Page;
-use App\Models\Config;
-
 class LoginController extends Controller
 {
     /*
@@ -79,14 +76,15 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        $latitude = option(Config::$APP_LATITUDE, -25.647467468105795);
-        $longitude = option(Config::$APP_LONGITUDE, 146.89921517372136);
+        $latitude = option(\App\Models\Config::$APP_LATITUDE, -25.647467468105795);
+        $longitude = option(\App\Models\Config::$APP_LONGITUDE, 146.89921517372136);
         
         $locale = \App::getLocale();
-        $title = Config::login()->get_meta_array('title', $locale, __('app.connexion'));
-        $content = Config::login()->get_meta_array('content', $locale);
-        $address = Config::login()->get_meta_array('address', $locale);
-        $contact = Config::login()->get_meta_array('contact', $locale);
+        $title = \App\Models\Config::login()->get_meta_array('title', $locale, __('app.connexion'));
+        $content = \App\Models\Config::login()->get_meta_array('content', $locale);
+        $address = \App\Models\Config::login()->get_meta_array('address', $locale);
+        $contact = \App\Models\Config::login()->get_meta_array('contact', $locale);
+        
         return view('auth.login')
             ->with('latitude', $latitude)
             ->with('longitude', $longitude)

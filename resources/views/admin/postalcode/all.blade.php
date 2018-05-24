@@ -3,7 +3,7 @@
 @section('content')
 <div id="main-content" class="main-content container-fluid">
 <div class="row-fluid page-head">
-    <h2 class="page-title"><i class="fa fa-registered" aria-hidden="true"></i> @lang('app.admin.badword.list') </h2>
+    <h2 class="page-title">{{$title}}</h2>
 </div>
 <!-- // page head -->
 <div id="page-content" class="page-content">
@@ -27,8 +27,8 @@
                             <td>{{$item->content}}</td>
                             <td>{{$item->created_at->diffForHumans()}}</td>
                             <td>
-                                <a href="{{route('admin.badword.edit', $item)}}" class="btn btn-small btn-info btn-update">@lang('app.btn.edit')</a>
-                                <a href="{{route('admin.badword.delete', $item)}}" class="btn btn-small btn-warning btn-delete">@lang('app.btn.delete')</a>
+                                <a href="{{route('admin.postalcode.edit', $item)}}" class="btn btn-small btn-info btn-update">@lang('app.btn.edit')</a>
+                                <a href="{{route('admin.postalcode.delete', $item)}}" class="btn btn-small btn-warning btn-delete">@lang('app.btn.delete')</a>
                             </td>
                         </tr>
                        @endforeach

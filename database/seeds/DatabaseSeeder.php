@@ -22,5 +22,8 @@ class DatabaseSeeder extends Seeder
         $this->call(LocationsTableSeeder::class);
         $this->call(ImagesTableSeeder::class);
         $this->call(TypesTableSeeder::class);
+        $this->call(MetaDatasSeeder::class);
+        $this->call(CountriesTableSeeder::class);
+        $this->call(StatesTableSeeder::class);
     }
 }

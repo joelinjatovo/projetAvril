@@ -31,7 +31,8 @@ class PostalCodeController extends Controller
     public function all(Request $request)
     {
         $items = PostalCode::paginate($this->pageSize);
-        return view('admin.state.all')
+        return view('admin.postalcode.all')
+            ->with('title', __('app.admin.postalcode.list'))
             ->with('items', $items); 
     }
     
@@ -50,7 +51,7 @@ class PostalCodeController extends Controller
         $action = route('admin.postalcode.store');
         
         return view('admin.postalcode.update')
-            ->with('title', __('app.postalcode.create'))
+            ->with('title', __('app.admin.postalcode.create'))
             ->with('item', $postalcode)
             ->with('action', $action);
     }
@@ -75,7 +76,7 @@ class PostalCodeController extends Controller
         }
 
         $postalcode = new PostalCode();
-        $postalcode->content = $postalcode->content;
+        $postalcode->content = $request->content;
         $postalcode->save();
         
         return back()->with('success',"Le code postal a été bien enregistré.");
@@ -90,12 +91,12 @@ class PostalCodeController extends Controller
      */
     public function edit(Request $request, PostalCode $postalcode)
     {
-        if($value = $request->old('content')) $state->content = $value;
+        if($value = $request->old('content')) $postalcode->content = $value;
 
-        $action = route('admin.postalcode.update', ['state'=>$state]);
+        $action = route('admin.postalcode.update', ['postalcode'=>$postalcode]);
         
         return view('admin.postalcode.update')
-            ->with('title', __('app.postalcode.update'))
+            ->with('title', __('app.admin.postalcode.update'))
             ->with('item', $postalcode)
             ->with('action', $action);
     }
@@ -119,7 +120,7 @@ class PostalCodeController extends Controller
                         ->withInput();
         }
         
-        $postalcode->content = $postalcode->content;
+        $postalcode->content = $request->content;
         $postalcode->save();
 
         return back()->with('success',"Le code postal a été bien modifié.");

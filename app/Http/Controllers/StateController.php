@@ -32,6 +32,7 @@ class StateController extends Controller
     {
         $items = State::paginate($this->pageSize);
         return view('admin.state.all')
+            ->with('title', __('app.admin.state.list'))
             ->with('items', $items); 
     }
     
@@ -50,7 +51,7 @@ class StateController extends Controller
         $action = route('admin.state.store');
         
         return view('admin.state.update')
-            ->with('title', __('app.state.create'))
+            ->with('title', __('app.admin.state.create'))
             ->with('item', $state)
             ->with('action', $action);
     }
@@ -95,8 +96,8 @@ class StateController extends Controller
         $action = route('admin.state.update', ['state'=>$state]);
         
         return view('admin.state.update')
-            ->with('title', __('app.state.update'))
-            ->with('item', $badword)
+            ->with('title', __('app.admin.state.update'))
+            ->with('item', $state)
             ->with('action', $action);
     }
 
@@ -119,7 +120,7 @@ class StateController extends Controller
                         ->withInput();
         }
         
-        $state->content = $state->content;
+        $state->content = $request->content;
         $state->save();
 
         return back()->with('success',"L'Etat a été bien modifié.");

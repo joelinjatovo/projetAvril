@@ -4,13 +4,7 @@
 <div id="main-content" class="main-content container-fluid">
     @include('includes.notification')
     <div class="row-fluid page-head">
-        <h2 class="page-title">
-            @if($item->id>0)
-                @lang('app.admin.badword.update') 
-            @else 
-                @lang('app.admin.badword.add')
-            @endif
-        </h2>
+        <h2 class="page-title">{{$title}}</h2>
     </div>
     <div id="page-content" class="page-content">
         <form method="post" action="{{$action}}">

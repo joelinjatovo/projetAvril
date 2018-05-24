@@ -32,6 +32,7 @@ class BadWordController extends Controller
     {
         $items = BadWord::paginate($this->pageSize);
         return view('admin.badword.all')
+            ->with('title', __('app.admin.badword.list'))
             ->with('items', $items); 
     }
     
@@ -50,7 +51,7 @@ class BadWordController extends Controller
         $action = route('admin.badword.store');
         
         return view('admin.badword.update')
-            ->with('title', __('app.badword.create'))
+            ->with('title', __('app.admin.badword.create'))
             ->with('item', $badword)
             ->with('action', $action);
     }
@@ -95,7 +96,7 @@ class BadWordController extends Controller
         $action = route('admin.badword.update', ['badword'=>$badword]);
         
         return view('admin.badword.update')
-            ->with('title', __('app.badword.update'))
+            ->with('title', __('app.admin.badword.update'))
             ->with('item', $badword)
             ->with('action', $action);
     }

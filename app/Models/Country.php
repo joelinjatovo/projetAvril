@@ -4,21 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class State extends BaseModel
+class Country extends BaseModel
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'states';
+    protected $table = 'countries';
 	
 	/**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['content'];
+    protected $fillable = ['content', 'prefixPhone', 'placeholder'];
     
     /**
      * Create a new model instance.

@@ -242,6 +242,28 @@
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
+                      <a href="#accPostalCode" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Request::is('admin/badword*')?'collapsed':''}}">
+                        <i class="fa fa-envelope"></i>
+                        <i class="chevron fontello-icon-right-open-3"></i> @lang('app.admin.postalcode.list')</a>
+                  </div>
+                  <ul class="accordion-content nav nav-list collapse {{\Request::is('admin/postalcode*')?'in':''}}" id="accPostalCode">
+                      <li><a href="{{route('admin.postalcode.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.postalcode.list')</a></li>
+                      <li><a href="{{route('admin.postalcode.create')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.postalcode.create')</a></li>
+                  </ul>
+              </li>
+              <li class="accordion-group">
+                  <div class="accordion-heading">
+                      <a href="#accState" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Request::is('admin/state*')?'collapsed':''}}">
+                        <i class="fa fa-envelope"></i>
+                        <i class="chevron fontello-icon-right-open-3"></i> @lang('app.admin.state.list')</a>
+                  </div>
+                  <ul class="accordion-content nav nav-list collapse {{\Request::is('admin/state*')?'in':''}}" id="accState">
+                      <li><a href="{{route('admin.state.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.state.list')</a></li>
+                      <li><a href="{{route('admin.state.create')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.state.create')</a></li>
+                  </ul>
+              </li>
+              <li class="accordion-group">
+                  <div class="accordion-heading">
                       <a href="#accReglages" data-parent="#mainSideMenu"  data-toggle="collapse" class="accordion-toggle {{\Request::is('*config*')?'collapsed':''}}">
                         <i class="fontello-icon-tools"></i>
                         <i class="chevron fontello-icon-right-open-3"></i> @lang('app.configs')
