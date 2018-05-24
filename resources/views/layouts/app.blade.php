@@ -231,6 +231,7 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
                             <li><a href="{{route('shop.index')}}">@lang('app.business')</a></li>
                             <li><a href="{{route('services')}}">@lang('app.services')</a></li>
                             <li><a href="{{route('blog.all')}}">@lang('app.blog')</a></li>
+                            <li><a href="{{route('contact')}}">@lang('app.contact')</a></li>
                             @if(Auth::check())
                             <li><a href="{{route('profile')}}">@lang('app.account')</a></li>
                             @endif

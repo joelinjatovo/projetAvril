@@ -63,4 +63,66 @@ class MemberController extends Controller
             ->with('title', __('app.purchases'))
             ->with('items', $items);
     }
+    
+    
+
+    public function contactAdmin(Request $request){
+        return view('backend.mail.admin')
+            ->with('title', __('app.contact_admin'));
+    }
+
+    public function sendMailAdmin(Request $request)
+    {
+        $current = Auth::user();
+
+        // Validate request
+        $datas = $request->all();
+        $validator = Validator::make($datas,[
+            'subject' => 'required|max:100',
+            'content' => 'required|max:1000'
+        ]);
+        
+        
+        if ($validator->fails()) {
+            return back()->withErrors($validator)
+                        ->withInput();
+        }
+
+        $receiver = User::ofRole('admin')
+                ->isActive()
+                ->first();
+        
+        if(!$receiver){
+            return back()->with('error', 'No user selected');
+        }
+        
+        $to = option('site.admin', $receiver->email);
+
+        $item = new Mail();
+        $item->subject = $request->subject;
+        $item->content = $request->content;
+        $item->receiver_id = $receiver->id;
+        
+        $item->save();
+
+        try{
+
+            $data = array('name'=>"Virat Gandhi");
+            
+            \Mail::send('mail', $data, function($message) use($item, $to) {
+                $message->to($to)
+                        ->subject($item->subject)
+                        ->from($item->sender->email, $item->sender->name);
+            });
+            
+        
+            $receiver->notify(new NewMail($item));
+            
+        }catch(\Exception $e){
+            return back()->with('error', $e->getMessage());
+        }
+
+        return back()->with('success', 'Message envoyé avec succes.');
+    }
+
 }

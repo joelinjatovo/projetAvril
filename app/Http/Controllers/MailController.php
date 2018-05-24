@@ -19,10 +19,58 @@ class MailController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        //
+    }
+
+    public function index(Request $request){
+        if($request->isMethod('post')){
+            // Validate request
+            $datas = $request->all();
+            $validator = Validator::make($datas,[
+                'email'   => 'required|email|max:100',
+                'name'    => 'required|max:100',
+                'subject' => 'required|max:100',
+                'content' => 'required|max:1000'
+            ]);
+            
+            if ($validator->fails()) {
+                return back()->withErrors($validator)
+                            ->withInput();
+            }
+            
+            try{
+                $data = array('name'=>"Virat Gandhi");
+                $to = option('site.admin', 'admin@investirenautralie.com');
+                $name = $request->name;
+                $email = $request->email;
+                $subject = $request->subject;
+
+                \Mail::send('mail', $data, function($message) use($subject, $email, $name, $to) {
+                    $message->to($to)
+                            ->subject($subject)
+                            ->from($email, $name);
+                });
+
+            }catch(\Exception $e){
+                return back()->with('error', $e->getMessage());
+            }
+            return back()->with('success', 'Message envoyé avec succes.');
+        }
+        
+        $locale = \App::getLocale();
+        $content = \App\Models\Config::login()->get_meta_array('content', $locale);
+        $address = \App\Models\Config::login()->get_meta_array('address', $locale);
+        $contact = \App\Models\Config::login()->get_meta_array('contact', $locale);
+        return view('index.contact')
+            ->with('title', __('app.send_mail'))
+            ->with('content', $content)
+            ->with('address', $address)
+            ->with('contact', $contact);
     }
 
     public function contact(Request $request, User $user = null){
+        $this->middleware('auth');
+        
         if(!$user||$user->id==0){
             $user = User::ofRole('admin')
                     ->isActive()
@@ -43,6 +91,13 @@ class MailController extends Controller
             'subject' => 'required|max:100',
             'content' => 'required|max:1000'
         ]);
+        
+        
+        if ($validator->fails()) {
+            return back()->withErrors($validator)
+                        ->withInput();
+        }
+
         
         if($request->has('receiver_id')){
             $receiver = User::find($request->get('receiver_id'));
@@ -92,7 +147,7 @@ class MailController extends Controller
      * @param  App\Models\Mail $mail
      * @return Illuminate\Http\Response
      */
-    public function index(Request $request, Mail $mail)
+    public function index2(Request $request, Mail $mail)
     {
         $this->middleware('auth');
         

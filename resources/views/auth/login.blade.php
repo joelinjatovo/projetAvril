@@ -12,7 +12,7 @@
                             @if(empty($content))
                                 Sed perspiciatis unde natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae.
                             @else
-                                {{$content}}
+                                {!!$content!!}
                             @endif
                         </p>
                     </div>
@@ -28,7 +28,7 @@
                                             Mountain View CA,
                                             United States
                                         @else
-                                            {{$address}}
+                                            {!!$address!!}
                                         @endif
                                     </address>
                                 </div>
@@ -44,7 +44,7 @@
                                             <li>Fax: +84 962 216 601</li>
                                         </ul>
                                     @else
-                                        {{$contact}}
+                                        {!!$contact!!}
                                     @endif
                                     
                                 </div>

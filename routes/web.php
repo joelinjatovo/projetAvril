@@ -98,10 +98,14 @@ Route::middleware('guest')->group(function(){
     Route::get('resend-code/{user}', 'Auth\RegisterController@resendActivation')->name('resend_code');
 });
 
+// Mail
+Route::get('contact','MailController@index')->name('contact');
+Route::post('contact','MailController@index')->name('contact');
+
 Route::middleware(["auth"])->group(function(){
     // Mail
-    Route::get('contact/{user?}','MailController@contact')->name('contact');
-    Route::post('contact/{user?}','MailController@sendMail');
+    Route::get('contact/{user}','MailController@contact')->name('contact.user');
+    Route::post('contact/{user}','MailController@sendMail');
 
     // Notification
     Route::get('notifications/{filter?}', 'NotificationController@all')->name('notification.list');
