@@ -78,7 +78,7 @@ class ShopController extends Controller
     }
     
     /**
-     * Add product in cart
+     * Select Apl for an product
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Product
@@ -91,14 +91,27 @@ class ShopController extends Controller
         $distance = $request->get('distance');
         if(empty($distance)) $distance = 100;
         
-        if(!$product->isDisponible()){
-    	   return redirect()->route('product.index', $product)
-               ->with('error','Stock en rupture');
-        }
-        
-        if(!$product->location){
-    	   return redirect()->route('product.index', $product)
-                ->with('error','Le systeme ne peut pas localiser le produit');
+        $data = [];
+        if($product && $product->id>0){
+            if(!$product->isDisponible()){
+               return redirect()->route('product.index', $product)
+                   ->with('error','Stock en rupture');
+            }
+
+            if(!$product->location){
+               return redirect()->route('product.index', $product)
+                    ->with('error','Le systeme ne peut pas localiser le produit');
+            }
+            
+            $data[] = [
+              'id' => $product->id,
+              'lat' => $product->location?$product->location->latitude:0,
+              'lng' => $product->location?$product->location->longitude:0,
+              'title' => $product->title,
+              'type' => 'product',
+            ];
+        }else{
+            
         }
         
         $apls = User::ofRole('apl')
@@ -111,7 +124,6 @@ class ShopController extends Controller
         
         $selected = null;
         
-        $data = [];
         foreach($apls as $item){
             $dataTemp = [
               'id' => $item->id,
@@ -129,15 +141,9 @@ class ShopController extends Controller
             }
         }
         
-        $data[] = [
-              'id' => $product->id,
-              'lat' => $product->location?$product->location->latitude:0,
-              'lng' => $product->location?$product->location->longitude:0,
-              'title' => $product->title,
-              'type' => 'product',
-            ];
         
-    	return view('shop.apl')
+        $action = route('shop.add', $product);
+    	return view('backend.apl.select')
             ->with('location', Auth::user()->location)
             ->with('items', $apls)
             ->with('item', $product)

@@ -68,26 +68,22 @@ class MailController extends Controller
             ->with('contact', $contact);
     }
 
-    public function contact(Request $request, User $user = null){
+    public function contact(Request $request, User $user)
+    {
         $this->middleware('auth');
-        
-        if(!$user||$user->id==0){
-            $user = User::ofRole('admin')
-                    ->isActive()
-                    ->first();
-        }
-
-        return view('backend.mail.contact')
+        return view('admin.mail.contact')
             ->with('item', $user);
     }
 
-    public function sendMail(Request $request)
+    public function sendMail(Request $request, User $user = null)
     {
+        $this->middleware('auth');
         $current = Auth::user();
 
         // Validate request
         $datas = $request->all();
         $validator = Validator::make($datas,[
+            'receiver_id' => 'required',
             'subject' => 'required|max:100',
             'content' => 'required|max:1000'
         ]);
@@ -98,21 +94,9 @@ class MailController extends Controller
                         ->withInput();
         }
 
+        $receiver = User::findOrFail($request->get('receiver_id'));
+        $to = $receiver->email;
         
-        if($request->has('receiver_id')){
-            $receiver = User::find($request->get('receiver_id'));
-            $to = $receiver->email;
-        }else{
-            $receiver = User::ofRole('admin')
-                    ->isActive()
-                    ->first();
-            $to = option('site.admin', $receiver->email);
-        }
-        
-        if(!$receiver){
-            return back()->with('error', 'No user selected');
-        }
-
         $item = new Mail();
         $item->subject = $request->subject;
         $item->content = $request->content;
@@ -121,18 +105,18 @@ class MailController extends Controller
         $item->save();
 
         try{
-
+            $receiver->notify(new NewMail($item));
+        }catch(\Exception $e){
+            // Do nothing
+        }
+        
+        try{
             $data = array('name'=>"Virat Gandhi");
-            
             \Mail::send('mail', $data, function($message) use($item, $to) {
                 $message->to($to)
                         ->subject($item->subject)
                         ->from($item->sender->email, $item->sender->name);
             });
-            
-        
-            $receiver->notify(new NewMail($item));
-            
         }catch(\Exception $e){
             return back()->with('error', $e->getMessage());
         }
@@ -147,7 +131,7 @@ class MailController extends Controller
      * @param  App\Models\Mail $mail
      * @return Illuminate\Http\Response
      */
-    public function index2(Request $request, Mail $mail)
+    public function view(Request $request, Mail $mail)
     {
         $this->middleware('auth');
         

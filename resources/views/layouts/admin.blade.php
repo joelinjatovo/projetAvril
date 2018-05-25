@@ -28,67 +28,69 @@
 
 </head>
 <body class="sidebar-left ">
-<div id="header-container">
-    <div id="header">
-        <div class="navbar navbar-inverse navbar-fixed-top">
-          <div class="navbar-inner">
-              <div class="container-fluid">
-                  <!-- <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                  </button> -->
-                  <a class="brand" href="{{route('home')}}">
-                      <img src="{{asset('administrator/img/logo.png')}}" width="100" height="50">
-                  </a>
-                  <div class="search-global">
-                      <input id="globalSearch" class="search search-query input-medium" type="search">
-                      <a class="search-button" href="#"><i class="fontello-icon-search-5"></i></a>
-                  </div>
-                  @if(Auth::check())
-                  <div class="nav-collapse collapse">
-                      <ul class="nav user-menu visible-desktop">
-                          <li class="dropdown">
-                              <a class="dropdown-toogle btn-glyph fontello-icon-edit tip-bc" href="#" data-toggle="dropdown" title="Messages"><span class="badge badge-important">8</span></a>
-                              <ul>
-                                  @foreach(Auth::user()->notifications as $notification)
-                                    <li>{{$notification->type}}</li>
-                                  @endforeach
-                                <li class="divider"></li>
-                              </ul>
-                          </li>
-                          <li>
-                              <a class="btn-glyph fontello-icon-mail-1 tip-bc" href="#" title="Emails"></a>
-                          </li>
-                          <li>
-                              <a class="btn-glyph fontello-icon-lifebuoy tip-bc" href="#" title="Support"><span class="badge badge-important">4</span></a>
-                          </li>
-                      </ul>
-                  </div>
-                  @endif
-              </div>
-          </div>
-        </div>
-        <!-- // navbar -->
-        
-        <div class="header-drawer">
-            <div class="mobile-nav text-center visible-phone"> <a href="javascript:void(0);" class="mobile-btn" data-toggle="collapse" data-target=".sidebar"><i class="aweso-icon-chevron-down"></i> @lang("Menu")</a> </div>
-            <!-- // Resposive navigation -->
-            <div class="breadcrumbs-nav hidden-phone">
-                <ul id="breadcrumbs" class="breadcrumb">
-                    <li><a href="javascript:void(0);"><i class="fontello-icon-home f12"></i> @lang("Dashboard")</a> <span class="divider">/</span></li>
-                    <li class="active"> @lang("Profil administrateur") </li>
-                </ul>
-            </div>
-            <!-- // breadcrumbs -->
-        </div>
-        <!-- // drawer -->
-    </div>
-    <!-- // header -->
-</div>
 <!-- // header-container -->
     
 <div id="main-container">
+    <div id="header-container">
+        <div id="header">
+            <div class="navbar navbar-inverse navbar-fixed-top">
+              <div class="navbar-inner">
+                  <div class="container-fluid">
+                      <!-- <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                          <span class="icon-bar"></span>
+                          <span class="icon-bar"></span>
+                          <span class="icon-bar"></span>
+                      </button> -->
+                      <a class="brand" href="{{route('home')}}">
+                          <img src="{{asset('administrator/img/logo.png')}}" width="100" height="50">
+                      </a>
+                      <div class="search-global">
+                          <input id="globalSearch" class="search search-query input-medium" type="search">
+                          <a class="search-button" href="#"><i class="fontello-icon-search-5"></i></a>
+                      </div>
+                      @if(Auth::check())
+                      <div class="nav-collapse collapse">
+                          <ul class="nav user-menu visible-desktop">
+                              <li class="dropdown">
+                                  <a class="dropdown-toogle btn-glyph fontello-icon-edit tip-bc" href="#" data-toggle="dropdown" title="Messages"><span class="badge badge-important">8</span></a>
+                                  <ul>
+                                      @foreach(Auth::user()->notifications as $notification)
+                                        <li>{{$notification->type}}</li>
+                                      @endforeach
+                                    <li class="divider"></li>
+                                  </ul>
+                              </li>
+                              <li>
+                                  <a class="btn-glyph fontello-icon-mail-1 tip-bc" href="#" title="Emails"></a>
+                              </li>
+                              <li>
+                                  <a class="btn-glyph fontello-icon-lifebuoy tip-bc" href="#" title="Support"><span class="badge badge-important">4</span></a>
+                              </li>
+                          </ul>
+                      </div>
+                      @endif
+                  </div>
+              </div>
+            </div>
+            <!-- // navbar -->
+
+            <div class="header-drawer">
+                <div class="mobile-nav text-center visible-phone"> <a href="javascript:void(0);" class="mobile-btn" data-toggle="collapse" data-target=".sidebar"><i class="aweso-icon-chevron-down"></i> @lang("Menu")</a> </div>
+                <!-- // Resposive navigation -->
+                <div class="breadcrumbs-nav hidden-phone">
+                    <ul id="breadcrumbs" class="breadcrumb">
+                        <li><a href="javascript:void(0);"><i class="fontello-icon-home f12"></i> @lang("Dashboard")</a> <span class="divider">/</span></li>
+                        <li class="active"> @lang("Profil administrateur") </li>
+                    </ul>
+                </div>
+                <!-- // breadcrumbs -->
+            </div>
+            <!-- // drawer -->
+        </div>
+        <!-- // header -->
+    </div>
+    <!-- // header -->
+    
     <div id="main-sidebar" class="sidebar sidebar-inverse">
           @if(Auth::check())
           <div class="sidebar-item">
@@ -105,7 +107,7 @@
               </div>
           </div>
           @endif
-          <ul id="mainSideMenu" class="nav nav-list nav-side">
+          <ul id="mainSideMenu" class="nav nav-list nav-side accordion">
               <li class="accordion-group">
                 <div class="accordion-heading">
                     <a href="{{route('profile')}}" data-parent="" class="accordion-toggle"><i class="fontello-icon-user-4"></i>@lang('app.profile')</a>
@@ -285,10 +287,11 @@
           <div class="sidebar-item"></div>
       </div>
     <!-- // sidebar -->
+
+    @yield('content')
+    <!-- // main content -->
 </div>
 <!-- // main-container -->
-
-@yield('content')
     
 <script src="{{asset('administrator/js/lib/jquery.js')}}"></script>
 <script src="{{asset('administrator/js/lib/jquery-ui.js')}}"></script>

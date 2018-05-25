@@ -459,6 +459,9 @@ return [
     'btn.reply'          => "Repondre",
     'btn.register'       => "Valider l'inscription",
     
+    'contact_admin'  => "Contacter l'administrateur",
+    'contact_apl'    => "Contacter l'APL",
+    
     'inscription' => "Inscription",
     'trial_delay' => "Delai d'essai des membres",
     'placeholder.trial_delay' => "Nombre de jour de la duree d'essai",

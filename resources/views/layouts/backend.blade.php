@@ -14,25 +14,19 @@
                     <li><a href="{{url('cart')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> @lang('app.cart')</a></li>
                     <li><a href="{{route('member.orders')}}"><i class="fa fa-shopping-basket" aria-hidden="true"></i> @lang('app.order')</a></li>
                     <li><a href="{{route('member.purchases')}}"><i class="fa fa-shopping-bag" aria-hidden="true"></i> @lang('app.purchase')</a></li>
+                    <li><a href="{{route('member.contact', ['role'=>'admin'])}}"><i class="fa fa-envelope" aria-hidden="true"></i> @lang('app.btn.contact_admin')</a></li>
+                    <li><a href="{{route('member.contact', ['role'=>'apl'])}}"><i class="fa fa-envelope" aria-hidden="true"></i> @lang('app.btn.contact_apl')</a></li>
                     @endif
                     
                     @if(!Auth::user()->isAdmin())
+                    <li class="submenu">
+                         <a href="{{route('mail.list',['filter'=>'inbox'])}}">
+                            <i class="fa fa-envelope"></i> @lang('app.mails')
+                         </a>
+                    </li>
+                    
                     <li><a href="{{url(Auth::user()->role.'/favorites')}}"><i class="fa fa-gratipay" aria-hidden="true"></i> @lang('app.favorites')</a></li>
                     <li><a href="{{url(Auth::user()->role.'/pins')}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('app.pin')</a></li>
-                    
-                    <li class="submenu">
-                         <a href="#">
-                            <i class="fa fa-envelope"></i> @lang('app.mails')
-                            <span class="caret pull-right"></span>
-                         </a>
-                         <!-- Sub menu -->
-                         <ul>
-                            <li><a href="{{route('contact')}}">@lang('app.btn.contact_admin')</a></li>
-                            <li><a href="{{route('mail.list',['filter'=>'inbox'])}}">@lang('app.mail.inbox')</a></li>
-                            <li><a href="{{route('mail.list',['filter'=>'outbox'])}}">@lang('app.mail.outbox')</a></li>
-                            <li><a href="{{route('mail.list',['filter'=>'draft'])}}">@lang('app.mail.draft')</a></li>
-                        </ul>
-                    </li>
                     @endif
                     
                     @If(Auth::user()->hasRole('seller'))

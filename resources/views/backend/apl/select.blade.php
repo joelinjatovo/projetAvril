@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    <form class="form-horizontal" role="form" method="post" action="{{route('shop.add', $item)}}">
+                    <form class="form-horizontal" role="form" method="post" action="{{$action}}">
                         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                         <div class="form-group">
                             <div class="col-sm-12">

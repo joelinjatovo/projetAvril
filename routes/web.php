@@ -113,7 +113,7 @@ Route::middleware(["auth"])->group(function(){
     // Mail Controller Groups
     Route::get('mails/{filter?}', 'MailController@all')->name('mail.list');
     Route::prefix('mail')->group(function(){
-        Route::get('{mail}', 'MailController@index')->name('mail.index');
+        Route::get('{mail}', 'MailController@view')->name('mail.index');
         Route::get('delete/{mail}', 'MailController@delete')->name('mail.delete');
     });
 
@@ -150,18 +150,27 @@ Route::middleware(["auth"])->group(function(){
 
 Route::middleware(["auth", "role:member"])->group(function(){
     
-    Route::post('product/{product}', 'ShopController@add')->name('shop.add');// Add product in cart
-    Route::get('select-apl/{product}', 'ShopController@selectApl')->name('shop.select.apl');// Add product in cart
+    Route::get('select-apl/{product}', 'ShopController@selectApl')->name('shop.select.apl');
+    Route::post('product/{product}', 'ShopController@add')->name('shop.add');
+    
     Route::get('cart', 'ShopController@cart')->name('shop.cart');// Show cart
-    Route::get('shop/reduce/{product}', 'ShopController@reduceByOne')->name('shop.product.reduce');// Delete one unity or all the selected product in the cart
+    Route::get('shop/reduce/{product}', 'ShopController@reduceByOne')->name('shop.product.reduce');
+    
     Route::get('shop/delete/{product}', 'ShopController@deleteAll')->name('shop.product.delete');
     Route::get('checkout', 'ShopController@getCheckout')->name('shop.product.checkout');
     Route::post('checkout', 'ShopController@postCheckout')->name('shop.product.postCheckout');
     
     Route::prefix('member')->group(function(){
+
+        Route::get('select-apl', 'MemberController@selectApl')->name('member.select.apl');
+        Route::post('select-apl', 'MemberController@updateApl');
+
         Route::get('/', 'BackendController@dashboard');
         Route::get('favorites', 'BackendController@favorites');
         Route::get('pins', 'BackendController@pins');
+        
+        Route::get('contact/{role}', 'MemberController@contact')->name('member.contact');
+        Route::post('contact/{role}', 'MemberController@sendMail');
         
         Route::get('purchases', 'MemberController@purchases')->name('member.purchases');
         Route::get('orders', 'MemberController@orders')->name('member.orders');
@@ -355,6 +364,13 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::get('payment', 'ConfigController@payment')->name('config.payment');
         Route::post('payment', 'ConfigController@payment')->name('config.payment.update');
         Route::get('fontawesome', 'ConfigController@fontawesome')->name('config.fontawesome');
+    });
+    
+    //Mail
+    Route::prefix('mail')->group(function(){
+        Route::get('/{user}', 'MailController@contact')->name('admin.mail.send');
+        Route::post('/{user}', 'MailController@sendMail');
+        Route::get('delete/{mail}', 'MailController@delete')->name('mail.delete');
     });
 
 });
