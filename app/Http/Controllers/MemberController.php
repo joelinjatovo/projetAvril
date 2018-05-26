@@ -151,7 +151,7 @@ class MemberController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return back()->with('success', 'Message envoyé avec succes.'.$item->sender->email);
+        return back()->with('success', 'Message envoyé avec succes.');
     }
     
     
