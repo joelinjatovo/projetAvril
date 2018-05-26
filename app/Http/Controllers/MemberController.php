@@ -84,7 +84,7 @@ class MemberController extends Controller
             ->with('title', __('app.contact_'.$role));
     }
 
-    public function sendMailAdmin(Request $request, $role)
+    public function sendMail(Request $request, $role)
     {
         
         if(($role=='apl') && !Auth::user()->apl){
@@ -149,7 +149,7 @@ class MemberController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return back()->with('success', 'Message envoyé avec succes.');
+        return back()->with('success', 'Message envoyé avec succes.'.$item->sender->email);
     }
     
     

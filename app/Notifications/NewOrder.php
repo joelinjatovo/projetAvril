@@ -54,7 +54,7 @@ class NewOrder extends Notification
         $cart = $this->cart;
         
         return (new MailMessage)
-                    ->from(env('ADMIN_MAIL', 'tsorakoto@gmail.com'))
+                    ->from(env('ADMIN_MAIL'))
                     ->subject('Successfully subscribed acount')
                     ->greeting(sprintf('Hello %s', $user->name))
                     ->line('Someone ordered product from the account attached to this email.')

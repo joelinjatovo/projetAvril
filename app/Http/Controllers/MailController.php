@@ -40,13 +40,14 @@ class MailController extends Controller
             
             try{
                 $data = array('name'=>"Virat Gandhi");
-                $to = option('site.admin', 'admin@investirenautralie.com');
+                $to = option('site.admin_email', env('ADMIN_MAIL'));
+                $to_name = option('site.admin_name', 'admin');
                 $name = $request->name;
                 $email = $request->email;
                 $subject = $request->subject;
 
-                \Mail::send('mail', $data, function($message) use($subject, $email, $name, $to) {
-                    $message->to($to)
+                \Mail::send('mail', $data, function($message) use($subject, $email, $name, $to, $to_name) {
+                    $message->to($to, $to_name)
                             ->subject($subject)
                             ->from($email, $name);
                 });
