@@ -114,13 +114,15 @@ class MemberController extends Controller
             if(!$receiver){
                 return back()->with('error', 'Une erreur est survenue.');
             }
-            $to = option('site.admin', $receiver->email);
+            $to = option('site.admin_email', $receiver->email);
+            $toName = option('site.admin_name', $receiver->name);
         }else if($role=='apl'){
             $receiver = $current->apl;
             if(!$receiver||!$receiver->isActive()){
                 return back()->with('error', 'Une erreur est survenue.');
             }
             $to = $receiver->email;
+            $toName = $receiver->name;
         }else{
             abort(404);
         }
@@ -139,9 +141,9 @@ class MemberController extends Controller
         }
         
         try{
-            $data = array('name'=>"Virat Gandhi");
-            \Mail::send('mail', $data, function($message) use($item, $to) {
-                $message->to($to)
+            $data = array('name'=>"Admin");
+            \Mail::send('mail', $data, function($message) use($item, $to, $toName) {
+                $message->to($to, $toName)
                         ->subject($item->subject)
                         ->from($item->sender->email, $item->sender->name);
             });
