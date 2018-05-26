@@ -202,6 +202,9 @@ return [
     'messages'      => 'Messages',
     'message'       => 'Message',
     
+    'subject'       => 'Sujet',
+    'subjects'       => 'Sujets',
+    
     'configs'       => 'Configurations',
     'config.site'   => 'Information du site',
     'config.social' => 'Reseaux Sociaux',
