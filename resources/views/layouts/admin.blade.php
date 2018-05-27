@@ -16,16 +16,21 @@
 <link rel="shortcut icon" href="{{asset('images/favicon.png')}}">
 
 <!-- Le styles -->
+<link href="{{asset('css/font-awesome.min.css')}}" rel="stylesheet" type="text/css" >
 <link href="{{asset('css/bootstrap.css')}}" rel="stylesheet" type="text/css" >
 <link href="{{asset('administrator/css/lib/bootstrap-responsive.css')}}" rel="stylesheet" type="text/css" >
-<link href="{{asset('administrator/css/boo-extension.css')}}" rel="stylesheet" type="text/css" >
+    
 <link href="{{asset('administrator/css/boo.css')}}" rel="stylesheet" type="text/css" >
+<link href="{{asset('administrator/css/boo-extension.css')}}" rel="stylesheet" type="text/css" >
 <link href="{{asset('administrator/css/boo-coloring.css')}}" rel="stylesheet" type="text/css" >
 <link href="{{asset('administrator/css/boo-utility.css')}}" rel="stylesheet" type="text/css" >
     
 <link href="{{asset('administrator/css/style.css')}}" rel="stylesheet" type="text/css" >
-<link href="{{asset('css/font-awesome.min.css')}}" rel="stylesheet" type="text/css" >
-
+<style type="text/css">
+    ul{
+        margin: 0;
+    }    
+</style>
 </head>
 <body class="sidebar-left ">
 <!-- // header-container -->
@@ -316,7 +321,6 @@
 <script src="{{asset('administrator/plugins/bootstrap-timepicker/js/bootstrap-timepicker.js')}}"></script>
 <script src="{{asset('administrator/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js')}}"></script>
 -->
-<script src="{{asset('administrator/js/lib/bootstrap/bootstrap-dropdown.js')}}"></script>
 <script src="{{asset('administrator/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js')}}"></script>
 <script src="{{asset('administrator/plugins/bootstrap-daterangepicker/js/bootstrap-daterangepicker.js')}}"></script>
 <script src="{{asset('administrator/plugins/bootstrap-toggle-button/js/bootstrap-toggle-button.js')}}"></script>
@@ -524,45 +528,6 @@ $(document).ready(function () {
     <!-- 
 <script src="{{asset('administrator/js/demo/d3.js')}}"></script>
 -->
-<script>
-$(function() {
-     $.configureBoxes({selectOnSubmit: false});
-     $.configureBoxes({
-         box1View: 'box3View',
-         box1Storage: 'box3Storage',
-         box1Filter: 'box3Filter',
-         box1Clear: 'box3Clear',
-         box1Counter: 'box3Counter',
-         box2View: 'box4View',
-         box2Storage: 'box4Storage',
-         box2Filter: 'box4Filter',
-         box2Clear: 'box4Clear',
-         box2Counter: 'box4Counter',
-         to1: 'to3',
-         to2: 'to4',
-         allTo1: 'allTo3',
-         allTo2: 'allTo4',
-         selectOnSubmit: false
-     });
-     $.configureBoxes({
-         box1View: 'box5View',
-         box1Storage: 'box5Storage',
-         box1Filter: 'box5Filter',
-         box1Clear: 'box5Clear',
-         box1Counter: 'box5Counter',
-         box2View: 'box6View',
-         box2Storage: 'box6Storage',
-         box2Filter: 'box6Filter',
-         box2Clear: 'box6Clear',
-         box2Counter: 'box6Counter',
-         to1: 'to5',
-         to2: 'to6',
-         allTo1: 'allTo5',
-         allTo2: 'allTo6',
-         selectOnSubmit: false
-     });/**/
-     });
-</script>
     
 @yield('script')
 

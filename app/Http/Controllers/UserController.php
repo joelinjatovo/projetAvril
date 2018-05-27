@@ -55,6 +55,8 @@ class UserController extends Controller
         $this->middleware('auth');
         $this->middleware('role:admin');
         
+        $items = new User();
+        
         switch($filter){
             case 'admin':
             case 'apl':
@@ -62,33 +64,57 @@ class UserController extends Controller
             case 'member':
             case 'seller':
                 $title = __('app.user.list.role', ['role'=>__('app.'.$filter)]);
-                $items = User::ofRole($filter)
-                    ->isActive()
-                    ->paginate($this->pageSize);
+                $items = $items->ofRole($filter)
+                    ->isActive();
                 break;
             case 'person':
             case 'organization':
                 $title = __('app.user.list.type', ['type'=>__('app.'.$filter)]);
-                $items = User::ofType($filter)
-                    ->isActive()
-                    ->paginate($this->pageSize);
+                $items = $items->ofType($filter)
+                    ->isActive();
                 break;
             case 'active':
             case 'pinged':
             case 'disabled':
             case 'blocked':
                 $title = __('app.user.list.status', ['status'=>__('app.'.$filter)]);
-                $items = User::ofStatus($filter)
-                    ->paginate($this->pageSize);
+                $items = $items->ofStatus($filter);
                 break;
             default:
             case 'all':
                 $title = __('app.admin.user.list');
-                $items = User::paginate($this->pageSize);
                 break;
         }
         
+        $page = $request->get('page');
+        if(!$page) $page = 1;
+        
+        $record = $request->get('record');
+        if(!$record) $record = $this->pageSize;
+        
+        $role = $request->get('role');
+        $role = trim($role);
+        if($role){
+            $items = $items->ofRole($role);
+        }
+        
+        $q = $request->get('q');
+        $q = trim($q);
+        if($q){
+            $items = $items->where(function($query) use($q){
+                return $query->orWhere('name', 'LIKE', '%'.$q.'%')
+                    ->orWhere('email', 'LIKE', '%'.$q.'%')
+                    ->orWhere('role', 'LIKE', '%'.$q.'%');
+            });
+        }
+        
+        
+        $items = $items->paginate($record);
+        
         return view('admin.user.all')
+            ->with('role', $role)
+            ->with('q', $q)
+            ->with('record', $record) 
             ->with('items',$items)
             ->with('title', $title); 
     }

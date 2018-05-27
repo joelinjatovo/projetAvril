@@ -143,11 +143,11 @@ class BlogController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
-
+        
         $items = Blog::where('post_type','=', $this->post_type)
             ->withCount('comments');
         
-        $title = __('app.blog.list');
+        $title = __('app.admin.blog.list');
         switch($filter){
             case 'starred':
                 $items = $items->where('starred', 1);
@@ -162,9 +162,23 @@ class BlogController extends Controller
                 break;
         }
         
-        $items = $items->paginate($this->pageSize);
+        $record = $request->get('record');
+        if(!$record) $record = $this->pageSize;
+        
+        $q = $request->get('q');
+        $q = trim($q);
+        if($q){
+            $items = $items->where(function($query) use($q){
+                return $query->orWhere('title', 'LIKE', '%'.$q.'%')
+                    ->orWhere('content', 'LIKE', '%'.$q.'%');
+            });
+        }
+        
+        $items = $items->paginate($record);
         
         return view('admin.blog.list')
+            ->with('q', $q) 
+            ->with('record', $record) 
             ->with('title', $title)
             ->with('items', $items);
     }

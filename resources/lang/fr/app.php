@@ -153,6 +153,8 @@ return [
     'contact'         => 'Contact',
     'detail'                => 'Detail',
     'description'           => 'Description',
+    'select_role'           => 'Selectionner le role',
+    'select_category'       => 'Selectionner la categorie',
     'select_one'            => 'Selectionner un',
     'select_apl'            => 'Selectionner une agence partenaire locale',
     'choose_as_default_apl' => 'Choisir comme apl par defaut',
@@ -192,6 +194,9 @@ return [
     'account'            => 'Compte',
     'confidential'      => 'Confidentialite',
     'user_guide'        => "Guide de l'utilisateur",
+    
+    'search'       => 'Recherche',
+    'search.filter'=> 'Filtre de recherche',
     
     'profile'       => 'Profile',
     'dashboard'     => 'Dashboard',
@@ -437,6 +442,8 @@ return [
     
     
     'btn.add'            => 'Ajouter',
+    'btn.search'         => 'Rechercher',
+    'btn.compose'        => 'Composer',
     'btn.detach'         => 'Detacher',
     'btn.save'           => 'Sauvegarder',
     'btn.cancel'         => 'Annuler',

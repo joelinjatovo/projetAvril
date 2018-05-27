@@ -30,9 +30,25 @@ class PostalCodeController extends Controller
      */
     public function all(Request $request)
     {
-        $items = PostalCode::paginate($this->pageSize);
+        $title = __('app.admin.postalcode.list');
+        
+        $items = new PostalCode();
+        
+        $record = $request->get('record');
+        if(!$record) $record = $this->pageSize;
+        
+        $q = $request->get('q');
+        $q = trim($q);
+        if($q){
+            $items = $items->where('content', 'LIKE', '%'.$q.'%');
+        }
+        
+        $items = $items->paginate($record);
+        
         return view('admin.postalcode.all')
-            ->with('title', __('app.admin.postalcode.list'))
+            ->with('q', $q) 
+            ->with('record', $record) 
+            ->with('title', $title)
             ->with('items', $items); 
     }
     

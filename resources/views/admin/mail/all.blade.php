@@ -5,10 +5,38 @@
     <div class="row-fluid page-head">
         <h2 class="page-title"> @lang('app.admin.mail.list') </h2>
     </div>
-    <div id="page-content" class="page-content">
-        <section>
-            <div class="page-header">
+    <div>
+        <h4>@lang('app.search.filter')</h4>
+        <form method="get" action="">
+            <div class="col-md-3">
+                <input id="q" type="text" class="form-control" name="q" placeholder="@lang('app.search')" title="@lang('app.search')" value="{{$q}}">
             </div>
+            <div class="col-md-3">
+                <select class="form-control" name="receiver">
+                    <option value="0">@lang('app.select_user')</option>
+                    @foreach($users as $user)
+                        <option {{$receiver==$user->id?'selected':''}} value="{{$user->id}}">{{$user->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-3">
+                <input id="number" type="number" class="form-control" name="record" title="Nombre par page" placeholder="Nombre par page" min="10" value="{{$record}}">
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-success">@lang('app.btn.search')</button>
+            </div>
+        </form>
+    </div>
+    <br>
+    <br>
+    <div id="page-content" class="page-content">
+        <div class="row-fluid">
+            <div class="span12">
+                <a href="{{route('admin.mail.compose')}}" class="btn btn-green btn-glyph" >@lang('app.btn.compose')</a>
+            </div>
+        </div>
+        <br>
+        <section>
             <div class="row-fluid">
                 <div class="span12">
                     @include('includes.alerts')
@@ -30,8 +58,8 @@
                                 <td>{{$item->id}}</td>
                                 <td>{{$item->subject}}</td>
                                 <td>{{$item->content}}</td>
-                                <td>{{$item->sender->name}} <span class="badge badge-info">{{$item->sender->role}}</span></td>
-                                <td>{{$item->receiver->name}} <span class="badge badge-info">{{$item->receiver->role}}</span></td>
+                                <td>{{$item->sender?$item->sender->name:''}} <span class="badge badge-info">{{$item->sender?$item->sender->role:''}}</span></td>
+                                <td>{{$item->receiver?$item->receiver->name:''}} <span class="badge badge-info">{{$item->receiver?$item->receiver->role:''}}</span></td>
                                 <td>{{$item->created_at->diffForHumans()}}</td>
                                 <td>
                                     <a href="{{route('mail.index', $item)}}"  class="btn btn-small btn-info">@lang('app.btn.view')</a>

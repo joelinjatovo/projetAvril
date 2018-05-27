@@ -4,6 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Auth;
+use Validator;
+
+use App\Models\User;
+use App\Models\Mail;
+use App\Models\MailUser;
+use App\Notifications\NewMail;
+
 class AdminController extends Controller
 {
     /**
@@ -68,7 +76,7 @@ class AdminController extends Controller
             ->get();
         
         return view('admin.mail.compose')
-            ->with('items', $users);
+            ->with('users', $users);
     }
     
     /*
@@ -105,9 +113,10 @@ class AdminController extends Controller
                 ->get();
             
             foreach($users as $user){
-                if($in_array($user->id, $receiverIds)){
+                if(in_array($user->id, $receiverIds)){
                     continue;
                 }
+                $receiverIds[] = $user->id;
                 
                 $sent = true;
                 try{
@@ -132,7 +141,7 @@ class AdminController extends Controller
         
         if($request->has('users')){
             foreach($request->users as $id){
-                if($in_array($id, $receiverIds)){
+                if(in_array($id, $receiverIds)){
                     continue;
                 }
                 
@@ -140,6 +149,8 @@ class AdminController extends Controller
                 if(!$user){
                     continue;
                 }
+                
+                $receiverIds[] = $id;
                 
                 $sent = true;
                 try{
@@ -161,8 +172,8 @@ class AdminController extends Controller
                 $mailItem->save();
             }
         }
-        
-        return back()->with('success', 'Messages envoyés avec succes.');
+        //echo var_dump($request);
+        return back()->with('success', 'Messages envoyés avec succes. '.count($receiverIds));
     }
 
 }

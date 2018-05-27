@@ -100,6 +100,25 @@ class ProductController extends Controller
         $page = $request->get('page');
         if(!$page) $page = 1;
         
+        $record = $request->get('record');
+        if(!$record) $record = $this->pageSize;
+        
+        $items = new Product();
+        $category = $request->get('category');
+        $category = intval($category);
+        if($category){
+            $items = $items->where('category_id', $category);
+        }
+        
+        $q = $request->get('q');
+        $q = trim($q);
+        if($q){
+            $items = $items->where(function($query) use($q){
+                return $query->orWhere('title', 'LIKE', '%'.$q.'%')
+                    ->orWhere('content', 'LIKE', '%'.$q.'%');
+            });
+        }
+        
         switch($filter){
             case 'ordered':
             case 'paid':
@@ -107,18 +126,27 @@ class ProductController extends Controller
             case 'pinged':
             case 'archived':
             case 'trashed':
-                $items = Product::ofStatus($filter)
-                    ->paginate($this->pageSize);
+                $items = $items->ofStatus($filter);
                 $title = __('app.product.list.status', ['status'=>__('app.'.$filter)]);
                 break;
             default:
             case 'all':
-                $items = Product::paginate($this->pageSize);
                 $title = __('app.product.list');
                 break;
         }
         
+        $items = $items->paginate($record);
+        
+        $categories = Category::orderBy('created_at', 'desc')
+            ->has('products')
+            ->withCount('products')
+            ->get();
+        
         return view('admin.product.all', compact('items', 'filter', 'page'))
+            ->with('q', $q) 
+            ->with('record', $record) 
+            ->with('category', $category) 
+            ->with('categories', $categories) 
             ->with('title', $title); 
     }
     

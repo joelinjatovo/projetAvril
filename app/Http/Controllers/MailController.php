@@ -69,6 +69,22 @@ class MailController extends Controller
             ->with('contact', $contact);
     }
 
+    public function read(Request $request, MailUser $mailuser)
+    {
+        $mailuser->read = 1;
+        $mailuser->save();
+        
+        $path = storage_path('app/public/logo.png');
+        if (!File::exists($path)) {
+            abort(404);
+        }
+        $file = File::get($path);
+        $type = File::mimeType($path);
+        $response = Response::make($file, 200);
+        $response->header("Content-Type", $type);
+        return $response;
+    }
+
     public function contact(Request $request, User $user)
     {
         $this->middleware('auth');
@@ -158,6 +174,9 @@ class MailController extends Controller
         $user = Auth::user();
         
         $items = Mail::orderBy('created_at', 'desc');
+        
+        $title = __('app.admin.mail.list');
+        
         switch($filter){
             case "inbox":
                 $items = $items->where('receiver_id', $user->id);
@@ -173,15 +192,72 @@ class MailController extends Controller
                 $this->middleware('role:admin');
                 break;
         }
-        $items = $items->paginate($this->pageSize);
         
-        if($user->isAdmin()){
-            return view('admin.mail.all')
-                ->with('items', $items);
+        $record = $request->get('record');
+        if(!$record) $record = $this->pageSize;
+        
+        $q = $request->get('q');
+        $q = trim($q);
+        if($q){
+            $items = $items->where(function($query) use($q){
+                return $query->orWhere('subject', 'LIKE', '%'.$q.'%')
+                    ->orWhere('content', 'LIKE', '%'.$q.'%');
+            });
         }
         
-        return view('backend.mail.all')
-          ->with('items', $items);
+        $receiver = $request->get('receiver');
+        $receiver = intval($receiver);
+        if($receiver){
+            $items = $items->where(function($query) use($receiver){
+                return $query->orWhere('receiver_id', $receiver)
+                    ->orWhere('sender_id', $receiver);
+            });
+        }
+        
+        
+        if($user->isAdmin()){
+            $view = view('admin.mail.all');
+            
+            $view->with('users', User::all());
+            
+        }else{
+            $view = view('backend.mail.all');
+            
+            switch(Auth::user()->role){
+                case 'apl':
+                    $view->with('users', User::active()->get());
+                break;
+                case 'afa':
+                    $view->with('users', User::active()
+                                ->where(function($query){
+                                    return $query->where('role', 'admin')
+                                        ->orWhere('role', 'apl');
+                                })->get());
+                break;
+                case 'seller':
+                    $view->with('users', User::active()
+                                ->where(function($query){
+                                    return $query->where('role', 'admin')
+                                        ->orWhere('role', 'apl');
+                                })->get());
+                break;
+                case 'member':
+                    $view->with('users', User::active()
+                                ->where(function($query){
+                                    return $query->where('role', 'admin')
+                                        ->orWhere('role', 'apl');
+                                })->get());
+                break;
+            }
+        }
+        
+        $items = $items->paginate($record);
+        
+        return $view->with('items', $items)
+            ->with('q', $q) 
+            ->with('record', $record) 
+            ->with('title', $title)
+            ->with('receiver', $receiver);
     }
 
     public function basic_email(){

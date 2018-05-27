@@ -144,6 +144,7 @@ class ShopController extends Controller
         
         $action = route('shop.add', $product);
     	return view('backend.apl.select')
+            ->with('action', $action)
             ->with('location', Auth::user()->location)
             ->with('items', $apls)
             ->with('item', $product)
@@ -287,10 +288,9 @@ class ShopController extends Controller
         $total = $cart->totalTma;
         $currency = $cart->currency;
         
-        
         try{
             $result = \Braintree_Transaction::sale([
-                'amount' => $total,
+                'amount' => 100,
                 'paymentMethodNonce' => $request->payment_method_nonce,
                 'options' => [
                     'submitForSettlement' => true,
@@ -300,8 +300,10 @@ class ShopController extends Controller
             return back()->with('error', $e->getMessage());
         }
         
+        //echo var_dump($result);
+        
         if (!$result->success) {
-          return back()->with('error', "Votre commande n'a pas été éffectué");
+          return back()->with('error', "Votre commande n'a pas été éffectué. ".$result->message);
         }
     
         // Set as order and notify user

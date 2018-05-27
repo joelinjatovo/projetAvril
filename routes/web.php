@@ -51,6 +51,9 @@ Route::get('storage/thumbnail/{album}/{filename}', function ($album,$filename)
     return $response;
 });
 
+//Open Mail
+Route::get('mail/read/{mailuser}', 'MailController@read');
+
 // Localisation
 Route::get('localization/{locale}', 'LocalizationController@index')->name('localization');
 
@@ -365,9 +368,12 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
     
     //Mail
     Route::prefix('mail')->group(function(){
-        Route::get('/{user}', 'MailController@contact')->name('admin.mail.send');
-        Route::post('/{user}', 'MailController@sendMail');
+        Route::get('contact/{user}', 'MailController@contact')->name('admin.mail.send');
+        Route::post('contact/{user}', 'MailController@sendMail');
         Route::get('delete/{mail}', 'MailController@delete')->name('mail.delete');
+        
+        Route::get('compose' , 'AdminController@compose')->name('admin.mail.compose');
+        Route::post('compose', 'AdminController@sendMail');
     });
 
 });

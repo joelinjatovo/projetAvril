@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
 
+use App\Notifications\NewOrder;
+
 class Cart extends BaseModel
 {
 
@@ -130,7 +132,7 @@ class Cart extends BaseModel
      * Set status as ordered
      *
      */
-    public function setAsOrdered(Order $order)
+    public function setAsOrdered()
     {
         $this->status = 'ordered';
         $this->save();

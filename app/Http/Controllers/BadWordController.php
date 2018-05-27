@@ -30,9 +30,25 @@ class BadWordController extends Controller
      */
     public function all(Request $request)
     {
-        $items = BadWord::paginate($this->pageSize);
+        $title = __('app.admin.badword.list');
+        
+        $items = new BadWord();
+        
+        $record = $request->get('record');
+        if(!$record) $record = $this->pageSize;
+        
+        $q = $request->get('q');
+        $q = trim($q);
+        if($q){
+            $items = $items->where('content', 'LIKE', '%'.$q.'%');
+        }
+        
+        $items = $items->paginate($record);
+        
         return view('admin.badword.all')
-            ->with('title', __('app.admin.badword.list'))
+            ->with('q', $q) 
+            ->with('record', $record) 
+            ->with('title', $title)
             ->with('items', $items); 
     }
     

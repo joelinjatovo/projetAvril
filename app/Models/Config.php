@@ -57,10 +57,10 @@ class Config extends BaseModel
     
     public static function loginRules(){
         return [
-            'title.*' => 'required|max:100',
-            'content.*' => 'required|max:100',
-            'address.*' => 'required|max:100',
-            'contact.*' => 'required|max:100',
+            'title.*' => 'required|max:200',
+            'content.*' => 'required|max:1000',
+            'address.*' => 'required|max:500',
+            'contact.*' => 'required|max:500',
         ];
     }
     

@@ -123,7 +123,7 @@ class User extends Authenticatable
      *
      * @return Boolean
      */
-    public function isActive()
+    public function active()
     {
       return ($this->status == 'active');
     }

@@ -207,11 +207,32 @@ class PageController extends Controller
         $this->middleware('auth');
         $this->middleware('role:admin');
         
-        $page = $request->get('page');
-        if(!$page) $page =1;
+        $title = __('app.admin.page.list');
         
-        $items = Page::paginate($this->pageSize);
-        return view('admin.page.all', compact('items', 'filter', 'page')); 
+        $items = new Page;
+        
+        $page = $request->get('page');
+        if(!$page){$page =1;}
+        
+        $record = $request->get('record');
+        if(!$record) $record = $this->pageSize;
+        
+        $q = $request->get('q');
+        $q = trim($q);
+        if($q){
+            $items = $items->where(function($query) use($q){
+                return $query->orWhere('title', 'LIKE', '%'.$q.'%')
+                    ->orWhere('content', 'LIKE', '%'.$q.'%')
+                    ->orWhere('path', 'LIKE', '%'.$q.'%');
+            });
+        }
+        
+        $items = $items->paginate($record);
+        
+        return view('admin.page.all', compact('items', 'filter', 'page'))
+            ->with('q', $q) 
+            ->with('record', $record) 
+            ->with('title', $title); 
     }
 
     

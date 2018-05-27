@@ -152,12 +152,31 @@ class CategoryController extends Controller
      */
     public function allAdmin(Request $request, $filter='all')
     {
+        $title = __('app.admin.category.list');
+        
+        $items = new Category;
+        
         $page = $request->get('page');
         if(!$page) $page = 1;
-
-        $items = Category::paginate($this->pageSize);
         
-        return view('admin.category.all', compact('items', 'filter', 'page'));
+        $record = $request->get('record');
+        if(!$record) $record = $this->pageSize;
+        
+        $q = $request->get('q');
+        $q = trim($q);
+        if($q){
+            $items = $items->where(function($query) use($q){
+                return $query->orWhere('title', 'LIKE', '%'.$q.'%')
+                    ->orWhere('content', 'LIKE', '%'.$q.'%');
+            });
+        }
+        
+        $items = $items->paginate($record);
+        
+        return view('admin.category.all', compact('items', 'filter', 'page'))
+            ->with('q', $q) 
+            ->with('record', $record) 
+            ->with('title', $title);
     }
 
 
