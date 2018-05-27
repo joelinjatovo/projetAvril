@@ -57,7 +57,7 @@
                         </div>
                         <div class="span6">
                             <label for="contact[en]">Contact</label>
-                            <textarea id="contact[en]" class="input-block-level" type="text" name="contact[en]" >{{old('contact.en')?old('contact.en'):$item->get_meta_array('contact', 'en', '')}}}}</textarea>
+                            <textarea id="contact[en]" class="input-block-level" type="text" name="contact[en]" >{{old('contact.en')?old('contact.en'):$item->get_meta_array('contact', 'en', '')}}</textarea>
                         </div>
                     </div>
                 </div>

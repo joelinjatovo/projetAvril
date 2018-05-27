@@ -20,9 +20,14 @@ class CartItem extends BaseModel
      *
      * @var array
      */
-    protected $fillable = [
-        
-    ];
+    protected $fillable = [];
+
+    /**
+     * The attributes that should be a date
+     *
+     * @var array
+     */
+    protected $dates =  ['apl_paid_at', 'afa_paid_at', 'cancelled_at'];
     
     
     /**

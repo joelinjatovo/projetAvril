@@ -12,7 +12,9 @@ return [
     'list_apl'    => 'Lister les APL',
     'read_more'    => 'Continuer de lire',
     
-    'send_mail'    => 'Envoyer Mail',
+    'login'    => 'Connexion',
+    
+    'send_mail'     => 'Envoyer Mail',
     'login_info'    => 'Login Information',
     'user_info'     => 'Information personnelle',
     'orga_info'     => 'Information sur l\'organisation',

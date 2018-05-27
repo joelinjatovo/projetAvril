@@ -85,15 +85,17 @@ class Cart extends BaseModel
             }
         }
         
+        $tma = max(option(Config::$RESERVATION, 0.10), $product->tma);
+        
 		$storedItem->quantity++;
 		$storedItem->price = $storedItem->quantity * $product->price;
-		$storedItem->tma = $storedItem->price*option(Config::$RESERVATION, 0.33);
+		$storedItem->tma = $storedItem->price*$tma;
 		$storedItem->currency = $product->currency;
         $storedItem->save();
         
 		self::$instance->totalQuantity++;
 		self::$instance->totalPrice += $product->price;
-		self::$instance->totalTma += $product->price*option(Config::$RESERVATION, 0.33);
+		self::$instance->totalTma += $product->price*$tma;
         self::$instance->save();
 	}
 
@@ -140,10 +142,22 @@ class Cart extends BaseModel
         foreach($this->items as $item){
             $item->status = 'ordered';
             $item->save();
+            
+            // Update product quantity
             if($item->product){
                 $item->product->quantity -= $item->quantity;
                 $item->product->buyer_id = $this->author_id;
                 $item->product->save();
+            }
+            
+            // Notify AFA
+            if($item->afa){
+                $this->afa->notify(new NewOrder($this->afa, $this));
+            }
+            
+            // Notify APL
+            if($item->apl){
+                $this->afa->notify(new NewOrder($this->apl, $this));
             }
         }
         
@@ -166,6 +180,17 @@ class Cart extends BaseModel
         foreach($this->items as $item){
             $item->status = 'paid';
             $item->save();
+            
+            // Notify AFA
+            if($item->afa){
+                $this->afa->notify(new OrderPaid($this->afa, $this));
+            }
+            
+            // Notify APL
+            if($item->apl){
+                $this->afa->notify(new OrderPaid($this->apl, $this));
+            }
+        }
         }
         
         if($this->author){
