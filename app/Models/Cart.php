@@ -191,7 +191,6 @@ class Cart extends BaseModel
                 $this->afa->notify(new OrderPaid($this->apl, $this));
             }
         }
-        }
         
         if($this->author){
             $this->author->notify(new OrderPaid($this->author, $this));
