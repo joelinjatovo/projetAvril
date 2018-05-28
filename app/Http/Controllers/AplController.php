@@ -65,4 +65,35 @@ class AplController extends Controller
             ->with('items', $items);
     }
     
+    /**
+     * 
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function commissions($filter = 'paid')
+    {
+        $items = Auth::user()->sales()
+            ->wherePivot('status', 'ordered');
+        
+        switch($filter){
+            case 'paid':
+                $items = $items->wherePivot('apl_paid_at', '<>', 'NULL');
+                $title = __('app.commissions.paid');
+                break;
+            case 'not-paid':
+                $items = $items->wherePivot('apl_paid_at', 'NULL');
+                $title = __('app.commissions.not_paid');
+                break;
+            default:
+                abort(404);
+                break;
+        }
+        
+        $items = $items->paginate($this->pageSize);
+        
+        return view('backend.product.all')
+            ->with('title', $title)
+            ->with('items', $items);
+    }
+    
 }

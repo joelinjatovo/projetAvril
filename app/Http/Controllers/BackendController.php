@@ -111,14 +111,14 @@ class BackendController extends Controller
                 break;
             case 'seller':
                 $count['products']  = 50;
-                $recent['products.'] = $user->products()
+                $recent['products'] = $user->products()
                     ->orderBy('products.created_at', 'desc')
                     ->take($this->recentSize)
                     ->get();
                 
                 $count['orders']  = 50;
                 $recent['orders'] = $user->products()
-                    ->wherePivot('products.status', 'ordered')
+                    ->where('products.status', 'ordered')
                     ->orderBy('products.created_at', 'desc')
                     ->take($this->recentSize)
                     ->get();

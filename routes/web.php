@@ -187,6 +187,7 @@ Route::prefix('afa')->middleware(["auth","role:afa"])->group(function(){
     
     Route::get('orders', 'AfaController@orders')->name('afa.orders');
     Route::get('sales', 'AfaController@sales')->name('afa.sales');
+    Route::get('commissions/{filter?}', 'AfaController@commissions')->name('afa.commissions');
     
 });
 
@@ -199,6 +200,7 @@ Route::prefix('apl')->middleware(["auth","role:apl"])->group(function(){
     Route::get('orders', 'AplController@orders')->name('apl.orders');
     Route::get('sales', 'AplController@sales')->name('apl.sales');
     Route::get('customers', 'AplController@customers')->name('apl.customers');
+    Route::get('commissions/{filter?}', 'AplController@commissions')->name('apl.commissions');
     
 });
 
@@ -209,6 +211,8 @@ Route::prefix('seller')->middleware(["auth","role:seller"])->group(function(){
     Route::get('pins', 'BackendController@pins');
     
     Route::get('products', 'SellerController@products')->name('seller.products');
+    Route::get('sales', 'SellerController@sales')->name('seller.sales');
+    Route::get('orders', 'SellerController@orders')->name('seller.orders');
     
 });
 
@@ -257,7 +261,16 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::get('restore/{product}', 'ProductController@restore')->name('admin.product.restore');
         Route::get('delete/{product}', 'ProductController@delete')->name('admin.product.delete');
     });
-
+    
+    // Shop Controller
+    Route::get('shops/{filter?}', 'CartItemController@all')->name('admin.shop');
+    Route::prefix('shop')->group(function(){
+        Route::get('pay/{cartitem}/{role}', 'CartItemController@pay')->name('admin.shop.pay');
+        Route::post('pay/{cartitem}/{role}', 'CartItemController@postPay');
+        
+        Route::get('delete/{cartitem}', 'CartItemController@delete')->name('admin.shop.delete');
+    });
+    
     // Category Controller Groups
     Route::get('categories/{filter?}', 'CategoryController@allAdmin')->name('admin.category.list');
     Route::prefix('category')->group(function(){
@@ -375,5 +388,6 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::get('compose' , 'AdminController@compose')->name('admin.mail.compose');
         Route::post('compose', 'AdminController@sendMail');
     });
+    
 
 });

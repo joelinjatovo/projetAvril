@@ -187,10 +187,27 @@ input[type="search"]::-webkit-search-decoration {
     border: 1px solid #E3E3E3;
     border-radius: 4px;
 }
+
+.btn-success {
+    color: #FFF;
+    background-color: #05AE0E;
+    border-color: #05AE0E;
+    border-radius: 1px;
+    padding: 10px 20px;
+    font-weight: 600;
+}
+.btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .btn-success:active:focus, .open > .dropdown-toggle.btn-success {
+    color: #fff;
+    background-color: #313538;
+    border-color: #282829;
+    font-weight: 600;
+}
+
+
 .btn-primary {
     color: #FFF;
     background-color: #FDC600;
-    border-color: #FDC600;
+    border-color: #F0F0F0;
     border-radius: 1px;
     padding: 10px 20px;
     font-weight: 600;
@@ -201,7 +218,40 @@ input[type="search"]::-webkit-search-decoration {
     border-color: #282829;
     font-weight: 600;
 }
+
 .btn-default {
+    border-radius: 1px;
+    padding: 10px 20px;
+    border: 1px solid #282829;
+    color: #fff;
+    background-color: #313538;
+    border-color: #F0F0F0;
+    font-weight: 600;
+}
+.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open > .dropdown-toggle.btn-default {
+    color: #fff;
+    background-color: #FDC600;
+    border-color: #F0F0F0;
+    font-weight: 600;
+}
+
+.btn-info {
+    border-radius: 1px;
+    padding: 10px 20px;
+    border: 1px solid #2CA8FF;
+    color: #000;
+    background-color: #2CA8FF;
+    border-color: #F0F0F0;
+    font-weight: 600;
+}
+.btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info.active, .open > .dropdown-toggle.btn-info {
+    color: #fff;
+    background-color: #313538;
+    border-color: #282829;
+    font-weight: 600;
+}
+
+.btn-warning {
     border-radius: 1px;
     padding: 10px 20px;
     border: 1px solid #FDC600;
@@ -210,12 +260,29 @@ input[type="search"]::-webkit-search-decoration {
     border-color: #F0F0F0;
     font-weight: 600;
 }
-.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open > .dropdown-toggle.btn-default {
+.btn-warning:hover, .btn-warning:focus, .btn-warning:active, .btn-warning.active, .open > .dropdown-toggle.btn-warning {
     color: #000;
     background-color: #FDC600;
+    border-color: #FDC600;
+    font-weight: 600;
+}
+
+.btn-danger {
+    border-radius: 1px;
+    padding: 10px 20px;
+    border: 1px solid #FF3B30;
+    color: #000;
+    background-color: #FF3B30;
     border-color: #F0F0F0;
     font-weight: 600;
 }
+.btn-danger:hover, .btn-danger:focus, .btn-danger:active, .btn-danger.active, .open > .dropdown-toggle.btn-danger {
+    color: #fff;
+    background-color: #313538;
+    border-color: #282829;
+    font-weight: 600;
+}
+
 .search-form {
     top: 100px;
     background-color: #fff;

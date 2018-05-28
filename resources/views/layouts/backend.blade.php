@@ -31,17 +31,23 @@
                     
                     @If(Auth::user()->hasRole('seller'))
                     <li><a href="{{route('seller.products')}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('app.products')</a></li>
+                    <li><a href="{{route('seller.orders')}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('app.orders')</a></li>
+                    <li><a href="{{route('seller.sales')}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('app.sales')</a></li>
                     @endif
                     
                     @If(Auth::user()->hasRole('afa'))
                     <li><a href="{{route('afa.orders')}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('app.orders')</a></li>
                     <li><a href="{{route('afa.sales')}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('app.sales')</a></li>
+                    <li><a href="{{route('afa.commissions', ['filter'=>'paid'])}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('app.commissions.paid')</a></li>
+                    <li><a href="{{route('afa.commissions', ['filter'=>'not-paid'])}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('app.commissions.not_paid')</a></li>
                     @endif
                     
                     @If(Auth::user()->hasRole('apl'))
                     <li><a href="{{route('apl.orders')}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('app.orders')</a></li>
                     <li><a href="{{route('apl.sales')}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('app.sales')</a></li>
                     <li><a href="{{route('apl.customers')}}"><i class="fa fa-users" aria-hidden="true"></i> @lang('app.customers')</a></li>
+                    <li><a href="{{route('apl.commissions', ['filter'=>'paid'])}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('app.commissions.paid')</a></li>
+                    <li><a href="{{route('apl.commissions', ['filter'=>'not-paid'])}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('app.commissions.not_paid')</a></li>
                     @endif
                     
                     <li><a href="{{route('logout')}}"><i class="fa fa-sign-out" aria-hidden="true"></i> @lang('app.logout')</a></li>

@@ -46,26 +46,10 @@
                 <section class="property-meta-wrapper common">
                     @include('includes.alerts')
                     <div class="row">
-                        @if(Auth::check()&&Auth::user()->hasRole('member'))
                         <div class="col-sm-12">
-                          <a href="{{route('member.contact', ['role'=>'admin'])}}" class="btn btn-default col-sm-6"><i class="fa fa-envelope-open-o"></i> @lang('app.btn.contact_admin')</a>
-                            
-                          @if(Auth::check()&&Auth::user()->hasApl())
-                            <a href="{{route('member.contact', ['role'=>'apl'])}}" class="btn btn-default col-sm-6"><i class="fa fa-envelope-open-o"></i> @lang('app.btn.contact_apl')</a>
-                          @endif
-                          
-                        </div>
-                        @endif
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <a href="{{route('shop.select.apl', ['product'=>$item])}}" class="btn btn-default col-sm-12"><i class="fa fa-envelope-open-o"></i>@lang('app.select_apl')</a>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                          <a href="{{route('label.store', ['product'=>$item,'type'=>'saved'])}}" class="btn btn-default col-sm-6"><i class="fa fa-floppy-o" aria-hidden="true"></i> @lang('app.btn.pin')</a>
-                          <a href="{{route('label.store', ['product'=>$item,'type'=>'starred'])}}" class="btn btn-default col-sm-6"><i class="fa fa-floppy-o" aria-hidden="true"></i>  @lang('app.btn.star')</a>
+                            <a href="{{route('shop.select.apl', ['product'=>$item])}}" class="btn btn-success col-sm-6"><i class="fa fa-envelope-open-o"></i> @lang('app.btn.add_to_cart')</a>
+                            <a href="{{route('label.store', ['product'=>$item,'type'=>'starred'])}}" class="btn btn-primary col-sm-3"><i class="fa fa-floppy-o" aria-hidden="true"></i>  @lang('app.btn.star')</a>
+                            <a href="{{route('label.store', ['product'=>$item,'type'=>'saved'])}}" class="btn btn-info col-sm-3"><i class="fa fa-floppy-o" aria-hidden="true"></i> @lang('app.btn.pin')</a>
                         </div>
                     </div>
                 </section>

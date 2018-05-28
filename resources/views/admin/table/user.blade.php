@@ -1,11 +1,6 @@
 <table class="table boo-table table-striped table-hover">
  <thead>
      <tr>
-       <th scope="col">
-         <label class="checkbox">
-             <input class="checkbox" type="checkbox" value="option1">
-         </label>
-       </th>
          <th scope="col">@lang('app.table.id') <span class="column-sorter"></span></th>
          <th scope="col">@lang('app.table.photo') <span class="column-sorter"></span></th>
          <th scope="col">@lang('app.table.name') <span class="column-sorter"></span></th>
@@ -20,11 +15,6 @@
  <tbody>
      @foreach($users as $item)
      <tr class="user-item-{{$item->id}}">
-       <td>
-           <label class="checkbox">
-               <input class="checkbox" type="checkbox" value="{{$item->id}}">
-           </label>
-       </td>
          <td>{{$item->id}}</td>
          <td>
              <a href="{{route('admin.user.show', $item)}}"><img class="thumb" src="{{$item->imageUrl()}}" width="50"></a>

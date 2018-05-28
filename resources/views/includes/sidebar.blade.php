@@ -1,7 +1,6 @@
 <div id="property-sidebar">
-    <a href="{{route('apls')}}" class="btn btn-default col-md-12">@lang('app.list_apl')</a>
-    <br>
-    <br>
+    <a href="{{route('apls')}}" class="btn btn-default col-md-12" style="margin-bottom: 20px;">@lang('app.list_apl')</a>
+    
     @foreach($pubs as $pub)
     <section class="widget property-meta-wrapper clearfix">
         <h2 class="title wow slideInLeft">{{$pub->title}}</h2>
@@ -10,20 +9,30 @@
         </div>
     </section>
     @endforeach
+    
     <section class="widget recent-properties clearfix">
         <h5 class="title">@lang('app.recent.product')</h5>
         @foreach($products as $product)
         <div class="property clearfix">
             <a href="{{route('product.index',['product'=>$product])}}">
-                <img src="{{$product->imageUrl(false)}}" alt="Property Image">
+                <img src="{{$product->imageUrl(false)}}" alt="{{$product->title}}" style="float: right;">
             </a>
             <div class="property-contents">
                 <h6 class="entry-title"> <a href="{{route('product.index',['product'=>$product])}}">{{$product->title}}</a></h6>
-                <span  class="btn btn-price">${{$product->price}}</span>
+                <span  class="btn btn-price">{{$product->price}}</span>
             </div>
         </div>
         @endforeach
     </section>
+    <section class="widget recent-properties clearfix">
+        <a href="{{route('member.contact', ['role'=>'admin'])}}" class="btn btn-primary col-sm-12"><i class="fa fa-envelope-open-o"></i> @lang('app.btn.contact_admin')</a>
+        <a href="{{route('member.contact', ['role'=>'apl'])}}" class="btn btn-default col-sm-12"><i class="fa fa-envelope-open-o"></i> @lang('app.btn.contact_apl')</a>
+    </section>
+
+    @if(Auth::check()&&Auth::user()->hasApl())
+        
+    @endif
+    
     <section class="widget property-taxonomies clearfix">
         <h5 class="title">@lang('app.recent.category')</h5>
         <ul class="clearfix">

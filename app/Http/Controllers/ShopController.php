@@ -9,6 +9,7 @@ use Auth;
 use App\Notifications\OrderPinged;
 
 use App\Models\Product;
+use App\Models\CartItem;
 use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Page;

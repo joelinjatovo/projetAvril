@@ -147,6 +147,23 @@
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
+                      <a href="#accShop" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Request::is('admin/shop*')?'collapsed':''}}">
+                        <i class="fa fa-shopping-cart"></i>
+                        <i class="chevron fontello-icon-right-open-3"></i>@lang('app.shop')</a>
+                  </div>
+                  <ul class="accordion-content nav nav-list collapse {{\Request::is('admin/shop*')?'in':''}}" id="accShop">
+                      <li><a href="{{route('admin.shop')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.shop')</a></li>
+                      <li><a href="{{route('admin.shop', ['filter'=>'pinged'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.shop.pinged')</a></li>
+                      <li><a href="{{route('admin.shop', ['filter'=>'ordered'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.shop.ordered')</a></li>
+                      <li><a href="{{route('admin.shop', ['filter'=>'apl-not-paid'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.shop.apl-not-paid')</a></li>
+                      <li><a href="{{route('admin.shop', ['filter'=>'apl-paid'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.shop.apl-paid')</a></li>
+                      <li><a href="{{route('admin.shop', ['filter'=>'afa-not-paid'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.shop.afa-not-paid')</a></li>
+                      <li><a href="{{route('admin.shop', ['filter'=>'afa-paid'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.shop.afa-paid')</a></li>
+                      <li><a href="{{route('admin.shop', ['filter'=>'paid'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.shop.paid')</a></li>
+                  </ul>
+              </li>
+              <li class="accordion-group">
+                  <div class="accordion-heading">
                       <a href="#accProducts" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Request::is('admin/product*')?'collapsed':''}}">
                         <i class="fontello-icon-users-1"></i>
                         <i class="chevron fontello-icon-right-open-3"></i>@lang('app.admin.products')</a>
@@ -298,29 +315,17 @@
 </div>
 <!-- // main-container -->
     
-<script src="{{asset('administrator/js/lib/jquery.js')}}"></script>
+<script src="{{asset('js/app.js')}}"></script>
 <script src="{{asset('administrator/js/lib/jquery-ui.js')}}"></script>
+
+    
 <script src="{{asset('administrator/js/lib/jquery.cookie.js')}}"></script>
-    <!-- 
-<script src="{{asset('administrator/js/lib/jquery.date.js')}}"></script>
--->
 <script src="{{asset('administrator/js/lib/jquery.mousewheel.js')}}"></script>
 <script src="{{asset('administrator/js/lib/jquery.load-image.min.js')}}"></script>
-<script src="{{asset('administrator/js/lib/bootstrap/bootstrap.js')}}"></script>
 
 <!-- Plugins Bootstrap -->
 <script src="{{asset('administrator/plugins/bootstrap-wysihtml5/lib/js/wysihtml5-0.3.0.min.js')}}"></script>
 <script src="{{asset('administrator/plugins/bootstrap-wysihtml5/src/bootstrap-wysihtml5.js')}}"></script>
-    <!-- 
-<script src="{{asset('administrator/plugins/bootstrap-fuelux/all-fuelux.min.js')}}"></script>
--->
-    <!-- 
-<script src="{{asset('administrator/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
--->
-    <!-- 
-<script src="{{asset('administrator/plugins/bootstrap-timepicker/js/bootstrap-timepicker.js')}}"></script>
-<script src="{{asset('administrator/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js')}}"></script>
--->
 <script src="{{asset('administrator/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js')}}"></script>
 <script src="{{asset('administrator/plugins/bootstrap-daterangepicker/js/bootstrap-daterangepicker.js')}}"></script>
 <script src="{{asset('administrator/plugins/bootstrap-toggle-button/js/bootstrap-toggle-button.js')}}"></script>
@@ -380,9 +385,6 @@
 
 <!-- Plugins data visualization -->
 <script src="{{asset('administrator/plugins/pl-visualization/sparkline/jquery.sparkline.min.js')}}"></script>
-<!-- 
-<script src="{{asset('administrator/plugins/pl-visualization/easy-pie-chart/jquery.easy-pie-chart.js')}}"></script>
--->
 <script src="{{asset('administrator/plugins/pl-visualization/percentageloader/percentageloader.min.js')}}"></script>
 <script src="{{asset('administrator/plugins/pl-visualization/knob/knob.js')}}"></script>
 <script src="{{asset('administrator/plugins/pl-visualization/flot/jquery.flot.js')}}"></script>
@@ -399,135 +401,9 @@
 <!-- main js -->
 <script src="{{asset('administrator/js/core.js')}}"></script>
 <script src="{{asset('administrator/js/application.js')}}"></script>
+
 <script src="{{asset('administrator/js/demo/demo-jquery.dataTables.js')}}"></script>
-
-<script type="text/javascript">
-$(document).ready(function () {
-     /* initiate plugin jPage */
-     $("ul.holder").jPages({
-             containerID: "gallery",
-             perPage: 12,
-             previous: "previous",
-             next: "next",
-             callback: function (pages, items) {
-                     $("#legend2").html(items.range.start + " - " + items.range.end + " of " + items.count);
-             }
-     });
-
-     /* on select change */
-     $("#showItem").change(function () {
-             var newPerPage = parseInt($(this).val());
-             $("ul.holder").jPages("destroy").jPages({
-                     containerID: "gallery",
-                     perPage: newPerPage
-             });
-     });
-
-     $('#gallery .nailthumb-container.show-loading').nailthumb({
-             titleWhen: 'hover',
-             animationTime: 3000,
-             replaceAnimation: 'fade',
-             imageFromWrappingLink: true,
-             onStart: function (container) {
-                     container.showLoading({
-                             'overlayWidth': 30, //null
-                             'overlayHeight': 30 //null
-                     });
-             },
-             onFinish: function (container) {
-                     container.hideLoading();
-             }
-     });
-
-     $("#gallery a.edit").click(function () {
-             $("#previewImage").html($("<img>").attr("src", this.href));
-             return false;
-
-     });
-
-     // Start slideshow button:
-     $('#start-slideshow').button().click(function () {
-             var options = $(this).data(),
-                     modal = $(options.target),
-                     data = modal.data('modal');
-             if(data) {
-                     $.extend(data.options, options);
-             }
-             else {
-                     options = $.extend(modal.data(), options);
-             }
-             modal.find('.modal-slideshow').find('i')
-                     .removeClass('fontello-icon-play')
-                     .addClass('fontello-icon-pause');
-             modal.modal(options);
-     });
-
-     // Toggle fullscreen button:
-     $('#toggle-fullscreen').button().click(function () {
-             var button = $(this),
-                     root = document.documentElement;
-             if(!button.hasClass('active')) {
-                     $('#modal-gallery').addClass('modal-fullscreen');
-                     if(root.webkitRequestFullScreen) {
-                             root.webkitRequestFullScreen(
-                             window.Element.ALLOW_KEYBOARD_INPUT);
-                     }
-                     else if(root.mozRequestFullScreen) {
-                             root.mozRequestFullScreen();
-                     }
-             }
-             else {
-                     $('#modal-gallery').removeClass('modal-fullscreen');
-                     (document.webkitCancelFullScreen || document.mozCancelFullScreen || $.noop).apply(document);
-             }
-     });
-
-     // Only demo form Tag
-     var fileTagData = [{
-             id: "Storm",
-             text: "Storm"
-     }, {
-             id: "Scenic",
-             text: "Scenic"
-     }, {
-             id: "Lakes",
-             text: "Lakes"
-     }, {
-             id: "Rivers",
-             text: "Rivers"
-     }, {
-             id: "Forest",
-             text: "Forest"
-     }, {
-             id: "Flowers",
-             text: "Flowers"
-     }]
-     $("#fileTag").select2({
-             tags: fileTagData,
-             createSearchChoice: function (term, data) {
-                     if($(data).filter(function () {
-                             return this.text.localeCompare(term) === 0;
-                     }).length === 0) {
-                             return {
-                                     id: term,
-                                     text: term
-                             };
-                     }
-             },
-             width: "100%",
-             multiple: true,
-             placeholder: "select or enter tag",
-             tokenSeparators: [",", " "]
-     });
-});
-</script>
-
-
-<!-- Only This Demo Page -->
 <script src="{{asset('administrator/js/demo/demo-wisyhtml5.js')}}"></script>
-    <!-- 
-<script src="{{asset('administrator/js/demo/d3.js')}}"></script>
--->
     
 @yield('script')
 
