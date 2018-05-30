@@ -9,7 +9,6 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Auth;
 use Event;
 
-use App\Events\UserRegistered;
 use App\Notifications\AccountCreated;
 
 use App\Models\User;
