@@ -31,7 +31,7 @@
                             <div class="widget-content">
                                 <div class="widget-body">
                                     <div class="control-group">
-                                        <input class="input-block-level" value="{{$item->email}}" placeholder="@lang('app.form.email')" disabled>
+                                        <input name="email" class="input-block-level" value="{{$item->email}}" placeholder="@lang('app.form.email')">
                                     </div>
                                 </div>
                             </div>

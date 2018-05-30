@@ -28,6 +28,22 @@
                         </select>
                     </div>
                     <div class="col-md-3">
+                        <select class="form-control" name="state">
+                            <option value="">@lang('app.select_state')</option>
+                            @foreach($states as $stateItem)
+                            <option value="{{$stateItem->id}}" {{$stateItem->id==$state?'selected':''}}>{{$stateItem->content}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-control" name="seller">
+                            <option value="">@lang('app.select_seller')</option>
+                            @foreach($sellers as $sellerItem)
+                            <option value="{{$sellerItem->id}}" {{$sellerItem->id==$seller?'selected':''}}>{{$sellerItem->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-3">
                         <input id="q" type="number" class="form-control" name="record" title="Nombre par page" placeholder="Nombre par page" min="10" value="{{$record}}">
                     </div>
                     <div class="col-md-3">

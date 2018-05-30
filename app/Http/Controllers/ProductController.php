@@ -13,6 +13,7 @@ use App\Models\Image;
 use App\Models\Page;
 use App\Models\Pub;
 use App\Models\User;
+use App\Models\State;
 
 class ProductController extends Controller
 {
@@ -97,6 +98,11 @@ class ProductController extends Controller
         $this->middleware('auth');
         $this->middleware('role:admin');
         
+        $categories = Category::orderBy('created_at', 'desc')
+            ->has('products')
+            ->withCount('products')
+            ->get();
+        
         $page = $request->get('page');
         if(!$page) $page = 1;
         
@@ -104,20 +110,6 @@ class ProductController extends Controller
         if(!$record) $record = $this->pageSize;
         
         $items = new Product();
-        $category = $request->get('category');
-        $category = intval($category);
-        if($category){
-            $items = $items->where('category_id', $category);
-        }
-        
-        $q = $request->get('q');
-        $q = trim($q);
-        if($q){
-            $items = $items->where(function($query) use($q){
-                return $query->orWhere('title', 'LIKE', '%'.$q.'%')
-                    ->orWhere('content', 'LIKE', '%'.$q.'%');
-            });
-        }
         
         switch($filter){
             case 'ordered':
@@ -135,18 +127,46 @@ class ProductController extends Controller
                 break;
         }
         
-        $items = $items->paginate($record);
+        $category = $request->get('category');
+        $category = intval($category);
+        if($category){
+            $items = $items->where('category_id', $category);
+        }
         
-        $categories = Category::orderBy('created_at', 'desc')
-            ->has('products')
-            ->withCount('products')
-            ->get();
+        $q = $request->get('q');
+        $q = trim($q);
+        if($q){
+            $items = $items->where(function($query) use($q){
+                return $query->orWhere('title', 'LIKE', '%'.$q.'%')
+                    ->orWhere('content', 'LIKE', '%'.$q.'%');
+            });
+        }
+        
+        $states = State::all();
+        $state = $request->get('state');
+        $state = intval($state);
+        if($state){
+            $items = $items->where('state_id', $state);
+        }
+        
+        $sellers = User::ofRole('seller')->isActive()->get();
+        $seller = $request->get('seller');
+        $seller = intval($seller);
+        if($seller){
+            $items = $items->where('seller_id', $seller);
+        }
+        
+        $items = $items->paginate($record);
         
         return view('admin.product.all', compact('items', 'filter', 'page'))
             ->with('q', $q) 
             ->with('record', $record) 
             ->with('category', $category) 
             ->with('categories', $categories) 
+            ->with('state', $state)
+            ->with('states', $states)
+            ->with('seller', $seller)
+            ->with('sellers', $sellers)
             ->with('title', $title); 
     }
     

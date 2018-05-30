@@ -7,6 +7,8 @@ use Validator;
 use Auth;
 
 use App\Models\User;
+use App\Models\Country;
+use App\Models\State;
 
 class UserController extends Controller
 {
@@ -98,6 +100,18 @@ class UserController extends Controller
             $items = $items->ofRole($role);
         }
         
+        $country = $request->get('country');
+        $country = intval($country);
+        if($country){
+            $items = $items->where('country_id', $country);
+        }
+        
+        $state = $request->get('state');
+        $state = intval($state);
+        if($state){
+            $items = $items->where('state_id', $state);
+        }
+        
         $q = $request->get('q');
         $q = trim($q);
         if($q){
@@ -108,14 +122,19 @@ class UserController extends Controller
             });
         }
         
-        
         $items = $items->paginate($record);
+        $countries = Country::all();
+        $states = State::all();
         
         return view('admin.user.all')
             ->with('role', $role)
             ->with('q', $q)
             ->with('record', $record) 
             ->with('items',$items)
+            ->with('country', $country)
+            ->with('countries', $countries)
+            ->with('state', $state)
+            ->with('states', $states)
             ->with('title', $title); 
     }
     

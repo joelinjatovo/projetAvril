@@ -182,6 +182,7 @@ class ProfileController extends Controller
                 break;
             case 'admin':
                 $rules = [
+                    'email'    => 'required|unique:users,email|max:100',
                     'language'   => 'required|max:100',
                     'first_name' => 'required|max:100',
                     'last_name'  => 'required|max:100',
@@ -210,6 +211,7 @@ class ProfileController extends Controller
         // Create user
         try{
             $user->fill($datas);
+            $user->save();
         }catch (\Exception $exception) {
             logger()->error($exception);
             return back()->with('info', 'Unable to edit your profile.');

@@ -34,6 +34,11 @@ class CreateUsersTable extends Migration
             $table->bigInteger('image_id')->default(0)->index(); // User must check his APL
             $table->bigInteger('author_id')->default(0)->index();
             $table->bigInteger('location_id')->default(0)->index();
+            $table->bigInteger('country_id')->default(0)->index();
+            
+            // AFA Detail
+            $table->bigInteger('operation_range')->default(0)->index();
+            $table->bigInteger('state_id')->default(0)->index();
             
             $table->string('activation_code')->nullable();
             $table->rememberToken();

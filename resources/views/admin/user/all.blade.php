@@ -29,6 +29,22 @@
                         </select>
                     </div>
                     <div class="col-md-3">
+                        <select class="form-control" name="country">
+                            <option value="">@lang('app.select_country')</option>
+                            @foreach($countries as $c)
+                            <option value="{{$c->id}}" {{$c->id==$country?'selected':''}}>{{$c->content}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-control" name="state">
+                            <option value="">@lang('app.select_state')</option>
+                            @foreach($states as $stateItem)
+                            <option value="{{$stateItem->id}}" {{$stateItem->id==$state?'selected':''}}>{{$stateItem->content}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-3">
                         <input id="q" type="number" class="form-control" name="record" title="Nombre par page" placeholder="Nombre par page" min="10" value="{{$record}}">
                     </div>
                     <div class="col-md-3">
