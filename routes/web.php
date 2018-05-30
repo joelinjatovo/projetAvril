@@ -102,7 +102,7 @@ Route::middleware('guest')->group(function(){
 });
 
 // Mail
-Route::get('contact','MailController@index')->name('contact');
+Route::get('contact','MailController@index');
 Route::post('contact','MailController@index')->name('contact');
 
 Route::middleware(["auth"])->group(function(){
@@ -155,7 +155,6 @@ Route::middleware(["auth", "role:member"])->group(function(){
     
     Route::get('cart', 'ShopController@cart')->name('shop.cart');// Show cart
     Route::get('shop/reduce/{product}', 'ShopController@reduceByOne')->name('shop.product.reduce');
-    
     Route::get('shop/delete/{product}', 'ShopController@deleteAll')->name('shop.product.delete');
     Route::get('checkout', 'ShopController@getCheckout')->name('shop.product.checkout');
     Route::post('checkout', 'ShopController@postCheckout')->name('shop.product.postCheckout');
@@ -188,6 +187,7 @@ Route::prefix('afa')->middleware(["auth","role:afa"])->group(function(){
     Route::get('orders', 'AfaController@orders')->name('afa.orders');
     Route::get('sales', 'AfaController@sales')->name('afa.sales');
     Route::get('commissions/{filter?}', 'AfaController@commissions')->name('afa.commissions');
+    Route::get('cartitem/{cartitem}', 'CartItemController@show')->name('afa.cartitem.show');
     
 });
 
@@ -201,6 +201,7 @@ Route::prefix('apl')->middleware(["auth","role:apl"])->group(function(){
     Route::get('sales', 'AplController@sales')->name('apl.sales');
     Route::get('customers', 'AplController@customers')->name('apl.customers');
     Route::get('commissions/{filter?}', 'AplController@commissions')->name('apl.commissions');
+    Route::get('cartitem/{cartitem}', 'CartItemController@show')->name('apl.cartitem.show');
     
 });
 
@@ -213,6 +214,7 @@ Route::prefix('seller')->middleware(["auth","role:seller"])->group(function(){
     Route::get('products', 'SellerController@products')->name('seller.products');
     Route::get('sales', 'SellerController@sales')->name('seller.sales');
     Route::get('orders', 'SellerController@orders')->name('seller.orders');
+    Route::get('cartitem/{cartitem}', 'CartItemController@show')->name('seller.cartitem.show');
     
 });
 
@@ -232,6 +234,7 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::post('/', 'BlogController@store')->name('admin.blog.store');
         Route::get('update/{blog}', 'BlogController@edit')->name('admin.blog.edit');
         Route::post('update/{blog}', 'BlogController@update')->name('admin.blog.update');
+        
         Route::get('publish/{blog}', 'BlogController@publish')->name('admin.blog.publish');
         Route::get('archive/{blog}', 'BlogController@archive')->name('admin.blog.archive');
         Route::get('trash/{blog}', 'BlogController@trash')->name('admin.blog.trash');
@@ -244,10 +247,12 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
     Route::get('comments/{blog}/{filter?}', 'CommentController@all')->name('admin.comment.list');
     Route::prefix('comment')->group(function(){
         Route::get('show/{comment}', 'CommentController@show')->name('admin.comment.show');
+        
         Route::get('publish/{comment}', 'CommentController@publish')->name('admin.comment.publish');
         Route::get('archive/{comment}', 'CommentController@archive')->name('admin.comment.archive');
         Route::get('trash/{comment}', 'CommentController@trash')->name('admin.comment.trash');
         Route::get('restore/{comment}', 'CommentController@restore')->name('admin.comment.restore');
+        
         Route::get('delete/{comment}', 'CommentController@delete')->name('admin.comment.delete');
     });
 
@@ -255,16 +260,19 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
     Route::get('products/{filter?}', 'ProductController@all')->name('admin.product.list');
     Route::prefix('product')->group(function(){
         Route::get('show/{product}', 'ProductController@show')->name('admin.product.show');
+        
         Route::get('publish/{product}', 'ProductController@publish')->name('admin.product.publish');
         Route::get('archive/{product}', 'ProductController@archive')->name('admin.product.archive');
         Route::get('trash/{product}', 'ProductController@trash')->name('admin.product.trash');
         Route::get('restore/{product}', 'ProductController@restore')->name('admin.product.restore');
+        
         Route::get('delete/{product}', 'ProductController@delete')->name('admin.product.delete');
     });
     
     // Shop Controller
     Route::get('shops/{filter?}', 'CartItemController@all')->name('admin.shop');
     Route::prefix('shop')->group(function(){
+        Route::get('cartitem/{cartitem}', 'CartItemController@show')->name('admin.cartitem.show');
         Route::get('pay/{cartitem}/{role}', 'CartItemController@pay')->name('admin.shop.pay');
         Route::post('pay/{cartitem}/{role}', 'CartItemController@postPay');
         
@@ -279,6 +287,7 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::get('show/{category}', 'CategoryController@show')->name('admin.category.show');
         Route::get('update/{category}', 'CategoryController@edit')->name('admin.category.edit');
         Route::post('update/{category}', 'CategoryController@update')->name('admin.category.update');
+        
         Route::get('delete/{category}', 'CategoryController@delete')->name('admin.category.delete');
     });
 
@@ -291,9 +300,11 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::post('show/{user}', 'ObservationController@store')->name('admin.user.observe');
         Route::get('update/{user}', 'UserController@edit')->name('admin.user.edit');
         Route::post('update/{user}', 'UserController@update')->name('admin.user.update');
+        
         Route::get('active/{user}', 'UserController@active')->name('admin.user.active');
         Route::get('block/{user}', 'UserController@block')->name('admin.user.block');
         Route::get('disable/{user}', 'UserController@disable')->name('admin.user.disable');
+        
         Route::get('delete/{user}', 'UserController@delete')->name('admin.user.delete');
     });
 
@@ -305,6 +316,7 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::get('show/{page}', 'PageController@show')->name('admin.page.show');
         Route::get('update/{page}', 'PageController@edit')->name('admin.page.edit');
         Route::post('update/{page}', 'PageController@update')->name('admin.page.update');
+        
         Route::get('delete/{page}', 'PageController@delete')->name('admin.page.delete');
     });
 
@@ -317,6 +329,7 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::get('update/{pub}', 'PubController@edit')->name('admin.pub.edit');
         Route::post('update/{pub}', 'PubController@update')->name('admin.pub.update');
         Route::get('detach/{pub}/{page}', 'PubController@detach')->name('admin.pub.detach');
+        
         Route::get('delete/{pub}', 'PubController@delete')->name('admin.pub.delete');
     });
 
@@ -327,6 +340,7 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::post('/', 'BadWordController@store')->name('admin.badword.store');
         Route::get('update/{badword}', 'BadWordController@edit')->name('admin.badword.edit');
         Route::post('update/{badword}', 'BadWordController@update')->name('admin.badword.update');
+        
         Route::get('delete/{badword}', 'BadWordController@delete')->name('admin.badword.delete');
     });
 
@@ -337,6 +351,7 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::post('/', 'PostalCodeController@store')->name('admin.postalcode.store');
         Route::get('update/{postalcode}', 'PostalCodeController@edit')->name('admin.postalcode.edit');
         Route::post('update/{postalcode}', 'PostalCodeController@update')->name('admin.postalcode.update');
+        
         Route::get('delete/{postalcode}', 'PostalCodeController@delete')->name('admin.postalcode.delete');
     });
 
@@ -347,6 +362,8 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::post('/', 'StateController@store')->name('admin.state.store');
         Route::get('update/{state}', 'StateController@edit')->name('admin.state.edit');
         Route::post('update/{state}', 'StateController@update')->name('admin.state.update');
+        
+        
         Route::get('delete/{state}', 'StateController@delete')->name('admin.state.delete');
     });
 
@@ -354,6 +371,7 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
     Route::get('chats/{filter?}', 'ThreadController@all')->name('admin.chat.list');
     Route::prefix('chat')->group(function(){
         Route::get('show/{thread}', 'ThreadController@show')->name('admin.thread.show');
+        
         Route::get('delete/{thread}', 'ThreadController@delete')->name('admin.thread.delete');
     });
     
@@ -362,6 +380,7 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
     Route::prefix('observation')->group(function(){
         Route::get('update/{observation}', 'ObservationController@edit')->name('admin.observation.edit');
         Route::post('update/{observation}', 'ObservationController@update')->name('admin.observation.update');
+        
         Route::get('delete/{observation}', 'ObservationController@delete')->name('admin.observation.delete');
         Route::get('restore/{observation}', 'ObservationController@restore')->name('admin.observation.restore');
     });

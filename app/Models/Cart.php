@@ -42,7 +42,7 @@ class Cart extends BaseModel
     
     
 	/*
-	Si le panier contien déjà quelque chose, on initialise avec les
+	Si le panier contient déjà quelque chose, on initialise avec les
 	actuels
 	*/
 	public static function getInstance($currentCard){
@@ -152,17 +152,17 @@ class Cart extends BaseModel
             
             // Notify AFA
             if($item->afa){
-                $this->afa->notify(new NewOrder($this->afa, $this));
+                $this->afa->notify(new NewOrder($this->afa, $this, $item));
             }
             
             // Notify APL
             if($item->apl){
-                $this->afa->notify(new NewOrder($this->apl, $this));
+                $this->apl->notify(new NewOrder($this->apl, $this, $item));
             }
         }
         
         if($this->author){
-            $this->author->notify(new NewOrder($this->author, $this));
+            $this->author->notify(new NewOrder($this->author, $this, null));
         }
         
     }
@@ -183,17 +183,17 @@ class Cart extends BaseModel
             
             // Notify AFA
             if($item->afa){
-                $this->afa->notify(new OrderPaid($this->afa, $this));
+                $this->afa->notify(new OrderPaid($this->afa, $this, $item));
             }
             
             // Notify APL
             if($item->apl){
-                $this->afa->notify(new OrderPaid($this->apl, $this));
+                $this->afa->notify(new OrderPaid($this->apl, $this, $item));
             }
         }
         
         if($this->author){
-            $this->author->notify(new OrderPaid($this->author, $this));
+            $this->author->notify(new OrderPaid($this->author, $this, null));
         }
     }
     

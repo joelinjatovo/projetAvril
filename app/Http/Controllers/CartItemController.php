@@ -106,6 +106,52 @@ class CartItemController extends Controller
     
 
     /**
+    *  Show cart item
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  \App\Models\CartItem $cartitem
+    * @return \Illuminate\Http\Response
+    */
+    public function show(Request $request, CartItem $cartitem)
+    {
+        $thos->middleware('auth');
+        
+        switch(\Auth::user()->role){
+            case 'afa':
+                if($cartitem->afa||$cartitem->afa->id!=\Auth::user()->id){
+                    abort(404);
+                }else{
+                    $view = view('backend.cartitem.index');
+                }
+                break;
+            case 'apl':
+                if($cartitem->apl||$cartitem->apl->id!=\Auth::user()->id){
+                    abort(404);
+                }else{
+                    $view = view('backend.cartitem.index');
+                }
+                break;
+            case 'member':
+                if($cartitem->author||$cartitem->author->id!=\Auth::user()->id){
+                    abort(404);
+                }else{
+                    $view = view('backend.cartitem.index');
+                }
+                break;
+            case 'admin':
+                $view = view('admin.cartitem.index');
+                break;
+        }
+        
+        $title = __('app.cartitem.index');
+        
+        return $view->with('title', $title)
+            ->with('item', $cartitem); 
+    }
+    
+    
+
+    /**
     * Pay user by role
     *
     * @param  \Illuminate\Http\Request  $request
