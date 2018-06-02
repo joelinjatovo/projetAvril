@@ -17,8 +17,11 @@ class CreateMailsUsersTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('user_id');
             $table->bigInteger('mail_id');
-            $table->integer('is_sent');
-            $table->integer('read');
+            $table->string('role')->nullable();
+            $table->integer('is_spam')->default(0);
+            $table->integer('is_sent')->default(0);
+            $table->integer('read')->default(0);
+            $table->text('reader')->nullable();
             $table->timestamps();
         });
     }

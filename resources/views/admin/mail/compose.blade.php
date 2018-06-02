@@ -17,6 +17,7 @@
                                 <label for="role">Selectionner ROLE</label>
                                 <div class="controls">
                                     <select id="role" name="role" class="selectpicker input-block-level">
+                                        <option value="0">@lang('app.select_role')</option>
                                         <option value="admin">Admin</option>
                                         <option value="apl">APL</option>
                                         <option value="afa">AFA</option>
@@ -29,6 +30,7 @@
                                 <label for="users">Selectionner utilisateurs</label>
                                 <div class="controls">
                                     <select id="users" name="users[]" class="selectpicker input-block-level" multiple>
+                                        <option value="0">@lang('app.select_user')</option>
                                         @foreach($users as $user)
                                             <option value="{{$user->id}}">{{$user->name}}</option>
                                         @endforeach
@@ -47,12 +49,12 @@
                                     <textarea id="message" class="input-block-level ckeditor" rows="10" name="content" placeholder="@lang('app.message')" ></textarea>
                                 </div>
                             </li>
-                            <li class="control-group">
-                                <div class="controls">
-                                    <input type="submit" class="btn btn-green" value="@lang('app.btn.send')" >
-                                </div>
-                            </li>
                         </ul>
+                        <div class="form-actions no-margin-bootom">
+                            <button type="submit" class="btn btn-green" name="method" value="send">@lang('app.btn.send')</button>
+                            <button type="submit" class="btn pull-right" name="method" value="draft">@lang('app.btn.draft')</button>
+                            <button type="submit" class="btn btn-blue pull-right" name="method" value="model">@lang('app.btn.save_as_model')</button>
+                        </div> 
                     </form>
                 </div>
             </div>

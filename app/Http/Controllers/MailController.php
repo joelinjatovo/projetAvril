@@ -22,7 +22,7 @@ class MailController extends Controller
         //
     }
 
-    public function index(Request $request){
+    public function contact(Request $request){
         if($request->isMethod('post')){
             // Validate request
             $datas = $request->all();
@@ -85,62 +85,6 @@ class MailController extends Controller
         return $response;
     }
 
-    public function contact(Request $request, User $user)
-    {
-        $this->middleware('auth');
-        return view('admin.mail.contact')
-            ->with('item', $user);
-    }
-
-    public function sendMail(Request $request, User $user = null)
-    {
-        $this->middleware('auth');
-        $current = Auth::user();
-
-        // Validate request
-        $datas = $request->all();
-        $validator = Validator::make($datas,[
-            'receiver_id' => 'required',
-            'subject' => 'required|max:100',
-            'content' => 'required|max:1000'
-        ]);
-        
-        
-        if ($validator->fails()) {
-            return back()->withErrors($validator)
-                        ->withInput();
-        }
-
-        $receiver = User::findOrFail($request->get('receiver_id'));
-        $to = $receiver->email;
-        
-        $item = new Mail();
-        $item->subject = $request->subject;
-        $item->content = $request->content;
-        $item->receiver_id = $receiver->id;
-        
-        $item->save();
-
-        try{
-            $receiver->notify(new NewMail($item));
-        }catch(\Exception $e){
-            // Do nothing
-        }
-        
-        try{
-            $data = array('name'=>"Virat Gandhi");
-            \Mail::send('mail', $data, function($message) use($item, $to) {
-                $message->to($to)
-                        ->subject($item->subject)
-                        ->from($item->sender->email, $item->sender->name);
-            });
-        }catch(\Exception $e){
-            return back()->with('error', $e->getMessage());
-        }
-
-        return back()->with('success', 'Message envoyé avec succes.');
-    }
-
     /**
      * Show a mail
      *
@@ -173,22 +117,39 @@ class MailController extends Controller
     {
         $user = Auth::user();
         
-        $items = Mail::orderBy('created_at', 'desc');
-        
         $title = __('app.admin.mail.list');
         
         switch($filter){
             case "inbox":
-                $items = $items->where('receiver_id', $user->id);
+                $items = $user->mails();
+                break;
+            case "sent":
+                $items = $user->mails()
+                    ->wherePivot('is_sent', 1);
+            case "unsent":
+                $items = $user->mails()
+                    ->wherePivot('is_sent', 0);
+            case "spam":
+                $items = $user->mails()
+                    ->wherePivot('is_spam', 1);
+            case "unread":
+                $items = $user->mails()
+                    ->wherePivot('read', 0);
+            case "read":
+                $items = $user->mails()
+                    ->wherePivot('read', 0);
                 break;
             case "outbox":
+                $items = Mail::orderBy('created_at', 'desc');
                 $items = $items->where('sender_id', $user->id);
                 break;
             case "draft":
-                $items = $items->where('receiver_id', $user->id)
-                    ->orWhere('sender_id', $user->id);
+            case "model":
+                $items = Mail::orderBy('created_at', 'desc');
+                $items = $items->where('status', $filter);
                 break;
             case "all":
+                $items = Mail::orderBy('created_at', 'desc');
                 $this->middleware('role:admin');
                 break;
         }
@@ -208,10 +169,15 @@ class MailController extends Controller
         $receiver = $request->get('receiver');
         $receiver = intval($receiver);
         if($receiver){
-            $items = $items->where(function($query) use($receiver){
-                return $query->orWhere('receiver_id', $receiver)
-                    ->orWhere('sender_id', $receiver);
-            });
+            if($user->isAdmin()){
+                $items = $items->where(function($query) use($receiver){
+                    return $query->where('sender_id', $receiver);
+                });
+            }else{
+                $items = $items->where(function($query) use($receiver){
+                    return $query->where('sender_id', $receiver);
+                });
+            }
         }
         
         
@@ -225,24 +191,24 @@ class MailController extends Controller
             
             switch(Auth::user()->role){
                 case 'apl':
-                    $view->with('users', User::active()->get());
+                    $view->with('users', User::isActive()->get());
                 break;
                 case 'afa':
-                    $view->with('users', User::active()
+                    $view->with('users', User::isActive()
                                 ->where(function($query){
                                     return $query->where('role', 'admin')
                                         ->orWhere('role', 'apl');
                                 })->get());
                 break;
                 case 'seller':
-                    $view->with('users', User::active()
+                    $view->with('users', User::isActive()
                                 ->where(function($query){
                                     return $query->where('role', 'admin')
                                         ->orWhere('role', 'apl');
                                 })->get());
                 break;
                 case 'member':
-                    $view->with('users', User::active()
+                    $view->with('users', User::isActive()
                                 ->where(function($query){
                                     return $query->where('role', 'admin')
                                         ->orWhere('role', 'apl');

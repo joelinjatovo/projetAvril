@@ -64,6 +64,11 @@ return [
     'pinged'    => "En attente",
     'ordered'   => "Commandé",
     'paid'      => "Payé",
+    'not_paid'  => "Non Payé",
+    'customer'  => "Clients",
+    'date'      => "Date",
+    
+    'cartitem.index' => "Visualisation d'une ligne d'achat",
     
     'table.id'     => "Id",
     'table.photo'  => "Photos",

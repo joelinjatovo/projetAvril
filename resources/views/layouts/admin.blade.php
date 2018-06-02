@@ -241,16 +241,17 @@
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="#accMails" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Request::is('admin/mail*')?'collapsed':''}}">
+                      <a href="#accMails" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Request::is('*mail*')?'collapsed':''}}">
                         <i class="fa fa-envelope"></i>
                         <i class="chevron fontello-icon-right-open-3"></i> @lang('app.admin.mail.list')</a>
                   </div>
-                  <ul class="accordion-content nav nav-list collapse {{\Request::is('admin/mail*')?'in':''}}" id="accMails">
+                  <ul class="accordion-content nav nav-list collapse {{\Request::is('*mail*')?'in':''}}" id="accMails">
                       <li><a href="{{route('mail.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.mail.list')</a></li>
                       <li><a href="{{route('mail.list',['filter'=>'inbox'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.mail.inbox')</a></li>
                       <li><a href="{{route('mail.list',['filter'=>'outbox'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.mail.outbox')</a></li>
                       <li><a href="{{route('mail.list',['filter'=>'draft'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.mail.draft')</a></li>
                       <li><a href="{{route('mail.list',['filter'=>'spam'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.mail.spam')</a></li>
+                      <li><a href="{{route('mail.list',['filter'=>'model'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.mail.model')</a></li>
                   </ul>
               </li>
               <li class="accordion-group">

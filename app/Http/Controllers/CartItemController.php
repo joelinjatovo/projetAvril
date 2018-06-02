@@ -114,25 +114,25 @@ class CartItemController extends Controller
     */
     public function show(Request $request, CartItem $cartitem)
     {
-        $thos->middleware('auth');
+        $this->middleware('auth');
         
         switch(\Auth::user()->role){
             case 'afa':
-                if($cartitem->afa||$cartitem->afa->id!=\Auth::user()->id){
+                if(!$cartitem->afa||$cartitem->afa->id!=\Auth::user()->id){
                     abort(404);
                 }else{
                     $view = view('backend.cartitem.index');
                 }
                 break;
             case 'apl':
-                if($cartitem->apl||$cartitem->apl->id!=\Auth::user()->id){
+                if(!$cartitem->apl||$cartitem->apl->id!=\Auth::user()->id){
                     abort(404);
                 }else{
                     $view = view('backend.cartitem.index');
                 }
                 break;
             case 'member':
-                if($cartitem->author||$cartitem->author->id!=\Auth::user()->id){
+                if(!$cartitem->author||$cartitem->author->id!=\Auth::user()->id){
                     abort(404);
                 }else{
                     $view = view('backend.cartitem.index');
@@ -140,6 +140,9 @@ class CartItemController extends Controller
                 break;
             case 'admin':
                 $view = view('admin.cartitem.index');
+                break;
+            default:
+                abort(404);
                 break;
         }
         

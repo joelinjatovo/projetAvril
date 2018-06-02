@@ -86,10 +86,14 @@ class AdminController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('auth:admin');
+        
+        echo var_dump($request->request);
+        exit;
             
         // Validate request
         $datas = $request->all();
         $validator = Validator::make($datas,[
+            'method' => 'required',
             'subject' => 'required|max:100',
             'content' => 'required|max:1000'
         ]);
@@ -102,8 +106,21 @@ class AdminController extends Controller
         $item = new Mail();
         $item->subject = $request->subject;
         $item->content = $request->content;
-        $item->receiver_id = 0;
-        $item->save();
+        
+        switch($request->method){
+            case 'model':
+                $item->status = 'model';
+                $item->save();
+            return back()->with('success', 'Message enregistré au model.');
+            case 'draft':
+                $item->status = 'draft';
+                $item->save();
+            return back()->with('success', 'Message enregistré au brouillon.');
+            case 'send':
+                $item->save();
+            break;
+        }
+        
 
         $receiverIds = [];
         if($request->has('role')){
@@ -139,7 +156,7 @@ class AdminController extends Controller
             }
         }
         
-        if($request->has('users')){
+        if($request->has('users')&&is_array($request->users)){
             foreach($request->users as $id){
                 if(in_array($id, $receiverIds)){
                     continue;
@@ -172,7 +189,7 @@ class AdminController extends Controller
                 $mailItem->save();
             }
         }
-        //echo var_dump($request);
+        
         return back()->with('success', 'Messages envoyés avec succes. '.count($receiverIds));
     }
 

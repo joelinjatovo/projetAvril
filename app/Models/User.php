@@ -19,7 +19,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'image_id', 'location_id', 'status', 'type', 'role', 'activation_code', 'use_default_password',
+        'name', 'email', 'password', 'image_id', 'location_id', 'status', 'type', 'role', 
+        'activation_code', 
+        'use_default_password',
     ];
 
     /**
@@ -341,5 +343,14 @@ class User extends Authenticatable
       return $this->belongsToMany(Product::class, 'carts_items', 'author_id', 'product_id');
     }
     
+    /**
+     * An user can have many mails with mails_users pivot table
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
+     */
+    public function mails()
+    {
+      return $this->belongsToMany(Mail::class, 'mails_users', 'user_id', 'mail_id');
+    }
     
 }

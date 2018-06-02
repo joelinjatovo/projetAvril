@@ -58,12 +58,14 @@
          <td>
             <a href="{{route('admin.shop.delete', $cartitem)}}" class="btn btn-small btn-warning btn-delete">@lang('app.btn.delete')</a>
              
-            @if(!$cartitem->apl_paid_at)
-            <a href="{{route('admin.shop.pay', ['cartitem'=>$cartitem, 'role'=>'apl'])}}" class="btn btn-small btn-info btn-delete">@lang('app.admin.shop.pay.apl')</a>
-            @endif
-            
-            @if(!$cartitem->afa_paid_at)
-            <a href="{{route('admin.shop.pay', ['cartitem'=>$cartitem, 'role'=>'afa'])}}" class="btn btn-small btn-info btn-delete">@lang('app.admin.shop.pay.afa')</a>
+            @if($cartitem->status=='ordered')
+                @if(!$cartitem->apl_paid_at)
+                <a href="{{route('admin.shop.pay', ['cartitem'=>$cartitem, 'role'=>'apl'])}}" class="btn btn-small btn-info btn-delete">@lang('app.admin.shop.pay.apl')</a>
+                @endif
+
+                @if(!$cartitem->afa_paid_at)
+                <a href="{{route('admin.shop.pay', ['cartitem'=>$cartitem, 'role'=>'afa'])}}" class="btn btn-small btn-info btn-delete">@lang('app.admin.shop.pay.afa')</a>
+                @endif
             @endif
          </td>
      </tr>

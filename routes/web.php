@@ -102,8 +102,8 @@ Route::middleware('guest')->group(function(){
 });
 
 // Mail
-Route::get('contact','MailController@index');
-Route::post('contact','MailController@index')->name('contact');
+Route::get('contact','MailController@contact');
+Route::post('contact','MailController@contact')->name('contact');
 
 Route::middleware(["auth"])->group(function(){
 
@@ -333,7 +333,7 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::get('delete/{pub}', 'PubController@delete')->name('admin.pub.delete');
     });
 
-    // Bad WOrds Controller Groups
+    // Bad Words Controller Groups
     Route::get('badwords', 'BadWordController@all')->name('admin.badword.list');
     Route::prefix('badword')->group(function(){
         Route::get('/', 'BadWordController@create')->name('admin.badword.create');
@@ -400,8 +400,6 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
     
     //Mail
     Route::prefix('mail')->group(function(){
-        Route::get('contact/{user}', 'MailController@contact')->name('admin.mail.send');
-        Route::post('contact/{user}', 'MailController@sendMail');
         Route::get('delete/{mail}', 'MailController@delete')->name('mail.delete');
         
         Route::get('compose' , 'AdminController@compose')->name('admin.mail.compose');
