@@ -11,6 +11,7 @@ use App\Notifications\NewMail;
 use App\Models\Order;
 use App\Models\User;
 use App\Models\Mail;
+use App\Models\MailUser;
 
 class MemberController extends Controller
 {
@@ -130,9 +131,13 @@ class MemberController extends Controller
         $item = new Mail();
         $item->subject = $request->subject;
         $item->content = $request->content;
-        $item->receiver_id = $receiver->id;
-        
+        $item->status = 'send';
         $item->save();
+
+        $mailUser = new MailUser();
+        $mailUser->user_id = $receiver->id;
+        $mailUser->mail_id = $item->id;
+        $mailUser->save();
 
         try{
             $receiver->notify(new NewMail($item));
