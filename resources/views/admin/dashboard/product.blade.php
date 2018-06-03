@@ -5,7 +5,7 @@
     <div id="page-content" class="page-content">
         <section>
             <div class="page-header">
-                <h3>@lang('app.dashboard')</h3>
+                <h3>@lang('app.products')</h3>
             </div>
             <div class="row-fluid">
                 <div class="span6 widget widget-simple">

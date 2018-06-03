@@ -8,6 +8,36 @@
                 <h3>@lang('app.dashboard')</h3>
             </div>
             <div class="row-fluid">
+                <div class="span3 widget widget-simple">
+                    <div class="widget-content">
+                        <div class="widget-body">
+                            <h2>{{$count['users']}} <small>Utilisateurs</small></h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="span3 widget widget-simple">
+                    <div class="widget-content">
+                        <div class="widget-body">
+                            <h2 class="text-center">{{$count['products']}} <small>Produits</small></h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="span3 widget widget-simple">
+                    <div class="widget-content">
+                        <div class="widget-body">
+                            <h2 class="text-center">{{$count['orders']}} <small>Commandes</small></h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="span3 widget widget-simple">
+                    <div class="widget-content">
+                        <div class="widget-body">
+                            <h2 class="text-center">{{$count['sales']}}  <small>Ventes</small></h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
                 <div class="span6 widget widget-simple">
                     <div class="widget-header">
                         <h4>Utilisateurs recents</h4>
@@ -44,7 +74,19 @@
                     </div>
                     <div class="widget-content">
                         <div class="widget-body">
-                            <div id="chart-users" style="width: 100%; height: 400px;"></div>
+                            <div id="chart-users" style="width: 100%; height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12 widget widget-simple">
+                    <div class="widget-header">
+                        <h4><i class="fontello-icon-chart"></i>Repartition des produits par date</h4>
+                    </div>
+                    <div class="widget-content">
+                        <div class="widget-body">
+                            <div id="chart-products" style="width: 100%; height: 300px;"></div>
                         </div>
                     </div>
                 </div>
@@ -63,8 +105,8 @@
 <script src="{{asset('administrator/amcharts/gauge.js')}}"></script>
 <script src="{{asset('administrator/amcharts/radar.js')}}"></script>
 <script type="text/javascript">
-function drawCategoryChart($data){
-    var chart = AmCharts.makeChart("chart-users", {
+function drawCategoryChart($selector, $data){
+    var chart = AmCharts.makeChart($selector, {
         "type": "serial",
         "theme": "light",
         "marginRight": 40,
@@ -144,6 +186,7 @@ function drawCategoryChart($data){
 
 }
 var data = {!!$data!!};
-drawCategoryChart(data.users);
+drawCategoryChart("chart-users", data.users);
+drawCategoryChart("chart-products", data.products);
 </script>
 @show

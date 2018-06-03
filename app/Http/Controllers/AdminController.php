@@ -33,7 +33,17 @@ class AdminController extends Controller
      */
     public function dashboard()
     {
+        $count = [];
+        $count['users'] = User::count();
+        $count['products'] = Product::count();
+        $count['orders'] = Product::ofStatus('ordered')->count();
+        $count['sales'] = Product::ofStatus('paid')->count();
+        
         $data = [];
+        $data['products'] = \DB::table('products')
+          ->select(\DB::raw('DATE(created_at) as date'), \DB::raw('count(*) as count'))
+          ->groupBy('date')
+          ->get();
         $data['users'] = \DB::table('users')
           ->select(\DB::raw('DATE(created_at) as date'), \DB::raw('count(*) as count'))
           ->groupBy('date')
@@ -43,7 +53,6 @@ class AdminController extends Controller
         $recent['users'] = User::orderBy('created_at', 'desc')
             ->take($this->recentSize)
             ->get();
-        
         $recent['products'] = Product::orderBy('created_at', 'desc')
             ->ofStatus('published')
             ->take($this->recentSize)
@@ -51,6 +60,7 @@ class AdminController extends Controller
         
         return view('admin.dashboard.index')
             ->with('recent', $recent)
+            ->with('count', $count)
             ->with('data', json_encode($data));
     }
 
