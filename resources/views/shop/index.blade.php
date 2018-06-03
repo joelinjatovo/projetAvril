@@ -3,14 +3,22 @@
 @section('content')
 @include('includes.slider')
 <div class="container">
-    
-    
     <div class="row">
         <div class="col-lg-8 col-md-7">
             <header class="section-header text-center">
                 <div class="row">
                     <div class="col-md-12">
-                        <h3 class="pull-left">@if($category&&$category->id>0) {{$category->title}} @else @lang('app.all_product') @endif</h3>
+                        <h3 class="pull-left">
+                            @if(isset($q)&&$q)
+                                @lang('app.search_result', ['q'=>$q])
+                            @else
+                                @if($category&&$category->id>0) 
+                                    {{$category->title}} 
+                                @else 
+                                    @lang('app.all_product') 
+                                @endif
+                            @endif
+                        </h3>
                     </div>
                 </div>
             </header>
@@ -19,12 +27,17 @@
             <div class="row">
                 <div class="col-md-12">
                     <ol class="breadcrumb">
-                      <li class="breadcrumb-item"><a href="{{route('home')}}">@lang('app.home')</a></li>
-                      @if($category&&$category->id>0)
+                        <li class="breadcrumb-item"><a href="{{route('home')}}">@lang('app.home')</a></li>
+                        @if(isset($q)&&$q)
                         <li class="breadcrumb-item"><a href="{{route('shop.index')}}">@lang('app.all_product')</a></li>
-                        <li class="breadcrumb-item active">{{$category->title}}</li>
-                      @else
-                        <li class="breadcrumb-item active">@lang('app.all_product')</li>
+                        <li class="breadcrumb-item active">@lang('app.search_result', ['q'=>$q])</li>
+                        @else
+                          @if($category&&$category->id>0)
+                            <li class="breadcrumb-item"><a href="{{route('shop.index')}}">@lang('app.all_product')</a></li>
+                            <li class="breadcrumb-item active">{{$category->title}}</li>
+                          @else
+                            <li class="breadcrumb-item active">@lang('app.all_product')</li>
+                          @endif
                       @endif
                     </ol>
                 </div>
@@ -92,7 +105,7 @@ $(window).scroll(function() {
 });
 function loadMoreData(page){
     $.ajax({
-        url: "{!!route("shop.index", ["category"=>$category, "order"=>$order, "orderBy"=>$orderBy])!!}&page="+page,
+        url: "{!!route("shop.index", ["q"=>$q, "category"=>$category, "order"=>$order, "orderBy"=>$orderBy])!!}&page="+page,
         type: "get",
         beforeSend: function()
         {

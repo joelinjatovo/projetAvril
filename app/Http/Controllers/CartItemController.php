@@ -104,7 +104,6 @@ class CartItemController extends Controller
             ->with('items', $items)
             ->with('breadcrumbs',$title); 
     }
-    
 
     /**
     *  Show cart item
@@ -153,8 +152,6 @@ class CartItemController extends Controller
             ->with('item', $cartitem)
             ->with('breadcrumbs', $title);
     }
-    
-    
 
     /**
     * Pay user by role
@@ -166,10 +163,19 @@ class CartItemController extends Controller
     */
     public function pay(Request $request,CartItem $cartitem, $role)
     {
+        switch($role){
+            case 'apl':
+                break;
+            case 'afa':
+                break;
+            default:
+                abort(404);
+                break;
+        }
+        
+        
         $action = route('admin.shop.pay', ['cartitem'=>$cartitem, 'role'=>$role]);
-        
         $title = __('app.shop.pay.'.$role);
-        
         return view('admin.shop.pay')
             ->with('title', $title)
             ->with('role', $role)
@@ -177,7 +183,6 @@ class CartItemController extends Controller
             ->with('item', $cartitem)
             ->with('breadcrumbs', $title);
     }
-    
 
     /**
     * Pay user by role
@@ -187,21 +192,22 @@ class CartItemController extends Controller
     * @param  Mixed $role
     * @return \Illuminate\Http\Response
     */
-    public function postPay(Request $request,CartItem $cartitem, $role)
+    public function postPay(Request $request, CartItem $cartitem, $role)
     {
-        $action = view('admin.shop.pay', ['cartitem'=>$cartitem, 'role'=>$role]);
+        switch($role){
+            case 'apl':
+                break;
+            case 'afa':
+                break;
+            default:
+                abort(404);
+                break;
+        }
         
-        $title = __('app.shop.pay.'.$role);
-        
-        return view('admin.shop.pay')
-            ->with('title', $title)
-            ->with('role', $role)
-            ->with('action', $action)
-            ->with('item', $cartitem)
-            ->with('breadcrumbs', $title);
+        return back()
+            ->with('success',"La carte a été payée avec succés.");
     }
     
-
     /**
     * Delete Cart Item
     *

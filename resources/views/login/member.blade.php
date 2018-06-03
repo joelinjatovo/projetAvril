@@ -86,6 +86,17 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label for="country" class="col-sm-3 control-label">Pays *</label>
+                                        <div class="col-md-9">
+                                            <select class="form-control" name="country">
+                                                <option value="0">@lang('app.select_country')</option>
+                                                @foreach($countries as $country)
+                                                <option value="{{$country->id}}"> {{$country->content}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-md-3 control-label" for="image">Avatar</label>
                                         <div class="col-md-9">
                                             <input type="file" class="btn btn-default" name="image" id="image">
@@ -107,19 +118,6 @@
                                         <label class="col-sm-3 control-label" for="lastname">Prénom *</label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control"  name="lastname" required>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                                <fieldset>
-                                    <legend>Localisation</legend>
-                                    <div class="form-group">
-                                        <label for="country" class="col-sm-3 control-label">Pays *</label>
-                                        <div class="col-md-9">
-                                            <select class="form-control" name="country">
-                                            <?php   for( $i=0; $i< count($pays) ; $i++){  ?>
-                                                <option value="<?php echo $pays[$i]; ?>"> <?php echo $pays[$i]; ?></option>
-                                            <?php  } ?>
-                                            </select>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -179,6 +177,15 @@
                                 <fieldset>
                                     <legend>Bussiness Detail</legend>
                                     <div class="form-group">
+                                        <label class="col-md-3 control-label" for="image">Logo de l'organsation *</label>
+                                        <div class="col-md-9">
+                                            <input type="file" class="btn btn-default" name="image">
+                                            <p class="help-block">
+                                                Choisissez le logo de votre organisation
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="orga_name" class="col-sm-3 control-label">Nom de l'organisation</label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control" name="orga_name" required>
@@ -187,16 +194,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label" for="orga_presentation" >Présentation de l'organisation *</label>
                                         <div class="col-sm-9">
-                                            <textarea  class="form-control" name="orga_presentation" required></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label" for="image">Logo de l'organsation *</label>
-                                        <div class="col-md-9">
-                                            <input type="file" class="btn btn-default" name="image">
-                                            <p class="help-block">
-                                                Choisissez le logo de votre organisation
-                                            </p>
+                                            <textarea  class="form-control" name="orga_presentation" rows="10" required></textarea>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -206,9 +204,12 @@
                                         <label for="country" class="col-sm-3 control-label">Pays *</label>
                                         <div class="col-md-9">
                                             <select class="form-control" name="country">
-                                                <?php   for( $i=0; $i< count($pays) ; $i++){  ?>
-                                                <option value="<?php echo $pays[$i]; ?>"> <?php echo $pays[$i]; ?></option>
-                                                <?php  } ?>
+                                                <option value="0">@lang('app.select_country')</option>
+                                                @foreach($countries as $country)
+                                                    @if($country->prefixPhone)
+                                                        <option value="{{$country->id}}"> {{$country->content}}</option>
+                                                    @endif
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -234,12 +235,15 @@
                                 <fieldset>
                                     <legend>Contact Information</legend>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Contact Mobile *</label>
-                                        <div class="col-sm-3">
+                                        <label for="prefixPhone" class="col-sm-3 control-label">Contact Mobile *</label>
+                                        <div class="col-md-3">
                                             <select class="form-control" name="prefixPhone">
-                                                <?php   for( $i=0; $i< count($tels) ; $i++){  ?>
-                                                <option value="<?php echo $tels[$i]; ?>"> <?php echo $tels[$i]; ?></option>
-                                                <?php  } ?>
+                                                <option value="0">@lang('app.select_phone')</option>
+                                                @foreach($countries as $country)
+                                                    @if($country->prefixPhone)
+                                                    <option value="{{$country->prefixPhone}}"> {{$country->prefixPhone}}</option>
+                                                    @endif
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="col-sm-6">

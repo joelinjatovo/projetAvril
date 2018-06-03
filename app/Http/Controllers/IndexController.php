@@ -10,6 +10,8 @@ use App\Models\Page;
 use App\Models\Pub;
 use App\Models\Category;
 use App\Models\Blog;
+use App\Models\Type;
+use App\Models\State;
 
 class IndexController extends Controller
 {
@@ -31,7 +33,21 @@ class IndexController extends Controller
      */
     public function index(Request $request)
     {
-        return $this->render($request, 1);
+        $types = Type::orderBy('title', 'asc')
+            ->where('object_type', 'type')
+            ->get();
+        
+        $locationTypes = Type::orderBy('title', 'asc')
+            ->where('object_type', 'location')
+            ->get();
+        
+        $states = State::orderBy('content', 'asc')
+            ->get();
+        
+        return $this->render($request, 1)
+            ->with('states',$states)
+            ->with('locationTypes',$locationTypes)
+            ->with('types',$types);
     }
 
     /**

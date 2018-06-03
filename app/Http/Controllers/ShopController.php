@@ -15,6 +15,8 @@ use App\Models\Category;
 use App\Models\Page;
 use App\Models\Pub;
 use App\Models\User;
+use App\Models\Type;
+use App\Models\State;
 
 class ShopController extends Controller
 {
@@ -44,8 +46,18 @@ class ShopController extends Controller
             $items = $items->where("category_id", $category->id);
         }
         
-        $items = $items->orderBy($orderBy, $order)
-                ->paginate($this->pageSize);
+        $q = $request->q;
+        if($q){
+            $items = $items->where(function($query) use ($q){
+                return $query->where('content', 'LIKE', '%'.$q.'%')
+                    ->orWhere('title', 'LIKE', '%'.$q.'%');
+            });
+        }
+        
+        
+        $items = $items->orderBy($orderBy, $order);
+        
+        $items = $items->paginate($this->pageSize);
         
         if($request->ajax()){
             return response()->json(array(
@@ -67,13 +79,29 @@ class ShopController extends Controller
         $page2 = Page::where('path', '=', '/products*')->first();
         if($page2){$pubs = $page2->pubs;}else{$pubs=[];}
 
+        
+        $types = Type::orderBy('title', 'asc')
+            ->where('object_type', 'type')
+            ->get();
+        
+        $locationTypes = Type::orderBy('title', 'asc')
+            ->where('object_type', 'location')
+            ->get();
+        
+        $states = State::orderBy('content', 'asc')
+            ->get();
+        
         return view('shop.index')
             ->with('items', $items)
+            ->with('q', $q)
             ->with('orderBy', $orderBy)
             ->with('order', $order)
             ->with('page', $page)
             ->with('pubs', $pubs)
             ->with('products', $products)
+            ->with('types', $types)
+            ->with('locationTypes', $locationTypes)
+            ->with('states', $states)
             ->with('category', $category)
             ->with('categories', $categories); 
     }

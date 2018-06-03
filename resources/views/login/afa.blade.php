@@ -58,6 +58,12 @@
                                     <fieldset>
                                         <legend>Business Details</legend>
                                         <div class="form-group">
+                                            <label for="image" class="col-sm-3 control-label">Logo *</label>
+                                            <div class="col-md-3">
+                                                <input type="file" class="btn btn-default" id="image" name="image" >
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label for="orga_name" class="col-sm-3 control-label">Business Name *</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" id="orga_name" name="orga_name" placeholder="Business Name" required>
@@ -88,17 +94,13 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="image" class="col-sm-3 control-label">Logo *</label>
-                                            <div class="col-md-3">
-                                                <input type="file" class="btn btn-default" id="image" name="image" >
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
                                             <label for="orga_operation_state" class="col-sm-3 control-label">State of legal operation of your present office *</label>
-                                            <div class="col-sm-9">
-                                                <select class="form-control" name="orga_operation_state" id="orga_operation_state">
-                                                    <option value="south"> South Australia</option>
-                                                    <option value="western"> Western Australia</option>
+                                            <div class="col-md-9">
+                                                <select class="form-control" name="orga_operation_state">
+                                                    <option value="0">@lang('app.select_state')</option>
+                                                    @foreach($states as $state)
+                                                    <option value="{{$state->id}}"> {{$state->content}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -119,8 +121,13 @@
                                         <legend>Locality Information</legend>
                                         <div class="form-group">
                                             <label for="area_level_1" class="col-sm-3 control-label">State *</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="area_level_1" name="area_level_1" placeholder="State" required>
+                                            <div class="col-md-9">
+                                                <select class="form-control" name="area_level_1">
+                                                    <option value="0">@lang('app.select_state')</option>
+                                                    @foreach($states as $state)
+                                                    <option value="{{$state->id}}"> {{$state->content}}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="form-group">

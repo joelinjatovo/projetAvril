@@ -167,9 +167,11 @@ return [
     'contact'         => 'Contact',
     'detail'                => 'Detail',
     'description'           => 'Description',
+    'select_country'        => 'Selectionner un pays',
+    'select_phone'          => 'Selectionner un code',
     'select_role'           => 'Selectionner le role',
     'select_category'       => 'Selectionner la categorie',
-    'select_user'            => 'Selectionner un utilisateur',
+    'select_user'           => 'Selectionner un utilisateur',
     'select_one'            => 'Selectionner un',
     'select_apl'            => 'Selectionner une agence partenaire locale',
     'choose_as_default_apl' => 'Choisir comme apl par defaut',
@@ -211,6 +213,7 @@ return [
     'user_guide'        => "Guide de l'utilisateur",
     
     'search'       => 'Recherche',
+    'search_result' => 'Resultat de recherche ":q"',
     'search.filter'=> 'Filtre de recherche',
     
     'profile'       => 'Profile',

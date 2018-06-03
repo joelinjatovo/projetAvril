@@ -184,9 +184,9 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
                 </nav>
             </div>
             <div class="col-md-3 col-sm-4">
-                <form class="navbar-form form-search searchMenu" role="search" action="{{route('search')}}">
+                <form method="get" class="navbar-form form-search searchMenu" role="search" action="{{route('shop.index')}}">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search" name="q">
+                        <input type="text" class="form-control" placeholder="Search" name="q" value="{{isset($q)?$q:''}}">
                         <div class="input-group-btn">
                             <button class="btn search-btn" type="submit"><i class="fa fa-search"></i></button>
                         </div>

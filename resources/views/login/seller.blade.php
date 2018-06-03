@@ -107,8 +107,13 @@
                                         <legend>Locality Information</legend>
                                         <div class="form-group">
                                             <label for="area_level_1" class="col-sm-3 control-label">State *</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="area_level_1" name="area_level_1" placeholder="State" required>
+                                            <div class="col-md-9">
+                                                <select class="form-control" name="area_level_1">
+                                                    <option value="0">@lang('app.select_state')</option>
+                                                    @foreach($states as $state)
+                                                    <option value="{{$state->id}}"> {{$state->content}}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="form-group">

@@ -12,7 +12,7 @@ class Type extends BaseModel
      *
      * @var string
      */
-    protected $table = 'type';
+    protected $table = 'types';
     
     /**
      * The attributes that are mass assignable.

@@ -58,6 +58,12 @@
                                     <fieldset>
                                         <legend>Business Details</legend>
                                         <div class="form-group">
+                                            <label for="image" class="col-sm-3 control-label">Logo *</label>
+                                            <div class="col-md-3">
+                                                <input type="file" class="btn btn-default" id="image" name="image" >
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label for="orga_name" class="col-sm-3 control-label">Business Name *</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" id="orga_name" name="orga_name" placeholder="Business Name" required>
@@ -88,12 +94,6 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="image" class="col-sm-3 control-label">Logo *</label>
-                                            <div class="col-md-3">
-                                                <input type="file" class="btn btn-default" id="image" name="image" >
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
                                             <label for="orga_operation_range" class="col-sm-3 control-label">Range of operation of your present office *</label>
                                             <div class="col-sm-9">
                                                 <select class="form-control" name="orga_operation_range" id="orga_operation_range">
@@ -108,6 +108,19 @@
                                     </fieldset>
                                     <fieldset>
                                         <legend>Locality Information</legend>
+                                        <div class="form-group">
+                                            <label for="country" class="col-sm-3 control-label">Pays *</label>
+                                            <div class="col-md-9">
+                                                <select class="form-control" name="country">
+                                                    <option value="0">@lang('app.select_country')</option>
+                                                    @foreach($countries as $country)
+                                                        @if($country->prefixPhone)
+                                                            <option value="{{$country->id}}"> {{$country->content}}</option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="form-group">
                                             <label for="area_level_1" class="col-sm-3 control-label">State *</label>
                                             <div class="col-sm-9">

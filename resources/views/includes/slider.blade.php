@@ -14,31 +14,33 @@
                             {{csrf_field()}}
                             <button class="btn toggle-btn" type="button"><i class="fa fa-bars"></i></button>
                              <div class="form-group">
-                                <select id="basic" class="selectpicker show-tick form-control" name="state">
+                                <select id="basic" class="form-control" name="state">
                                     <option value="">Etats</option>
-                                    <option value="Australie-Méridionale">Australie-Méridionale </option>
-                                    <option value="Gold coast">Gold coast</option>
-                                    <option value="Nouvelle-Galles du Sud">Nouvelle-Galles du Sud</option>
-                                    <option value="Queensland">Queensland</option>
-                                    <option value="Victoria">Victoria</option>
+                                    @if(isset($states))
+                                        @foreach($states as $state)
+                                            <option value="{{$state->id}}">{{$state->content}}</option>
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
                             <div class="form-group">
-                                <select id="lunchBegins" class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Villes" name="city">
-                                    <option value="">Villes</option>
-                                    <option value="Surfers Paradise">Surfers Paradise</option>
-                                    <option value="Melbourne">Melbourne</option>
-                                    <option value="Benowa Waters">Benowa Waters</option>
-                                    <option value="Valla Beach">Valla Beach</option>
-                                    <option value="MacLeay Island">MacLeay Island</option>
+                                <select id="basic" class="form-control" name="type">
+                                    <option value="">Type</option>
+                                    @if(isset($types))
+                                        @foreach($types as $type)
+                                            <option value="{{$type->id}}">{{$type->title}}</option>
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
                             <div class="form-group">
-                                <select id="basic" class="selectpicker show-tick form-control" name="suburb">
-                                    <option value="">Darlington</option>
-                                    <option value="">Lucas Heights </option>
-                                    <option value="">Mosman</option>
-                                    <option value="">Rose Bay</option>
+                                <select id="basic" class="form-control" name="location_type">
+                                    <option value="">Localisation</option>
+                                    @if(isset($locationTypes))
+                                        @foreach($locationTypes as $locationType)
+                                            <option value="{{$locationType->id}}">{{$locationType->title}}</option>
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
                             <button class="btn search-btn" type="submit"><i class="fa fa-search"></i></button>
@@ -50,20 +52,18 @@
                             <div id="residentiel" class="tab-pane fade in active">
                                 <div class="search-row">
                                     <div class="form-group mar-r-20">
-                                        <label for="price-range">Prix (AU$):</label>
-                                        <input type="text" class="span2" name="price" value="" data-slider-min="100000"
-                                               data-slider-max="10000000" data-slider-step="50000"
-                                               data-slider-value="[500000,5000000]" id="price-range1" name="prix"><br />
+                                        <label for="price-range">Prix (AU $):</label>
+                                        <input type="text" class="span2" name="price" value="" data-slider-min="100000" data-slider-max="10000000" data-slider-step="50000" data-slider-value="[500000,5000000]" id="price-range1">
+                                        <br>
                                         <b class="pull-left color">100000$</b>
                                         <b class="pull-right color">10000000$</b>
                                     </div>
                                     <div class="form-group mar-l-20">
                                         <label for="property-geo">Superficie (m2) :</label>
-                                        <input type="text" class="span2"  name="superficie" value="" data-slider-min="50"
-                                               data-slider-max="1000" data-slider-step="25"
-                                               data-slider-value="[50,450]" id="property-geo" name="superficie"><br />
-                                        <b class="pull-left color">50m</b>
-                                        <b class="pull-right color">1000m</b>
+                                        <input type="text" class="span2"  name="superficie" value="" data-slider-min="50" data-slider-max="1000" data-slider-step="25" data-slider-value="[50,450]" id="property-geo">
+                                        <br>
+                                        <b class="pull-left color">50m2</b>
+                                        <b class="pull-right color">1000m2</b>
                                     </div>
                                 </div>
                                 <div class="search-row">
@@ -85,127 +85,52 @@
                                     </div>
                                 </div>
                                 <br>
-                                <div class="form-group">
-                                    <select id="basic" class="selectpicker show-tick form-control" name="category">
-                                        <option value="">Type de logement</option>
-                                        <option value="Appartement">Appartement </option>
-                                        <option value="Maison individuelle">Maison individuelle</option>
-                                        <option value="Townhouse">Townhouse</option>
-                                        <option value="Terrain">Terrain</option>
-                                        <option value="Bureau & Local commercial">Bureau & Local commercial</option>
-                                        <option value="Entrepôt & Local d'activité">Entrepôt & Local d'activité</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <select id="basic" class="selectpicker show-tick form-control" name="type">
-                                        <option value="">Localisation</option>
-                                        <option value="">En agglomération </option>
-                                        <option value="">Hors agglomération</option>
-                                        <option value="">En campagne</option>
-                                    </select>
-                                </div>
-                                <br>
                                 <div class="search-row">
                                     <div class="form-group">
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox">Suburbs voisins
+                                                <input type="checkbox"> Suburbs voisins
                                             </label>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox">Salle d'eau
+                                                <input type="checkbox"> Salle d'eau
                                             </label>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox">Toilette
+                                                <input type="checkbox"> Toilette
                                             </label>
                                         </div>
                                     </div>
                                     <br>
-                                </div>
-                                <div class="search-row">
-                                    <div class="form-group">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"> Garage
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"> Piscine
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"> Emergency Exit(200)
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="search-row">
-                                    <div class="form-group">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"> Laundry Room(10073)
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"> Jog Path(1503)
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"> 26' Ceilings(1200)
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <hr>
                                 </div>
                                 <button class="btn search-btn prop-btm-sheaerch" type="submit"><i class="fa fa-search"></i></button>
                             </div><!-- end div residentiel -->
 
                             <div id="foncier" class="tab-pane fade">
                               <div class="search-row">
-                                    <div class="form-group">
-                                        <select id="basic" class="selectpicker show-tick form-control" name="typefoncier">
-                                            <option value="">Types de Foncier</option>
-                                            <option value="foncier agricole">Foncier Agricole </option>
-                                            <option value="foncier residentiel">Foncier Résidentiel </option>
-                                        </select>
-                                    </div><br>
-                                    <div class="form-group mar-r-20">
-                                        <label for="price-range">Prix (AU$):</label>
-                                        <input type="text" class="span2" value="" data-slider-min="100000"
-                                               data-slider-max="10000000" data-slider-step="50000"
-                                               data-slider-value="[500000,5000000]" id="price-range" name="prix"><br />
-                                        <b class="pull-left color">100000$</b>
-                                        <b class="pull-right color">10000000$</b>
-                                    </div>
-                                    <div class="form-group mar-l-20">
-                                        <label for="property-geo">Superficie (m2) :</label>
-                                        <input type="text" class="span2" value="" data-slider-min="50"
-                                               data-slider-max="1000" data-slider-step="25"
-                                               data-slider-value="[50,450]" id="property-geo1" name="superficie"><br />
-                                        <b class="pull-left color">50m</b>
-                                        <b class="pull-right color">1000m</b>
-                                    </div>
-                                    <br>
+                                <div class="form-group mar-r-20">
+                                    <label for="price-range">Prix (AU$):</label>
+                                    <input type="text" class="span2" value="" data-slider-min="100000"
+                                           data-slider-max="10000000" data-slider-step="50000"
+                                           data-slider-value="[500000,5000000]" id="price-range" name="prix"><br />
+                                    <b class="pull-left color">100000$</b>
+                                    <b class="pull-right color">10000000$</b>
+                                </div>
+                                <div class="form-group mar-l-20">
+                                    <label for="property-geo">Superficie (m2) :</label>
+                                    <input type="text" class="span2" value="" data-slider-min="50"
+                                           data-slider-max="1000" data-slider-step="25"
+                                           data-slider-value="[50,450]" id="property-geo1" name="superficie"><br />
+                                    <b class="pull-left color">50m</b>
+                                    <b class="pull-right color">1000m</b>
+                                </div>
+                                <br>
                               </div><!-- end search-row -->
                             </div><!-- end div foncier -->
 

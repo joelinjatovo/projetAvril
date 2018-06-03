@@ -57,8 +57,6 @@ Route::get('mail/read/{mailuser}', 'MailController@read');
 // Localisation
 Route::get('localization/{locale}', 'LocalizationController@index')->name('localization');
 
-// Search
-Route::get('search', 'SearchController@index')->name('search');
 
 // Static pages
 Route::get('/', 'IndexController@index')->name('home');
@@ -79,6 +77,7 @@ Route::post('comments', 'CommentController@store');
 Route::post('comments/{comment}/{action}', 'CommentController@update');
 
 // Shop and Product
+Route::post('shop/{category?}', 'SearchController@index')->name('search');
 Route::get('shop/{category?}', 'ShopController@index')->name('shop.index');// List product by Category OR no
 Route::get('product/{product}', 'ProductController@index')->name('product.index');// View Product
 

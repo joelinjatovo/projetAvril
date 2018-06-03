@@ -15,6 +15,8 @@ use App\Models\User;
 use App\Models\Localisation;
 use App\Models\Image;
 use App\Models\Page;
+use App\Models\Country;
+use App\Models\State;
 
 class RegisterController extends Controller
 {
@@ -154,7 +156,9 @@ class RegisterController extends Controller
             case "member":
                 $pays = $this->getPaysFromCsv();
                 $tels = $this->getTelsFromCsv();
-                return view('login.'.$role, ["pays"=>$pays , "tels"=>$tels, "action"=>$action])
+                return view('login.'.$role)
+                    ->with('action', $action)
+                    ->with('countries', Country::all())
                     ->with('page', $page);
                 break;
             case "afa":
@@ -219,7 +223,10 @@ class RegisterController extends Controller
             $request->session()->put("step", "register");
             $pays = $this->getPaysFromCsv();
             $action = route('register',['role'=>$role]);
-            return view('login.'.$role, ["pays"=>$pays , "action"=>$action]);
+            return view('login.'.$role)
+                    ->with('action', $action)
+                    ->with('states', State::all())
+                    ->with('countries', Country::all());
             
         }
         

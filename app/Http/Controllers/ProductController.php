@@ -14,6 +14,7 @@ use App\Models\Page;
 use App\Models\Pub;
 use App\Models\User;
 use App\Models\State;
+use App\Models\Type;
 
 class ProductController extends Controller
 {
@@ -62,6 +63,17 @@ class ProductController extends Controller
         
         $product->load('images');
         
+        $types = Type::orderBy('title', 'asc')
+            ->where('object_type', 'type')
+            ->get();
+        
+        $locationTypes = Type::orderBy('title', 'asc')
+            ->where('object_type', 'location')
+            ->get();
+        
+        $states = State::orderBy('content', 'asc')
+            ->get();
+        
         return view('product.index')
             ->with('item', $product)
             ->with('location', $product->location)
@@ -69,6 +81,9 @@ class ProductController extends Controller
             ->with('products', $products)
             ->with('apls', $apls)
             ->with('data', json_encode($data))
+            ->with('states', $states)
+            ->with('locationTypes', $locationTypes)
+            ->with('types', $types)
             ->with('categories', $categories); 
     }
     
