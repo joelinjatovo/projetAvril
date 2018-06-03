@@ -4,9 +4,6 @@
 <div class="main-content container-fluid">
     <div id="page-content" class="page-content">
         <section>
-            <div class="page-header">
-                <h3>@lang('app.dashboard')</h3>
-            </div>
             <div class="row-fluid">
                 <div class="span3 widget widget-simple">
                     <div class="widget-content">
