@@ -15,7 +15,7 @@
         @foreach($products as $product)
         <div class="property clearfix">
             <a href="{{route('product.index',['product'=>$product])}}">
-                <img src="{{$product->imageUrl(false)}}" alt="{{$product->title}}" style="float: right;">
+                <img class="feature-image" src="{{$product->imageUrl(false)}}" alt="{{$product->title}}">
             </a>
             <div class="property-contents">
                 <h6 class="entry-title"> <a href="{{route('product.index',['product'=>$product])}}">{{$product->title}}</a></h6>

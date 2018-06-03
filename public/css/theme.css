@@ -1066,6 +1066,7 @@ img.zoom-img {
 .widget_categories a:hover {
   color: #6c98e1;
 }
+
 /*Recent Properties*/
 .recent-properties .property {
   padding: 0 0 13px 0;
@@ -1087,7 +1088,6 @@ img.zoom-img {
 }
 .recent-properties .btn-price {
   color: #6c98e1;
-  display: block;
   margin-bottom: 7px;
   padding: 0;
 }
@@ -1105,10 +1105,12 @@ img.zoom-img {
   font-size: 12px;
   color: #999;
 }
+
 /*Advance Search Widget Styles*/
 #advance-search-widget fieldset {
   width: 100%;
 }
+
 #advance-search-widget fieldset > div {
   width: calc(50% - 7.5px);
   float: left;
