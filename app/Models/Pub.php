@@ -83,4 +83,12 @@ class Pub extends BaseModel
       return $this->belongsToMany(Page::class, 'pubs_pages', 'pub_id', 'page_id');
     }
     
+    /**
+     * Get the image record associated with the pub.
+     */
+    public function image()
+    {
+        return $this->belongsTo(Image::class, 'image_id', 'id');
+    }
+    
 }

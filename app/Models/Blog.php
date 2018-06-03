@@ -100,4 +100,11 @@ class Blog extends BaseModel
         return $this->belongsTo(User::class, 'author_id', 'id');
     }
 
+    /**
+     * Get the image record associated with the blog.
+     */
+    public function image()
+    {
+        return $this->belongsTo(Image::class, 'image_id', 'id');
+    }
 }

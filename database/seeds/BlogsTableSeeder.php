@@ -19,6 +19,7 @@ class BlogsTableSeeder extends Seeder
             'created_at' => date("Y-m-d H:i:s"),
             'status' => 'published',
             'view_count' => 150,
+            'image_id' => 8,
             'author_id' => 1,
         ]);
         DB::table('blogs')->insert([
@@ -29,6 +30,7 @@ class BlogsTableSeeder extends Seeder
             'created_at' => date("Y-m-d H:i:s"),
             'status' => 'published',
             'view_count' => 120,
+            'image_id' => 9,
             'author_id' => 1,
         ]);
         DB::table('blogs')->insert([
@@ -39,6 +41,7 @@ class BlogsTableSeeder extends Seeder
             'created_at' => date("Y-m-d H:i:s"),
             'status' => 'published',
             'view_count' => 10,
+            'image_id' => 10,
             'author_id' => 1,
         ]);
         DB::table('blogs')->insert([
@@ -49,6 +52,7 @@ class BlogsTableSeeder extends Seeder
             'created_at' => date("Y-m-d H:i:s"),
             'status' => 'published',
             'view_count' => 1000000,
+            'image_id' => 8,
             'author_id' => 1,
         ]);
         DB::table('blogs')->insert([
@@ -60,6 +64,7 @@ class BlogsTableSeeder extends Seeder
             'status' => 'published',
             'view_count' => 50,
             'author_id' => 1,
+            'image_id' => 9,
         ]);
     }
 }

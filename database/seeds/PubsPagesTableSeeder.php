@@ -137,5 +137,12 @@ class PubsPagesTableSeeder extends Seeder
             'author_id' => 1,
         ]);
         
+        DB::table('pubs_pages')->insert([
+            'created_at' => date("Y-m-d H:i:s"),
+            'pub_id' => 4,
+            'page_id' => 1,
+            'author_id' => 1,
+        ]);
+        
     }
 }
