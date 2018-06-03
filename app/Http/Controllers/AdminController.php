@@ -88,7 +88,7 @@ class AdminController extends Controller
     /*
     *
     */
-    public function sendMail(Request $request, Mail $mail)
+    public function sendMail(Request $request, Mail $mail = null)
     {
         $this->middleware('auth');
         $this->middleware('auth:admin');
@@ -112,7 +112,12 @@ class AdminController extends Controller
         if(!$mail || !$mail->id){
             $item = new Mail();
         }else{
-            $item = $mail;
+            if(($mail->subject == $request->subject) && ($mail->content == $request->content)){
+                $item = $mail;
+            }else{
+                $item = new Mail();
+                $item->copied_from = $mail->id;
+            }
         }
         
         $item->subject = $request->subject;

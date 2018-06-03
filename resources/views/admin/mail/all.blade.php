@@ -47,7 +47,7 @@
                                 <th scope="col">Subject<span class="column-sorter"></span></th>
                                 <th scope="col">Contenu<span class="column-sorter"></span></th>
                                 <th scope="col">Sender<span class="column-sorter"></span></th>
-                                <th scope="col">Receiver<span class="column-sorter"></span></th>
+                                <th scope="col">Status<span class="column-sorter"></span></th>
                                 <th scope="col">Date<span class="column-sorter"></span></th>
                                 <th scope="col">Actions</th>
                             </tr>
@@ -59,10 +59,11 @@
                                 <td>{{$item->subject}}</td>
                                 <td>{{$item->content}}</td>
                                 <td>{{$item->sender?$item->sender->name:''}} <span class="badge badge-info">{{$item->sender?$item->sender->role:''}}</span></td>
-                                <td>{{$item->receiver?$item->receiver->name:''}} <span class="badge badge-info">{{$item->receiver?$item->receiver->role:''}}</span></td>
+                                <td>{{$item->status}}</span></td>
                                 <td>{{$item->created_at->diffForHumans()}}</td>
                                 <td>
                                     <a href="{{route('mail.index', $item)}}"  class="btn btn-small btn-info">@lang('app.btn.view')</a>
+                                    <a href="{{route('admin.mail.compose', $item)}}"  class="btn btn-small btn-success">@lang('app.btn.send')</a>
                                     <a href="{{route('mail.delete', $item)}}" class="btn btn-small btn-warning btn-delete">@lang('app.btn.delete')</a>
                                 </td>
                             </tr>

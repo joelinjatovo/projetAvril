@@ -402,8 +402,8 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
     Route::prefix('mail')->group(function(){
         Route::get('delete/{mail}', 'MailController@delete')->name('mail.delete');
         
-        Route::get('compose' , 'AdminController@compose')->name('admin.mail.compose');
-        Route::post('compose', 'AdminController@sendMail');
+        Route::get('compose/{mail?}' , 'AdminController@compose')->name('admin.mail.compose');
+        Route::post('compose/{mail?}', 'AdminController@sendMail');
     });
     
 

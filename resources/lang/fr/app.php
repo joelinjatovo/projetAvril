@@ -153,6 +153,7 @@ return [
     'postalCode'    => 'Code Postal',
     
     'profile.edit' => 'Modifier Profile',
+    'receivers'    => 'Receveurs',
     
     'home'         => 'Accueil',
     'language'     => 'Langue',
@@ -402,6 +403,7 @@ return [
     'admin.mail.outbox'    => "Boite d'envoie",
     'admin.mail.draft'     => "Brouillon",
     'admin.mail.spam'      => "Spam",
+    'admin.mail.model'      => "Messages enregistrees",
     
     'mail'           => 'Mail',
     'mails'          => 'Mails',

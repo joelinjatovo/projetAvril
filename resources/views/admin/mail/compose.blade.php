@@ -17,12 +17,12 @@
                                 <label for="role">Selectionner ROLE</label>
                                 <div class="controls">
                                     <select id="role" name="role" class="selectpicker input-block-level">
-                                        <option value="0">@lang('app.select_role')</option>
-                                        <option value="admin">Admin</option>
-                                        <option value="apl">APL</option>
-                                        <option value="afa">AFA</option>
-                                        <option value="member">Member</option>
-                                        <option value="seller">Seller</option>
+                                        <option {{old('role')&&old('role')=='0'?'selected':''}} value="0">@lang('app.select_role')</option>
+                                        <option {{old('role')&&old('role')=='admin'?'selected':''}} value="admin">Admin</option>
+                                        <option {{old('role')&&old('role')=='apl'?'selected':''}} value="apl">APL</option>
+                                        <option {{old('role')&&old('role')=='afa'?'selected':''}} value="afa">AFA</option>
+                                        <option {{old('role')&&old('role')=='member'?'selected':''}} value="member">Member</option>
+                                        <option {{old('role')&&old('role')=='seller'?'selected':''}} value="seller">Seller</option>
                                     </select>
                                 </div>
                             </li>
@@ -40,13 +40,13 @@
                             <li class="control-group">
                                 <label for="subject" class="control-label">@lang('app.subject')</label>
                                 <div class="controls">
-                                    <input id="subject" class="input-block-level" name="subject" type="text" placeholder="@lang('app.subject') *" aria-required="true" required="required">
+                                    <input id="subject" class="input-block-level" name="subject" type="text" placeholder="@lang('app.subject') *" aria-required="true" required="required" value="{{$item->subject}}">
                                 </div>
                             </li>
                             <li class="control-group">
                                 <label for="message">@lang('app.message')</label>
                                 <div class="controls">
-                                    <textarea id="message" class="input-block-level ckeditor" rows="10" name="content" placeholder="@lang('app.message')" ></textarea>
+                                    <textarea id="message" class="input-block-level ckeditor" rows="10" name="content" placeholder="@lang('app.message')" >{{$item->content}}</textarea>
                                 </div>
                             </li>
                         </ul>

@@ -17,6 +17,7 @@ class CreateMailsTable extends Migration
             $table->bigIncrements('id');
             $table->text('subject')->nullable();
             $table->text('content')->nullable();
+            $table->bigInteger('copied_from')->default(0);
             $table->string('status', 20);
             $table->bigInteger('sender_id');
             $table->timestamps();

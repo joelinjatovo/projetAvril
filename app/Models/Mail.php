@@ -58,4 +58,14 @@ class Mail extends BaseModel
     {
         return $this->belongsTo(User::class, 'receiver_id', 'id');
     }
+    
+    /**
+     * An user can have many mails with mails_users pivot table
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
+     */
+    public function users()
+    {
+      return $this->belongsToMany(User::class, 'mails_users', 'mail_id', 'user_id');
+    }
 }
