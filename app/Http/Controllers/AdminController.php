@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Validator;
 
+use App\Models\Product;
 use App\Models\User;
 use App\Models\Mail;
 use App\Models\MailUser;
@@ -32,7 +33,25 @@ class AdminController extends Controller
      */
     public function dashboard()
     {
-        return view('admin.dashboard.index');
+        $data = [];
+        $data['users'] = \DB::table('users')
+          ->select(\DB::raw('DATE(created_at) as date'), \DB::raw('count(*) as count'))
+          ->groupBy('date')
+          ->get();
+        
+        $recent = [];
+        $recent['users'] = User::orderBy('created_at', 'desc')
+            ->take($this->recentSize)
+            ->get();
+        
+        $recent['products'] = Product::orderBy('created_at', 'desc')
+            ->ofStatus('published')
+            ->take($this->recentSize)
+            ->get();
+        
+        return view('admin.dashboard.index')
+            ->with('recent', $recent)
+            ->with('data', json_encode($data));
     }
 
     /**
@@ -44,7 +63,7 @@ class AdminController extends Controller
     {
         switch($type){
             case "product":
-                return view('admin.dashboard.index');
+                return view('admin.dashboard.product');
             case "user":
                 return view('admin.dashboard.user');
             case "member":

@@ -14,9 +14,8 @@ class ChartController extends Controller
 {
     public function categories(Request $request)
     {
-        
         $items = Category::has('products')
-            ->withCount(['products'])
+            ->withCount('products')
             ->get();
         $data = array();
         foreach($items as $item){
@@ -26,25 +25,18 @@ class ChartController extends Controller
                 "color"=>"#B0DE09",
             ];
         }
-        if ($request->isMethod('post')){    
-            return response()->json(['response' => 'This is post method']); 
-        }
-
         return response()->json([
             'state' => '1',
-            'response' => 'This is get method',
             'data' => $data,
         ]);
     }
     
     public function locations(Request $request, $type='product')
     {
-        
         switch($type){
             case 'product':
-                $items = Localisation::join('products', 'products.location_id', '=', 'localizations.id')
-                    ->select(DB::raw('count(*) as number, state'))
-                    ->groupBy('state')
+                $items = State::join('products', 'products.state_id', '=', 'states.id')
+                    ->select(DB::raw('count(*) as number, states.content as state'))
                     ->get();
             break;
             case 'user':
