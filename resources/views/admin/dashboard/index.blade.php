@@ -68,6 +68,52 @@
                 </div>
             </div>
             <div class="row-fluid">
+                <div class="span6 widget widget-simple">
+                    <div class="widget-header">
+                        <h4>Commandes recentes</h4>
+                    </div>
+                    <div class="widget-content">
+                        <div class="widget-body">
+                            <ul>
+                            @foreach($recent['orders'] as $product)
+                                <li>{{$product->title}}</li>
+                            @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="span6 widget widget-simple">
+                    <div class="widget-header">
+                        <h4>Ventes recentes</h4>
+                    </div>
+                    <div class="widget-content">
+                        <div class="widget-body">
+                            <ul>
+                            @foreach($recent['sales'] as $product)
+                                <li>{{$product->title}}</li>
+                            @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span6 widget widget-simple">
+                    <div class="widget-header">
+                        <h4>Emails recents</h4>
+                    </div>
+                    <div class="widget-content">
+                        <div class="widget-body">
+                            <ul>
+                            @foreach($recent['mails'] as $mail)
+                                <li>{{$mail->subject}}</li>
+                            @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
                 <div class="span12 widget widget-simple">
                     <div class="widget-header">
                         <h4><i class="fontello-icon-chart"></i>Repartition des utilisateurs par date d'inscription</h4>
@@ -105,7 +151,7 @@
 <script src="{{asset('administrator/amcharts/gauge.js')}}"></script>
 <script src="{{asset('administrator/amcharts/radar.js')}}"></script>
 <script type="text/javascript">
-function drawCategoryChart($selector, $data){
+function drawLineChart($selector, $data){
     var chart = AmCharts.makeChart($selector, {
         "type": "serial",
         "theme": "light",
@@ -186,7 +232,7 @@ function drawCategoryChart($selector, $data){
 
 }
 var data = {!!$data!!};
-drawCategoryChart("chart-users", data.users);
-drawCategoryChart("chart-products", data.products);
+drawLineChart("chart-users", data.users);
+drawLineChart("chart-products", data.products);
 </script>
 @show

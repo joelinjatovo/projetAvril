@@ -57,6 +57,17 @@ class AdminController extends Controller
             ->ofStatus('published')
             ->take($this->recentSize)
             ->get();
+        $recent['sales'] = Product::orderBy('created_at', 'desc')
+            ->ofStatus('paid')
+            ->take($this->recentSize)
+            ->get();
+        $recent['orders'] = Product::orderBy('created_at', 'desc')
+            ->ofStatus('ordered')
+            ->take($this->recentSize)
+            ->get();
+        $recent['mails'] = Mail::orderBy('created_at', 'desc')
+            ->take($this->recentSize)
+            ->get();
         
         return view('admin.dashboard.index')
             ->with('recent', $recent)
