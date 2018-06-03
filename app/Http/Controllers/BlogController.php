@@ -180,7 +180,8 @@ class BlogController extends Controller
             ->with('q', $q) 
             ->with('record', $record) 
             ->with('title', $title)
-            ->with('items', $items);
+            ->with('items', $items)
+            ->with('breadcrumbs', $title);
     }
 
     /**
@@ -210,7 +211,8 @@ class BlogController extends Controller
             ->with('item', $blog)
             ->with('action', $action)
             ->with('categoryIds', $categoryIds)
-            ->with('categories', $categories);
+            ->with('categories', $categories)
+            ->with('breadcrumbs', __('app.blog.create'));
     }
 
     /**
@@ -303,7 +305,8 @@ class BlogController extends Controller
             ->with('item', $blog)
             ->with('action', $action)
             ->with('categoryIds', $categoryIds)
-            ->with('categories', $categories);
+            ->with('categories', $categories)
+            ->with('breadcrumbs', __('app.blog.update'));
     }
 
     /**

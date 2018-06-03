@@ -101,7 +101,8 @@ class CartItemController extends Controller
             ->with('q', $q) 
             ->with('record', $record) 
             ->with('title', $title)
-            ->with('items', $items); 
+            ->with('items', $items)
+            ->with('breadcrumbs',$title); 
     }
     
 
@@ -149,7 +150,8 @@ class CartItemController extends Controller
         $title = __('app.cartitem.index');
         
         return $view->with('title', $title)
-            ->with('item', $cartitem); 
+            ->with('item', $cartitem)
+            ->with('breadcrumbs', $title);
     }
     
     
@@ -172,7 +174,8 @@ class CartItemController extends Controller
             ->with('title', $title)
             ->with('role', $role)
             ->with('action', $action)
-            ->with('item', $cartitem); 
+            ->with('item', $cartitem)
+            ->with('breadcrumbs', $title);
     }
     
 
@@ -194,7 +197,8 @@ class CartItemController extends Controller
             ->with('title', $title)
             ->with('role', $role)
             ->with('action', $action)
-            ->with('item', $cartitem); 
+            ->with('item', $cartitem)
+            ->with('breadcrumbs', $title);
     }
     
 

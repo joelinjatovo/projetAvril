@@ -66,7 +66,8 @@ class MailController extends Controller
             ->with('title', __('app.send_mail'))
             ->with('content', $content)
             ->with('address', $address)
-            ->with('contact', $contact);
+            ->with('contact', $contact)
+            ->with('breadcrumbs', __('app.send_mail'));
     }
 
     public function read(Request $request, MailUser $mailuser)
@@ -223,7 +224,8 @@ class MailController extends Controller
             ->with('q', $q) 
             ->with('record', $record) 
             ->with('title', $title)
-            ->with('receiver', $receiver);
+            ->with('receiver', $receiver)
+            ->with('breadcrumbs', $title);
     }
 
     public function basic_email(){

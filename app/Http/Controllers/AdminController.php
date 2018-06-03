@@ -65,30 +65,36 @@ class AdminController extends Controller
     
     /*
     *
+    *
     */
-    public function compose(Request $request)
+    public function compose(Request $request, Mail $mail = null)
     {
         $this->middleware('auth');
         $this->middleware('auth:admin');
+        
+        if(!$mail || !$mail->id){
+            $mail = new Mail();
+        }
         
         $users = User::isActive()
             ->where('id', '<>', \Auth::user()->id)
             ->get();
         
         return view('admin.mail.compose')
+            ->with('item', $mail)
             ->with('users', $users);
     }
     
     /*
     *
     */
-    public function sendMail(Request $request)
+    public function sendMail(Request $request, Mail $mail)
     {
         $this->middleware('auth');
         $this->middleware('auth:admin');
         
-        echo var_dump($request->request);
-        exit;
+        //echo var_dump($request->request);
+        //exit;
             
         // Validate request
         $datas = $request->all();
@@ -102,8 +108,13 @@ class AdminController extends Controller
             return back()->withErrors($validator)
                         ->withInput();
         }
-
-        $item = new Mail();
+        
+        if(!$mail || !$mail->id){
+            $item = new Mail();
+        }else{
+            $item = $mail;
+        }
+        
         $item->subject = $request->subject;
         $item->content = $request->content;
         
@@ -117,6 +128,7 @@ class AdminController extends Controller
                 $item->save();
             return back()->with('success', 'Message enregistré au brouillon.');
             case 'send':
+                $item->status = 'send';
                 $item->save();
             break;
         }

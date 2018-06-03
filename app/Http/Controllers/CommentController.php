@@ -37,7 +37,7 @@ class CommentController extends Controller
         $comment->load('replies')->withCount('replies');
         
         return view('admin.comment.index')
-            ->with('item', $comment); 
+            ->with('item', $comment);
     }
     
     /**
@@ -295,7 +295,8 @@ class CommentController extends Controller
             ->with('items', $items)
             ->with('filter', $filter)
             ->with('blog', $blog)
-            ->with('page', $page);
+            ->with('page', $page)
+            ->with('breadcrumbs', $title);
     }
     
     

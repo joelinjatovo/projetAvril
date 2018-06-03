@@ -53,7 +53,8 @@ class ConfigController extends Controller
             return back()->with('success','La configuration a été modifiée avec succés ! ');
         }
         
-        return view('config.site',compact('item', 'keys'));
+        return view('config.site',compact('item', 'keys'))
+            ->with('breadcrumbs', __('app.config'));
     }
     /**
      * Show login config
@@ -88,7 +89,8 @@ class ConfigController extends Controller
             return back()->with('success','La configuration a été modifiée avec succés ! ');
         }
         
-        return view('config.login',compact('item'));
+        return view('config.login',compact('item'))
+            ->with('breadcrumbs', __('app.config'));
     }
 
     /**
@@ -122,7 +124,8 @@ class ConfigController extends Controller
             return back()->with('success','La configuration a été modifiée avec succés ! ');
         }
         
-        return view('config.social',compact('item', 'keys', 'titles'));
+        return view('config.social',compact('item', 'keys', 'titles'))
+            ->with('breadcrumbs', __('app.config'));
     }
 
     /**
@@ -157,7 +160,8 @@ class ConfigController extends Controller
             return back()->with('success','La configuration a été modifiée avec succés ! ');
         }
         
-        return view('config.payment',compact('item', 'keys'));
+        return view('config.payment',compact('item', 'keys'))
+            ->with('breadcrumbs', __('app.config'));
     }
     
     

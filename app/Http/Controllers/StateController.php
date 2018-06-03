@@ -49,7 +49,8 @@ class StateController extends Controller
             ->with('q', $q) 
             ->with('record', $record) 
             ->with('title', $title)
-            ->with('items', $items); 
+            ->with('items', $items)
+            ->with('breadcrumbs', $title);
     }
     
     
@@ -69,7 +70,8 @@ class StateController extends Controller
         return view('admin.state.update')
             ->with('title', __('app.admin.state.create'))
             ->with('item', $state)
-            ->with('action', $action);
+            ->with('action', $action)
+            ->with('breadcrumbs', __('app.admin.state.create'));
     }
 
     /**
@@ -114,7 +116,8 @@ class StateController extends Controller
         return view('admin.state.update')
             ->with('title', __('app.admin.state.update'))
             ->with('item', $state)
-            ->with('action', $action);
+            ->with('action', $action)
+            ->with('breadcrumbs', __('app.admin.state.update'));
     }
 
     /**

@@ -80,12 +80,24 @@
             <!-- // navbar -->
 
             <div class="header-drawer">
-                <div class="mobile-nav text-center visible-phone"> <a href="javascript:void(0);" class="mobile-btn" data-toggle="collapse" data-target=".sidebar"><i class="aweso-icon-chevron-down"></i> @lang("Menu")</a> </div>
+                <div class="mobile-nav text-center visible-phone"> <a href="javascript:void(0);" class="mobile-btn" data-toggle="collapse" data-target=".sidebar"><i class="aweso-icon-chevron-down"></i> Menu</a> </div>
                 <!-- // Resposive navigation -->
                 <div class="breadcrumbs-nav hidden-phone">
                     <ul id="breadcrumbs" class="breadcrumb">
-                        <li><a href="javascript:void(0);"><i class="fontello-icon-home f12"></i> @lang("Dashboard")</a> <span class="divider">/</span></li>
-                        <li class="active"> @lang("Profil administrateur") </li>
+                        <li><a href="{{route('admin.dashboard')}}"><i class="fontello-icon-home f12"></i> @lang("app.dashboard")</a></li>
+                        @if(isset($breadcrumbs))
+                            @if(!is_array($breadcrumbs))
+                                <li class="active"> {{$breadcrumbs}}</li>
+                            @else
+                                @foreach($breadcrumbs as $breadcrumb)
+                                    @if(isset($breadcrumb['active'])&&$breadcrumb['active'])
+                                        <li class="active"> {{$breadcrumb['label']}}</li>
+                                    @else
+                                        <li><a href="{{$breadcrumb['route']}}"> {{$breadcrumb['label']}}</a></li>
+                                    @endif
+                                @endforeach
+                            @endif
+                        @endif
                     </ul>
                 </div>
                 <!-- // breadcrumbs -->
@@ -98,7 +110,7 @@
     
     <div id="main-sidebar" class="sidebar sidebar-inverse">
           @if(Auth::check())
-          <div class="sidebar-item">
+          <div class="sidebar-item" style="margin-top:10px;">
               <div class="media profile">
                   <div class="media-thumb media-left">
                       <a class="img-shadow" href="">

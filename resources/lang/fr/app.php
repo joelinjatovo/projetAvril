@@ -68,6 +68,8 @@ return [
     'customer'  => "Clients",
     'date'      => "Date",
     
+    'config'      => "Configuration",
+    
     'cartitem.index' => "Visualisation d'une ligne d'achat",
     
     'table.id'     => "Id",
@@ -149,6 +151,8 @@ return [
     'locality'      => 'Localité',
     'route'         => 'route',
     'postalCode'    => 'Code Postal',
+    
+    'profile.edit' => 'Modifier Profile',
     
     'home'         => 'Accueil',
     'language'     => 'Langue',
@@ -500,6 +504,8 @@ return [
     'btn.send'           => "Envoyer",
     'btn.add_to_cart'    => "Acheter Produit",
     'btn.reply'          => "Repondre",
+    'btn.draft'          => "Brouillon",
+    'btn.save_as_model'  => "Enregistrer en tant que Model",
     'btn.register'       => "Valider l'inscription",
     
     'contact_admin'  => "Contacter l'administrateur",

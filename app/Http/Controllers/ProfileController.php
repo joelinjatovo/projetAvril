@@ -37,7 +37,8 @@ class ProfileController extends Controller
         }
         
         return $view->with('title', __('app.profile'))
-            ->with('item', Auth::user());
+            ->with('item', Auth::user())
+            ->with('breadcrumbs', __('app.profile'));
     }
 
     /**
@@ -54,10 +55,22 @@ class ProfileController extends Controller
         }else{
             $view = view('backend.user.edit.update');
         }
-        
+        $breadcrumbs = [
+            [
+                'active'=>false,
+                'route'=>route('profile'),
+                'label'=>__('app.profile'),
+            ],
+            [
+                'active'=>true,
+                'label'=>__('app.profile.edit'),
+            ],
+            
+        ];
         return $view->with('title', __('app.profile'))
             ->with('action', $action)
-            ->with('item', Auth::user());
+            ->with('item', Auth::user())
+            ->with('breadcrumbs', $breadcrumbs);
     }
 
     /**
@@ -315,7 +328,20 @@ class ProfileController extends Controller
             $view = view('backend.user.edit.password');
         }
         
-        return $view->with('title', __('app.password'));
+        $breadcrumbs = [
+            [
+                'active'=>false,
+                'route'=>route('profile'),
+                'label'=>__('app.profile'),
+            ],
+            [
+                'active'=>true,
+                'label'=>__('app.password'),
+            ],
+            
+        ];
+        return $view->with('title', __('app.password'))
+            ->with('breadcrumbs', $breadcrumbs);
     }
 
     /**
@@ -359,8 +385,21 @@ class ProfileController extends Controller
             $view = view('backend.user.edit.avatar');
         }
         
+        $breadcrumbs = [
+            [
+                'active'=>false,
+                'route'=>route('profile'),
+                'label'=>__('app.profile'),
+            ],
+            [
+                'active'=>true,
+                'label'=>__('app.avatar'),
+            ],
+            
+        ];
         return $view->with('title', __('app.avatar'))
-            ->with('item', Auth::user());
+            ->with('item', Auth::user())
+            ->with('breadcrumbs', $breadcrumbs);
     }
 
     /**
@@ -409,9 +448,22 @@ class ProfileController extends Controller
             $view = view('backend.user.edit.location');
         }
         
+        $breadcrumbs = [
+            [
+                'active'=>false,
+                'route'=>route('profile'),
+                'label'=>__('app.profile'),
+            ],
+            [
+                'active'=>true,
+                'label'=>__('app.location'),
+            ],
+            
+        ];
         return $view->with('title', __('app.location'))
             ->with('item', Auth::user()->with('location'))
-            ->with('location',  Auth::user()->location);
+            ->with('location',  Auth::user()->location)
+            ->with('breadcrumbs',  $breadcrumbs);
     }
 
     /**

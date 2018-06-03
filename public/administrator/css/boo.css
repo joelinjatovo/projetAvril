@@ -5538,7 +5538,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff2d3032', e
 
 #header .header-drawer {
   position: absolute;
-  top: 0px;
+  top: 10px;
   /*height: 34px;*/
   min-height: 5px;
   margin-top: 41px;
@@ -6084,15 +6084,10 @@ filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ff59B14F', en
 
 /** Page Head
  ---------------------------------------- */
-
-
-
-
-
-
 .page-head {
   position: relative;
-  /*margin: 0 -20px;*/
+  margin: 0 -15px;
+  width: auto;
   margin-bottom: 10px;
   padding: 0 20px;
   min-height: 100px;
@@ -6121,12 +6116,6 @@ filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ff59B14F', en
 
 /* Page Bar
  ---------------------------------------- */
-
-
-
-
-
-
 .page-bar {
   position: absolute;
   left: 20px;
@@ -6156,12 +6145,6 @@ filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ff59B14F', en
 
 /** Page Content
  ---------------------------------------- */
-
-
-
-
-
-
 .page-content { /*padding-top: 20px;*/
   padding-bottom: 20px
 }

@@ -82,7 +82,8 @@ class ProductController extends Controller
     public function show(Request $request, Product $product)
     {
         return view('admin.product.index')
-            ->with('item', $product); 
+            ->with('item', $product)
+            ->with('breadcrumbs', __('app.product'));
     }
     
     /**
@@ -167,7 +168,8 @@ class ProductController extends Controller
             ->with('states', $states)
             ->with('seller', $seller)
             ->with('sellers', $sellers)
-            ->with('title', $title); 
+            ->with('title', $title)
+            ->with('breadcrumbs', $title);
     }
     
     /**

@@ -33,7 +33,8 @@ class CategoryController extends Controller
     public function show(Request $request, Category $category)
     {
         return view('admin.category.index')
-                ->with('item', $category); 
+                ->with('item', $category)
+            ->with('breadcrumbs', __('app.category'));
     }
 
     /**
@@ -49,7 +50,8 @@ class CategoryController extends Controller
         if($value = $request->old('content'))   $item->content = $value;
 
         $action = route('admin.category.store');
-        return view('admin.category.update', ['item'=>$item, 'action'=>$action]);
+        return view('admin.category.update', ['item'=>$item, 'action'=>$action])
+            ->with('breadcrumbs', __('app.admin.category.add'));
     }
 
     /**
@@ -105,7 +107,8 @@ class CategoryController extends Controller
 
         $action = route('admin.category.update', ['category'=>$category]);
         
-        return view('admin.category.update', ['item'=>$category, 'action'=>$action]);
+        return view('admin.category.update', ['item'=>$category, 'action'=>$action])
+            ->with('breadcrumbs', __('app.admin.category.update'));
     }
 
     /**
@@ -176,7 +179,8 @@ class CategoryController extends Controller
         return view('admin.category.all', compact('items', 'filter', 'page'))
             ->with('q', $q) 
             ->with('record', $record) 
-            ->with('title', $title);
+            ->with('title', $title)
+            ->with('breadcrumbs', $title);
     }
 
 

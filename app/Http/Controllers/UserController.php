@@ -42,7 +42,8 @@ class UserController extends Controller
         
         return view('admin.user.index')
             ->with('item', $user)
-            ->with('title', __('app.'.$user->role));
+            ->with('title', __('app.'.$user->role))
+            ->with('breadcrumbs', __('app.'.$user->role));
     }
     
     /**
@@ -135,7 +136,8 @@ class UserController extends Controller
             ->with('countries', $countries)
             ->with('state', $state)
             ->with('states', $states)
-            ->with('title', $title); 
+            ->with('title', $title)
+            ->with('breadcrumbs', $title);
     }
     
     /**

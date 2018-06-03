@@ -119,7 +119,7 @@ class MemberController extends Controller
             $toName = option('site.admin_name', $receiver->name);
         }else if($role=='apl'){
             $receiver = $current->apl;
-            if(!$receiver||!$receiver->isActive()){
+            if(!$receiver||!$receiver->active()){
                 return back()->with('error', 'Une erreur est survenue.');
             }
             $to = $receiver->email;
