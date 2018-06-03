@@ -4,7 +4,7 @@
 <div class="main-content container-fluid">
     <div id="page-content" class="page-content">
         <section>
-            <div class="row-fluid">
+            <div class="row-fluid" style="margin-top:20px;">
                 <div class="span3 widget widget-simple">
                     <div class="widget-content">
                         <div class="widget-body">
