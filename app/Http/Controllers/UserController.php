@@ -163,30 +163,6 @@ class UserController extends Controller
     }
     
     /**
-    * Block User
-    *
-    * @param  \Illuminate\Http\Request  $request
-     * @param  App\Models\User  $user
-    * @return \Illuminate\Http\Response
-    */
-    public function block(Request $request,User $user)
-    {
-        $this->middleware('auth');
-        $this->middleware('role:admin');
-        
-        if($user->id==1){
-            return back()->with('error',"Cette action ne peut pas etre réalisée.");
-        }
-        
-        $this->middleware('auth');
-        $this->middleware('role:admin');
-        $user->status = 'blocked';
-        $user->save();
-        
-        return back()->with('success',"L'utilsateur a été bloqué avec succés");
-    }
-    
-    /**
     * Disable User
     *
     * @param  \Illuminate\Http\Request  $request

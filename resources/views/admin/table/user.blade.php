@@ -34,9 +34,6 @@
              </a>
          </td>
          <td>
-             @if($item->status!='blocked')
-                <a href="{{route('admin.user.block', $item)}}" class="btn btn-small btn-default">@lang('app.btn.block')</a>
-             @endif
              @if($item->status=='active')
                 <a href="{{route('admin.user.disable', $item)}}" class="btn btn-small btn-success">@lang('app.btn.disable')</a>
              @else

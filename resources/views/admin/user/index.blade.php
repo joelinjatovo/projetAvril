@@ -7,9 +7,6 @@
         <div id="TabTop1" class="tab-pane padding-bottom30 active fade in">
             @include('includes.alerts')
             <div>
-                 @if($item->status!='blocked')
-                    <a href="{{route('admin.user.block', $item)}}" class="btn btn-small btn-default">@lang('app.btn.block')</a>
-                 @endif
                  @if($item->status=='active')
                     <a href="{{route('admin.user.disable', $item)}}" class="btn btn-small btn-success">@lang('app.btn.disable')</a>
                  @else
@@ -47,6 +44,9 @@
                     </div>
                     
                     @if($item->role=='member')
+                        @if($item->apl)
+                            @include('admin.user.info.apl',    ['item'=>$item->apl])
+                        @endif
                         <div class="widget widget-simple">
                             <div class="widget-header">
                                 <h4><small>@lang('app.orders')</small></h4>
