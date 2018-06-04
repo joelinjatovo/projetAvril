@@ -16,7 +16,7 @@
                             <li class="control-group">
                                 <label for="role">Selectionner ROLE</label>
                                 <div class="controls">
-                                    <select id="role" name="role" class="selectpicker input-block-level">
+                                    <select id="role" name="role" class="selecttwo input-block-level">
                                         <option {{old('role')&&old('role')=='0'?'selected':''}} value="0">@lang('app.select_role')</option>
                                         <option {{old('role')&&old('role')=='admin'?'selected':''}} value="admin">Admin</option>
                                         <option {{old('role')&&old('role')=='apl'?'selected':''}} value="apl">APL</option>
@@ -29,7 +29,7 @@
                             <li class="control-group">
                                 <label for="users">Selectionner utilisateurs</label>
                                 <div class="controls">
-                                    <select id="users" name="users[]" class="selectpicker input-block-level" multiple>
+                                    <select id="users" name="users[]" class="selecttwo input-block-level" multiple>
                                         <option value="0">@lang('app.select_user')</option>
                                         @foreach($users as $user)
                                             <option value="{{$user->id}}">{{$user->name}}</option>

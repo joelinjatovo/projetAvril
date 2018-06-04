@@ -167,6 +167,7 @@ return [
     'contact'         => 'Contact',
     'detail'                => 'Detail',
     'description'           => 'Description',
+    'select_state'          => 'Selectionner un Etat',
     'select_country'        => 'Selectionner un pays',
     'select_phone'          => 'Selectionner un code',
     'select_role'           => 'Selectionner le role',

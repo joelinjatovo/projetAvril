@@ -48,6 +48,9 @@ class CreateUsersTable extends Migration
             $table->string('braintree_id')->nullable();
             $table->string('paypal_email')->nullable();
             
+            // Stripe
+            $table->string('stripe_id')->nullable();
+            
             // Common fields Cashier & Baintree
             $table->string('card_brand')->nullable();
             $table->string('card_last_four')->nullable();

@@ -413,7 +413,6 @@
 
 <!-- main js -->
 <script src="{{asset('administrator/js/core.js')}}"></script>
-<script src="{{asset('administrator/js/application.js')}}"></script>
 
 <script src="{{asset('administrator/js/demo/demo-jquery.dataTables.js')}}"></script>
 <script src="{{asset('administrator/js/demo/demo-wisyhtml5.js')}}"></script>
