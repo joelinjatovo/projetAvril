@@ -30,13 +30,11 @@
                 <div class="grider">
                     @include('admin.user.info.login',    ['item'=>$item])
                     
-                    @if($item->type=='organization')
-                    @include('admin.user.info.orga',     ['item'=>$item])
-                    @include('admin.user.info.contact',  ['item'=>$item])
-                    @endif
-                    
-                    @if($item->type=='person')
-                    @include('admin.user.info.person',   ['item'=>$item])
+                    @if($item->hasRole('member') && $item->type=='person')
+                        @include('admin.user.info.person',   ['item'=>$item])
+                    @else
+                        @include('admin.user.info.orga',     ['item'=>$item])
+                        @include('admin.user.info.contact',  ['item'=>$item])
                     @endif
                     
                     @include('admin.user.info.location', ['location'=>$item->location])
@@ -49,57 +47,105 @@
                     </div>
                     
                     @if($item->role=='member')
-                    <div class="widget widget-simple">
-                        <div class="widget-header">
-                            <h4><small>@lang('app.purchases')</small></h4>
+                        <div class="widget widget-simple">
+                            <div class="widget-header">
+                                <h4><small>@lang('app.orders')</small></h4>
+                            </div>
+                            @include('admin.table.product',[
+                                'products'=>$item->purchases()->wherePivot('status', 'ordered')
+                            ])
                         </div>
-                        @include('admin.table.product',['products'=>$item->purchases])
-                    </div>
-                    <div class="widget widget-simple">
-                        <div class="widget-header">
-                            <h4><small>@lang('app.pins')</small></h4>
+                        <div class="widget widget-simple">
+                            <div class="widget-header">
+                                <h4><small>@lang('app.purchases')</small></h4>
+                            </div>
+                            @include('admin.table.product',[
+                                'products'=>$item->purchases()->wherePivot('status', 'paid')
+                            ])
                         </div>
-                        @include('admin.table.product',['products'=>$item->pins])
-                    </div>
-                    <div class="widget widget-simple">
-                        <div class="widget-header">
-                            <h4><small>@lang('app.favorites')</small></h4>
+                        <div class="widget widget-simple">
+                            <div class="widget-header">
+                                <h4><small>@lang('app.pins')</small></h4>
+                            </div>
+                            @include('admin.table.product',['products'=>$item->pins])
                         </div>
-                        @include('admin.table.product',['products'=>$item->favorites])
-                    </div>
+                        <div class="widget widget-simple">
+                            <div class="widget-header">
+                                <h4><small>@lang('app.favorites')</small></h4>
+                            </div>
+                            @include('admin.table.product',['products'=>$item->favorites])
+                        </div>
                     @endif
                     
                     @if($item->role=='apl')
-                    <div class="widget widget-simple">
-                        <div class="widget-header">
-                            <h4><small>@lang('app.customers')</small></h4>
+                        <div class="widget widget-simple">
+                            <div class="widget-header">
+                                <h4><small>@lang('app.customers')</small></h4>
+                            </div>
+                            @include('admin.table.user',['users'=>$item->customers])
                         </div>
-                        @include('admin.table.user',['users'=>$item->customers])
-                    </div>
-                    <div class="widget widget-simple">
-                        <div class="widget-header">
-                            <h4><small>@lang('app.sales')</small></h4>
+                        <div class="widget widget-simple">
+                            <div class="widget-header">
+                                <h4><small>@lang('app.orders')</small></h4>
+                            </div>
+                            @include('admin.table.product',[
+                                'products'=>$item->sales()->wherePivot('status', 'ordered')
+                            ])
                         </div>
-                        @include('admin.table.product',['products'=>$item->sales])
-                    </div>
+                        <div class="widget widget-simple">
+                            <div class="widget-header">
+                                <h4><small>@lang('app.sales')</small></h4>
+                            </div>
+                            @include('admin.table.product',[
+                                'products'=>$item->sales()->wherePivot('status', 'paid')
+                            ])
+                        </div>
                     @endif
                     
                     @if($item->role=='seller')
-                    <div class="widget widget-simple">
-                        <div class="widget-header">
-                            <h4><small>@lang('app.products')</small></h4>
+                        <div class="widget widget-simple">
+                            <div class="widget-header">
+                                <h4><small>@lang('app.products')</small></h4>
+                            </div>
+                            @include('admin.table.product',[
+                                'products'=>$item->products
+                            ])
                         </div>
-                        @include('admin.table.product',['products'=>$item->products])
-                    </div>
+                        <div class="widget widget-simple">
+                            <div class="widget-header">
+                                <h4><small>@lang('app.orders')</small></h4>
+                            </div>
+                            @include('admin.table.product',[
+                                'products'=>$item->products()->where('products.status', 'ordered')
+                            ])
+                        </div>
+                        <div class="widget widget-simple">
+                            <div class="widget-header">
+                                <h4><small>@lang('app.sales')</small></h4>
+                            </div>
+                            @include('admin.table.product',[
+                                'products'=>$item->products()->where('products.status', 'paid')
+                            ])
+                        </div>
                     @endif
                     
                     @if($item->role=='afa')
-                    <div class="widget widget-simple">
-                        <div class="widget-header">
-                            <h4><small>@lang('app.sales')</small></h4>
+                        <div class="widget widget-simple">
+                            <div class="widget-header">
+                                <h4><small>@lang('app.orders')</small></h4>
+                            </div>
+                            @include('admin.table.product',[
+                                'products'=>$item->sales()->wherePivot('status', 'ordered')
+                            ])
                         </div>
-                        @include('admin.table.product',['products'=>$item->sales])
-                    </div>
+                        <div class="widget widget-simple">
+                            <div class="widget-header">
+                                <h4><small>@lang('app.sales')</small></h4>
+                            </div>
+                            @include('admin.table.product',[
+                                'products'=>$item->sales()->wherePivot('status', 'paid')
+                            ])
+                        </div>
                     @endif
                     
                 </div>
