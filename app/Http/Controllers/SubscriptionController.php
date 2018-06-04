@@ -29,4 +29,9 @@ class SubscriptionController extends Controller
             return back()->with('error', $e->getMessage());
         }
     }
+    
+    public function success()
+    {
+        return view('subscription.success');
+    }
 }

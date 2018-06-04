@@ -318,18 +318,31 @@ class ShopController extends Controller
         $currency = $cart->currency;
         
         try{
-            $result = \Braintree_Transaction::sale([
-                'amount' => 100,
-                'paymentMethodNonce' => $request->payment_method_nonce,
-                'options' => [
-                    'submitForSettlement' => true,
-                ],
-            ]);
+            // Get the submitted Stripe token
+            $token = $request->stripe_token;
+            
+            // Create Customer
+            $customer = \Stripe\Customer::create(array(
+                "description" => \Auth::user()->email,
+                "source" => $token
+            ));
+
+            \Auth::user()->stripe_id = $customer->id;
+            \Auth::user()->save();
+
+            // Create the charge
+            $result = \Stripe\Charge::create(array(
+                "amount" => 150.95,
+                "customer" => $customer->id,
+                "description" => 'Purchased Book!'
+            ));
+            
         }catch(\Exception $e){
             return back()->with('error', $e->getMessage());
         }
         
-        //echo var_dump($result);
+        echo var_dump($result);
+        exit;
         
         if (!$result->success) {
           return back()->with('error', "Votre commande n'a pas été éffectué. ".$result->message);
@@ -340,7 +353,8 @@ class ShopController extends Controller
 
         Session::forget('cart');
         
-        return redirect()->route('profile')->with('success', 'Votre commande a été éffectué');
+        //do some other stuffs
+        return redirect()->route('subscription.success');
     }
 
     public function reduceByOne(Product $product){

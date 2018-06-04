@@ -68,7 +68,8 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
 @endif
 
 @yield('style')
-
+    
+@yield('style-stripe')
 </head>
 <body>
 <header id="head">
@@ -318,6 +319,7 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
     
     
 @yield('script')
+@yield('stripe')
 @yield('braintree')
 </body>
 </html>

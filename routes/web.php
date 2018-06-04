@@ -130,6 +130,9 @@ Route::middleware(["auth"])->group(function(){
     Route::get('/plan/{plan}', 'PlanController@show');
     Route::post('/subscribe', 'PlanController@subscribe');
     
+    // Subscription
+    Route::post('/subscription/success', 'SubscriptionController@success')->name('subscription.success');
+    
     // Profile
     Route::prefix('profile')->group(function(){
         Route::get('/', 'ProfileController@index')->name('profile');
