@@ -8,6 +8,7 @@ return [
     'copyright'           => '© Copyright :year : ":app" - Tout droit reserve',
     
     'last_update'         => 'Derniere Modification, :date',
+    'contact_user'        => 'Contacter: :name (:email)',
     'contact_us_phone'    => 'Contactez-nous: :phone',
     'list_apl'    => 'Lister les APL',
     'read_more'    => 'Continuer de lire',
@@ -486,6 +487,7 @@ return [
     'reply'  => "Repondre",
     
     
+    'btn.contact'        => 'Contacter',
     'btn.add'            => 'Ajouter',
     'btn.search'         => 'Rechercher',
     'btn.compose'        => 'Composer',
@@ -511,6 +513,7 @@ return [
     'btn.contact_apl'    => "Contacter l'APL",
     'btn.login'          => "Connexion",
     'btn.send'           => "Envoyer",
+    'btn.send_mail'      => "Envoyer email",
     'btn.add_to_cart'    => "Acheter Produit",
     'btn.reply'          => "Repondre",
     'btn.draft'          => "Brouillon",

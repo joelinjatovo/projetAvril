@@ -192,6 +192,13 @@ class AdminController extends Controller
                 }
                 $receiverIds[] = $user->id;
                 
+                $mailItem = new MailUser();
+                $mailItem->mail_id = $item->id;
+                $mailItem->user_id = $user->id;
+                $mailItem->is_sent = 1;
+                $mailItem->read    = 0;
+                $mailItem->save();
+                
                 $sent = true;
                 try{
                     $data = array('name'=>"Virat Gandhi");
@@ -201,15 +208,9 @@ class AdminController extends Controller
                                 ->from($user->email, $user->name);
                     });
                 }catch(\Exception $e){
-                    $sent = false;
+                    $mailItem->is_sent = 0;
+                    $mailItem->save();
                 }
-                
-                $mailItem = new MailUser();
-                $mailItem->mail_id = $item->id;
-                $mailItem->user_id = $user->id;
-                $mailItem->is_sent = ($sent?1:0);
-                $mailItem->read    = 0;
-                $mailItem->save();
             }
         }
         
@@ -226,7 +227,13 @@ class AdminController extends Controller
                 
                 $receiverIds[] = $id;
                 
-                $sent = true;
+                $mailItem = new MailUser();
+                $mailItem->mail_id = $item->id;
+                $mailItem->user_id = $user->id;
+                $mailItem->is_sent = 1;
+                $mailItem->read    = 0;
+                $mailItem->save();
+                
                 try{
                     $data = array('name'=>"Virat Gandhi");
                     \Mail::send('mail', $data, function($message) use($mailItem, $user, $item) {
@@ -235,15 +242,9 @@ class AdminController extends Controller
                                 ->from($user->email, $user->name);
                     });
                 }catch(\Exception $e){
-                    $sent = false;
+                    $mailItem->is_sent = 0;
+                    $mailItem->save();
                 }
-                
-                $mailItem = new MailUser();
-                $mailItem->mail_id = $item->id;
-                $mailItem->user_id = $user->id;
-                $mailItem->is_sent = ($sent?1:0);
-                $mailItem->read    = 0;
-                $mailItem->save();
             }
         }
         

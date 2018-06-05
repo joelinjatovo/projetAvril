@@ -7,6 +7,8 @@ use Validator;
 use Auth;
 
 use App\Models\User;
+use App\Models\Mail;
+use App\Models\MailUser;
 use App\Models\Country;
 use App\Models\State;
 
@@ -20,6 +22,92 @@ class UserController extends Controller
     public function __construct()
     {
         //
+    }
+    
+    
+    /*
+    *
+    *
+    */
+    public function contact(Request $request, User $user)
+    {
+        $this->middleware('auth');
+        $this->middleware('auth:admin');
+        
+        $mail = new Mail();
+        if($value = $request->old('subject'))    $mail->subject = $value;
+        if($value = $request->old('content'))    $mail->content = $value;
+        
+        return view('admin.user.contact')
+            ->with('title', __('app.contact_user', ['name'=>$user->name, "email"=>$user->email]))
+            ->with('item', $user)
+            ->with('mail', $mail);
+    }
+    
+    /*
+    *
+    */
+    public function postContact(Request $request, User $user)
+    {
+        $this->middleware('auth');
+        $this->middleware('auth:admin');
+            
+        // Validate request
+        $datas = $request->all();
+        $validator = Validator::make($datas,[
+            'method' => 'required',
+            'subject' => 'required|max:100',
+            'content' => 'required|max:1000'
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)
+                        ->withInput();
+        }
+        
+        $item = new Mail();
+        $item->subject = $request->subject;
+        $item->content = $request->content;
+        
+        switch($request->method){
+            case 'model':
+                $item->status = 'model';
+                $item->save();
+            return back()->with('success', 'Message enregistré au model.');
+            case 'draft':
+                $item->status = 'draft';
+                $item->save();
+            return back()->with('success', 'Message enregistré au brouillon.');
+            case 'send':
+                $item->status = 'send';
+                $item->save();
+            break;
+        }
+
+        $receiverIds = [];
+        $receiverIds[] = $user->id;
+
+        $mailItem = new MailUser();
+        $mailItem->mail_id = $item->id;
+        $mailItem->user_id = $user->id;
+        $mailItem->is_sent = 1;
+        $mailItem->read    = 0;
+        $mailItem->save();
+        
+        try{
+            $data = array('name'=>"Virat Gandhi");
+            \Mail::send('mail', $data, function($message) use($mailItem, $user, $item) {
+                $message->to($user->email, $user->name)
+                        ->subject($item->subject)
+                        ->from($user->email, $user->name);
+            });
+        }catch(\Exception $e){
+            $mailItem->is_sent = 0;
+            $mailItem->save();
+            return back()->with('success', 'Message non envoyé. '. $e->getMessage());
+        }
+        
+        return back()->with('success', 'Messages envoyés avec succes. '.count($receiverIds));
     }
     
     /**

@@ -308,6 +308,9 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::get('disable/{user}', 'UserController@disable')->name('admin.user.disable');
         
         Route::get('delete/{user}', 'UserController@delete')->name('admin.user.delete');
+        
+        Route::get('contact/{user}' , 'UserController@contact')->name('admin.user.contact');
+        Route::post('contact/{user}', 'UserController@postContact');
     });
 
     // Page Controller Groups
