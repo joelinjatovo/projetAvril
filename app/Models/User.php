@@ -121,6 +121,46 @@ class User extends Authenticatable
     }
     
     /**
+     * Is current user can contact $user
+     *
+     * @return Boolean
+     */
+    public function canContact(User $user)
+    {
+       if($this->isAdmin())
+           return true;
+        
+        if(!$user->active())
+            return false;
+        
+        
+        if($this->hasRole('afa')){
+            return !$user->hasRole('member');
+        }
+        
+        if($this->hasRole('seller')){
+            return !$user->hasRole('member');
+        }
+        
+        
+        if($this->hasRole('member')){
+            if($user->hasRole('apl')){
+                return $this->apl && ($this->apl->id == $user->id);
+            }
+            
+            return $user->hasRole('admin');
+        }
+        
+        if($this->hasRole('apl')){
+            if($user->hasRole('member')){
+                return $user->apl && ($user->apl->id == $this->id);
+            }
+            
+            return true;
+        }
+    }
+    
+    /**
      * Is user active
      *
      * @return Boolean

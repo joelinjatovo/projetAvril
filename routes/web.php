@@ -170,12 +170,15 @@ Route::middleware(["auth", "role:member"])->group(function(){
         Route::get('favorites', 'BackendController@favorites');
         Route::get('pins', 'BackendController@pins');
         
-        Route::get('contact/{role}', 'MemberController@contact')->name('member.contact');
-        Route::post('contact/{role}', 'MemberController@sendMail');
+        Route::get('contact/role/{role}', 'MemberController@contact')->name('member.contact');
+        Route::post('contact/role/{role}', 'MemberController@sendMail');
         
         Route::get('purchases', 'MemberController@purchases')->name('member.purchases');
         Route::get('orders', 'MemberController@orders')->name('member.orders');
         Route::get('cart/{cart}', 'MemberController@showCart')->name('member.cart');
+        
+        Route::get('contact/{user}' , 'BackendController@contact')->name('member.user.contact');
+        Route::post('contact/{user}', 'BackendController@postContact');
     });
     
 });
@@ -190,6 +193,9 @@ Route::prefix('afa')->middleware(["auth","role:afa"])->group(function(){
     Route::get('sales', 'AfaController@sales')->name('afa.sales');
     Route::get('commissions/{filter?}', 'AfaController@commissions')->name('afa.commissions');
     Route::get('cartitem/{cartitem}', 'CartItemController@show')->name('afa.cartitem.show');
+        
+    Route::get('contact/{user}' , 'BackendController@contact')->name('afa.user.contact');
+    Route::post('contact/{user}', 'BackendController@postContact');
     
 });
 
@@ -204,6 +210,9 @@ Route::prefix('apl')->middleware(["auth","role:apl"])->group(function(){
     Route::get('customers', 'AplController@customers')->name('apl.customers');
     Route::get('commissions/{filter?}', 'AplController@commissions')->name('apl.commissions');
     Route::get('cartitem/{cartitem}', 'CartItemController@show')->name('apl.cartitem.show');
+        
+    Route::get('contact/{user}' , 'BackendController@contact')->name('apl.user.contact');
+    Route::post('contact/{user}', 'BackendController@postContact');
     
 });
 
@@ -217,6 +226,9 @@ Route::prefix('seller')->middleware(["auth","role:seller"])->group(function(){
     Route::get('sales', 'SellerController@sales')->name('seller.sales');
     Route::get('orders', 'SellerController@orders')->name('seller.orders');
     Route::get('cartitem/{cartitem}', 'CartItemController@show')->name('seller.cartitem.show');
+        
+    Route::get('contact/{user}' , 'BackendController@contact')->name('seller.user.contact');
+    Route::post('contact/{user}', 'BackendController@postContact');
     
 });
 
