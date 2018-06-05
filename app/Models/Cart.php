@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Auth;
 
 use App\Notifications\NewOrder;
+use App\Notifications\OrderPaid;
 
 class Cart extends BaseModel
 {
@@ -161,8 +162,16 @@ class Cart extends BaseModel
             }
         }
         
+        // Notify Customer
         if($this->author){
             $this->author->notify(new NewOrder($this->author, $this, null));
+        }
+        
+        // Notify Admin
+        $adminId = option('site.admin', 1);
+        $admin = User::find($adminId);
+        if($admin){
+            $admin->notify(new NewOrder($admin, $this, null));
         }
         
     }
@@ -177,23 +186,15 @@ class Cart extends BaseModel
         $this->status = 'paid';
         $this->save();
         
-        foreach($this->items as $item){
-            $item->status = 'paid';
-            $item->save();
-            
-            // Notify AFA
-            if($item->afa){
-                $this->afa->notify(new OrderPaid($this->afa, $this, $item));
-            }
-            
-            // Notify APL
-            if($item->apl){
-                $this->afa->notify(new OrderPaid($this->apl, $this, $item));
-            }
-        }
-        
         if($this->author){
             $this->author->notify(new OrderPaid($this->author, $this, null));
+        }
+        
+        // Notify Admin
+        $adminId = option('site.admin', 1);
+        $admin = User::find($adminId);
+        if($admin){
+            $admin->notify(new OrderPaid($admin, $this, null));
         }
     }
     

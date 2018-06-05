@@ -23,11 +23,15 @@ class CreateCartsItemsTable extends Migration
             
             $table->bigInteger('apl_id')->default(0)->index();
             $table->datetime('apl_paid_at')->nullable();
-            $table->double('apl_commission', 10, 2)->default(0);
+            $table->double('apl_amount', 10, 2)->default(0);
+            $table->string('apl_transaction_id')->nullable();
+            $table->string('apl_payment_type')->nullable();
             
             $table->bigInteger('afa_id')->default(0)->index();
             $table->datetime('afa_paid_at')->nullable();
-            $table->double('afa_commission', 10, 2)->default(0);
+            $table->double('afa_amount', 10, 2)->default(0);
+            $table->string('afa_transaction_id')->nullable();
+            $table->string('afa_payment_type')->nullable();
             
             $table->bigInteger('product_id')->default(0)->index();
             $table->bigInteger('author_id')->default(0)->index();

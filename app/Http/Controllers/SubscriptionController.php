@@ -13,6 +13,10 @@ class SubscriptionController extends Controller
         try{
           $user = $request->user();
             
+          //Stripe
+          $user->newSubscription('grape shop', 'grape-shop')->create($request->stripe_token);
+            
+            /* Baintree
           // get the plan after submitting the form
           $plan = Plan::findOrFail($request->plan);
 
@@ -20,11 +24,15 @@ class SubscriptionController extends Controller
           $user->newSubscription('main', $plan->braintree_plan)
               ->create($request->payment_method_nonce);
         
+            */
+            
           // Notify User
           $user->notify(new UserSubscribed($user, $plan));
 
+            
           // redirect to home after a successful subscription
-          return redirect()->route('profile')->with('success', 'Succesfull subscription');
+          return redirect()->route('subscription.success');
+            
         }catch(\Exception $e){
             return back()->with('error', $e->getMessage());
         }

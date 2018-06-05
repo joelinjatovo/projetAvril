@@ -77,31 +77,68 @@ class OrderPaid extends Notification
                     ->action('View More', route('afa.cartitem.show', $cartItem))
                     ->line('Thank you for using our application!');
             case 'member':
-                return (new MailMessage)
-                    ->from(env('ADMIN_MAIL'))
-                    ->subject('Order paid')
-                    ->greeting(sprintf('Hello %s', $user->name))
-                    ->line('Someone ordered product for an account with this email address.')
-                    ->action('View More', route('member.cart', $cart))
-                    ->line('Thank you for using our application!');
+                if($cartitem){
+                    return (new MailMessage)
+                        ->from(env('ADMIN_MAIL'))
+                        ->subject('Order paid')
+                        ->greeting(sprintf('Hello %s', $user->name))
+                        ->line('Someone ordered product for an account with this email address.')
+
+                        ->line(sprintf('APL %s', $cartitem->apl_paid_at))
+                        ->line(sprintf('AFA %s', $cartitem->afa_paid_at))
+                        ->action('View More', route('member.cart', $cart))
+
+                        ->line('Thank you for using our application!');
+                }else{
+                    return (new MailMessage)
+                        ->from(env('ADMIN_MAIL'))
+                        ->subject('Order paid')
+                        ->greeting(sprintf('Hello %s', $user->name))
+                        ->line('Someone ordered product for an account with this email address.')
+
+                        ->line(sprintf('Quantity %s', $cart->totalQuantity))
+                        ->line(sprintf('Amount %s', $cart->totalPrice))
+                        ->line(sprintf('TMA %s', $cart->totalTma))
+                        ->action('View More', route('member.cart', $cart))
+
+                        ->line('Thank you for using our application!');
+                }
             case 'admin':
-                return (new MailMessage)
-                    ->from(env('ADMIN_MAIL'))
-                    ->subject('Order paid')
-                    ->greeting(sprintf('Hello %s', $user->name))
-                    ->line('A customer ordered product')
-                    
-                    ->line(sprintf('Customer %s', $cartItem->author->name))
-                    ->action('View Customer', route('admin.user.show', $cartItem->author))
-                    
-                    ->line(sprintf('APL %s', $cartItem->apl->name))
-                    ->action('View APL', route('admin.user.show', $cartItem->apl))
-                    
-                    ->line(sprintf('AFA %s', $cartItem->apl->name))
-                    ->action('View AFA', route('admin.user.show', $cartItem->afa))
-                    
-                    ->action('View More', route('admin.cartitem.show', $cartItem))
-                    ->line('Thank you for using our application!');
+                if($cartitem){
+                    return (new MailMessage)
+                        ->from(env('ADMIN_MAIL'))
+                        ->subject('Order paid')
+                        ->greeting(sprintf('Hello %s', $user->name))
+                        ->line('A customer ordered product')
+
+                        ->line(sprintf('Customer %s', $cartItem->author->name))
+                        ->action('View Customer', route('admin.user.show', $cartItem->author))
+
+                        ->line(sprintf('APL %s', $cartItem->apl->name))
+                        ->action('View APL', route('admin.user.show', $cartItem->apl))
+
+                        ->line(sprintf('AFA %s', $cartItem->afa->name))
+                        ->action('View AFA', route('admin.user.show', $cartItem->afa))
+
+                        ->action('View More', route('admin.cartitem.show', $cartItem))
+                        ->line('Thank you for using our application!');
+                }else{
+                    return (new MailMessage)
+                        ->from(env('ADMIN_MAIL'))
+                        ->subject('Order paid')
+                        ->greeting(sprintf('Hello %s', $user->name))
+                        ->line('A customer ordered product')
+
+                        ->line(sprintf('Customer %s', $cart->author->name))
+                        ->action('View Customer', route('admin.user.show', $cart->author))
+
+                        ->line(sprintf('Quantity %s', $cart->totalQuantity))
+                        ->line(sprintf('Amount %s', $cart->totalPrice))
+                        ->line(sprintf('TMA %s', $cart->totalTma))
+                        ->action('View More', route('admin.cart.show', $cart))
+
+                        ->line('Thank you for using our application!');
+                }
         }
         
         return (new MailMessage)

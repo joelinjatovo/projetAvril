@@ -248,6 +248,9 @@ return [
     'shop.pay.apl'    => 'Payer commission APL',
     'shop.pay.afa'    => 'Payer commission AFA',
     
+    'admin.shop.pay.apl'    => 'Payer commission APL',
+    'admin.shop.pay.afa'    => 'Payer commission AFA',
+    
     'admin.shop'    => 'Shop',
     'admin.shop.list'    => 'Liste des achats',
     'admin.shop.pinged'       => 'Shop En Attente',

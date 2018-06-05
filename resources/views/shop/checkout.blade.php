@@ -107,7 +107,7 @@ SUCCESS PAGE
 <script src="https://js.stripe.com/v3/"></script>
 <script>
 (function() {
-   var stripe = Stripe('stripe_api_key_goes_here');
+   var stripe = Stripe('{!!env("STRIPE_SK")!!}');
    var elements = stripe.elements();
    var card = elements.create('card', {
       style: {

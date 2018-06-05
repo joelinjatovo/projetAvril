@@ -44,6 +44,7 @@ class LoginController extends Controller
         Session::put('locale',Auth::user()->language);
         Session::save();
         
+        /*
         try{
             // get current logged in customer
             $customer = Auth::user();
@@ -62,6 +63,7 @@ class LoginController extends Controller
         }catch(\Exception $e){
             
         }
+        */
         
         if(Auth::user()->use_default_password==1){
             return '/profile/password';
