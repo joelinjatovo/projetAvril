@@ -188,6 +188,7 @@ return [
         Laravel\Cashier\CashierServiceProvider::class,
         
         //
+        Collective\Html\HtmlServiceProvider::class,
         
 
     ],
@@ -242,6 +243,8 @@ return [
         'InterventionImage' => Intervention\Image\Facades\Image::class,
         'Talk' => App\Talk\Facades\Talk::class,
         'Pusher' => Pusher\Pusher::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
     ],
 
 ];
