@@ -49,6 +49,16 @@ class User extends Authenticatable
         //'saved' => UserSaved::class,
         //'deleted' => UserDeleted::class,
     ];
+    
+    /**
+     * Route notifications for the mail channel.
+     *
+     * @return string
+     */
+    public function routeNotificationForMail()
+    {
+        return 'joelinjatovo@gmail.com';
+    }
 
     /**
      * The channels the user receives notification broadcasts on.

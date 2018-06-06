@@ -23,6 +23,8 @@ class AppServiceProvider extends ServiceProvider
         \Braintree_Configuration::privateKey(config('services.braintree.private_key'));
         */
         
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+        
         // Cashier
         Cashier::useCurrency('eur', '€');
         

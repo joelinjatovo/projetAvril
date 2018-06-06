@@ -153,12 +153,12 @@ class Cart extends BaseModel
             
             // Notify AFA
             if($item->afa){
-                $this->afa->notify(new NewOrder($this->afa, $this, $item));
+                $item->afa->notify(new NewOrder($item->afa, $this, $item));
             }
             
             // Notify APL
             if($item->apl){
-                $this->apl->notify(new NewOrder($this->apl, $this, $item));
+                $item->apl->notify(new NewOrder($item->apl, $this, $item));
             }
         }
         

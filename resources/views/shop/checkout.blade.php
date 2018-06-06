@@ -83,9 +83,9 @@ SUCCESS PAGE
     <div class="panel panel-default">
       <div class="panel-heading">Payer les produits</div>
       <div class="panel-body">
-        <form action="{{route('shop.product.postCheckout')}}" method="POST">
+        <form id="form" action="{{route('shop.product.postCheckout')}}" method="POST">
             {{ csrf_field() }}
-            <input name="stripe_token" type="hidden" type="text"/>
+            <input name="stripe_token" type="hidden"/>
             <div id="card-element" class="field"></div>
             <hr>
             <div id="session-messages" class="column has-text-centered _session-messages">
@@ -107,7 +107,7 @@ SUCCESS PAGE
 <script src="https://js.stripe.com/v3/"></script>
 <script>
 (function() {
-   var stripe = Stripe('{!!env("STRIPE_SK")!!}');
+   var stripe = Stripe('{!!env("STRIPE_KEY")!!}');
    var elements = stripe.elements();
    var card = elements.create('card', {
       style: {
@@ -128,8 +128,9 @@ SUCCESS PAGE
     card.mount('#card-element');
     
     function setOutcome(result) {
+        console.log(result);
         
-      var form = document.querySelector('form');
+      var form = document.querySelector('#form');
       var errorElement = document.querySelector('.error');
       
       errorElement.classList.remove('visible');
@@ -149,7 +150,7 @@ SUCCESS PAGE
       setOutcome(event);
     });
     
-    document.querySelector('form').addEventListener('submit', function(e) {
+    document.querySelector('#form').addEventListener('submit', function(e) {
         e.preventDefault();
         document.querySelector('#pay-button').disabled = true;
         var initialSubmitText = document.querySelector('#pay-button').textContent;

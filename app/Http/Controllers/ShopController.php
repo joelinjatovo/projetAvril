@@ -299,6 +299,11 @@ class ShopController extends Controller
         $this->middleware('auth');
         $this->middleware('role:member');
         
+        $this->validate($request, [
+            'stripe_token' => 'required',
+        ]);
+
+        
         $user = Auth::user();
         
         if (!Session::has('cart')) {
@@ -332,7 +337,8 @@ class ShopController extends Controller
 
             // Create the charge
             $result = \Stripe\Charge::create(array(
-                "amount" => 150.95,
+                "amount" => 150,
+                "currency" => "eur",
                 "customer" => $customer->id,
                 "description" => 'Purchased Book!'
             ));
@@ -341,10 +347,7 @@ class ShopController extends Controller
             return back()->with('error', $e->getMessage());
         }
         
-        echo var_dump($result);
-        exit;
-        
-        if (!$result->success) {
+        if ($result->status != 'succeeded') {
           return back()->with('error', "Votre commande n'a pas été éffectué. ".$result->message);
         }
     

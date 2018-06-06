@@ -9,7 +9,7 @@
         <section>
             <div class="row-fluid">
                 <div class="span12">
-                  {!! Form::open(['url' => route('order-post'), 'data-parsley-validate']) !!}
+                  {!! Form::open(['url' => route('home'), 'data-parsley-validate']) !!}
 
                   <div class="form-group" id="first-name-group">
                       {!! Form::label('firstName', 'First Name:') !!}

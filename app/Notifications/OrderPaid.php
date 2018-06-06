@@ -5,12 +5,14 @@ namespace App\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
+
 use Illuminate\Notifications\Messages\MailMessage;
+
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\User;
 
-class OrderPaid extends Notification
+class OrderPaid extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -24,7 +26,7 @@ class OrderPaid extends Notification
      *
      * @return void
      */
-    public function __construct(User $user, Cart $cart, CartItem $cartItem)
+    public function __construct(User $user, Cart $cart, $cartItem)
     {
         $this->user = $user;
         $this->cart = $cart;

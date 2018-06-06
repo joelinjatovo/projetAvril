@@ -23,7 +23,7 @@ class NewOrder extends Notification
      *
      * @return void
      */
-    public function __construct(User $user, Cart $cart, CartItem $cartItem)
+    public function __construct(User $user, Cart $cart, $cartItem)
     {
         $this->user = $user;
         $this->cart = $cart;
@@ -84,7 +84,7 @@ class NewOrder extends Notification
                     ->action('View More', route('member.cart', $cart))
                     ->line('Thank you for using our application!');
             case 'admin':
-                if($cartitem){
+                if($cartItem){
                     return (new MailMessage)
                         ->from(env('ADMIN_MAIL'))
                         ->subject('New order')
