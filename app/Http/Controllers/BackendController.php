@@ -42,13 +42,13 @@ class BackendController extends Controller
         $count  = [];
         
                 
-        $count['pins']  = 110;
+        $count['pins']  = $user->pins()->count();
         $recent['pins'] = $user->pins()
             ->orderBy('created_at', 'desc')
             ->take($this->recentSize)
             ->get();
 
-        $count['favorites']  = 300;
+        $count['favorites']  = $user->favorites()->count();
         $recent['favorites'] = $user->favorites()
             ->orderBy('created_at', 'desc')
             ->take($this->recentSize)
@@ -60,14 +60,14 @@ class BackendController extends Controller
                 $cart = Cart::getInstance($currentCart);
                 $view->with('cart', $cart);
                 
-                $count['orders']  = 20;
+                $count['orders']  = $user->purchases()->wherePivot('status', 'ordered')->count();
                 $recent['orders'] = $user->purchases()
                     ->wherePivot('status', 'ordered')
                     ->orderBy('created_at', 'desc')
                     ->take($this->recentSize)
                     ->get();
                 
-                $count['purchases']  = 30;
+                $count['purchases']  = $user->purchases()->wherePivot('status', 'paid')->count();
                 $recent['purchases'] = $user->purchases()
                     ->wherePivot('status', 'paid')
                     ->orderBy('created_at', 'desc')
@@ -75,7 +75,7 @@ class BackendController extends Controller
                     ->get();
                 break;
             case 'apl':
-                $count['customers']  = 10;
+                $count['customers']  = $user->customers()->count();
                 $recent['customers'] = $user->customers()
                     ->isActive()
                     ->ofRole('member')
@@ -83,14 +83,14 @@ class BackendController extends Controller
                     ->take($this->recentSize)
                     ->get();
                 
-                $count['orders']  = 20;
+                $count['orders']  = $user->sales()->wherePivot('status', 'ordered')->count();
                 $recent['orders'] = $user->sales()
                     ->wherePivot('status', 'ordered')
                     ->orderBy('created_at', 'desc')
                     ->take($this->recentSize)
                     ->get();
                 
-                $count['sales']  = 30;
+                $count['sales']  = $user->sales()->wherePivot('status', 'paid')->count();
                 $recent['sales'] = $user->sales()
                     ->wherePivot('status', 'paid')
                     ->orderBy('created_at', 'desc')
@@ -98,14 +98,14 @@ class BackendController extends Controller
                     ->get();
                 break;
             case 'afa':
-                $count['orders']  = 5;
+                $count['orders']  = $user->sales()->wherePivot('status', 'ordered')->count();
                 $recent['orders'] = $user->sales()
                     ->wherePivot('status', 'ordered')
                     ->orderBy('created_at', 'desc')
                     ->take($this->recentSize)
                     ->get();
                 
-                $count['sales']  = 20;
+                $count['sales']  = $user->sales()->wherePivot('status', 'paid')->count();
                 $recent['sales'] = $user->sales()
                     ->wherePivot('status', 'paid')
                     ->orderBy('created_at', 'desc')
@@ -113,20 +113,20 @@ class BackendController extends Controller
                     ->get();
                 break;
             case 'seller':
-                $count['products']  = 50;
+                $count['products']  = $user->products()->count();
                 $recent['products'] = $user->products()
                     ->orderBy('products.created_at', 'desc')
                     ->take($this->recentSize)
                     ->get();
                 
-                $count['orders']  = 50;
+                $count['orders']  = $user->products()->where('products.status', 'ordered')->count();
                 $recent['orders'] = $user->products()
                     ->where('products.status', 'ordered')
                     ->orderBy('products.created_at', 'desc')
                     ->take($this->recentSize)
                     ->get();
                 
-                $count['sales']  = 200;
+                $count['sales']  = $user->products()->where('products.status', 'paid')->count();
                 $recent['sales'] = $user->products()
                     ->where('products.status', 'paid')
                     ->orderBy('products.created_at', 'desc')
