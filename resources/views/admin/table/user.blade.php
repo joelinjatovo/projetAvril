@@ -16,14 +16,25 @@
      @foreach($users as $item)
      <tr class="user-item-{{$item->id}}">
          <td>{{$item->id}}</td>
-         <td>
-             <a href="{{route('admin.user.show', $item)}}"><img class="thumb" src="{{$item->imageUrl()}}" width="50"></a>
+         <td style="position: relative;">
+             <a href="{{route('admin.user.show', $item)}}"><img class="img-circle" src="{{$item->imageUrl()}}" width="50"></a>
+             @if($item->isOnline())
+                <span class="badge badge-danger" style="background-color:green; margin-left:-20px;margin-bottom:-30px;">&nbsp;</span>
+             @endif
          </td>
          <td>{{$item->name}}</td>
          <td>{{$item->email}}</td>
          <td>{{$item->created_at->diffForHumans()}}</td>
          <td><a href="{{route('admin.user.list', ['filter'=>$item->role])}}"><span class="label label-warning">{{$item->role}}</span></a></td>
-         <td><a href="{{route('admin.user.list', ['filter'=>$item->typed])}}"><span class="label label-info">{{$item->type}}</span></a></td>
+         <td>
+             @if($item->isPerson())
+             <a href="{{route('admin.user.list', ['filter'=>$item->typed])}}"><span class="label label-info">{{$item->type}}</span>
+             </a>
+             @else
+             <a href="{{route('admin.user.list', ['filter'=>$item->typed])}}"><span class="label label-success">{{$item->type}}</span>
+             </a>
+             @endif
+         </td>
          <td>
              <a href="{{route('admin.user.list', ['filter'=>$item->status])}}">
              @if($item->status=='active')

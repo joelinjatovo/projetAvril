@@ -41,6 +41,7 @@ class Config extends BaseModel
             'latitude' => 'required|max:100',
             'longitude' => 'required|max:100',
             
+            'admin' => 'required|integer',
             'admin_email' => 'required|max:100',
             'admin_phone' => 'required|max:100',
             'admin_name' => 'required|max:100',

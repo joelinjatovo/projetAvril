@@ -12,8 +12,8 @@
                   {!! Form::open(['url' => route('home'), 'data-parsley-validate']) !!}
 
                   <div class="form-group" id="first-name-group">
-                      {!! Form::label('firstName', 'First Name:') !!}
-                      {!! Form::text('firstname', null, [
+                      {!! Form::label('last_name', 'First Name:') !!}
+                      {!! Form::text('first_name', old('first_name', $user->meta('first_name')), [
                           'class'                         => 'form-control',
                           'required'                      => 'required',
                           'data-parsley-required-message' => 'First name is required',
@@ -26,8 +26,8 @@
                   </div>
 
                   <div class="form-group" id="last-name-group">
-                      {!! Form::label('lastName', 'Last Name:') !!}
-                      {!! Form::text('lastname', null, [
+                      {!! Form::label('last_name', 'Last Name:') !!}
+                      {!! Form::text('last_name', old('last_name', $user->meta('last_name')), [
                           'class'                         => 'form-control',
                           'required'                      => 'required',
                           'data-parsley-required-message' => 'Last name is required',
@@ -41,7 +41,7 @@
 
                   <div class="form-group" id="email-group">
                       {!! Form::label('email', 'Email address:') !!}
-                      {!! Form::email('email', null, [
+                      {!! Form::email('email', $user->email, [
                           'class' => 'form-control',
                           'placeholder'                   => 'email@example.com',
                           'required'                      => 'required',
@@ -53,7 +53,7 @@
 
                   <div class="form-group" id="cc-group">
                       {!! Form::label(null, 'Credit card number:') !!}
-                      {!! Form::text(null, null, [
+                      {!! Form::text(null, old('cc', $user->meta('cc')), [
                           'class'                         => 'form-control',
                           'required'                      => 'required',
                           'data-parsley-type'             => 'number',
@@ -65,7 +65,7 @@
 
                   <div class="form-group" id="ccv-group">
                       {!! Form::label(null, 'Card Validation Code (3 or 4 digit number):') !!}
-                      {!! Form::text(null, null, [
+                      {!! Form::text(null, old('ccv', $user->meta('ccv')), [
                           'class'                         => 'form-control',
                           'required'                      => 'required',
                           'data-parsley-type'             => 'number',
@@ -97,7 +97,11 @@
                   </div>
 
                     <div class="form-group">
-                        {!! Form::submit('Place order!', ['class' => 'btn btn-primary btn-order', 'id' => 'submitBtn', 'style' => 'margin-bottom: 10px;']) !!}
+                        {!! Form::submit('Place order!', [
+                                'class'     => 'btn btn-primary btn-order', 
+                                'id'        => 'submitBtn', 
+                                'style'     => 'margin-bottom: 10px;'
+                        ]) !!}
                     </div>
 
                 {!! Form::close() !!}
@@ -123,7 +127,7 @@
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <script>
     // This identifies your website in the createToken call below
-    Stripe.setPublishableKey('{!!env("STRIPE_SK")!!}');
+    Stripe.setPublishableKey('{!!env("STRIPE_KEY")!!}');
 
     jQuery(function($) {
         $('#payment-form').submit(function(event) {

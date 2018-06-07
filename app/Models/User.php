@@ -181,6 +181,16 @@ class User extends Authenticatable
     }
     
     /**
+     * Is user online
+     *
+     * @return Boolean
+     */
+    public function isOnline()
+    {
+      return $this->sessions()->activity()->exists();
+    }
+    
+    /**
      * Is user admin
      *
      * @return Boolean
@@ -198,6 +208,16 @@ class User extends Authenticatable
     public function hasRole($role)
     {
       return ($this->role == $role);
+    }
+    
+    /**
+     * A user is person
+     *
+     * @return Boolean
+     */
+    public function isPerson()
+    {
+      return $this->hasRole('member')&&($this->type=='person');
     }
     
     /**
@@ -264,6 +284,16 @@ class User extends Authenticatable
     public function location()
     {
       return $this->hasOne(Localisation::class, 'id', 'location_id');
+    }
+    
+    /**
+     * A user can have many session
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function sessions()
+    {
+      return $this->hasMany(Session::class, 'user_id', 'id');
     }
     
     /**
@@ -401,6 +431,18 @@ class User extends Authenticatable
     public function mails()
     {
       return $this->belongsToMany(Mail::class, 'mails_users', 'user_id', 'mail_id');
+    }
+    
+    /*
+    * Alias to get_meta()
+    *
+    */
+    public function meta($key, $default = ''){
+        $meta = $this->get_meta($key);
+        if(!$meta) return $default;
+
+        return $meta->value;
+        
     }
     
 }

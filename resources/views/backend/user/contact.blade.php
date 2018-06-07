@@ -14,11 +14,8 @@
                 </p>
                 <p class="form-comment"><textarea id="content" name="content" placeholder="@lang('app.message')" cols="45" rows="8" aria-required="true" required="required">{{$mail->content}}</textarea></p>
                 <p class="form-submit">
-                    <button type="submit" class="pull-right submit-btn btn btn-default btn-lg" data-hover="@lang('app.btn.send')">@lang('app.btn.send')</button>
-                    <span id="ajax-loader"><i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i><span class="sr-only">Loading...</span></span>
+                    <button type="submit" name="method" value="send" class="pull-right submit-btn btn btn-default btn-lg" data-hover="@lang('app.btn.send')">@lang('app.btn.send')</button>
                 </p>
-                <div id="error-container"></div>
-                <div id="message-container"></div>
             </form>
         </div>
     </div>

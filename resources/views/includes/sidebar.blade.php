@@ -24,14 +24,11 @@
         </div>
         @endforeach
     </section>
+    
     <section class="widget recent-properties clearfix">
         <a href="{{route('member.contact', ['role'=>'admin'])}}" class="btn btn-primary col-sm-12"><i class="fa fa-envelope-open-o"></i> @lang('app.btn.contact_admin')</a>
         <a href="{{route('member.contact', ['role'=>'apl'])}}" class="btn btn-default col-sm-12"><i class="fa fa-envelope-open-o"></i> @lang('app.btn.contact_apl')</a>
     </section>
-
-    @if(Auth::check()&&Auth::user()->hasApl())
-        
-    @endif
     
     <section class="widget property-taxonomies clearfix">
         <h5 class="title">@lang('app.recent.category')</h5>

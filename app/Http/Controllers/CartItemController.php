@@ -176,11 +176,13 @@ class CartItemController extends Controller
                 if(!empty($cartitem->apl_paid_at)){
                     abort(404);
                 }
+                $user = $cartitem->apl;
                 break;
             case 'afa':
                 if(!empty($cartitem->afa_paid_at)){
                     abort(404);
                 }
+                $user = $cartitem->afa;
                 break;
             default:
                 abort(404);
@@ -190,10 +192,11 @@ class CartItemController extends Controller
         $action = route('admin.shop.pay', ['cartitem'=>$cartitem, 'role'=>$role]);
         $title = __('app.shop.pay.'.$role);
         return view('admin.shop.pay')
-            ->with('title', $title)
-            ->with('role', $role)
-            ->with('action', $action)
-            ->with('item', $cartitem)
+            ->with('title',   $title)
+            ->with('role',    $role)
+            ->with('action',  $action)
+            ->with('item',    $cartitem)
+            ->with('user',    $user)
             ->with('breadcrumbs', $title);
     }
 
@@ -235,8 +238,6 @@ class CartItemController extends Controller
 
         $token = $request->input('stripe_token');
         
-        \Stripe\Stripe::setApiKey(env('STRIPE_SK'));
-
         // If emprty stripe_id then create new customer
         if (empty($user->strip_id)) {
             // Create a new Stripe customer

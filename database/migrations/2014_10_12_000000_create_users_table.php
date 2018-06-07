@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email', 100)->unique();
             $table->string('password');
             $table->string('role', 20)->default('member')->index(); // admin afa apl member seller
-            $table->string('type', 20)->default('person')->index(); // person organization
+            $table->string('type', 20)->default('organization')->index(); // person organization
             $table->string('language')->default('fr'); // fr en
             $table->string('status', 20); // active disabled blocked pinged
             $table->double('percent', 8, 2)->nullable();
