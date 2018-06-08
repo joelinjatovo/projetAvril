@@ -29190,17 +29190,22 @@ var app = new Vue({
 
 var notifications = [];
 var NOTIFICATION_TYPES = {
-    mail: 'App\\Notifications\\NewMail'
+    test: 'App\\Notifications\\Order',
+    mail: 'App\\Notifications\\NewMail',
+    order: 'App\\Notifications\\NewOrder',
+    purchase: 'App\\Notifications\\OrderPaid'
 };
 
 $(document).ready(function () {
     // check if there's a logged in user
     if (Laravel.userId) {
         $.get('/notifications', function (data) {
+            console.log(data);
             addNotifications(data, "#notifications");
         });
 
         window.Echo.private('App.Models.User.' + Laravel.userId).notification(function (notification) {
+            console.log(notification);
             addNotifications([notification], '#notifications');
         });
     }
@@ -29220,9 +29225,11 @@ function showNotifications(notifications, target) {
         });
         $(target + 'Menu').html(htmlElements.join(''));
         $(target).addClass('has-notifications');
+        $(target + 'Count').removeClass('hidden');
     } else {
         $(target + 'Menu').html('<li class="dropdown-header">No notifications</li>');
         $(target).removeClass('has-notifications');
+        $(target + 'Count').addClass('hidden');
     }
 }
 
@@ -29245,9 +29252,10 @@ function routeNotification(notification) {
 // get the notification text based on it's type
 function makeNotificationText(notification) {
     var text = '';
-    if (notification.type === NOTIFICATION_TYPES.mail) {
-        var name = notification.data.message;
-        text += '<strong>' + name + '</strong> followed you';
+    if (notification.data.message != undefined) {
+        text += notification.data.message;
+    } else {
+        text += notification.data.data.message;
     }
     return text;
 }

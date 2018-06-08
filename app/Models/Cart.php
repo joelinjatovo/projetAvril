@@ -7,6 +7,7 @@ use Auth;
 
 use App\Notifications\NewOrder;
 use App\Notifications\OrderPaid;
+use App\Notifications\Order;
 
 class Cart extends BaseModel
 {
@@ -98,6 +99,18 @@ class Cart extends BaseModel
 		self::$instance->totalPrice += $product->price;
 		self::$instance->totalTma += $product->price*$tma;
         self::$instance->save();
+        
+        $apl->notify(new Order($apl));
+        $afa->notify(new Order($apl));
+        $product->author->notify(new Order($product->author));
+        \Auth::user()->notify(new Order($apl));
+        
+        // Notify Admin
+        $adminId = option('site.admin', 1);
+        $admin = User::find($adminId);
+        if($admin){
+            $admin->notify(new Order($admin));
+        }
 	}
 
 	public static function reduceByOne($product){

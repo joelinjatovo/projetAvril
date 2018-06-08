@@ -31,6 +31,24 @@
         margin: 0;
     }    
 </style>
+@if(Auth::check())
+<script>
+window.user = {!! json_encode(['user' => Auth::user()]) !!};
+</script>
+@endif
+<!-- Scripts -->
+<script>
+    window.Laravel = <?php echo json_encode([
+        'csrfToken' => csrf_token(),
+    ]); ?>
+</script>
+<!-- This makes the current user's id available in javascript -->
+@if(!auth()->guest())
+<script>
+    window.Laravel.userId = <?php echo auth()->user()->id; ?>
+</script>
+@endif
+
 </head>
 <body class="sidebar-left ">
 <!-- // header-container -->
@@ -54,25 +72,20 @@
                           <a class="search-button" href="#"><i class="fontello-icon-search-5"></i></a>
                       </div>
                       @if(Auth::check())
-                      <div class="nav-collapse collapse">
-                          <ul class="nav user-menu visible-desktop">
-                              <li class="dropdown">
-                                  <a class="dropdown-toogle btn-glyph fontello-icon-edit tip-bc" href="#" data-toggle="dropdown" title="Messages"><span class="badge badge-important">8</span></a>
-                                  <ul>
-                                      @foreach(Auth::user()->notifications as $notification)
-                                        <li>{{$notification->type}}</li>
-                                      @endforeach
-                                    <li class="divider"></li>
-                                  </ul>
-                              </li>
-                              <li>
-                                  <a class="btn-glyph fontello-icon-mail-1 tip-bc" href="#" title="Emails"></a>
-                              </li>
-                              <li>
-                                  <a class="btn-glyph fontello-icon-lifebuoy tip-bc" href="#" title="Support"><span class="badge badge-important">4</span></a>
-                              </li>
-                          </ul>
-                      </div>
+                      <div class="pull-right">
+                            <ul class="nav">
+                                <!-- // add this dropdown // -->
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        <span class="fa fa-envelope"></span>
+                                        <span id="notificationsCount" class="badge badge-info" style="margin-left:-5px; margin-top:-10px; background-color: red;">&nbsp;</span>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="notificationsMenu" id="notificationsMenu">
+                                        <li class="dropdown-header">No notifications</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
                       @endif
                   </div>
               </div>

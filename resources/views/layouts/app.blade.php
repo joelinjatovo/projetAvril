@@ -175,6 +175,7 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
                             <li class="dropdown">
                                 <a class="dropdown-toggle" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     <span class="fa fa-user"></span>
+                                    <span id="notificationsCount" class="badge badge-info" style="margin-left:-5px; margin-top:-10px; background-color: red;">&nbsp;</span>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="notificationsMenu" id="notificationsMenu">
                                     <li class="dropdown-header">No notifications</li>

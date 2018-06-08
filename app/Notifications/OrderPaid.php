@@ -157,8 +157,73 @@ class OrderPaid extends Notification implements ShouldQueue
      */
     public function toArray($notifiable)
     {
+        switch($user->role){
+            case 'apl':
+                return [
+                    'id' => $this->id,
+                    'read_at' => null,
+                    'data' => [
+                        'cartitem_id' => $this->cartitem->id,
+                        'author_id' => $this->cartitem->author->id,
+                        'author_name' => $this->cartitem->author->name,
+                        'message' => 'Commission MIO payée',
+                    ],
+                ];
+            case 'afa':
+                return [
+                    'id' => $this->id,
+                    'read_at' => null,
+                    'data' => [
+                        'cartitem_id' => $this->cartitem->id,
+                        'author_id' => $this->cartitem->author->id,
+                        'author_name' => $this->cartitem->author->name,
+                        'message' => 'Commission MIO payée',
+                    ],
+                ];
+            case 'seller':
+                return [
+                    'id' => $this->id,
+                    'read_at' => null,
+                    'data' => [
+                        'cartitem_id' => $this->cartitem->id,
+                        'author_id' => $this->cartitem->author->id,
+                        'author_name' => $this->cartitem->author->name,
+                        'message' => 'Commissions MIO payées',
+                    ],
+                ];
+            case 'admin':
+                return [
+                    'id' => $this->id,
+                    'read_at' => null,
+                    'data' => [
+                        'cart_id' => $this->cart->id,
+                        'author_id' => $this->cart->author->id,
+                        'author_name' => $this->cart->author->name,
+                        'message' => 'Commissions MIO payées',
+                    ],
+                ];
+            case 'member':
+                return [
+                    'id' => $this->id,
+                    'read_at' => null,
+                    'data' => [
+                        'cart_id' => $this->cart->id,
+                        'author_id' => $this->cart->author->id,
+                        'author_name' => $this->cart->author->name,
+                        'message' => 'Commissions MIO payées',
+                    ],
+                ];
+        }
+        
         return [
-            //
+            'id' => 0,
+            'read_at' => null,
+            'data' => [
+                'cart_id' => 0,
+                'author_id' => 0,
+                'author_name' => null,
+                'message' => 'Commande',
+            ],
         ];
     }
 }
