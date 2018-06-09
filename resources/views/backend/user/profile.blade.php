@@ -69,11 +69,11 @@
                 <div class="col-sm-12">
                     <div class="form-group">
                         <label class="col-sm-3 control-label">First Name</label>
-                        <div class="col-sm-9">{{$item->get_meta('firstname')?$item->get_meta('firstname')->value:''}}</div>
+                        <div class="col-sm-9">{{$item->get_meta('first_name')?$item->get_meta('first_name')->value:''}}</div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Last Name</label>
-                        <div class="col-sm-9">{{$item->get_meta('lastname')?$item->get_meta('lastname')->value:''}}</div>
+                        <div class="col-sm-9">{{$item->get_meta('last_name')?$item->get_meta('last_name')->value:''}}</div>
                     </div>
                     <div class="form-group">
                         <label for="phone" class="col-sm-3 control-label">Phone</label>

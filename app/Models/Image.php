@@ -22,11 +22,16 @@ class Image extends BaseModel
     protected $fillable = ['filename', 'filemime', 'filepath'];
     
     static function storeAndSave($file){
-        $path = $file->store('uploads');
+        $name = md5(time()).'.'.$file->getClientOriginalExtension();
+        $album = 'app';
+        $dir = public_path('uploads/'.$album);
+        
+        $newFile = $file->move($dir, $name);
+        
         $image = new Image();
-        $image->filename = '';
-        $image->filemime = '';
-        $image->filepath = $path;
+        $image->filename = $name;
+        $image->filemime = $file->getClientMimeType();
+        $image->filepath = $album.'/'.$name;
         $image->save();
         return $image;
     }

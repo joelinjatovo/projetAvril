@@ -251,6 +251,7 @@ class BlogController extends Controller
             $slug = $slugOriginal + '-' + $i++;
         }
         
+        $blog->slug = $slug;
         $blog->title = $request->title;
         $blog->content = $request->content;
         $blog->meta_tag = $request->meta_tag;

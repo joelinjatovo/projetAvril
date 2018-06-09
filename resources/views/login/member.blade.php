@@ -109,15 +109,15 @@
                                 <fieldset>
                                     <legend>User Information</legend>
                                     <div class="form-group">
-                                        <label for="firstname" class="col-sm-3 control-label">Nom *</label>
+                                        <label for="first_name" class="col-sm-3 control-label">Nom *</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="firstname">
+                                            <input type="text" class="form-control" name="first_name">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label" for="lastname">Prénom *</label>
+                                        <label class="col-sm-3 control-label" for="last_name">Prénom *</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control"  name="lastname" required>
+                                            <input type="text" class="form-control"  name="last_name" required>
                                         </div>
                                     </div>
                                 </fieldset>

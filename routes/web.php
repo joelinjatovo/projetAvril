@@ -21,36 +21,6 @@ Route::get('mail/attachment','MailController@attachment_email');
 Auth::routes();
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
-Route::get('storage/{album}/{filename}', function ($album,$filename)
-{
-    $path = storage_path('app/'.$album.'/'.$filename);
-    if (!File::exists($path)) {
-        abort(404);
-    }
-    $file = File::get($path);
-    $type = File::mimeType($path);
-    $response = Response::make($file, 200);
-    $response->header("Content-Type", $type);
-    return $response;
-});
-
-Route::get('storage/thumbnail/{album}/{filename}', function ($album,$filename)
-{
-    $path = storage_path('app/'.$album.'/'.$filename);
-    if (!File::exists($path)) {
-        abort(404);
-    }
-    $thumbnail = storage_path('app/'.$album.'/thumb_'.$filename);
-    if (!File::exists($thumbnail)) {
-        InterventionImage::make($path)->resize(320,240)->save($thumbnail);
-    }
-    $file = File::get($thumbnail);
-    $type = File::mimeType($thumbnail);
-    $response = Response::make($file, 200);
-    $response->header("Content-Type", $type);
-    return $response;
-});
-
 //Open Mail
 Route::get('mail/read/{mailuser}', 'MailController@read');
 

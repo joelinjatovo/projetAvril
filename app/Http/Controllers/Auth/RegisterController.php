@@ -271,8 +271,8 @@ class RegisterController extends Controller
                         'language' => 'required|max:100',
                         'image'    => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
-                        'firstname' => 'required|max:100',
-                        'lastname'  => 'required|max:100',
+                        'first_name' => 'required|max:100',
+                        'last_name'  => 'required|max:100',
 
                         'country'      => 'required|max:100',
                         'area_level_1' => 'nullable|max:100',
@@ -446,8 +446,8 @@ class RegisterController extends Controller
                     if($value = $request->input('phone')) $user->update_meta("phone", $value);
                 }else{
                     // Update MetaData
-                    if($value = $request->input('firstname')) $user->update_meta("firstname", $value);
-                    if($value = $request->input('lastname')) $user->update_meta("lastname", $value);
+                    if($value = $request->input('first_name')) $user->update_meta("firstname", $value);
+                    if($value = $request->input('last_name')) $user->update_meta("lastname", $value);
 
                 }
                 break;
