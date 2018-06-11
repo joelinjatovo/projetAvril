@@ -47,7 +47,14 @@
                     @include('includes.alerts')
                     <div class="row">
                         <div class="col-sm-12">
+                            @if(Auth::user()->hasApl())
+                            <form action="{{route('shop.add', ['product'=>$item])}}" method="post">
+                                {{csrf_field()}}
+                                <button type="submit" class="btn btn-success col-sm-6"><i class="fa fa-envelope-open-o"></i> @lang('app.btn.add_to_cart') 2</button>
+                            </form>
+                            @else
                             <a href="{{route('shop.select.apl', ['product'=>$item])}}" class="btn btn-success col-sm-6"><i class="fa fa-envelope-open-o"></i> @lang('app.btn.add_to_cart')</a>
+                            @endif
                             <a href="{{route('label.store', ['product'=>$item,'type'=>'starred'])}}" class="btn btn-primary col-sm-3"><i class="fa fa-floppy-o" aria-hidden="true"></i>  @lang('app.btn.star')</a>
                             <a href="{{route('label.store', ['product'=>$item,'type'=>'saved'])}}" class="btn btn-info col-sm-3"><i class="fa fa-floppy-o" aria-hidden="true"></i> @lang('app.btn.pin')</a>
                         </div>

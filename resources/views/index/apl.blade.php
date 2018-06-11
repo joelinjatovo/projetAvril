@@ -6,7 +6,7 @@
 
         <div class="row">
             <fieldset>
-                <legend>@lang('app.select_apl')</legend>
+                <legend>@lang('app.list_apl')</legend>
                 <div class="row">
                     <div class="col-sm-12">
                         <div id="map" style="height: 400px;"></div>
