@@ -140,12 +140,12 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
           <ul id="mainSideMenu" class="nav nav-list nav-side accordion">
               <li class="accordion-group">
                 <div class="accordion-heading">
-                    <a href="{{route('profile')}}" data-parent="" class="accordion-toggle"><i class="fontello-icon-user-4"></i>@lang('app.profile')</a>
+                    <a href="{{route('profile')}}" data-parent="" class="accordion-toggle"><i class="fontello-icon-user-4"></i> @lang('app.profile')</a>
                 </div>
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="#accDashboard" data-parent="#mainSideMenu"  data-toggle="collapse" class="accordion-toggle {{\Request::is('admin/chart*')?'collapsed':''}}"><i class="fontello-icon-chart"></i><i class="chevron fontello-icon-right-open-3"></i>Statistiques</a>
+                      <a href="#accDashboard" data-parent="#mainSideMenu"  data-toggle="collapse" class="accordion-toggle {{\Request::is('admin/chart*')?'collapsed':''}}"><i class="fontello-icon-chart"></i><i class="chevron fontello-icon-right-open-3"></i> Statistiques</a>
                   </div>
                   <ul class="accordion-content nav nav-list collapse {{\Request::is('admin/chart*')?'in':''}}" id="accDashboard">
                       <li><a href="{{route('admin.chart', ['type'=>'product'])}}"> <i class="fontello-icon-right-dir"></i>@lang('app.products')</a></li>
@@ -159,7 +159,7 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="#accMembres" data-parent="#mainSideMenu"  data-toggle="collapse" class="accordion-toggle {{\Request::is('admin/user*')?'collapsed':''}}"><i class="fontello-icon-users-1"></i><i class="chevron fontello-icon-right-open-3"></i>Parties Prenantes</a>
+                      <a href="#accMembres" data-parent="#mainSideMenu"  data-toggle="collapse" class="accordion-toggle {{\Request::is('admin/user*')?'collapsed':''}}"><i class="fontello-icon-users-1"></i><i class="chevron fontello-icon-right-open-3"></i> Parties Prenantes</a>
                   </div>
                   <ul class="accordion-content nav nav-list collapse {{\Request::is('admin/user*')?'in':''}}" id="accMembres">
                       <li><a href="{{route('admin.user.list')}}"> <i class="fontello-icon-right-dir"></i>Tous</a></li>
@@ -172,9 +172,25 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
+                      <a href="#accProducts" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Request::is('admin/product*')?'collapsed':''}}">
+                        <i class="fontello-icon-users-1"></i>
+                        <i class="chevron fontello-icon-right-open-3"></i> @lang('app.admin.products')</a>
+                  </div>
+                  <ul class="accordion-content nav nav-list collapse {{\Request::is('admin/product*')?'in':''}}" id="accProducts">
+                      <li><a href="{{route('admin.product.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.list')</a></li>
+                      <li><a href="{{route('admin.product.list', ['filter'=>'published'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.publish')</a></li>
+                      <li><a href="{{route('admin.product.list', ['filter'=>'paid'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.paid')</a></li>
+                      <li><a href="{{route('admin.product.list', ['filter'=>'ordered'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.ordered')</a></li>
+                      <li><a href="{{route('admin.product.list', ['filter'=>'pinged'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.ping')</a></li>
+                      <li><a href="{{route('admin.product.list', ['filter'=>'archived'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.archive')</a></li>
+                      <li><a href="{{route('admin.product.list', ['filter'=>'trashed'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.trash')</a></li>
+                  </ul>
+              </li>
+              <li class="accordion-group">
+                  <div class="accordion-heading">
                       <a href="#accShop" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Request::is('admin/shop*')?'collapsed':''}}">
                         <i class="fa fa-shopping-cart"></i>
-                        <i class="chevron fontello-icon-right-open-3"></i>@lang('app.shop')</a>
+                        <i class="chevron fontello-icon-right-open-3"></i> @lang('app.shop')</a>
                   </div>
                   <ul class="accordion-content nav nav-list collapse {{\Request::is('admin/shop*')?'in':''}}" id="accShop">
                       <li><a href="{{route('admin.shop')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.shop')</a></li>
@@ -189,25 +205,21 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="#accProducts" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Request::is('admin/product*')?'collapsed':''}}">
-                        <i class="fontello-icon-users-1"></i>
-                        <i class="chevron fontello-icon-right-open-3"></i>@lang('app.admin.products')</a>
+                      <a href="#accCarts" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Request::is('admin/cart*')?'collapsed':''}}">
+                        <i class="fa fa-shopping-cart"></i>
+                        <i class="chevron fontello-icon-right-open-3"></i> @lang('app.admin.carts')</a>
                   </div>
-                  <ul class="accordion-content nav nav-list collapse {{\Request::is('admin/product*')?'in':''}}" id="accProducts">
-                      <li><a href="{{route('admin.product.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.list')</a></li>
-                      <li><a href="{{route('admin.product.list', ['filter'=>'published'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.publish')</a></li>
-                      <li><a href="{{route('admin.product.list', ['filter'=>'paid'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.paid')</a></li>
-                      <li><a href="{{route('admin.product.list', ['filter'=>'ordered'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.ordered')</a></li>
-                      <li><a href="{{route('admin.product.list', ['filter'=>'pinged'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.ping')</a></li>
-                      <li><a href="{{route('admin.product.list', ['filter'=>'archived'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.archive')</a></li>
-                      <li><a href="{{route('admin.product.list', ['filter'=>'trashed'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.product.trash')</a></li>
+                  <ul class="accordion-content nav nav-list collapse {{\Request::is('admin/cart*')?'in':''}}" id="accCarts">
+                      <li><a href="{{route('admin.cart.list', ['filter'=>'pinged'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.cart.pinged')</a></li>
+                      <li><a href="{{route('admin.cart.list', ['filter'=>'ordered'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.cart.ordered')</a></li>
+                      <li><a href="{{route('admin.cart.list', ['filter'=>'paid'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.cart.paid')</a></li>
                   </ul>
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
                       <a href="#accBlogs" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Request::is('admin/blog*')?'collapsed':''}}">
                         <i class="fontello-icon-users-1"></i>
-                        <i class="chevron fontello-icon-right-open-3"></i>@lang('app.admin.blogs')</a>
+                        <i class="chevron fontello-icon-right-open-3"></i> @lang('app.admin.blogs')</a>
                   </div>
                   <ul class="accordion-content nav nav-list collapse {{\Request::is('admin/blog*')?'in':''}}" id="accBlogs">
                       <li><a href="{{route('admin.blog.create')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.blog.add')</a></li>
@@ -222,7 +234,7 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
                   <div class="accordion-heading">
                       <a href="#accCategories" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Request::is('admin/category*')?'collapsed':''}}">
                         <i class="fontello-icon-users-1"></i>
-                        <i class="chevron fontello-icon-right-open-3"></i>@lang('app.admin.categories')</a>
+                        <i class="chevron fontello-icon-right-open-3"></i> @lang('app.admin.categories')</a>
                   </div>
                   <ul class="accordion-content nav nav-list collapse {{\Request::is('admin/category*')?'in':''}}" id="accCategories">
                       <li><a href="{{route('admin.category.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.category.list')</a></li>
@@ -233,7 +245,7 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
                   <div class="accordion-heading">
                       <a href="#accPubs" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Request::is('admin/pub*')?'collapsed':''}}">
                         <i class="fontello-icon-users-1"></i>
-                        <i class="chevron fontello-icon-right-open-3"></i>@lang('app.admin.pubs')</a>
+                        <i class="chevron fontello-icon-right-open-3"></i> @lang('app.admin.pubs')</a>
                   </div>
                   <ul class="accordion-content nav nav-list collapse {{\Request::is('admin/pub*')?'in':''}}" id="accPubs">
                       <li><a href="{{route('admin.pub.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.pub.list')</a></li>
@@ -249,19 +261,6 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
                   <ul class="accordion-content nav nav-list collapse {{\Request::is('admin/page*')?'in':''}}" id="accPages">
                       <li><a href="{{route('admin.page.create')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.page.add')</a></li>
                       <li><a href="{{route('admin.page.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.page.list')</a></li>
-                  </ul>
-              </li>
-              <li class="accordion-group">
-                  <div class="accordion-heading">
-                      <a href="#accCarts" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Request::is('admin/cart*')?'collapsed':''}}">
-                        <i class="fa fa-shopping-cart"></i>
-                        <i class="chevron fontello-icon-right-open-3"></i> @lang('app.admin.carts')</a>
-                  </div>
-                  <ul class="accordion-content nav nav-list collapse {{\Request::is('admin/cart*')?'in':''}}" id="accCarts">
-                      <li><a href="{{route('admin.cart.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.cart.list')</a></li>
-                      <li><a href="{{route('admin.cart.list', ['filter'=>'pinged'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.cart.pinged')</a></li>
-                      <li><a href="{{route('admin.cart.list', ['filter'=>'ordered'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.cart.ordered')</a></li>
-                      <li><a href="{{route('admin.cart.list', ['filter'=>'paid'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.cart.paid')</a></li>
                   </ul>
               </li>
               <li class="accordion-group">

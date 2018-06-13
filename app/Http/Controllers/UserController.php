@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Validator;
 use Auth;
 
+use App\Notifications\AccountActivated;
+use App\Notifications\AccountDisabled;
+
 use App\Models\User;
 use App\Models\Mail;
 use App\Models\MailUser;
@@ -247,6 +250,12 @@ class UserController extends Controller
         $user->status = 'active';
         $user->save();
         
+        try{
+            $user->notify(new AccountActivated($user, $status));
+        }catch(\Exception $e){
+
+        }
+        
         return back()->with('success',"L'utilsateur a été activé avec succés");
     }
     
@@ -266,8 +275,16 @@ class UserController extends Controller
             return back()->with('error',"Cette action ne peut pas etre réalisée.");
         }
         
+        $status = $user->status;
+        
         $user->status = 'disabled';
         $user->save();
+        
+        try{
+            $user->notify(new AccountDisabled($user, $status));
+        }catch(\Exception $e){
+
+        }
         
         return back()->with('success',"L'utilsateur a été desactivé avec succés");
     }

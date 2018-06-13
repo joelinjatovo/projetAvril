@@ -102,7 +102,6 @@ class Cart extends BaseModel
         
         $apl->notify(new Order($apl));
         $afa->notify(new Order($apl));
-        $product->author->notify(new Order($product->author));
         \Auth::user()->notify(new Order($apl));
         
         // Notify Admin

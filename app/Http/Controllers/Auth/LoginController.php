@@ -129,19 +129,28 @@ class LoginController extends Controller
         */
         if ($this->guard()->validate($this->credentials($request))) {
             $user = $this->guard()->getLastAttempted();
-
+            
             // Make sure the user is active
-            if ($user->isActive() && $this->attemptLogin($request)) {
+            if ($user->active() && $this->attemptLogin($request)) {
                 // Send the normal successful login response
                 return $this->sendLoginResponse($request);
             } else {
+                
                 // Increment the failed login attempts and redirect back to the
                 // login form with an error message.
                 $this->incrementLoginAttempts($request);
+                
+                if($user->status == 'disabled'){
+                    return redirect()
+                        ->route('login')
+                        ->withInput($request->only($this->username(), 'remember'))
+                        ->with('error', 'Your account is deactivated. An email is sent to your email.');
+                }
+                
                 return redirect()
-                    ->back()
+                    ->route('login')
                     ->withInput($request->only($this->username(), 'remember'))
-                    ->with('error', 'You account must be active to login.');
+                    ->with('error', 'You must be confirm your account.');
             }
         }
 

@@ -54,6 +54,7 @@ class ConfigController extends Controller
         }
         
         return view('config.site',compact('item', 'keys'))
+            ->with('admins', User::isActive()->ofRole('admin')->get())
             ->with('breadcrumbs', __('app.config'));
     }
     /**
