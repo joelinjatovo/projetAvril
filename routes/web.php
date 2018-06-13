@@ -89,9 +89,9 @@ Route::middleware(["auth"])->group(function(){
     Route::get('products/{type}', 'LabelController@all')->name('label.list');// List saved products OR starred Product
 
     // Braintree
-    Route::get('/plans', 'PlanController@index');
-    Route::get('/plan/{plan}', 'PlanController@show');
-    Route::post('/subscribe', 'PlanController@subscribe');
+    Route::get('/plans', 'PlanController@index')->name('plans');
+    Route::get('/plan/{plan}', 'PlanController@show')->name('plan.show');
+    Route::post('/subscribe', 'PlanController@subscribe')->name('subscribe');
     
     // Subscription
     Route::post('/subscription/success', 'SubscriptionController@success')->name('subscription.success');
@@ -314,6 +314,18 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         
         Route::get('contact/{user}' , 'UserController@contact')->name('admin.user.contact');
         Route::post('contact/{user}', 'UserController@postContact');
+    });
+
+    // Plan Controller Groups
+    Route::get('plans/{filter?}', 'PlanController@all')->name('admin.plan.list');
+    Route::prefix('plan')->group(function(){
+        Route::get('/', 'PlanController@create')->name('admin.plan.create');
+        Route::post('/', 'PlanController@store')->name('admin.plan.store');
+        Route::get('show/{plan}', 'PlanController@show')->name('admin.plan.show');
+        Route::get('update/{plan}', 'PlanController@edit')->name('admin.plan.edit');
+        Route::post('update/{plan}', 'PlanController@update')->name('admin.plan.update');
+        
+        Route::get('delete/{plan}', 'PlanController@delete')->name('admin.plan.delete');
     });
 
     // Page Controller Groups

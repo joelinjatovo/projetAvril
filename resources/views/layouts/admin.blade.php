@@ -78,7 +78,7 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
                                 <li class="dropdown">
                                     <a class="dropdown-toggle" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="fa fa-envelope"></span>
-                                        <span id="notificationsCount" class="badge badge-info" style="margin-left:-5px; margin-top:-10px; background-color: red;">&nbsp;</span>
+                                        <span id="notificationsCount" class="badge badge-info hidden" style="margin-left:-5px; margin-top:-10px; background-color: red;">&nbsp;</span>
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="notificationsMenu" id="notificationsMenu">
                                         <li class="dropdown-header">No notifications</li>
@@ -309,6 +309,17 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
                   <ul class="accordion-content nav nav-list collapse {{\Request::is('admin/state*')?'in':''}}" id="accState">
                       <li><a href="{{route('admin.state.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.state.list')</a></li>
                       <li><a href="{{route('admin.state.create')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.state.create')</a></li>
+                  </ul>
+              </li>
+              <li class="accordion-group">
+                  <div class="accordion-heading">
+                      <a href="#accPlan" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Request::is('admin/plan*')?'collapsed':''}}">
+                        <i class="fa fa-envelope"></i>
+                        <i class="chevron fontello-icon-right-open-3"></i> @lang('app.admin.plan.list')</a>
+                  </div>
+                  <ul class="accordion-content nav nav-list collapse {{\Request::is('admin/plan*')?'in':''}}" id="accPlan">
+                      <li><a href="{{route('admin.plan.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.plan.list')</a></li>
+                      <li><a href="{{route('admin.plan.create')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.plan.create')</a></li>
                   </ul>
               </li>
               <li class="accordion-group">

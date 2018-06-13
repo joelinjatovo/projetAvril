@@ -4,12 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-use Auth;
-use Session;
-use App;
-use Route;
-
-class EditPassword
+class CheckSubscription
 {
     /**
      * Handle an incoming request.
@@ -20,9 +15,13 @@ class EditPassword
      */
     public function handle($request, Closure $next)
     {
-        if(!$request->is('*profile/password*')
-           &&Auth::check()&&Auth::user()->use_default_password == 1){
-            return redirect()->route('password.edit');
+        
+        if(!$request->is('*plan*')&&
+           \Auth::check()&&
+           !\Auth::user()->isAdmin()&&
+           !\Auth::user()->onTrial()){
+            return redirect()->route('plans')
+                ->with('warning', __('app.trial_end'));
         }
         return $next($request);
     }

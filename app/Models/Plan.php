@@ -18,10 +18,12 @@ class Plan extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'slug', 'braintree_plan', 'cost', 'description', 'role'];
+    protected $fillable = ['name', 'slug', 'name', 'cost', 'description', 'role'];
     
     public function getRouteKeyName()
     {
-      return 'slug';
+        if(\Auth::check() && \Auth::user()->isAdmin())
+            return 'id';
+        return 'slug';
     }
 }

@@ -20,7 +20,7 @@
                     
                     @if(!Auth::user()->isAdmin())
                     <li class="submenu">
-                         <a href="{{route('mail.list',['filter'=>'inbox'])}}">
+                         <a href="{{route(Auth::user()->role.'.mail.list',['filter'=>'inbox'])}}">
                             <i class="fa fa-envelope"></i> @lang('app.mails')
                          </a>
                     </li>
