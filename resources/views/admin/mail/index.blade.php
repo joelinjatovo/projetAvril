@@ -7,7 +7,7 @@
     </div>
     <div>
         <a href="{{route('admin.mail.compose', $item)}}"  class="btn btn-small btn-success">@lang('app.btn.send')</a>
-        <a href="{{route('mail.delete', $item)}}" class="btn btn-small btn-warning btn-delete">@lang('app.btn.delete')</a>
+        <a href="{{route('admin.mail.delete', $item)}}" class="btn btn-small btn-warning btn-delete">@lang('app.btn.delete')</a>
     </div>
     <div id="page-content" class="page-content">
         <section>

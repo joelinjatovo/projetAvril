@@ -62,9 +62,9 @@
                                 <td>{{$item->status}}</span></td>
                                 <td>{{$item->created_at->diffForHumans()}}</td>
                                 <td>
-                                    <a href="{{route('mail.index', $item)}}"  class="btn btn-small btn-info">@lang('app.btn.view')</a>
+                                    <a href="{{route('admin.mail.index', $item)}}"  class="btn btn-small btn-info">@lang('app.btn.view')</a>
                                     <a href="{{route('admin.mail.compose', $item)}}"  class="btn btn-small btn-success">@lang('app.btn.send')</a>
-                                    <a href="{{route('mail.delete', $item)}}" class="btn btn-small btn-warning btn-delete">@lang('app.btn.delete')</a>
+                                    <a href="{{route('admin.mail.delete', $item)}}" class="btn btn-small btn-warning btn-delete">@lang('app.btn.delete')</a>
                                 </td>
                             </tr>
                            @endforeach

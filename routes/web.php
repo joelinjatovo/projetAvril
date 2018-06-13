@@ -79,13 +79,6 @@ Route::middleware(["auth"])->group(function(){
     // Notification
     Route::get('notifications/{filter?}', 'NotificationController@all')->name('notification.list');
 
-    // Mail Controller Groups
-    Route::get('mails/{filter?}', 'MailController@all')->name('mail.list');
-    Route::prefix('mail')->group(function(){
-        Route::get('{mail}', 'MailController@view')->name('mail.index');
-        Route::get('delete/{mail}', 'MailController@delete')->name('mail.delete');
-    });
-
     //Chat
     Route::get('chat', 'ChatController@index');
     Route::post('chat/threads', 'ThreadController@store');
@@ -149,6 +142,13 @@ Route::middleware(["auth", "role:member"])->group(function(){
         
         Route::get('contact/{user}' , 'BackendController@contact')->name('member.user.contact');
         Route::post('contact/{user}', 'BackendController@postContact');
+        
+        // Mail Controller Groups
+        Route::get('mails/{filter?}', 'MailController@all')->name('member.mail.list');
+        Route::prefix('mail')->group(function(){
+            Route::get('{mail}', 'MailController@view')->name('member.mail.index');
+            Route::get('delete/{mail}', 'MailController@delete')->name('member.mail.delete');
+        });
     });
     
 });
@@ -167,6 +167,13 @@ Route::prefix('afa')->middleware(["auth","role:afa"])->group(function(){
     Route::get('contact/{user}' , 'BackendController@contact')->name('afa.user.contact');
     Route::post('contact/{user}', 'BackendController@postContact');
     
+    // Mail Controller Groups
+    Route::get('mails/{filter?}', 'MailController@all')->name('afa.mail.list');
+    Route::prefix('mail')->group(function(){
+        Route::get('{mail}', 'MailController@view')->name('afa.mail.index');
+        Route::get('delete/{mail}', 'MailController@delete')->name('afa.mail.delete');
+    });
+    
 });
 
 Route::prefix('apl')->middleware(["auth","role:apl"])->group(function(){
@@ -184,6 +191,13 @@ Route::prefix('apl')->middleware(["auth","role:apl"])->group(function(){
     Route::get('contact/{user}' , 'BackendController@contact')->name('apl.user.contact');
     Route::post('contact/{user}', 'BackendController@postContact');
     
+    // Mail Controller Groups
+    Route::get('mails/{filter?}', 'MailController@all')->name('apl.mail.list');
+    Route::prefix('mail')->group(function(){
+        Route::get('{mail}', 'MailController@view')->name('apl.mail.index');
+        Route::get('delete/{mail}', 'MailController@delete')->name('apl.mail.delete');
+    });
+    
 });
 
 Route::prefix('seller')->middleware(["auth","role:seller"])->group(function(){
@@ -199,6 +213,13 @@ Route::prefix('seller')->middleware(["auth","role:seller"])->group(function(){
         
     Route::get('contact/{user}' , 'BackendController@contact')->name('seller.user.contact');
     Route::post('contact/{user}', 'BackendController@postContact');
+    
+    // Mail Controller Groups
+    Route::get('mails/{filter?}', 'MailController@all')->name('seller.mail.list');
+    Route::prefix('mail')->group(function(){
+        Route::get('{mail}', 'MailController@view')->name('seller.mail.index');
+        Route::get('delete/{mail}', 'MailController@delete')->name('seller.mail.delete');
+    });
     
 });
 
@@ -384,14 +405,14 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::post('payment', 'ConfigController@payment')->name('config.payment.update');
         Route::get('fontawesome', 'ConfigController@fontawesome')->name('config.fontawesome');
     });
-    
-    //Mail
+
+    // Mail Controller Groups
+    Route::get('mails/{filter?}', 'MailController@all')->name('admin.mail.list');
     Route::prefix('mail')->group(function(){
-        Route::get('delete/{mail}', 'MailController@delete')->name('mail.delete');
-        
         Route::get('compose/{mail?}' , 'AdminController@compose')->name('admin.mail.compose');
         Route::post('compose/{mail?}', 'AdminController@sendMail');
+        
+        Route::get('{mail}', 'MailController@view')->name('admin.mail.index');
+        Route::get('delete/{mail}', 'MailController@delete')->name('admin.mail.delete');
     });
-    
-
 });
