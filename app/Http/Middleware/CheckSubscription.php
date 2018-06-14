@@ -15,13 +15,15 @@ class CheckSubscription
      */
     public function handle($request, Closure $next)
     {
-        
-        if(!$request->is('*plan*')&&
-           \Auth::check()&&
-           !\Auth::user()->isAdmin()&&
-           !\Auth::user()->onTrial()){
-            return redirect()->route('plans')
-                ->with('warning', __('app.trial_end'));
+        $disabled = option('payment.disable_payed_inscription', 0);
+        if(!$disabled){
+            if(!$request->is('*plan*')&&
+               \Auth::check()&&
+               !\Auth::user()->isAdmin()&&
+               !\Auth::user()->onTrial()){
+                return redirect()->route('plans')
+                    ->with('warning', __('app.trial_end'));
+            }
         }
         return $next($request);
     }

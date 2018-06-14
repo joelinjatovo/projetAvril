@@ -247,14 +247,15 @@ class UserController extends Controller
             return back()->with('error',"Cette action ne peut pas etre réalisée.");
         }
         
+        if($user->status == 'pinged'){
+            $user->trial_ends_at = \Carbon\Carbon::now()->addDays(option('payment.trial_delay', 14));
+        }
         $user->status = 'active';
         $user->save();
         
         try{
             $user->notify(new AccountActivated($user, $status));
-        }catch(\Exception $e){
-
-        }
+        }catch(\Exception $e){}
         
         return back()->with('success',"L'utilsateur a été activé avec succés");
     }
@@ -282,9 +283,7 @@ class UserController extends Controller
         
         try{
             $user->notify(new AccountDisabled($user, $status));
-        }catch(\Exception $e){
-
-        }
+        }catch(\Exception $e){}
         
         return back()->with('success',"L'utilsateur a été desactivé avec succés");
     }

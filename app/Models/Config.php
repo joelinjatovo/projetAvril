@@ -27,7 +27,6 @@ class Config extends BaseModel
     public static $SMTP_ID = 6;
     
     public static $TRIAL = "payment.trial_delay";
-    public static $RESERVATION = "payment.percent_reservation";
     
     public static $APP_LATITUDE = "site.latitude";
     public static $APP_LONGITUDE = "site.longitude";
@@ -124,18 +123,13 @@ class Config extends BaseModel
     
     public static function paymentRules(){
         return [
-            'value_inscription_member' => 'required|max:100',
-            'value_inscription_seller' => 'required|max:100',
-            'value_inscription_afa' => 'required|max:100',
-            'value_inscription_apl' => 'required|max:100',
+            'percent_reservation' => 'required',
 
-            'percent_reservation' => 'required|max:100',
+            'percent_presentation_afa' => 'required',
+            'percent_presentation_apl' => 'required',
 
-            'percent_presentation_afa' => 'required|max:100',
-            'percent_presentation_apl' => 'required|max:100',
-
-            'disable_payed_inscription' => 'max:100',
-            'trial_delay' => 'required|max:100',
+            'disable_payed_inscription' => 'max:1',
+            'trial_delay' => 'required|integer|min:0|max:365',
         ];
     }
     

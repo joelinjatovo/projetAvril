@@ -18,12 +18,29 @@ class Plan extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'slug', 'name', 'cost', 'description', 'role'];
+    protected $fillable = ['name', 'slug', 'cost', 'description', 'role', 'type'];
     
     public function getRouteKeyName()
     {
         if(\Auth::check() && \Auth::user()->isAdmin())
             return 'id';
         return 'slug';
+    }
+    
+    public function getDayCount()
+    {
+        switch($this->type){
+            case 'daily':
+                return 1;
+            case 'weekly':
+                return 7;
+            case 'bimonthly':
+                return 15;
+            case 'monthly':
+                return 30;
+            case 'yearly':
+                return 365;
+        }
+        return 0;
     }
 }

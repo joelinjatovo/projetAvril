@@ -87,7 +87,7 @@ class Cart extends BaseModel
             }
         }
         
-        $tma = max(option(Config::$RESERVATION, 0.10), $product->tma);
+        $tma = max(option('payment.percent_reservation', 0.10), $product->tma);
         
 		$storedItem->quantity++;
 		$storedItem->price = $storedItem->quantity * $product->price;
@@ -100,16 +100,26 @@ class Cart extends BaseModel
 		self::$instance->totalTma += $product->price*$tma;
         self::$instance->save();
         
-        $apl->notify(new Order($apl));
-        $afa->notify(new Order($apl));
-        \Auth::user()->notify(new Order($apl));
+        try{
+            $apl->notify(new Order($apl));
+        }catch(\Exception $e){}
         
-        // Notify Admin
-        $adminId = option('site.admin', 1);
-        $admin = User::find($adminId);
-        if($admin){
-            $admin->notify(new Order($admin));
-        }
+        try{
+            $afa->notify(new Order($apl));
+        }catch(\Exception $e){}
+        
+        try{
+            \Auth::user()->notify(new Order($apl));
+        }catch(\Exception $e){}
+        
+        try{
+            // Notify Admin
+            $adminId = option('site.admin', 1);
+            $admin = User::find($adminId);
+            if($admin){
+                $admin->notify(new Order($admin));
+            }
+        }catch(\Exception $e){}
 	}
 
 	public static function reduceByOne($product){
@@ -165,25 +175,33 @@ class Cart extends BaseModel
             
             // Notify AFA
             if($item->afa){
-                $item->afa->notify(new NewOrder($item->afa, $this, $item));
+                try{
+                    $item->afa->notify(new NewOrder($item->afa, $this, $item));
+                }catch(\Exception $e){}
             }
             
             // Notify APL
             if($item->apl){
-                $item->apl->notify(new NewOrder($item->apl, $this, $item));
+                try{
+                    $item->apl->notify(new NewOrder($item->apl, $this, $item));
+                }catch(\Exception $e){}
             }
         }
         
         // Notify Customer
         if($this->author){
-            $this->author->notify(new NewOrder($this->author, $this, null));
+            try{
+                $this->author->notify(new NewOrder($this->author, $this, null));
+            }catch(\Exception $e){}
         }
         
         // Notify Admin
         $adminId = option('site.admin', 1);
         $admin = User::find($adminId);
         if($admin){
-            $admin->notify(new NewOrder($admin, $this, null));
+            try{
+                $admin->notify(new NewOrder($admin, $this, null));
+            }catch(\Exception $e){}
         }
         
     }
@@ -199,14 +217,18 @@ class Cart extends BaseModel
         $this->save();
         
         if($this->author){
-            $this->author->notify(new OrderPaid($this->author, $this, null));
+            try{
+                $this->author->notify(new OrderPaid($this->author, $this, null));
+            }catch(\Exception $e){}
         }
         
         // Notify Admin
         $adminId = option('site.admin', 1);
         $admin = User::find($adminId);
         if($admin){
-            $admin->notify(new OrderPaid($admin, $this, null));
+            try{
+                $admin->notify(new OrderPaid($admin, $this, null));
+            }catch(\Exception $e){}
         }
     }
     

@@ -96,6 +96,7 @@ class RegisterController extends Controller
             }
             $user->status = 'active';
             $user->activation_code = null;
+            $user->trial_ends_at = \Carbon\Carbon::now()->addDays(option('payment.trial_delay', 14));
             $user->save();
         } catch (\Exception $exception) {
             logger()->error($exception);
@@ -423,9 +424,6 @@ class RegisterController extends Controller
         $datas['password'] = $password = str_random(10);
         $datas['activation_code'] = md5(str_random(30).(time()*32));
         $datas['use_default_password'] = 1;
-        
-        // Date d'essaie
-        $datas['trial_ends_at'] = \Carbon\Carbon::now()->addDays(option('payment.trial_delay', 14));
 
         // Create user
         try{

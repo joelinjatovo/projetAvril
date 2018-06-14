@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name', 'email', 'password', 'image_id', 'location_id', 'status', 'type', 'role', 
         'activation_code', 
         'use_default_password',
+        'trial_ends_at',
     ];
 
     /**

@@ -144,7 +144,7 @@ class LoginController extends Controller
                     return redirect()
                         ->route('login')
                         ->withInput($request->only($this->username(), 'remember'))
-                        ->with('error', 'Your account is deactivated. An email is sent to your email.');
+                        ->with('error', 'Your account is deactivated. An email is sent to your address email.');
                 }
                 
                 return redirect()

@@ -54,9 +54,8 @@ class ShopController extends Controller
             });
         }
         
-        
         $items = $items->orderBy($orderBy, $order);
-        
+
         $items = $items->paginate($this->pageSize);
         
         if($request->ajax()){
@@ -322,25 +321,40 @@ class ShopController extends Controller
         $total = $cart->totalTma;
         $currency = $cart->currency;
         
+        // Get the submitted Stripe token
+        $token = $request->stripe_token;
+
+        // If empty stripe_id then create new customer
+        if (empty($user->strip_id)) {
+            // Create a new Stripe customer
+            try {
+                $customer = \Stripe\Customer::create([
+                'source' => $token,
+                'email' => $user->email,
+                'metadata' => [
+                    "First Name" => $user->name,
+                    "Last Name" => $user->name
+                ]
+                ]);
+            } catch (\Stripe\Error\Card $e) {
+                return redirect()->to($action)
+                    ->withErrors($e->getMessage())
+                    ->withInput();
+            }
+
+            // Update user in the database with Stripe
+            $user->stripe_id = $customer->id;
+            $user->save();
+
+        }
+
         try{
-            // Get the submitted Stripe token
-            $token = $request->stripe_token;
-            
-            // Create Customer
-            $customer = \Stripe\Customer::create(array(
-                "description" => \Auth::user()->email,
-                "source" => $token
-            ));
-
-            \Auth::user()->stripe_id = $customer->id;
-            \Auth::user()->save();
-
             // Create the charge
             $result = \Stripe\Charge::create(array(
-                "amount" => 150,
+                "amount" => $total,
                 "currency" => "eur",
-                "customer" => $customer->id,
-                "description" => 'Purchased Book!'
+                "customer" => $user->stripe_id,
+                "description" => 'Purchase'
             ));
             
         }catch(\Exception $e){

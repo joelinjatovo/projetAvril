@@ -13,6 +13,8 @@ return [
     'list_apl'    => 'Lister les APL',
     'read_more'    => 'Continuer de lire',
     
+    'trial_end'    => 'Vous devez mettre a jour votre inscription. Choisissez un plan.',
+    
     'shop'    => 'Shop',
     'login'    => 'Connexion',
     
@@ -178,6 +180,8 @@ return [
     'select_seller'         => 'Selectionner un vendeur',
     'select_apl'            => 'Selectionner une agence partenaire locale',
     'select_admin'          => 'Selectionner un administrateur',
+    'select_frequency'     => 'Selectionner le frequence',
+    
     'choose_as_default_apl' => 'Choisir comme apl par defaut',
     'i_want_buy_this_item'  => 'Je veux acheter ce produit',
     'as'       => 'En tant que',
@@ -243,6 +247,10 @@ return [
     'config.login'  => 'Ecran de connexion',
     'config.payment'   => 'Paiement',
     'config.static_page'   => 'Page Statique',
+    
+    'admin.plan.list'  => 'Liste des plans',
+    'admin.plan.create'  => 'Ajouter un plan',
+    'admin.plan.update'  => 'Modifier un plan',
     
     'shop.list'              => 'Liste des ventes',
     'shop.list.status'       => 'Liste des ventes ":status"',
@@ -336,6 +344,27 @@ return [
     
     'admin.parent'   => 'Parent',
     'admin.language'   => 'Langue',
+    
+    'admin.name'   => 'Nom',
+    'admin.name.desc'   => 'Ajouter un nom',
+    
+    'admin.price'   => 'Prix',
+    'admin.price.desc'   => 'Ajouter le prix',
+    
+    'admin.description'   => 'Description',
+    'admin.description.desc'   => 'Ajouter la description',
+    
+    'admin.role'   => 'Role',
+    'admin.role.desc'   => 'Selectionner le role',
+    
+    'admin.frequency'          => 'Frequence',
+    'admin.frequency.desc'     => 'Selectionner le frequence',
+    
+    'frequency.daily'    => 'Par jour',
+    'frequency.weekly'   => 'Par semaine',
+    'frequency.monthly'   => 'Par mois',
+    'frequency.bimonthly' => '2 fois par mois',
+    'frequency.yearly'   => 'Par année',
     
     'admin.title'   => 'Titre',
     'admin.title.desc'   => 'Ajouter un nouveau titre',
@@ -530,6 +559,7 @@ return [
     
     'inscription' => "Inscription",
     'trial_delay' => "Delai d'essai des membres",
+    'percent.desc' => "Entrer un nombre entre 0 et 1",
     'placeholder.trial_delay' => "Nombre de jour de la duree d'essai",
     'disable_payed_inscription' => "Desactiver l'inscription payant",
     'placeholder.disable_payed_inscription' => "Cochez si vous voulez mettre l'inscription gratuit",

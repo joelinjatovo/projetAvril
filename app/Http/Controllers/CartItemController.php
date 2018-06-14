@@ -220,14 +220,16 @@ class CartItemController extends Controller
                     abort(404);
                 }
                 $user = $cartitem->apl;
-                $amount = 7;
+                $percent = option('payment.percent_presentation_apl', 0.01);
+                $amount = $cartitem->tma*$percent;
                 break;
             case 'afa':
                 if(!empty($cartitem->afa_paid_at)){
                     abort(404);
                 }
                 $user = $cartitem->afa;
-                $amount = 13;
+                $percent = option('payment.percent_presentation_afa', 0.01);
+                $amount = $cartitem->tma*$percent;
                 break;
             default:
                 abort(404);
@@ -238,7 +240,7 @@ class CartItemController extends Controller
 
         $token = $request->input('stripe_token');
         
-        // If emprty stripe_id then create new customer
+        // If empty stripe_id then create new customer
         if (empty($user->strip_id)) {
             // Create a new Stripe customer
             try {
@@ -266,7 +268,7 @@ class CartItemController extends Controller
         try {
             $charge = \Stripe\Charge::create([
                 'amount' => $amount,
-                'currency' => 'usd',
+                'currency' => 'eur',
                 'customer' => $user->stripe_id,
                 'metadata' => [
                     'product_name' => $cartitem->product?$cartitem->product->title:'unknown product'

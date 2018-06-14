@@ -31,30 +31,59 @@ class PlanController extends Controller
     
     public function show(Plan $plan)
     {
-        return view('plan.show')->with(['plan' => $plan]);
+        return view('plan.show')->with('plan', $plan);
     }
     
     public function subscribe(Request $request)
     {
+        // Validate request
+        $datas = $request->all();
+        $validator = Validator::make($datas,[
+            'plan' => 'required|integer',
+            'stripe_token' => 'required',
+        ]);
+
+        $user = $request->user();
+            
+        // get the plan after submitting the form
+        $plan = Plan::findOrFail($request->plan);
+
+        // subscribe the user
         try{
-          $user = $request->user();
-            
-          // get the plan after submitting the form
-          $plan = Plan::findOrFail($request->plan);
-
-          // subscribe the user
-          $user->newSubscription('main', $plan->name)
-              ->create($request->payment_method_nonce);
-        
-          // Notify User
-          $user->notify(new UserSubscribed($user, $plan));
-
-          // redirect to home after a successful subscription
-          return redirect()->route('profile')->with('success', 'Succesfull subscription');
-            
+            $user->newSubscription('main', $plan->name)
+                ->create($request->stripe_token);
         }catch(\Exception $e){
-            return back()->with('error', $e->getMessage());
+            //return back()->with('error', $e->getMessage());
         }
+        
+        // subscription_ends_at OR trial_ends_at
+        if(!$user->subscription_ends_at){
+            $date = \Carbon\Carbon::now();
+        }else{
+            $date = $user->subscription_ends_at;
+        }
+        $user->subscription_ends_at = $date->addDays($plan->getDayCount());
+
+        // Notify User
+        try{
+            $user->notify(new UserSubscribed($user, $plan));
+        }catch(\Exception $e){
+        }
+        
+        // Notify Admin
+        try{
+            $adminId = option('site.admin', 1);
+            $admin = User::find($adminId);
+            if($admin){
+                $admin->notify(new UserSubscribed($user, $plan));
+            }
+        }catch(\Exception $e){
+        }
+
+        // redirect to home after a successful subscription
+        return redirect()->route('profile')
+            ->with('success', 'Succesfull subscription');
+
     }
     
     

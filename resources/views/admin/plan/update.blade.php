@@ -19,7 +19,7 @@
                 <div class="well well-nice">
                     <h4 class="simple-header">@lang('app.admin.price')</h4>
                     <div class="control-group">
-                        <input class="input-block-level" value="{{$item->cost}}" name="cost" placeholder="@lang('app.admin.name.price')" type="number">
+                        <input class="input-block-level" value="{{$item->cost}}" name="cost" placeholder="@lang('app.admin.price.desc')" type="number">
                     </div>
                 </div>
                 <div class="well well-nice">
