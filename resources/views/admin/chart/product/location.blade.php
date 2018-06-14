@@ -48,7 +48,7 @@ function drawChart($data){
       "type": "pie",
       "dataProvider": $data,
       "valueField": "products_count",
-      "titleField": "state",
+      "titleField": "location",
        "balloon":{
        "fixedPosition":true
       }

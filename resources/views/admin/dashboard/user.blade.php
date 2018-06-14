@@ -42,7 +42,6 @@
 <script src="{{asset('administrator/amcharts/gantt.js')}}"></script>
 <script src="{{asset('administrator/amcharts/gauge.js')}}"></script>
 <script src="{{asset('administrator/amcharts/radar.js')}}"></script>
-<script src="{{asset('administrator/amcharts/graphddde.js')}}"></script>
 <script type="text/javascript">
     
 function drawLocationChart($data){
@@ -50,7 +49,7 @@ function drawLocationChart($data){
       "type": "pie",
       "dataProvider": $data,
       "valueField": "number",
-      "titleField": "state",
+      "titleField": "location",
        "balloon":{
         "fixedPosition":true
       }

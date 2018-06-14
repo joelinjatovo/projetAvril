@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Localisation;
 use App\Models\User;
+use App\Models\State;
 use DB;
 
 class ChartController extends Controller
@@ -36,23 +37,29 @@ class ChartController extends Controller
         switch($type){
             case 'product':
                 $items = State::join('products', 'products.state_id', '=', 'states.id')
-                    ->select(DB::raw('count(*) as number, states.content as state'))
+                    ->select(DB::raw('count(*) as number, states.content as location'))
+                    ->groupBy('location')
                     ->get();
             break;
+            case 'afa':
+                $items = State::join('users', 'users.state_id', '=', 'states.id')
+                    ->select(DB::raw('count(*) as number, states.content as location'))
+                    ->groupBy('location')
+                    ->get();
+                break;
             case 'user':
                 $items = Localisation::join('users', 'users.location_id', '=', 'localizations.id')
-                    ->select(DB::raw('count(*) as number, state'))
-                    ->groupBy('state')
+                    ->select(DB::raw('count(*) as number, country as location'))
+                    ->groupBy('location')
                     ->get();
             break;
             case 'member':
-            case 'afa':
             case 'apl':
             case 'seller':
                 $items = Localisation::join('users', 'users.location_id', '=', 'localizations.id')
                     ->where('users.role', $type)
-                    ->select(DB::raw('count(*) as number, state'))
-                    ->groupBy('state')
+                    ->select(DB::raw('count(*) as number, country as location'))
+                    ->groupBy('location')
                     ->get();
             break;
                 
@@ -142,9 +149,9 @@ class ChartController extends Controller
     {
         
         $items = User::where('role', 'seller')
-            ->groupBy('type')
             ->join('products', 'products.seller_id', '=', 'users.id')
             ->select(DB::raw('count(*) as number, type'))
+            ->groupBy('type')
             ->get();
         for($i=0; $i<count($items); $i++){
             $item = $items[$i];

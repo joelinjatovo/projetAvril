@@ -49,7 +49,7 @@ function drawLocationChart($data){
       "type": "pie",
       "dataProvider": $data,
       "valueField": "number",
-      "titleField": "state",
+      "titleField": "location",
        "balloon":{
         "fixedPosition":true
       }
