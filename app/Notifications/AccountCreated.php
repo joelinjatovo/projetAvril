@@ -51,14 +51,14 @@ class AccountCreated extends Notification
         $password = $this->password;
         
         return (new MailMessage)
-            ->from(env('ADMIN_MAIL', 'tsorakoto@gmail.com'))
-            //->to($user->email, $user->name)
-            ->subject('Successfully created new account')
-            ->greeting(sprintf('Hello %s', $user->name))
-            ->line('You have successfully registered to our system. Please activate your account.')
-            ->action('Active Account', route('activate.user', $user->activation_code))
-            ->line(sprintf('Your default password is %s', $password))
-            ->line('Thank you for using our application!');
+            ->from(env('ADMIN_MAIL'))
+            ->subject(__('mail.created.subject', ['app'=>app_name()]))
+            ->greeting(__('mail.greeting', ['name'=>$user->name]))
+            ->subject(__('mail.created.content.1'))
+            ->subject(__('mail.created.content.2'))
+            ->action(__('mail.btn.active'), route('activate.user', $user->activation_code))
+            ->line(__('mail.default_password', ['password'=>$password]))
+            ->line(__('mail.thank'));
     }
 
     /**

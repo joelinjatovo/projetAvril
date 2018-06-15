@@ -46,10 +46,11 @@ class AccountDisabled extends Notification
         $user = $this->user;
         
         return (new MailMessage)
-            ->from(env('ADMIN_MAIL', 'tsorakoto@gmail.com'))
-            ->subject('Account deactivated')
-            ->greeting(sprintf('Hello %s', $user->name))
-            ->line('Your account is deactivated.');
+            ->from(env('ADMIN_MAIL'))
+            ->subject(__('mail.disabled.subject', ['app'=>app_name()]))
+            ->greeting(__('mail.greeting', ['name'=>$user->name]))
+            ->line(__('mail.disabled.content'))
+            ->line(__('mail.thank'));
     }
 
     /**

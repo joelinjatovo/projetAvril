@@ -9,7 +9,7 @@
 <!-- CSRF Token -->
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
-<title>{{option('site.meta_title', 'IEA')}} {{isset($title)?' - '.$title:''}}</title>
+<title>{{app_name()}} {{isset($title)?' - '.$title:''}}</title>
 <meta name="description" content="{{option('site.meta_desc', 'IEA')}}">
 <meta name="keywords" content="{{option('site.meta_keywords', 'IEA, Investir')}}">
     

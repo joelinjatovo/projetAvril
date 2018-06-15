@@ -90,6 +90,16 @@ if( ! function_exists('option'))
 	}
 }
 
+if( ! function_exists('app_name'))
+{
+	function app_name($default=null)
+	{
+        $default = config('app.name', $default);
+        $default = option('site.meta_title', $default);
+        return $default;
+	}
+}
+
 /**
 * creer le lien javascript vers le dashboard ADMIN en ligne  
 * @param $url_js string : lien de l'image en local

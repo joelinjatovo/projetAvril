@@ -48,11 +48,11 @@ class AccountActivated extends Notification
         $user = $this->user;
         
         return (new MailMessage)
-            ->from(env('ADMIN_MAIL', 'tsorakoto@gmail.com'))
-            ->subject('Account activated')
-            ->greeting(sprintf('Hello %s', $user->name))
-            ->line('Your account have successfully activated.')
-            ->line('Thank you for using our application!');
+            ->from(env('ADMIN_MAIL'))
+            ->subject(__('mail.activated.subject', ['app'=>app_name()]))
+            ->greeting(__('mail.greeting', ['name'=>$user->name]))
+            ->line(__('mail.activated.content'))
+            ->line(__('mail.thank'));
     }
 
     /**

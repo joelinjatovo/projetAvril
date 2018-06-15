@@ -51,11 +51,11 @@ class UserSubscribed extends Notification
         $plan = $this->plan;
         
         return (new MailMessage)
-            ->from(env('ADMIN_MAIL', 'tsorakoto@gmail.com'))
-            ->subject('Successfully subscribed acount')
-            ->greeting(sprintf('Hello %s', $user->name))
-            ->line('You have successfully subscribed to the plan "'.$plan->name.'".')
-            ->line('Thank you for using our application!');
+            ->from(env('ADMIN_MAIL'))
+            ->subject(__('mail.subscribed.subject', ['app'=>app_name(), 'plan'=>$plan->name]))
+            ->greeting(__('mail.greeting', ['name'=>$user->name]))
+            ->line(__('mail.subscribed.content', ['count'=>$plan->getDayCount(), 'plan'=>$plan->name]))
+            ->line(__('mail.thank'));
     }
 
     /**

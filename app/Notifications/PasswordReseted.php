@@ -41,9 +41,12 @@ class PasswordReseted extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->from(env('ADMIN_MAIL'))
+            ->subject(__('mail.reseted.subject', ['app'=>app_name()]))
+            ->greeting(__('mail.greeting', ['name'=>$user->name]))
+            ->line(__('mail.reseted.content'))
+            ->action('Notification Action', url('/'))
+            ->line(__('mail.thank'));
     }
 
     /**

@@ -435,7 +435,7 @@ class User extends Authenticatable
     }
     
     /*
-    * Alias to get_meta()
+    * Alias to get_meta()->value
     *
     */
     public function meta($key, $default = ''){
