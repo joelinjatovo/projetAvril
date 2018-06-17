@@ -15,12 +15,17 @@ class CountriesTableSeeder extends Seeder
         $items2 = $this->getTelsFromCsv();
         $items = array_merge($items1, $items2);
         foreach($items as $code => $item){
-            DB::table('countries')->insert([
-                'code' => $code,
-                'content' => isset($items1[$code]['content'])?$items1[$code]['content']:'',
-                'prefixPhone' => isset($items2[$code]['prefixPhone'])?$items2[$code]['prefixPhone']:'',
-                'created_at' => date("Y-m-d H:i:s"),
-            ]);
+            $content = isset($items1[$code]['content'])?$items1[$code]['content']:'';
+            $prefixPhone = isset($items2[$code]['prefixPhone'])?$items2[$code]['prefixPhone']:'';
+            if(!empty($content)&&!empty($prefixPhone))
+            {
+                DB::table('countries')->insert([
+                    'code' => $code,
+                    'content' => $content,
+                    'prefixPhone' => $content,
+                    'created_at' => date("Y-m-d H:i:s"),
+                ]);
+            }
         }
     }
     

@@ -438,12 +438,145 @@ class User extends Authenticatable
     * Alias to get_meta()->value
     *
     */
-    public function meta($key, $default = ''){
+    public function meta($key, $default = '')
+    {
         $meta = $this->get_meta($key);
         if(!$meta) return $default;
 
         return $meta->value;
         
+    }
+    
+    /*
+    * Handle request to update_meta
+    *
+    * @param \Illuminate\Http\Request $request
+    */
+    public function handles(\Illuminate\Http\Request $request)
+    {
+        $user = $this;
+        $role = $request->input('role');
+        switch($this->role){
+            case 'admin':
+                if($value = $request->input('first_name'))
+                    $user->update_meta("first_name", $value);
+                if($value = $request->input('last_name'))
+                    $user->update_meta("last_name", $value);
+                break;
+            case 'member':
+                $type=$request->input('type');
+                if($type=='person'){
+                    // Update MetaData
+                    if($value = $request->input('first_name'))
+                        $user->update_meta("firstname", $value);
+                    if($value = $request->input('last_name'))
+                        $user->update_meta("lastname", $value);
+                }else{
+                    // Update MetaData
+                    if($value = $request->input('orga_name'))
+                        $user->update_meta("orga_name", $value);
+                    if($value = $request->input('orga_presentation'))
+                        $user->update_meta("orga_presentation", $value);
+                    if($value = $request->input('prefixPhone'))
+                        $user->update_meta("prefixPhone", $value);
+                    if($value = $request->input('phone'))
+                        $user->update_meta("phone", $value);
+                }
+                break;
+            case 'afa':
+                // Update MetaData
+                if($value = $request->input('orga_name'))
+                    $user->update_meta("orga_name", $value);
+                if($value = $request->input('orga_presentation'))
+                    $user->update_meta("orga_presentation", $value);
+                if($value = $request->input('orga_email'))
+                    $user->update_meta("orga_email", $value);
+                if($value = $request->input('orga_phone'))
+                    $user->update_meta("orga_phone", $value);
+                if($value = $request->input('orga_website'))
+                    $user->update_meta("orga_website", $value);
+                if($value = $request->input('orga_operation_state'))
+                    $user->update_meta("orga_operation_state", $value);
+                if($value = $request->input('orga_operation_range'))
+                    $user->update_meta("orga_operation_range", $value);
+
+                // Create Contact MetaData
+                if($value = $request->input('contact_name'))
+                    $user->update_meta("contact_name", $value);
+                if($value = $request->input('contact_email'))
+                    $user->update_meta("contact_email", $value);
+                if($value = $request->input('contact_phone'))
+                    $user->update_meta("contact_phone", $value);
+
+                // CRM Prodvider data
+                if($value = $request->input('crm_name'))
+                    $user->update_meta("crm_name", $value);
+                if($value = $request->input('crm_email'))
+                    $user->update_meta("crm_email", $value);
+                break;
+            case 'apl':
+                // Update MetaData
+                if($value = $request->input('orga_name'))
+                    $user->update_meta("orga_name", $value);
+                if($value = $request->input('orga_presentation'))
+                    $user->update_meta("orga_presentation", $value);
+                if($value = $request->input('orga_email'))
+                    $user->update_meta("orga_email", $value);
+                if($value = $request->input('orga_phone'))
+                    $user->update_meta("orga_phone", $value);
+                if($value = $request->input('orga_website'))
+                    $user->update_meta("orga_website", $value);
+                if($value = $request->input('orga_operation_range'))
+                    $user->update_meta("orga_operation_range", $value);
+
+                // Create Contact MetaData
+                if($value = $request->input('contact_name'))
+                    $user->update_meta("contact_name", $value);
+                if($value = $request->input('contact_email'))
+                    $user->update_meta("contact_email", $value);
+                if($value = $request->input('contact_phone'))
+                    $user->update_meta("contact_phone", $value);
+
+                // Bank data
+                if($value = $request->input('bank_iban'))
+                    $user->update_meta("bank_iban", $value);
+                if($value = $request->input('bank_bic'))
+                    $user->update_meta("bank_bic", $value);
+                break;
+            case 'seller':
+                // Create Organisation MetaData
+                if($value = $request->input('orga_name'))
+                    $user->update_meta("orga_name", $value);
+                if($value = $request->input('orga_presentation'))
+                    $user->update_meta("orga_presentation", $value);
+                if($value = $request->input('orga_email'))
+                    $user->update_meta("orga_email", $value);
+                if($value = $request->input('orga_phone'))
+                    $user->update_meta("orga_phone", $value);
+                if($value = $request->input('orga_website'))
+                    $user->update_meta("orga_website", $value);
+
+                // Create Contact MetaData
+                if($value = $request->input('contact_name'))
+                    $user->update_meta("contact_name", $value);
+                if($value = $request->input('contact_email'))
+                    $user->update_meta("contact_email", $value);
+                if($value = $request->input('contact_phone'))
+                    $user->update_meta("contact_phone", $value);
+
+                // CRM Prodvider data
+                if($value = $request->input('crm_name'))
+                    $user->update_meta("crm_name", $value);
+                if($value = $request->input('crm_email'))
+                    $user->update_meta("crm_email", $value);
+                break;
+        }
+
+        // Common datas
+        if($value = $request->input('newsletter')) 
+            $user->update_meta("newsletter", $value);
+        if($value = $request->input('allow_sharing')) 
+            $user->update_meta("allow_sharing", $value);
     }
     
 }

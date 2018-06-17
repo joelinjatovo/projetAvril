@@ -25,5 +25,6 @@ class DatabaseSeeder extends Seeder
         $this->call(MetaDatasSeeder::class);
         $this->call(CountriesTableSeeder::class);
         $this->call(StatesTableSeeder::class);
+        $this->call(PlansTableSeeder::class);
     }
 }
