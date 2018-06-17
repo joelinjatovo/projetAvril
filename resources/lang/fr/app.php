@@ -61,6 +61,8 @@ return [
     'location.longitude'  => 'Longitude',
     
     'published' => "Publié",
+    'Archived' => "Archivé",
+    'trashed' => "Au corbeille",
     'active'    => "Activé",
     'blocked'   => "Bloqué",
     'disabled'  => "Desactivé",
