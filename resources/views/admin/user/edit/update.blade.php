@@ -58,7 +58,7 @@
                             <div class="widget-content">
                                 <div class="widget-body">
                                     <div class="control-group">
-                                        <input class="input-block-level" value="{{old('first_name')?old('first_name'):$item->get_meta('first_name')?$item->get_meta('first_name')->value:''}}" name="first_name" placeholder="@lang('app.form.first_name')">
+                                        <input class="input-block-level" value="{{old('first_name', $item->meta('first_name', ''))}}" name="first_name" placeholder="@lang('app.form.first_name')">
                                     </div>
                                 </div>
                             </div>
@@ -70,7 +70,7 @@
                             <div class="widget-content">
                                 <div class="widget-body">
                                     <div class="control-group">
-                                        <input class="input-block-level" value="{{old('last_name')?old('last_namelast_name'):$item->get_meta('last_name')?$item->get_meta('last_name')->value:''}}" name="last_name" placeholder="@lang('app.form.last_name')">
+                                        <input class="input-block-level" value="{{old('last_name', $item->meta('last_name', ''))}}" name="last_name" placeholder="@lang('app.form.last_name')">
                                     </div>
                                 </div>
                             </div>

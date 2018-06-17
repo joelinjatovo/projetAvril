@@ -468,9 +468,9 @@ class User extends Authenticatable
                 if($type=='person'){
                     // Update MetaData
                     if($value = $request->input('first_name'))
-                        $user->update_meta("firstname", $value);
+                        $user->update_meta("first_name", $value);
                     if($value = $request->input('last_name'))
-                        $user->update_meta("lastname", $value);
+                        $user->update_meta("last_name", $value);
                 }else{
                     // Update MetaData
                     if($value = $request->input('orga_name'))
