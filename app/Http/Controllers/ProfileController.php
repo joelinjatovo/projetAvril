@@ -57,13 +57,13 @@ class ProfileController extends Controller
         }
         $breadcrumbs = [
             [
-                'active'=>false,
-                'route'=>route('profile'),
-                'label'=>__('app.profile'),
+                'active' => false,
+                'route'  => route('profile'),
+                'label'  => __('app.profile'),
             ],
             [
-                'active'=>true,
-                'label'=>__('app.profile.edit'),
+                'active' => true,
+                'label'  => __('app.profile.edit'),
             ],
             
         ];
@@ -190,6 +190,7 @@ class ProfileController extends Controller
         if(!$user->isAdmin()){
             $rules = array_merge($default, $rules);
         }
+        
         $validator = Validator::make($datas, $rules);
         if ($validator->fails()) {
             return back()->withErrors($validator)

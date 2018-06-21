@@ -47,7 +47,7 @@
                     @include('includes.alerts')
                     <div class="row">
                         <div class="col-sm-12">
-                            @if(Auth::user()->hasApl())
+                            @if(\Auth::check() && \Auth::user()->hasApl())
                             <form action="{{route('shop.add', ['product'=>$item])}}" method="post">
                                 {{csrf_field()}}
                                 <button type="submit" class="btn btn-success col-sm-6"><i class="fa fa-envelope-open-o"></i> @lang('app.btn.add_to_cart') 2</button>

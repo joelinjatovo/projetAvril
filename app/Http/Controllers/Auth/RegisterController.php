@@ -59,8 +59,8 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
@@ -292,7 +292,7 @@ class RegisterController extends Controller
                         'orga_presentation' => 'required|max:100',
 
                         'country'      => 'required|max:100',
-                        'area_level_1' => 'required|max:100',
+                        'area_level_1' => 'nullable|max:100',
                         'area_level_2' => 'nullable|max:100',
                         'locality'     => 'required|max:100',
                         'route'        => 'nullable|max:100',

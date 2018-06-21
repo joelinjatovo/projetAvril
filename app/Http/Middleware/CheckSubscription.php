@@ -17,7 +17,8 @@ class CheckSubscription
     {
         $disabled = option('payment.disable_payed_inscription', 0);
         if(!$disabled){
-            if(!$request->is('*plan*')&&
+            if(!$request->is('*logout*')&&
+               !$request->is('*plan*')&&
                \Auth::check()&&
                !\Auth::user()->isAdmin()&&
                !\Auth::user()->onTrial()){
