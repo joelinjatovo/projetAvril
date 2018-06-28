@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCartsItemsTable extends Migration
+class CreateSalesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateCartsItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('carts_items', function (Blueprint $table) {
+        Schema::create('sales', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('status', 150)->default('pinged')->index();
-            $table->bigInteger('quantity')->default(0);
             $table->double('price', 10, 2)->default(0);
             $table->double('tma', 10, 2)->default(0);
             $table->string('currency', 20)->nullable();
@@ -33,14 +32,13 @@ class CreateCartsItemsTable extends Migration
             $table->string('afa_transaction_id')->nullable();
             $table->string('afa_payment_type')->nullable();
             
-            $table->bigInteger('product_id')->default(0)->index();
-            $table->bigInteger('author_id')->default(0)->index();
-            $table->bigInteger('cart_id')->default(0)->index();
-            
             $table->bigInteger('cancelled_by')->default(0)->index();
             $table->datetime('cancelled_at')->nullable();
             $table->string('cancelled_by_role', 150)->nullable();
             $table->string('cancelled_desc')->nullable();
+            
+            $table->bigInteger('product_id')->default(0)->index();
+            $table->bigInteger('author_id')->default(0)->index();
             
             $table->timestamps();
         });
@@ -53,6 +51,6 @@ class CreateCartsItemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('carts_items');
+        Schema::dropIfExists('sales');
     }
 }

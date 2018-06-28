@@ -81,9 +81,9 @@ SUCCESS PAGE
 @section('subcontent')
 <div class="col-md-12">
     <div class="panel panel-default">
-      <div class="panel-heading">Payer les produits</div>
+      <div class="panel-heading">@lang('member.pay_order')</div>
       <div class="panel-body">
-        <form id="form" action="{{route('shop.product.postCheckout')}}" method="POST">
+        <form id="form" action="{{route('shop.checkout')}}" method="POST">
             {{ csrf_field() }}
             <input name="stripe_token" type="hidden"/>
             <div id="card-element" class="field"></div>
@@ -94,7 +94,7 @@ SUCCESS PAGE
             </div>
             <div class="field">
                 <button type="submit" id="pay-button" class="btn btn-primary btn-flat">
-                    <strong>Pay Now</strong>
+                    <strong>@lang('member.pay_now')</strong>
                 </button>
             </div>
         </form>

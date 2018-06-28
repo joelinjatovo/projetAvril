@@ -10,14 +10,13 @@ use App\Notifications\NewOrder;
 use App\Notifications\OrderPaid;
 
 use App\Models\Product;
-use App\Models\CartItem;
-use App\Models\Cart;
+use App\Models\Sale;
 use App\Models\Category;
 use App\Models\Page;
 use App\Models\Pub;
 use App\Models\User;
 
-class CartItemController extends Controller
+class SaleController extends Controller
 {
     /**
      * Show the list of product.
@@ -30,7 +29,7 @@ class CartItemController extends Controller
     {
         $title = __('app.shop.list');
         
-        $items = new CartItem();
+        $items = new Sale();
         $items = $items->with('product')
             ->with('apl')
             ->with('afa')
@@ -114,30 +113,30 @@ class CartItemController extends Controller
     *  Show cart item
     *
     * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Models\CartItem $cartitem
+    * @param  \App\Models\Sale $sale
     * @return \Illuminate\Http\Response
     */
-    public function show(Request $request, CartItem $cartitem)
+    public function show(Request $request, Sale $sale)
     {
         $this->middleware('auth');
         
         switch(\Auth::user()->role){
             case 'afa':
-                if(!$cartitem->afa||$cartitem->afa->id!=\Auth::user()->id){
+                if(!$sale->afa||$sale->afa->id!=\Auth::user()->id){
                     abort(404);
                 }else{
                     $view = view('backend.cartitem.index');
                 }
                 break;
             case 'apl':
-                if(!$cartitem->apl||$cartitem->apl->id!=\Auth::user()->id){
+                if(!$sale->apl||$sale->apl->id!=\Auth::user()->id){
                     abort(404);
                 }else{
                     $view = view('backend.cartitem.index');
                 }
                 break;
             case 'member':
-                if(!$cartitem->author||$cartitem->author->id!=\Auth::user()->id){
+                if(!$sale->author||$sale->author->id!=\Auth::user()->id){
                     abort(404);
                 }else{
                     $view = view('backend.cartitem.index');
@@ -162,40 +161,41 @@ class CartItemController extends Controller
     * Pay user by role
     *
     * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Models\CartItem $cartitem
+    * @param  \App\Models\Sale $sale
     * @param  Mixed $role
     * @return \Illuminate\Http\Response
     */
-    public function pay(Request $request, CartItem $cartitem, $role)
+    public function pay(Request $request, Sale $sale, $role)
     {
-        if(($cartitem->status!='ordered')||!$cartitem->product||!$cartitem->apl||!$cartitem->afa){
+        if(($sale->status!='ordered')||!$sale->product||!$sale->apl||!$sale->afa){
             abort(404);
         }
+        
         switch($role){
             case 'apl':
-                if(!empty($cartitem->apl_paid_at)){
+                if(!empty($sale->apl_paid_at)){
                     abort(404);
                 }
-                $user = $cartitem->apl;
+                $user = $sale->apl;
                 break;
             case 'afa':
-                if(!empty($cartitem->afa_paid_at)){
+                if(!empty($sale->afa_paid_at)){
                     abort(404);
                 }
-                $user = $cartitem->afa;
+                $user = $sale->afa;
                 break;
             default:
                 abort(404);
                 break;
         }
         
-        $action = route('admin.shop.pay', ['cartitem'=>$cartitem, 'role'=>$role]);
+        $action = route('admin.shop.pay', ['sale'=>$sale, 'role'=>$role]);
         $title = __('app.shop.pay.'.$role);
         return view('admin.shop.pay')
             ->with('title',   $title)
             ->with('role',    $role)
             ->with('action',  $action)
-            ->with('item',    $cartitem)
+            ->with('item',    $sale)
             ->with('user',    $user)
             ->with('breadcrumbs', $title);
     }
@@ -204,39 +204,39 @@ class CartItemController extends Controller
     * Pay user by role
     *
     * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Models\CartItem $cartitem
+    * @param  \App\Models\Sale $sale
     * @param  Mixed $role
     * @return \Illuminate\Http\Response
     */
-    public function postPay(Request $request, CartItem $cartitem, $role)
+    public function postPay(Request $request, Sale $sale, $role)
     {
-        if(($cartitem->status!='ordered')||!$cartitem->product||!$cartitem->apl||!$cartitem->afa){
+        if(($sale->status!='ordered')||!$sale->product||!$sale->apl||!$sale->afa){
             abort(404);
         }
         
         switch($role){
             case 'apl':
-                if(!empty($cartitem->apl_paid_at)){
+                if(!empty($sale->apl_paid_at)){
                     abort(404);
                 }
-                $user = $cartitem->apl;
+                $user = $sale->apl;
                 $percent = option('payment.percent_presentation_apl', 0.01);
-                $amount = $cartitem->tma*$percent;
+                $amount = $sale->tma*$percent;
                 break;
             case 'afa':
-                if(!empty($cartitem->afa_paid_at)){
+                if(!empty($sale->afa_paid_at)){
                     abort(404);
                 }
-                $user = $cartitem->afa;
+                $user = $sale->afa;
                 $percent = option('payment.percent_presentation_afa', 0.01);
-                $amount = $cartitem->tma*$percent;
+                $amount = $sale->tma*$percent;
                 break;
             default:
                 abort(404);
                 break;
         }
         
-        $action = route('admin.shop.pay', ['cartitem'=>$cartitem, 'role'=>$role]);
+        $action = route('admin.shop.pay', ['sale'=>$sale, 'role'=>$role]);
 
         $token = $request->input('stripe_token');
         
@@ -271,7 +271,7 @@ class CartItemController extends Controller
                 'currency' => 'eur',
                 'customer' => $user->stripe_id,
                 'metadata' => [
-                    'product_name' => $cartitem->product?$cartitem->product->title:'unknown product'
+                    'product_name' => $sale->product?$sale->product->title:'unknown product'
                 ]
                 ]);
         } catch (\Stripe\Error\Card $e) {
@@ -283,32 +283,32 @@ class CartItemController extends Controller
         // Update cartitem record in the database
         switch($role){
             case 'apl':
-                $cartitem->apl_paid_at = date('Y-m-d h:i:s');
-                $cartitem->apl_ammount = $amount;
-                $cartitem->apl_transaction_id = $charge->id;
-                $cartitem->apl_payment_type = 'stripe';
-                $cartitem->save();
+                $sale->apl_paid_at = date('Y-m-d h:i:s');
+                $sale->apl_ammount = $amount;
+                $sale->apl_transaction_id = $charge->id;
+                $sale->apl_payment_type = 'stripe';
+                $sale->save();
                 break;
             case 'afa':
-                $cartitem->afa_paid_at = date('Y-m-d h:i:s');
-                $cartitem->afa_ammount = $amount;
-                $cartitem->afa_transaction_id = $charge->id;
-                $cartitem->afa_payment_type = 'stripe';
-                $cartitem->save();
+                $sale->afa_paid_at = date('Y-m-d h:i:s');
+                $sale->afa_ammount = $amount;
+                $sale->afa_transaction_id = $charge->id;
+                $sale->afa_payment_type = 'stripe';
+                $sale->save();
                 break;
         }
         
         // Notify APL or AFA
-        $user->notify(new OrderPaid($user, $cartitem->cart, $cartitem));
+        $user->notify(new OrderPaid($user, $sale));
         
         // Update cartitem record status
-        if(!empty($cartitem->apl_paid_at)&&!empty($cartitem->afa_paid_at)){
-            $cartitem->status = 'paid';
-            $cartitem->save();
+        if(!empty($sale->apl_paid_at)&&!empty($sale->afa_paid_at)){
+            $sale->status = 'paid';
+            $sale->save();
             
-            // Notify Customer
-            if($cartitem->author){
-                $cartitem->author->notify(new OrderPaid($admin, $cartitem->cart, $cartitem));
+            // Notify Customer$sale
+            if($sale->author){
+                $sale->author->notify(new OrderPaid($admin, $sale));
             }
         }
         
@@ -316,15 +316,7 @@ class CartItemController extends Controller
         $adminId = option('site.admin', 1);
         $admin = User::find($adminId);
         if($admin){
-            $admin->notify(new OrderPaid($admin, $cartitem->cart, $cartitem));
-        }
-        
-        // Update cart status
-        $itemCount = CartItem::where('cart_id', $cartitem->cart_id)->count();
-        $paidCount = CartItem::where('cart_id', $cartitem->cart_id)->where('status', 'paid')->count();
-        if(($itemCount!=0) && ($itemCount===$paidCount) && $cartitem->cart){
-            // Notify Customer && Admin
-            $cartitem->cart->setAsPaid();
+            $admin->notify(new OrderPaid($admin, $sale));
         }
         
         return redirect()->route('admin.dashboard')

@@ -46,11 +46,6 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <input type="checkbox" name="is_default" value="1"> @lang('app.choose_as_default_apl')
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-12">
                                 <button id="submit" type="submit" class="btn btn-primary">@lang('app.btn.select_apl')</button>
                             </div>
                         </div>

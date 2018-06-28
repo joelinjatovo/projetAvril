@@ -27,7 +27,6 @@ Route::get('mail/read/{mailuser}', 'MailController@read');
 // Localisation
 Route::get('localization/{locale}', 'LocalizationController@index')->name('localization');
 
-
 // Static pages
 Route::get('/', 'IndexController@index')->name('home');
 Route::get('services', 'IndexController@services')->name('services');
@@ -41,7 +40,7 @@ Route::get('apls', 'IndexController@apl')->name('apls');
 Route::get('blogs/{filter?}', 'BlogController@all')->name('blog.all');
 Route::get('blog/{blog}', 'BlogController@index')->name('blog.index');
 
-// Action
+// Comment
 Route::get('comments/{blog}', 'CommentController@index');
 Route::post('comments', 'CommentController@store');
 Route::post('comments/{comment}/{action}', 'CommentController@update');
@@ -63,6 +62,7 @@ Route::get('api/chart/sellers', 'ChartController@sellers')->name('chart.sellers'
 Route::get('api/chart/dates/{role?}', 'ChartController@dates')->name('chart.dates');
 Route::get('api/chart/carts', 'ChartController@carts')->name('chart.carts');
 
+// Register
 Route::middleware('guest')->group(function(){
     Route::get('register/{role}', 'Auth\RegisterController@index')->name('register');
     Route::post('register/{role}', 'Auth\RegisterController@register');
@@ -70,12 +70,11 @@ Route::middleware('guest')->group(function(){
     Route::get('resend-code/{user}', 'Auth\RegisterController@resendActivation')->name('resend_code');
 });
 
-// Mail
+// Contact Page
 Route::get('contact','MailController@contact');
 Route::post('contact','MailController@contact')->name('contact');
 
 Route::middleware(["auth"])->group(function(){
-
     // Notification
     Route::get('notifications/{filter?}', 'NotificationController@all')->name('notification.list');
 
@@ -85,15 +84,13 @@ Route::middleware(["auth"])->group(function(){
     Route::post('chat/messages', 'ChatController@store');
 
     // Label
-    Route::get('product/{product}/{type}', 'LabelController@storeOrUpdate')->name('label.store');// Save OR Star Product
-    Route::get('products/{type}', 'LabelController@all')->name('label.list');// List saved products OR starred Product
+    Route::get('product/{product}/label/{type}', 'LabelController@storeOrUpdate')->name('label.store');// Save OR Star Product
+    Route::get('products/label/{type}', 'LabelController@all')->name('label.list');// List saved products OR starred Product
 
-    // Braintree
+    // Subscription Plan
     Route::get('/plans', 'PlanController@index')->name('plans');
     Route::get('/plan/{plan}', 'PlanController@show')->name('plan.show');
     Route::post('/subscribe', 'PlanController@subscribe')->name('subscribe');
-    
-    // Subscription
     Route::post('/subscription/success', 'SubscriptionController@success')->name('subscription.success');
     
     // Profile
@@ -108,21 +105,20 @@ Route::middleware(["auth"])->group(function(){
         Route::get('location', 'ProfileController@location')->name('location.edit');
         Route::post('location', 'ProfileController@updateLocation');
     });
-    
 
 });
 
 
 Route::middleware(["auth", "role:member"])->group(function(){
+    // Buy product
+    Route::post('product/{product}', 'ShopController@order')->name('shop.order');
+    Route::get('product/{product}/apl', 'ShopController@selectApl')->name('shop.select.apl');
+
+    Route::get('order/last', 'ShopController@lastOrder')->name('shop.order.last');
+    Route::post('order/last', 'ShopController@cancel');
     
-    Route::get('select-apl/{product}', 'ShopController@selectApl')->name('shop.select.apl');
-    Route::post('product/{product}', 'ShopController@add')->name('shop.add');
-    
-    Route::get('cart', 'ShopController@cart')->name('shop.cart');// Show cart
-    Route::get('shop/reduce/{product}', 'ShopController@reduceByOne')->name('shop.product.reduce');
-    Route::get('shop/delete/{product}', 'ShopController@deleteAll')->name('shop.product.delete');
-    Route::get('checkout', 'ShopController@getCheckout')->name('shop.product.checkout');
-    Route::post('checkout', 'ShopController@postCheckout')->name('shop.product.postCheckout');
+    Route::get('checkout', 'ShopController@getCheckout')->name('shop.checkout');
+    Route::post('checkout', 'ShopController@postCheckout');
     
     Route::prefix('member')->group(function(){
 
@@ -136,9 +132,10 @@ Route::middleware(["auth", "role:member"])->group(function(){
         Route::get('contact/role/{role}', 'MemberController@contact')->name('member.contact');
         Route::post('contact/role/{role}', 'MemberController@sendMail');
         
-        Route::get('purchases', 'MemberController@purchases')->name('member.purchases');
+        Route::get('carts', 'MemberController@carts')->name('member.carts');
         Route::get('orders', 'MemberController@orders')->name('member.orders');
-        Route::get('cart/{cart}', 'MemberController@showCart')->name('member.cart');
+        Route::get('purchases', 'MemberController@purchases')->name('member.purchases');
+        Route::get('sale/{sale}', 'SaleController@show')->name('member.cart');
         
         Route::get('contact/{user}' , 'BackendController@contact')->name('member.user.contact');
         Route::post('contact/{user}', 'BackendController@postContact');
@@ -224,13 +221,51 @@ Route::prefix('seller')->middleware(["auth","role:seller"])->group(function(){
 });
 
 Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
+
+    // User Controller Groups
+    Route::get('users/{filter?}', 'UserController@all')->name('admin.user.list');
+    Route::prefix('user')->group(function(){
+        Route::get('/', 'UserController@create')->name('admin.user.create');
+        Route::post('/', 'UserController@store')->name('admin.user.store');
+        Route::get('show/{user}', 'UserController@show')->name('admin.user.show');
+        Route::post('show/{user}', 'ObservationController@store')->name('admin.user.observe');
+        Route::get('update/{user}', 'UserController@edit')->name('admin.user.edit');
+        Route::post('update/{user}', 'UserController@update')->name('admin.user.update');
+        
+        Route::get('active/{user}', 'UserController@active')->name('admin.user.active');
+        Route::get('block/{user}', 'UserController@block')->name('admin.user.block');
+        Route::get('disable/{user}', 'UserController@disable')->name('admin.user.disable');
+        
+        Route::get('delete/{user}', 'UserController@delete')->name('admin.user.delete');
+        
+        Route::get('contact/{user}' , 'UserController@contact')->name('admin.user.contact');
+        Route::post('contact/{user}', 'UserController@postContact');
+    });
+
+    // Product Controller Groups
+    Route::get('products/{filter?}', 'ProductController@all')->name('admin.product.list');
+    Route::prefix('product')->group(function(){
+        Route::get('show/{product}', 'ProductController@show')->name('admin.product.show');
+        
+        Route::get('publish/{product}', 'ProductController@publish')->name('admin.product.publish');
+        Route::get('archive/{product}', 'ProductController@archive')->name('admin.product.archive');
+        Route::get('trash/{product}', 'ProductController@trash')->name('admin.product.trash');
+        Route::get('restore/{product}', 'ProductController@restore')->name('admin.product.restore');
+        
+        Route::get('delete/{product}', 'ProductController@delete')->name('admin.product.delete');
+    });
+    
+    // Sale Controller
+    Route::get('sales/{filter?}', 'SaleController@all')->name('admin.sale');
+    Route::prefix('sale')->group(function(){
+        Route::get('{sale}', 'SaleController@show')->name('admin.sale.show');
+        Route::get('pay/{sale}/{role}', 'SaleController@pay')->name('admin.sale.pay');
+        Route::post('pay/{sale}/{role}', 'SaleController@postPay');
+        Route::get('delete/{sale}', 'SaleController@delete')->name('admin.sale.delete');
+    });
     
     Route::get('/', 'AdminController@dashboard')->name('admin.dashboard');
     Route::get('/chart/{type}', 'AdminController@chart')->name('admin.chart');
-
-    Route::get('card', 'AdminController@card')->name('admin.card');
-    Route::get('carts/{filter?}', 'CartController@allAdmin')->name('admin.cart.list');
-    Route::get('cart/{cart}', 'CartController@index')->name('admin.cart.show');
 
     // Blog Controller Groups
     Route::get('blogs/{filter?}', 'BlogController@allAdmin')->name('admin.blog.list');
@@ -260,29 +295,6 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         
         Route::get('delete/{comment}', 'CommentController@delete')->name('admin.comment.delete');
     });
-
-    // Product Controller Groups
-    Route::get('products/{filter?}', 'ProductController@all')->name('admin.product.list');
-    Route::prefix('product')->group(function(){
-        Route::get('show/{product}', 'ProductController@show')->name('admin.product.show');
-        
-        Route::get('publish/{product}', 'ProductController@publish')->name('admin.product.publish');
-        Route::get('archive/{product}', 'ProductController@archive')->name('admin.product.archive');
-        Route::get('trash/{product}', 'ProductController@trash')->name('admin.product.trash');
-        Route::get('restore/{product}', 'ProductController@restore')->name('admin.product.restore');
-        
-        Route::get('delete/{product}', 'ProductController@delete')->name('admin.product.delete');
-    });
-    
-    // Shop Controller
-    Route::get('shops/{filter?}', 'CartItemController@all')->name('admin.shop');
-    Route::prefix('shop')->group(function(){
-        Route::get('cartitem/{cartitem}', 'CartItemController@show')->name('admin.cartitem.show');
-        Route::get('pay/{cartitem}/{role}', 'CartItemController@pay')->name('admin.shop.pay');
-        Route::post('pay/{cartitem}/{role}', 'CartItemController@postPay');
-        
-        Route::get('delete/{cartitem}', 'CartItemController@delete')->name('admin.shop.delete');
-    });
     
     // Category Controller Groups
     Route::get('categories/{filter?}', 'CategoryController@allAdmin')->name('admin.category.list');
@@ -294,26 +306,6 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::post('update/{category}', 'CategoryController@update')->name('admin.category.update');
         
         Route::get('delete/{category}', 'CategoryController@delete')->name('admin.category.delete');
-    });
-
-    // User Controller Groups
-    Route::get('users/{filter?}', 'UserController@all')->name('admin.user.list');
-    Route::prefix('user')->group(function(){
-        Route::get('/', 'UserController@create')->name('admin.user.create');
-        Route::post('/', 'UserController@store')->name('admin.user.store');
-        Route::get('show/{user}', 'UserController@show')->name('admin.user.show');
-        Route::post('show/{user}', 'ObservationController@store')->name('admin.user.observe');
-        Route::get('update/{user}', 'UserController@edit')->name('admin.user.edit');
-        Route::post('update/{user}', 'UserController@update')->name('admin.user.update');
-        
-        Route::get('active/{user}', 'UserController@active')->name('admin.user.active');
-        Route::get('block/{user}', 'UserController@block')->name('admin.user.block');
-        Route::get('disable/{user}', 'UserController@disable')->name('admin.user.disable');
-        
-        Route::get('delete/{user}', 'UserController@delete')->name('admin.user.delete');
-        
-        Route::get('contact/{user}' , 'UserController@contact')->name('admin.user.contact');
-        Route::post('contact/{user}', 'UserController@postContact');
     });
 
     // Plan Controller Groups

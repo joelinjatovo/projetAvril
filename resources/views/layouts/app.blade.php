@@ -167,20 +167,16 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
                             </ul>
                         </li>
                         
-                            @if(Session::has('cart'))
-                            <li><a href="{{route('shop.cart')}}">@lang('app.cart')<i class="badge badge-info">{{Session::get('cart')->totalQuantity}}</i></a></li>
-                            @endif
-                        
-                            <!-- // add this dropdown // -->
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    <span class="fa fa-user"></span>
-                                    <span id="notificationsCount" class="badge badge-info hidden" style="margin-left:-5px; margin-top:-10px; background-color: red;">&nbsp;</span>
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="notificationsMenu" id="notificationsMenu">
-                                    <li class="dropdown-header">No notifications</li>
-                                </ul>
-                            </li>
+                        <!-- // add this dropdown // -->
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <span class="fa fa-user"></span>
+                                <span id="notificationsCount" class="badge badge-info hidden" style="margin-left:-5px; margin-top:-10px; background-color: red;">&nbsp;</span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="notificationsMenu" id="notificationsMenu">
+                                <li class="dropdown-header">@lang('app.no_notification')</li>
+                            </ul>
+                        </li>
                         @endif
                     </ul>
                 </nav>

@@ -1,3 +1,4 @@
+
 <?php
 
 return [
@@ -17,6 +18,8 @@ return [
     
     'shop'    => 'Shop',
     'login'    => 'Connexion',
+    
+    'no_notification' => "Aucune notification",
     
     'send_mail'     => 'Envoyer Mail',
     'login_info'    => 'Login Information',
@@ -263,18 +266,18 @@ return [
     'shop.pay.apl'           => 'Payer commission APL',
     'shop.pay.afa'           => 'Payer commission AFA',
     
-    'admin.shop.pay.apl'    => 'Payer commission APL',
-    'admin.shop.pay.afa'    => 'Payer commission AFA',
+    'admin.sale.pay.apl'    => 'Payer commission APL',
+    'admin.sale.pay.afa'    => 'Payer commission AFA',
     
-    'admin.shop'              => 'Ventes',
-    'admin.shop.list'         => 'Liste des Ventes',
-    'admin.shop.pinged'       => 'Ventes En Attente',
-    'admin.shop.ordered'      => 'Ventes En Cours',
-    'admin.shop.paid'         => 'Ventes Effectué',
-    'admin.shop.apl-not-paid' => 'Ventes: APL non payé',
-    'admin.shop.apl-paid'     => 'Ventes: APL payé',
-    'admin.shop.afa-not-paid' => 'Ventes: AFA non payé',
-    'admin.shop.afa-paid'     => 'Ventes: AFA payé',
+    'admin.sale'              => 'Ventes',
+    'admin.sale.list'         => 'Liste des Ventes',
+    'admin.sale.pinged'       => 'Ventes En Attente',
+    'admin.sale.ordered'      => 'Ventes En Cours',
+    'admin.sale.paid'         => 'Ventes Effectué',
+    'admin.sale.apl-not-paid' => 'Ventes: APL non payé',
+    'admin.sale.apl-paid'     => 'Ventes: APL payé',
+    'admin.sale.afa-not-paid' => 'Ventes: AFA non payé',
+    'admin.sale.afa-paid'     => 'Ventes: AFA payé',
     
     'blogs'                 => 'Blogs',
     'blog'                  => 'Blog',
@@ -558,6 +561,8 @@ return [
     
     'contact_admin'  => "Contacter l'administrateur",
     'contact_apl'    => "Contacter l'APL",
+    
+    'saved_searches'    => "Recherches sauvegardées",
     
     'inscription' => "Inscription",
     'trial_delay' => "Delai d'essai des membres",

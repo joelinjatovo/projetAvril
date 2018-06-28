@@ -6,11 +6,8 @@ use Illuminate\Http\Request;
 use Session;
 use Auth;
 
-use App\Notifications\OrderPinged;
-
 use App\Models\Product;
-use App\Models\CartItem;
-use App\Models\Cart;
+use App\Models\Sale;
 use App\Models\Category;
 use App\Models\Page;
 use App\Models\Pub;
@@ -170,7 +167,7 @@ class ShopController extends Controller
         }
         
         
-        $action = route('shop.add', $product);
+        $action = route('shop.order', $product);
     	return view('backend.apl.select')
             ->with('action', $action)
             ->with('location', Auth::user()->location)
@@ -183,13 +180,13 @@ class ShopController extends Controller
     }
     
     /**
-     * Add product in cart
+     * Order product
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Product
      * @return \Illuminate\Http\Response
      */
-    public function add(Request $request, Product $product){
+    public function order(Request $request, Product $product){
         $this->middleware('auth');
         $this->middleware('role:member');
         
@@ -209,13 +206,14 @@ class ShopController extends Controller
         
         // No APL selected
         if(!$apl && !Auth::user()->apl){
-    	   return redirect()->route('product.index', $product)
+    	   return redirect()
+               ->route('shop.select.apl', $product)
                ->withInput()
                ->with('error','Vous devez choisir un apl.');
         }
         
         // Update APL
-        if($apl && $request->input('is_default')){
+        if($apl){
             Auth::user()->apl_id = $apl->id;
             Auth::user()->save();
         }
@@ -249,49 +247,32 @@ class ShopController extends Controller
                ->with('error','Vous ne pouvez pas encore faire cet achat. Il n\'y a pas d\'agence dans la base');
         }
         
-    	$currentCart = Session::has('cart') ? Session::get('cart') : null;
-    	$cart = Cart::getInstance($currentCart);
-        
         try{
-            $cart->add($product, $apl, $afa);
+            $sale = Sale::add($product, $apl, $afa);
         }catch(\Exception $e){
-            return redirect()->route('product.index', $product)
-                ->with('error', $e->getMessage());
+            //return redirect()->route('product.index', $product)
+              //  ->with('error', $e->getMessage());
         }
-        
 
-    	Session::put('cart', $cart);
+    	Session::put('sale', $sale);
     	Session::save();
 
-    	return redirect()->route('product.index', $product)
-            ->with('success', 'Nouvel article ajoute au panier!');
-    }
-
-    /**
-     * Show cart
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function cart(){
-        $this->middleware('auth');
-        $this->middleware('role:member');
-        
-        $currentCart = Session::has('cart') ? Session::get('cart') : null;
-        $cart = Cart::getInstance($currentCart);
-
-        return view('shop.cart')->with(['item' => $cart]);
+    	return redirect()
+            ->route('shop.checkout')
+            ->with('success', 'Produit en cours d\'achat. Veuillez effectuer le paiement.');
     }
 
     public function getCheckout(){
         $this->middleware('auth');
         $this->middleware('role:member');
         
-        if (!Session::has('cart')) {
+        $sale = Session::has('sale') ? Session::get('sale') : null;
+        if (!$sale) {
             return redirect()->route('profile')
                 ->with('error', 'Votre carte est encore vide.');
         }
         
-        return view('shop.checkout');
+        return view('shop.checkout')->with(['item' => $sale]);
     }
 
     public function postCheckout(Request $request){
@@ -301,25 +282,17 @@ class ShopController extends Controller
         $this->validate($request, [
             'stripe_token' => 'required',
         ]);
-
         
+        $sale = Session::has('sale') ? Session::get('sale') : null;
+        if (!$sale) {
+            return redirect()->route('profile')
+                ->with('error', 'Votre carte est encore vide.');
+        }
+
         $user = Auth::user();
-        
-        if (!Session::has('cart')) {
-            return redirect()->route('profile')
-                ->with('error', 'Votre carte est encore vide.');
-        }
-        
-        $currentCart = Session::has('cart') ? Session::get('cart') : null;
-        $cart = Cart::getInstance($currentCart);
-        
-        if (count($cart->items)<=0) {
-            return redirect()->route('profile')
-                ->with('error', 'Votre carte est encore vide.');
-        }
-
-        $total = $cart->totalTma;
-        $currency = $cart->currency;
+                
+        $total    = $sale->price;
+        $currency = $sale->currency;
         
         // Get the submitted Stripe token
         $token = $request->stripe_token;
@@ -366,49 +339,59 @@ class ShopController extends Controller
         }
     
         // Set as order and notify user
-        $cart->setAsOrdered();
+        $sale->setAsOrdered();
 
-        Session::forget('cart');
+        Session::forget('sale');
         
         //do some other stuffs
-        return redirect()->route('subscription.success');
+        return redirect()->route('home');
     }
 
-    public function reduceByOne(Product $product){
+
+    /**
+     * Show last order
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function lastOrder(){
         $this->middleware('auth');
         $this->middleware('role:member');
-
-        $currentCart = Session::has('cart') ? Session::get('cart') : null;
-        $cart = Cart::getInstance($currentCart);
-        $cart->reduceByOne($product);
-
-        Session::put('cart', $cart);
-        Session::save();
-
-        if (count($cart->items) <= 0) {
-            Session::forget('cart');
-        }
-
-        return redirect()->route('shop.cart')->with('success', "L'article a bien été supprimé !");
+        $count = Sale::where('author_id', \AUth::user()->id)
+            ->where('status', 'pinged')
+            ->count();
+        $sale = Session::has('sale') ? Session::get('sale') : null;
+        return view('shop.order')->with(['item' => $sale])
+            ->with('count', $count);
     }
-
-    public function deleteAll(Product $product){
+    
+    /*
+    * Cancelling order
+    */
+    public function cancel(){
         $this->middleware('auth');
         $this->middleware('role:member');
         
-        $currentCart = Session::has('cart') ? Session::get('cart') : null;
-        $cart = Cart::getInstance($currentCart);
-        $cart->deleteAll($product);
-
-        Session::put('cart', $cart);
-        Session::save();
-
-        if (count($cart->items) <= 0) {
-            $cart->delete();
-            Session::forget('cart');
+        switch($action){
+            case 'session':
+                $sale = Session::has('sale') ? Session::get('sale') : null;
+                if (!$sale) {
+                    return redirect()->route('profile')
+                        ->with('error', 'Votre carte est encore vide.');
+                }
+                $sale->delete();
+                Session::forget('sale');
+                break;
+            case 'all':
+                Sale::where('author_id', \Auth::user()->id)
+                    ->where('status', 'pinged')
+                    ->delete();
+                break;
+            default:
+                abort(404);
+                break;
         }
-
-        return redirect()->route('shop.cart')->with('success', "L'article a bien été supprimé !");
+        
+        return redirect()->route('shop.order.last')->with('success', "Votre commande a bien été annulée.");
     }
 
 }

@@ -369,16 +369,6 @@ class User extends Authenticatable
     }
     
     /**
-     * An Client can have many carts
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function carts()
-    {
-      return $this->hasMany(Cart::class, 'author_id', 'id');
-    }
-    
-    /**
      * An many user can have many products from labels table
      *
      * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
@@ -401,27 +391,37 @@ class User extends Authenticatable
     }
     
     /**
-     * An many afa/apl can have many products from carts_items table
+     * An Client can have many orders
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orders()
+    {
+      return $this->hasMany(Sale::class, 'author_id', 'id');
+    }
+    
+    /**
+     * An many afa/apl can have many products from sales table
      *
      * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
      */
     public function sales()
     {
         if($this->hasRole('afa')){
-            return $this->belongsToMany(Product::class, 'carts_items', 'afa_id', 'product_id');
+            return $this->belongsToMany(Product::class, 'sales', 'afa_id', 'product_id');
         }
         // else APL
-        return $this->belongsToMany(Product::class, 'carts_items', 'apl_id', 'product_id');
+        return $this->belongsToMany(Product::class, 'sales', 'apl_id', 'product_id');
     }
     
     /**
-     * An many clients can buy many products from carts_items table
+     * An many clients can buy many products from sales table
      *
      * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
      */
     public function purchases()
     {
-      return $this->belongsToMany(Product::class, 'carts_items', 'author_id', 'product_id');
+      return $this->belongsToMany(Product::class, 'sales', 'author_id', 'product_id');
     }
     
     /**

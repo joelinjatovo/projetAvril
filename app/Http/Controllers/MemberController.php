@@ -31,11 +31,15 @@ class MemberController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function showCart(Cart $cart)
+    public function carts()
     {
-        return view('backend.cart.index')
-            ->with('title', __('app.cart'))
-            ->with('item', $cart);
+        $items = Auth::user()->purchases()
+            ->wherePivot('status', 'pinged')
+            ->paginate($this->pageSize);
+        
+        return view('backend.product.all')
+            ->with('title', __('member.carts'))
+            ->with('items', $items);
     }
 
     /**
@@ -50,7 +54,7 @@ class MemberController extends Controller
             ->paginate($this->pageSize);
         
         return view('backend.product.all')
-            ->with('title', __('app.orders'))
+            ->with('title', __('member.orders'))
             ->with('items', $items);
     }
 
@@ -66,7 +70,7 @@ class MemberController extends Controller
             ->paginate($this->pageSize);
         
         return view('backend.product.all')
-            ->with('title', __('app.purchases'))
+            ->with('title', __('member.purchases'))
             ->with('items', $items);
     }
     
