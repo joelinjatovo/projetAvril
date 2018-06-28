@@ -14,6 +14,7 @@ use App\Models\Pub;
 use App\Models\User;
 use App\Models\Type;
 use App\Models\State;
+use App\Models\Search;
 
 class ShopController extends Controller
 {
@@ -49,6 +50,10 @@ class ShopController extends Controller
                 return $query->where('content', 'LIKE', '%'.$q.'%')
                     ->orWhere('title', 'LIKE', '%'.$q.'%');
             });
+            
+            $search = new Search();
+            $search->keyword = $q;
+            $search->save();
         }
         
         $items = $items->orderBy($orderBy, $order);
