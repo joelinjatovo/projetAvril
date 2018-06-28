@@ -29,10 +29,9 @@ class SearchController extends Controller
      */
     public function index(Request $request, Category $category = null)
     {
-        //dd($request->request);
-        //exit;
-        
         $items = Product::ofStatus('published');
+        
+        $search = new Search();
         
         if($request->state){
             $items = $items->where('state_id', $request->state);
@@ -113,10 +112,14 @@ class SearchController extends Controller
             }
             $items = $items->where('area', $sign, $area);
         }
+        
+        if($request->q){
+            $items = $items->where('title', 'LIKE', '%'.$request->q.'%');
+            $search->keyword = $request->q;
+        }
 
         $items = $items->paginate(20);
         
-        $search = new Search();
         $search->content = serialize($request->all());
         $search->save();
         

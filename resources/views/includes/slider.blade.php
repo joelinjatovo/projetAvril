@@ -52,36 +52,50 @@
                             <div id="residentiel" class="tab-pane fade in active">
                                 <div class="search-row">
                                     <div class="form-group mar-r-20">
-                                        <label for="price-range">Prix (AU $):</label>
-                                        <input type="text" class="span2" name="price" value="" data-slider-min="100000" data-slider-max="10000000" data-slider-step="50000" data-slider-value="[500000,5000000]" id="price-range1">
-                                        <br>
-                                        <b class="pull-left color">100000$</b>
-                                        <b class="pull-right color">10000000$</b>
+                                        <label for="price">Prix (AU $):</label>
+                                        <select name="price" id="price" class="form-control" >
+                                        <?php $prices = [
+                                                    "Selectionner un prix",
+                                                    "<100.000",
+                                                    "<200.000",
+                                                    "<300.000",
+                                                    ">100.000",
+                                                    ">200.000",
+                                                    ">300.000",
+                                                ];
+                                            ?>
+                                            @foreach($prices as $index => $price)
+                                                <option value="{{$index}}">{{$price}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="form-group mar-l-20">
-                                        <label for="property-geo">Superficie (m2) :</label>
-                                        <input type="text" class="span2"  name="superficie" value="" data-slider-min="50" data-slider-max="1000" data-slider-step="25" data-slider-value="[50,450]" id="property-geo">
-                                        <br>
-                                        <b class="pull-left color">50m2</b>
-                                        <b class="pull-right color">1000m2</b>
+                                        <label for="area">Superficie (m2) :</label>
+                                        <select name="area" id="area" class="form-control" >
+                                        <?php $areas = [
+                                                    "Selectionner une superficie",
+                                                    "<100",
+                                                    "<250",
+                                                    "<500",
+                                                    ">100",
+                                                    ">250",
+                                                    ">500",
+                                                ];
+                                            ?>
+                                            @foreach($areas as $index => $area)
+                                                <option value="{{$index}}">{{$area}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="search-row">
                                     <div class="form-group mar-r-20">
-                                        <label for="price-range">Min salle de bain :</label>
-                                        <input type="text" class="span2" name="bain" value="" data-slider-min="1"
-                                               data-slider-max="10" data-slider-step="1"
-                                               data-slider-value="[4,8]" id="min-baths" name="sdb"><br />
-                                        <b class="pull-left color">1</b>
-                                        <b class="pull-right color">10</b>
+                                        <label for="bathrooms">Nombre de salle de bain :</label>
+                                        <input type="number" min="0" class="form-control" id="bathrooms" name="bathrooms"><br />
                                     </div>
-                                    <div class="form-group mar-l-20">
-                                        <label for="property-geo">Min chambre :</label>
-                                        <input type="text" class="span2" name="chambre" value="" data-slider-min="1"
-                                               data-slider-max="10" data-slider-step="1"
-                                               data-slider-value="[3,7]" id="min-bed" name="ch"><br />
-                                        <b class="pull-left color">1</b>
-                                        <b class="pull-right color">10</b>
+                                    <div class="form-group mar-r-20">
+                                        <label for="bedrooms">Nombre de chambre :</label>
+                                        <input type="number" min="0" class="form-control" id="bedrooms" name="bedrooms"><br />
                                     </div>
                                 </div>
                                 <br>
