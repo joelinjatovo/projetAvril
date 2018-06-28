@@ -47,13 +47,71 @@ class SearchController extends Controller
         }
         
         if($request->price){
-            $prices = preg_split("/,/", $request->price);
-            $items = $items->whereBetween('price', $prices);
+            switch($request->price){
+                case 1:
+                    $sign = '<';
+                    $price = 100000;
+                    break;
+                case 2:
+                    $sign = '<';
+                    $price = 200000;
+                    break;
+                case 3:
+                    $sign = '<';
+                    $price = 300000;
+                    break;
+                case 4:
+                    $sign = '>';
+                    $price = 100000;
+                    break;
+                case 5:
+                    $sign = '>';
+                    $price = 200000;
+                    break;
+                case 6:
+                    $sign = '>';
+                    $price = 300000;
+                    break;
+                default:
+                    $sign = '>';
+                    $price = 0;
+                    break;
+            }
+            $items = $items->where('price', $sign, $price);
         }
         
         if($request->area){
-            $areas = preg_split("/,/", $request->area);
-            $items = $items->whereBetween('area', $areas);
+            switch($request->area){
+                case 1:
+                    $sign = '<';
+                    $area = 100;
+                    break;
+                case 2:
+                    $sign = '<';
+                    $area = 250;
+                    break;
+                case 3:
+                    $sign = '<';
+                    $area = 500;
+                    break;
+                case 4:
+                    $sign = '>';
+                    $area = 100;
+                    break;
+                case 5:
+                    $sign = '>';
+                    $area = 250;
+                    break;
+                case 6:
+                    $sign = '>';
+                    $area = 500;
+                    break;
+                default:
+                    $sign = '>';
+                    $area = 0;
+                    break;
+            }
+            $items = $items->where('area', $sign, $area);
         }
 
         $items = $items->paginate(20);

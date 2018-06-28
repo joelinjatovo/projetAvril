@@ -27,11 +27,14 @@ class CreateUsersTable extends Migration
             $table->dateTime('enabled_at')->nullable();
             $table->dateTime('disabled_at')->nullable();
             
-            $table->integer('use_default_password')->default(0)->index(); // if afa check if seller
+            $table->integer('use_default_password')->default(0);
             $table->integer('is_seller')->default(0)->index(); // if afa check if seller
             
-            $table->bigInteger('apl_id')->default(0)->index(); // User must check his APL
-            $table->bigInteger('image_id')->default(0)->index(); // User must check his APL
+            $table->bigInteger('apl_id')->default(0)->index();
+            $table->dateTime('apl_ends_at')->nullable()->index();
+            
+            $table->bigInteger('image_id')->default(0)->index();
+            
             $table->bigInteger('author_id')->default(0)->index();
             $table->bigInteger('location_id')->default(0)->index();
             $table->bigInteger('country_id')->default(0)->index();

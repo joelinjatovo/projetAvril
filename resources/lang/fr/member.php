@@ -12,9 +12,10 @@ return [
     "pay_now" => "Payer maintenant",
     "goto_payment" => "Passer au paiement",
     
-    "orders" => "Produits en cours d'achat",
-    "purchases" => "Produits achetés",
+    "orders" => "Produits En Cours d’Achat",
+    "purchases" => "Achats Précédents",
     
     "contact_admin" => "Contacter ADMIN",
     "contact_apl" => "Contacter APL",
+    "select.apl" => "Choisir un APL",
 ];

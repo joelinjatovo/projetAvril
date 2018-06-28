@@ -31,7 +31,7 @@
          <td>{{$cartitem->currency}} {{$cartitem->price}} / {{$cartitem->tma}}</td>
          <td>{{$cartitem->created_at->diffForHumans()}}</td>
          <td>
-             <a href="{{route('admin.shop', ['filter'=>$cartitem->status])}}">
+             <a href="{{route('admin.sale', ['filter'=>$cartitem->status])}}">
                  @if($cartitem->status=='ordered')
                  <span class="label label-success">{{$cartitem->status}}</span>
                  @else
@@ -56,15 +56,15 @@
              @endif
          </td>
          <td>
-            <a href="{{route('admin.shop.delete', $cartitem)}}" class="btn btn-small btn-warning btn-delete">@lang('app.btn.delete')</a>
+            <a href="{{route('admin.sale.delete', $cartitem)}}" class="btn btn-small btn-warning btn-delete">@lang('app.btn.delete')</a>
              
             @if($cartitem->status=='ordered')
                 @if(!$cartitem->apl_paid_at)
-                <a href="{{route('admin.shop.pay', ['cartitem'=>$cartitem, 'role'=>'apl'])}}" class="btn btn-small btn-info btn-delete">@lang('app.admin.shop.pay.apl')</a>
+                <a href="{{route('admin.sale.pay', ['cartitem'=>$cartitem, 'role'=>'apl'])}}" class="btn btn-small btn-info btn-delete">@lang('app.admin.shop.pay.apl')</a>
                 @endif
 
                 @if(!$cartitem->afa_paid_at)
-                <a href="{{route('admin.shop.pay', ['cartitem'=>$cartitem, 'role'=>'afa'])}}" class="btn btn-small btn-info btn-delete">@lang('app.admin.shop.pay.afa')</a>
+                <a href="{{route('admin.sale.pay', ['cartitem'=>$cartitem, 'role'=>'afa'])}}" class="btn btn-small btn-info btn-delete">@lang('app.admin.shop.pay.afa')</a>
                 @endif
             @endif
          </td>

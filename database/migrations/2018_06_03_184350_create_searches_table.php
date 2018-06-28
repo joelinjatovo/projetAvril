@@ -15,6 +15,8 @@ class CreateSearchesTable extends Migration
     {
         Schema::create('searches', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->text('title')->nullable();
+            $table->text('keyword')->nullable();
             $table->longText('content')->nullable();
             $table->bigInteger('author_id')->default(0)->index();
             $table->timestamps();

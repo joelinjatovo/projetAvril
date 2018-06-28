@@ -7,7 +7,7 @@ use Session;
 use Auth;
 use Validator;
 
-use App\Models\Cart;
+use App\Models\Sale;
 use App\Models\Image;
 use App\Models\Mail;
 use App\Models\MailUser;
@@ -56,9 +56,8 @@ class BackendController extends Controller
         
         switch($user->role){
             case 'member':
-                $currentCart = Session::has('cart') ? Session::get('cart') : null;
-                $cart = Cart::getInstance($currentCart);
-                $view->with('cart', $cart);
+                $sale = Session::has('sale') ? Session::get('sale') : null;
+                $view->with('sale', $sale);
                 
                 $count['orders']  = $user->purchases()->wherePivot('status', 'ordered')->count();
                 $recent['orders'] = $user->purchases()

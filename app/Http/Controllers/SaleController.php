@@ -27,6 +27,9 @@ class SaleController extends Controller
      */
     public function all(Request $request, $filter = 'all')
     {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
         $title = __('app.shop.list');
         
         $items = new Sale();
@@ -167,6 +170,9 @@ class SaleController extends Controller
     */
     public function pay(Request $request, Sale $sale, $role)
     {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
         if(($sale->status!='ordered')||!$sale->product||!$sale->apl||!$sale->afa){
             abort(404);
         }
@@ -210,6 +216,9 @@ class SaleController extends Controller
     */
     public function postPay(Request $request, Sale $sale, $role)
     {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
         if(($sale->status!='ordered')||!$sale->product||!$sale->apl||!$sale->afa){
             abort(404);
         }
@@ -327,12 +336,16 @@ class SaleController extends Controller
     * Delete Cart Item
     *
     * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Models\CartItem $cartitem
+    * @param  \App\Models\Sale $sale
     * @return \Illuminate\Http\Response
     */
-    public function delete(Request $request,CartItem $cartitem)
+    public function delete(Request $request, Sale $sale)
     {
-        $cartitem->delete();
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        $sale->delete();
+        
         return redirect()->route('admin.dashboard')
             ->with('success',"La carte a été supprimée avec succés");
     }

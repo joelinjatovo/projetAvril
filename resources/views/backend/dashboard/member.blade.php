@@ -5,26 +5,26 @@
     <div id="property-sidebar">
         <div class="col-sm-12">
             <div class="col-sm-4">
-                <a href="{{route('shop.cart')}}">
+                <a href="#">
                     <section class="widget text-center">
-                        <strong>@lang('app.cart')</strong>
-                        <h3>{{count($cart->items)}}</h3>
+                        <strong>@lang('app.favorites')</strong>
+                        <h3>{{$count['favorites']}}</h3>
                     </section>
                 </a>
             </div>
             <div class="col-sm-4">
                 <a href="#">
                     <section class="widget text-center">
-                        <strong>@lang('app.pins')/@lang('app.favorites')</strong>
-                        <h3>{{$count['pins']}}/{{$count['favorites']}}</h3>
+                        <strong>@lang('app.orders')</strong>
+                        <h3>{{$count['orders']}}</h3>
                     </section>
                 </a>
             </div>
             <div class="col-sm-4">
                 <a href="#">
                     <section class="widget text-center">
-                        <strong>@lang('app.purchases')/@lang('app.orders')</strong>
-                        <h3>{{$count['purchases']}}/{{$count['orders']}}</h3>
+                        <strong>@lang('app.purchases')</strong>
+                        <h3>{{$count['purchases']}}</h3>
                     </section>
                 </a>
             </div>

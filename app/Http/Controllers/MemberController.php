@@ -7,6 +7,7 @@ use Auth;
 use Validator;
 
 use App\Notifications\NewMail;
+use App\Notifications\AplChanged;
 
 use App\Models\Order;
 use App\Models\User;
@@ -249,7 +250,16 @@ class MemberController extends Controller
         
         // Update APL
         Auth::user()->apl_id = $apl->id;
+        Auth::user()->apl_ends_at = \Carbon\Carbon::now()->addDays(option('payment.apl_ends_at', 180));
         Auth::user()->save();
+        
+        try{
+            Auth::user()->notify(new AplChanged(Auth::user(), false));
+        }catch(\Exception $e){}
+        
+        try{
+            $apl->notify(new AplChanged(Auth::user(), true));
+        }catch(\Exception $e){}
         
     	return back()
             ->with('success', 'Apl modifié!');

@@ -29,7 +29,11 @@
                     
                     @if(Auth::user()->hasRole('member'))
                         <li><a href="{{route('member.contact', ['role'=>'admin'])}}"><i class="fa fa-envelope" aria-hidden="true"></i> @lang('member.contact_admin')</a></li>
-                        <li><a href="{{route('member.contact', ['role'=>'apl'])}}"><i class="fa fa-envelope" aria-hidden="true"></i> @lang('member.contact_apl')</a></li>
+                        @if(Auth::user()->hasApl())
+                            <li><a href="{{route('member.contact', ['role'=>'apl'])}}"><i class="fa fa-envelope" aria-hidden="true"></i> @lang('member.contact_apl')</a></li>
+                        @else
+                            <li><a href="{{route('member.select.apl')}}"><i class="fa fa-user" aria-hidden="true"></i> @lang('member.select.apl')</a></li>
+                        @endif
                     @endif
                     
                     @If(Auth::user()->hasRole('seller'))

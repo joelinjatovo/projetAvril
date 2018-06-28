@@ -367,10 +367,11 @@ class ShopController extends Controller
     /*
     * Cancelling order
     */
-    public function cancel(){
+    public function cancel(Request $request){
         $this->middleware('auth');
         $this->middleware('role:member');
         
+        $action = $request->input('action');
         switch($action){
             case 'session':
                 $sale = Session::has('sale') ? Session::get('sale') : null;
