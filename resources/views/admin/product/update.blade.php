@@ -2,7 +2,7 @@
 
 @section('content')
 <div id="main-content" class="main-content container-fluid">
-    @include('includes.notification')
+    @include('includes.alerts')
     <div class="row-fluid page-head">
         <h2 class="page-title"><i class="aweso-icon-list-alt"></i> @lang('app.admin.product.gestion') <small>@if($item->id>0) @lang('app.admin.product.update') else @lang('app.admin.product.add') @endif</small></h2>
     </div>

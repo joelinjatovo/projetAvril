@@ -4,7 +4,7 @@
 <div id="main-content" class="main-content container-fluid">
     <div class="row-fluid page-head">
          <!-- Message de notification -->
-            @include('includes.notification')
+            @include('includes.alerts')
         <!-- fin Message de notification -->
         <h2 class="page-title"><i class="fontello-icon-picture"></i> Paramêtrage Publicité <small>éditer, organiser et visualiser les publicités apparaissant ssur le côté Front-Office du site </small></h2>
         <p class="pagedesc">Cette section vous permettra de modifier les publicités affichant sur le côté Client de votre site.  Elle a été conçue pour faciliter l'intégration des publicités et la gestion de ses contenus.</p>

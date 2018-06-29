@@ -4,7 +4,7 @@
 <div id="main-content" class="main-content container-fluid">
     <form class="form-horizontal" role="form" method="post" action="{{route('password.edit')}}">
         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-        @include('includes.notification')
+        @include('includes.alerts')
         <fieldset>
             <legend>Modification de mot de passe</legend>
             <div class="form-group">

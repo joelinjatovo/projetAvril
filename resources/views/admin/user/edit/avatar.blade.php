@@ -5,7 +5,7 @@
     <form class="form-horizontal" role="form" method="post" action="{{route('avatar.edit')}}" 
           enctype="multipart/form-data">
         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-        @include('includes.notification')
+        @include('includes.alerts')
         <fieldset>
             <legend>Modification Image</legend>
             <div class="col-sm-12">

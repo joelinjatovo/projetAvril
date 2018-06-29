@@ -2,7 +2,7 @@
 
 @section('content')
 <div id="main-content" class="main-content container-fluid">
-    @include('includes.notification')
+    @include('includes.alerts')
     <div class="row-fluid page-head">
         <h2 class="page-title"><i class="aweso-icon-list-alt"></i> 
             @if($item->id>0) 

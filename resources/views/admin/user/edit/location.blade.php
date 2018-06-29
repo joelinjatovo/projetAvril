@@ -4,7 +4,7 @@
 <div id="main-content" class="main-content container-fluid">
     <form class="form-horizontal" role="form" method="post" action="{{route('location.edit')}}">
         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-        @include('includes.notification')
+        @include('includes.alerts')
         <input type="hidden" name="formatted" id="formatted">
         <fieldset>
             <legend>Modification Localisation</legend>
