@@ -124,7 +124,7 @@
 <script src="http://parsleyjs.org/dist/parsley.js"></script>
 
 <!-- Inlude Stripe.js -->
-<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript" src="https://js.stripe.com/v3/"></script>
 <script>
     // This identifies your website in the createToken call below
     Stripe.setPublishableKey('{!!env("STRIPE_KEY")!!}');

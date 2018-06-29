@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\Plan;
-
 use Validator;
 use Auth;
+
+use App\Notifications\UserSubscribed;
+
+use App\Models\Plan;
+use App\Models\User;
 
 class PlanController extends Controller
 {

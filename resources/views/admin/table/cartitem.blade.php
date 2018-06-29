@@ -60,11 +60,11 @@
              
             @if($cartitem->status=='ordered')
                 @if(!$cartitem->apl_paid_at)
-                <a href="{{route('admin.sale.pay', ['cartitem'=>$cartitem, 'role'=>'apl'])}}" class="btn btn-small btn-info btn-delete">@lang('app.admin.shop.pay.apl')</a>
+                <a href="{{route('admin.sale.pay', ['cartitem'=>$cartitem, 'role'=>'apl'])}}" class="btn btn-small btn-info btn-delete">@lang('app.admin.sale.pay.apl')</a>
                 @endif
 
                 @if(!$cartitem->afa_paid_at)
-                <a href="{{route('admin.sale.pay', ['cartitem'=>$cartitem, 'role'=>'afa'])}}" class="btn btn-small btn-info btn-delete">@lang('app.admin.shop.pay.afa')</a>
+                <a href="{{route('admin.sale.pay', ['cartitem'=>$cartitem, 'role'=>'afa'])}}" class="btn btn-small btn-info btn-delete">@lang('app.admin.sale.pay.afa')</a>
                 @endif
             @endif
          </td>

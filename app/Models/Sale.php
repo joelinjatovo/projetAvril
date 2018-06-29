@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+
+use App\Notifications\NewOrder;
 use Auth;
 
 // Eloquent\Model to manage Product and Service to sell
@@ -106,6 +108,7 @@ class Sale extends BaseModel
         
         // Update product buyers
         if($this->product){
+            $this->product->status = 'ordered';
             $this->product->buyer_id = $this->author_id;
             $this->product->save();
         }

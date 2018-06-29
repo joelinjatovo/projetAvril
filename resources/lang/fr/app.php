@@ -270,7 +270,7 @@ return [
     'admin.sale.pay.afa'    => 'Payer commission AFA',
     
     'admin.sale'              => 'Ventes',
-    'admin.sale.list'         => 'Liste des Ventes',
+    'admin.sale.list'         => 'Toutes les Ventes',
     'admin.sale.pinged'       => 'Ventes En Attente',
     'admin.sale.ordered'      => 'Ventes En Cours',
     'admin.sale.paid'         => 'Ventes Effectué',

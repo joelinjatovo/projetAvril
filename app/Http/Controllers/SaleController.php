@@ -195,7 +195,7 @@ class SaleController extends Controller
                 break;
         }
         
-        $action = route('admin.shop.pay', ['sale'=>$sale, 'role'=>$role]);
+        $action = route('admin.sale.pay', ['sale'=>$sale, 'role'=>$role]);
         $title = __('app.shop.pay.'.$role);
         return view('admin.shop.pay')
             ->with('title',   $title)
@@ -245,7 +245,7 @@ class SaleController extends Controller
                 break;
         }
         
-        $action = route('admin.shop.pay', ['sale'=>$sale, 'role'=>$role]);
+        $action = route('admin.sale.pay', ['sale'=>$sale, 'role'=>$role]);
 
         $token = $request->input('stripe_token');
         
