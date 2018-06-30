@@ -348,6 +348,10 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
 <script src="{{asset('administrator/js/lib/jquery.load-image.min.js')}}"></script>
 
 <!-- Plugins Bootstrap -->
+<script src="{{asset('administrator/plugins/ckeditor/ckeditor.js')}}"></script>
+    <!--
+<script src="https://cdn.ckeditor.com/4.8.0/standard-all/ckeditor.js"></script>
+-->
 <script src="{{asset('administrator/plugins/bootstrap-wysihtml5/lib/js/wysihtml5-0.3.0.min.js')}}"></script>
 <script src="{{asset('administrator/plugins/bootstrap-wysihtml5/src/bootstrap-wysihtml5.js')}}"></script>
 <script src="{{asset('administrator/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js')}}"></script>
@@ -424,6 +428,7 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
 
 <!-- main js -->
 <script src="{{asset('administrator/js/core.js')}}"></script>
+<script src="{{asset('administrator/js/script.js')}}"></script>
 
 <script src="{{asset('administrator/js/demo/demo-jquery.dataTables.js')}}"></script>
 <script src="{{asset('administrator/js/demo/demo-wisyhtml5.js')}}"></script>

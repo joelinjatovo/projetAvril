@@ -192,6 +192,7 @@ class MemberController extends Controller
         $selected = null;
         
         foreach($apls as $item){
+            $html = view('backend.apl.html')->with('item', $item)->render();
             $dataTemp = [
               'id' => $item->id,
               'lat' => $item->location?$item->location->latitude:0,
@@ -199,6 +200,7 @@ class MemberController extends Controller
               'title' => $item->name,
               'content' => $item->get_meta('orga_description')?$item->get_meta('orga_description')->value:'',
               'type' => $item->role,
+              'html' => $html,
             ];
             
             $data[] = $dataTemp;

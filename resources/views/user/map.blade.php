@@ -15,9 +15,6 @@
                   <p>{{$item->get_meta('orga_description')?$item->get_meta('orga_description')->value:''}}</p>
               </div>
           </div>
-          <div class="col-md-12">
-              <a href="{{route('contact', $item)}}" class="btn btn-default pull-right">@lang('app.contact')</a>
-          </div>
       </div>
   </div>
 </div>

@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\User;
 use App\Models\Mail;
 use App\Models\MailUser;
+
 use App\Notifications\NewMail;
 
 class AdminController extends Controller

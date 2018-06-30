@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    <form class="form-horizontal" role="form" method="post" action="{{$action}}">
+                    <form id="apl-form" class="form-horizontal" role="form" method="post" action="{{$action}}">
                         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                         <div class="form-group">
                             <div class="col-sm-12">
@@ -54,8 +54,33 @@
             </div>
         </fieldset>
 </div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h4 class="modal-title" id="title">Modal header</h4>
+      </div>
+      <div class="modal-body">
+        <p id="content">One fine body…</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <button class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 @endsection
 @section('script')
+<script>
+$('#apl-form').on('submit', function(ev) {
+    $('#myModal').modal('show'); 
+    ev.preventDefault();
+});
+</script>
 <script>
     var _map;
     var _geocoder;
@@ -86,7 +111,6 @@
     
     var datas = {!!$data!!};
     var selected = {!!$selected!!};
-    var circles = [];
     var markers = [];
     
     function initMap() {
@@ -110,43 +134,6 @@
     
         for (var i = 0; i < datas.length; i++) {
             placeMarker(datas[i], );
-            placeCirle(datas[i]);
-        }
-        
-        if(selected!=null){
-            changeCircle(selected);
-        }
-    }
-
-    function placeCirle(data) {
-        if(data.type == 'apl'){
-            circles[data.id] = new google.maps.Circle({
-              strokeColor: '#e67b19',
-              strokeOpacity: 0.8,
-              strokeWeight: 2,
-              fillColor: '#e67b19',
-              fillOpacity: 0.35,
-              map: _map,
-              center: {lat:parseFloat(data.lat), lng:parseFloat(data.lng)},
-              radius: data.id * 50 * 1000
-            });
-        }
-    }
-
-    function changeCircle(data) {
-        if(selected!=null){
-            circles[selected.id].setOptions({
-                        fillColor: '#e67b19',
-                        strokeColor: '#e67b19'
-                    });
-        }
-        
-        if(data.type == 'apl'){
-            circles[data.id].setOptions({
-                        fillColor: '#00FF00',
-                        strokeColor: '#00FF00'
-                    });
-            selected = data;
         }
     }
     
@@ -161,20 +148,12 @@
         if(data.type == 'apl'){
             google.maps.event.addListener(markers[data.id], 'click', function() {
                 _inputApl.value = data.id;
-                changeCircle(data);
+                $('#title').html(data.title);
+                $('#content').html(data.html);
+                $('#myModal').modal('show'); 
             });
         }
     }
-    
-    _inputApl.addEventListener('change',function(){
-        var id = _inputApl.value;
-        for (var i = 0; i < datas.length; i++) {
-            if(datas[i].id == id){
-                changeCircle(datas[i]);
-                break;
-            }
-        }
-    });
 
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtRuDbjjrHacZ6EqZySofNueLBLkrNxwI&callback=initMap"></script>

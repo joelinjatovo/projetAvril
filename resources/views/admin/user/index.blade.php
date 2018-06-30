@@ -66,12 +66,6 @@
                         </div>
                         <div class="widget widget-simple">
                             <div class="widget-header">
-                                <h4><small>@lang('app.pins')</small></h4>
-                            </div>
-                            @include('admin.table.product',['products'=>$item->pins])
-                        </div>
-                        <div class="widget widget-simple">
-                            <div class="widget-header">
                                 <h4><small>@lang('app.favorites')</small></h4>
                             </div>
                             @include('admin.table.product',['products'=>$item->favorites])

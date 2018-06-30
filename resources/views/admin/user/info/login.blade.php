@@ -13,11 +13,9 @@
                         <div class="col-sm-9">
                             <p><strong>@lang('app.form.login')</strong>: {{$item->name}}</p>
                             <p><strong>@lang('app.form.email')</strong>: {{$item->email}}</p>
-                            <p><strong>@lang('app.form.first_name')</strong>: {{$item->get_meta('first_name')?$item->get_meta('first_name')->value:''}}</p>
-                            <p><strong>@lang('app.form.last_name')</strong>: {{$item->get_meta('last_name')?$item->get_meta('last_name')->value:''}}</p>
                             <p><strong>@lang('app.form.language')</strong>: {{$item->language=='en'?'English':'Français'}}</p>
                             <p><strong>@lang('app.user.ontrial')</strong>: {{$item->onTrial()?'oui':'non'}}</p>
-                            <p><strong>@lang('app.user.trial_end_at')</strong>: {{$item->trial_end_at}}</p>
+                            <p><strong>@lang('app.user.trial_end_at')</strong>: {{$item->trial_ends_at}}</p>
                         </div>
                     </div>
                 </div>
