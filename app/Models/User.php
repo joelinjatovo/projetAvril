@@ -385,7 +385,10 @@ class User extends Authenticatable
      */
     public function orders()
     {
-      return $this->hasMany(Sale::class, 'author_id', 'id');
+        if($this->hasRole('member')) return $this->hasMany(Sale::class, 'author_id', 'id');
+        if($this->hasRole('apl'))    return $this->hasMany(Sale::class, 'apl_id', 'id');
+        if($this->hasRole('afa'))    return $this->hasMany(Sale::class, 'afa_id', 'id');
+        return null;
     }
     
     /**

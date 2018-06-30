@@ -1,9 +1,9 @@
-<div class="property clearfix">
-    <a href="{{route(\Auth::user()->role.'.user.contact', $user)}}"/>
-        <img class="feature-image" src="{{$user->imageUrl(false)}}" alt="{{$user->name}}">
-    </a>
+<article class="property list-style clearfix">
     <div class="property-contents">
-        <h6 class="entry-title"> <a href="{{route(\Auth::user()->role.'.user.contact', $user)}}">{{$user->name}}</a></h6>
-        <span  class="btn btn-price">{{$user->role}}</span>
+        <div class="author-box clearfix">
+            <a href="{{route(\Auth::user()->role.'.user.contact', $user)}}" class="author-img"><img src="{{$user->imageUrl(false)}}" alt="{{$user->name}}" width="100px;"></a>
+            <cite class="author-name">Personal Seller: <a href="{{route(\Auth::user()->role.'.user.contact', $user)}}">{{$user->name}}</a></cite>
+            <span class="email"><i class="fa fa-email"></i> {{$user->email}}</span>
+        </div>
     </div>
-</div>
+</article>

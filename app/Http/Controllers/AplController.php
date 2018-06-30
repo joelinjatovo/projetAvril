@@ -25,12 +25,12 @@ class AplController extends Controller
      */
     public function orders()
     {
-        $items = Auth::user()->sales()
-            ->wherePivot('status', 'ordered')
+        $items = Auth::user()->orders()
+            ->where('status', 'ordered')
             ->paginate($this->pageSize);
         
-        return view('backend.product.all')
-            ->with('title', __('app.orders'))
+        return view('backend.sale.all')
+            ->with('title', __('apl.orders'))
             ->with('items', $items);
     }
     
@@ -41,12 +41,12 @@ class AplController extends Controller
      */
     public function sales()
     {
-        $items = Auth::user()->sales()
-            ->wherePivot('status', 'paid')
+        $items = Auth::user()->orders()
+            ->where('status', 'paid')
             ->paginate($this->pageSize);
         
-        return view('backend.product.all')
-            ->with('title', __('app.sales'))
+        return view('backend.sale.all')
+            ->with('title', __('apl.sales'))
             ->with('items', $items);
     }
     
@@ -91,7 +91,7 @@ class AplController extends Controller
         
         $items = $items->paginate($this->pageSize);
         
-        return view('backend.product.all')
+        return view('backend.sale.all')
             ->with('title', $title)
             ->with('items', $items);
     }
