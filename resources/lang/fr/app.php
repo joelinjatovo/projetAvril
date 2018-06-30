@@ -16,6 +16,12 @@ return [
     
     'trial_end'    => 'Vous devez mettre a jour votre inscription. Choisissez un plan.',
     
+    'num.area' => ':num m2',
+    'num.bed' =>  ':num chambres',
+    'num.bath' =>  ':num douches',
+    'yes' =>  'oui',
+    'no' =>  'non',
+    
     'shop'    => 'Shop',
     'login'    => 'Connexion',
     

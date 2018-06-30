@@ -182,6 +182,7 @@ Route::prefix('apl')->middleware(["auth","role:apl"])->group(function(){
     Route::get('/', 'BackendController@dashboard');
     Route::get('favorites', 'BackendController@favorites');
     Route::get('pins', 'BackendController@pins');
+    Route::get('searches', 'BackendController@searches');
     
     Route::get('orders', 'AplController@orders')->name('apl.orders');
     Route::get('sales', 'AplController@sales')->name('apl.sales');
@@ -206,6 +207,7 @@ Route::prefix('seller')->middleware(["auth","role:seller"])->group(function(){
     Route::get('/', 'BackendController@dashboard');
     Route::get('favorites', 'BackendController@favorites');
     Route::get('pins', 'BackendController@pins');
+    Route::get('searches', 'BackendController@searches');
     
     Route::get('products', 'SellerController@products')->name('seller.products');
     Route::get('sales', 'SellerController@sales')->name('seller.sales');

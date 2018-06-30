@@ -9,19 +9,17 @@
         <header class="property-header clearfix">
             <div class="pull-left">
                 <h6 class="entry-title"><a href="{{route('product.index',['product'=>$item])}}">{{$item->title}}</a></h6>
-                @if($item->location)
-                <span class="property-location"><i class="fa fa-map-marker"></i> {{$item->location->toString()}}</span>
-                @endif
+                <span class="property-location"><i class="fa fa-map-marker"></i> {{$item->location?$item->location->toString():''}}</span>
             </div>
         </header>
-        <div class="property-meta clearfix">
-            <span><i class="fa fa-arrows-alt"></i> {{$item->area}}</span>
-            <span><i class="fa fa-bed"></i> {{$item->bedrooms}}</span>
-            <span><i class="fa fa-bathtub"></i> {{$item->bathrooms}}</span>
-            <span><i class="fa fa-cab"></i> {{$item->garage_spaces}}</span>
-        </div>
         <div class="contents clearfix">
-            <p> {{$item->excerpt()}} </p>
+            {{$item->excerpt()}}
+        </div>
+        <div class="property-meta clearfix">
+            <span><i class="fa fa-arrows-alt"></i> @lang('app.num.area', ['num'=>number_format($item->area, 0)])</span>
+            <span><i class="fa fa-bed"></i> @lang('app.num.bed', ['num'=>$item->bedrooms])</span>
+            <span><i class="fa fa-bathtub"></i> @lang('app.num.bath', ['num'=>$item->bathrooms])</span>
+            <span><i class="fa fa-cab"></i> {{$item->garage_spaces?__('app.yes'):__('app.no')}}</span>
         </div>
         <a href="{{route('product.index',['product'=>$item])}}" class="btn btn-default btn-price pull-right">
             <strong>{{$item->currency}} {{$item->price}}</strong>

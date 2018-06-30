@@ -14,12 +14,18 @@
         <h5 class="title">@lang('app.recent.product')</h5>
         @foreach($products as $product)
         <div class="property clearfix">
-            <a href="{{route('product.index',['product'=>$product])}}">
-                <img class="feature-image" src="{{$product->imageUrl(false)}}" alt="{{$product->title}}">
+            <a href="{{route('product.index',['product'=>$product])}}" class="feature-image">
+                <img src="{{$product->imageUrl(false)}}" alt="{{$product->title}}">
             </a>
             <div class="property-contents">
                 <h6 class="entry-title"> <a href="{{route('product.index',['product'=>$product])}}">{{$product->title}}</a></h6>
-                <span  class="btn btn-price">{{$product->price}}</span>
+                <span class="btn btn-price">{{$product->price}}</span>
+                <div class="property-meta clearfix">
+                    <span><i class="fa fa-arrows-alt"></i> @lang('app.num.area', ['num'=>number_format($product->area, 0)])</span>
+                    <span><i class="fa fa-bed"></i> @lang('app.num.bed', ['num'=>$product->bedrooms])</span>
+                    <span><i class="fa fa-bathtub"></i> @lang('app.num.bath', ['num'=>$product->bathrooms])</span>
+                    <span><i class="fa fa-cab"></i> {{$product->garage_spaces?__('app.yes'):__('app.no')}}</span>
+                </div>
             </div>
         </div>
         @endforeach

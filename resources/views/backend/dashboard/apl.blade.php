@@ -5,7 +5,7 @@
     <div id="property-sidebar">
         <div class="col-sm-12">
             <div class="col-sm-4">
-                <a href="{{route('shop.cart')}}">
+                <a href="#s">
                     <section class="widget text-center">
                         <strong>@lang('app.customers')</strong>
                         <h3>{{$count['customers']}}</h3>
@@ -15,8 +15,8 @@
             <div class="col-sm-4">
                 <a href="#">
                     <section class="widget text-center">
-                        <strong>@lang('app.pins')/@lang('app.favorites')</strong>
-                        <h3>{{$count['pins']}}/{{$count['favorites']}}</h3>
+                        <strong>@lang('app.favorites')</strong>
+                        <h3>{{$count['favorites']}}</h3>
                     </section>
                 </a>
             </div>
