@@ -25,12 +25,12 @@ class AfaController extends Controller
      */
     public function orders()
     {
-        $items = Auth::user()->sales()
-            ->wherePivot('status', 'ordered')
+        $items = Auth::user()->orders()
+            ->where('status', 'ordered')
             ->paginate($this->pageSize);
         
-        return view('backend.product.all')
-            ->with('title', __('app.orders'))
+        return view('backend.sale.all')
+            ->with('title', __('afa.orders'))
             ->with('items', $items);
     }
     
@@ -41,12 +41,12 @@ class AfaController extends Controller
      */
     public function sales()
     {
-        $items = Auth::user()->sales()
-            ->wherePivot('status', 'paid')
+        $items = Auth::user()->orders()
+            ->where('status', 'paid')
             ->paginate($this->pageSize);
         
-        return view('backend.product.all')
-            ->with('title', __('app.sales'))
+        return view('backend.sale.all')
+            ->with('title', __('afa.sales'))
             ->with('items', $items);
     }
     
@@ -57,16 +57,16 @@ class AfaController extends Controller
      */
     public function commissions($filter = 'paid')
     {
-        $items = Auth::user()->sales()
-            ->wherePivot('status', 'ordered');
+        $items = Auth::user()->orders()
+            ->where('status', 'ordered');
         
         switch($filter){
             case 'paid':
-                $items = $items->wherePivot('apl_paid_at', '<>', 'NULL');
+                $items = $items->where('apl_paid_at', '<>', 'NULL');
                 $title = __('app.commissions.paid');
                 break;
             case 'not-paid':
-                $items = $items->wherePivot('apl_paid_at', 'NULL');
+                $items = $items->where('apl_paid_at', 'NULL');
                 $title = __('app.commissions.not_paid');
                 break;
             default:
@@ -76,7 +76,7 @@ class AfaController extends Controller
         
         $items = $items->paginate($this->pageSize);
         
-        return view('backend.product.all')
+        return view('backend.sale.all')
             ->with('title', $title)
             ->with('items', $items);
     }

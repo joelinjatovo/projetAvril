@@ -29,7 +29,7 @@ class SellerController extends Controller
             ->paginate($this->pageSize);
         
         return view('backend.product.all')
-            ->with('title', __('app.products'))
+            ->with('title', __('seller.products'))
             ->with('items', $items);
     }
     
@@ -45,7 +45,7 @@ class SellerController extends Controller
             ->paginate($this->pageSize);
         
         return view('backend.product.all')
-            ->with('title', __('app.orders'))
+            ->with('title', __('seller.orders'))
             ->with('items', $items);
     }
     
@@ -61,7 +61,7 @@ class SellerController extends Controller
             ->paginate($this->pageSize);
         
         return view('backend.product.all')
-            ->with('title', __('app.sales'))
+            ->with('title', __('seller.sales'))
             ->with('items', $items);
     }
     

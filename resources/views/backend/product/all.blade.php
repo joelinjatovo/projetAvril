@@ -1,17 +1,26 @@
 @extends('layouts.backend')
 
 @section('subcontent')
-<div id="property-sidebar">
-    <div class="col-sm-12">
-        <section class="widget recent-properties clearfix">
-            <div class="page-header">
-                <h3>{{isset($title)?$title:__('app.list.product')}}</h3>
-            </div>
-            @foreach($items as $item)
-                @include('backend.product.item', ['product'=>$item])
-            @endforeach
-        </section>
-        {{$items->links()}}
+<section>
+    <div class="page-header">
+        <h3>{{$title}}</h3>
     </div>
-</div>
+    <div class="row-fluid">
+        <div class="col-md-12">
+            @if(count($items)>0)
+                @include('backend.table.product', ['products'=>$items])
+            @else
+            <div class="panel panel-default">
+                <div class="panel-body">
+                  <ul class="list-group">
+                      <li class="list-group-item clearfix">
+                          <h4>@lang('member.empty')</h4>
+                      </li>
+                    </ul>
+                </div>
+            </div>
+            @endif
+        </div>
+    </div>
+</section>
 @endsection

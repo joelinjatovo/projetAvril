@@ -5,7 +5,7 @@
     <div id="property-sidebar">
         <div class="col-sm-12">
             <div class="col-sm-4">
-                <a href="{{route('shop.cart')}}">
+                <a href="#">
                     <section class="widget text-center">
                         <strong>@lang('app.products')</strong>
                         <h3>{{$count['products']}}</h3>
