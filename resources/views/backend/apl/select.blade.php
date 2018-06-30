@@ -66,8 +66,8 @@
         <p id="content">One fine body…</p>
       </div>
       <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-        <button class="btn btn-primary">Save changes</button>
+        <button class="btn pull-right" data-dismiss="modal" aria-hidden="true">Close</button>
+        <button class="btn btn-primary pull-left">Save changes</button>
       </div>
     </div>
   </div>
@@ -75,6 +75,7 @@
 
 @endsection
 @section('script')
+@parent
 <script>
 $('#apl-form').on('submit', function(ev) {
     $('#myModal').modal('show'); 

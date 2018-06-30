@@ -199,6 +199,7 @@ return [
     'favorites'=> 'Favoris',
     'pin'      => 'Epingle',
     'pins'     => 'Epingles',
+    "searches" => "Recherches sauvegardees",
     'order'    => 'Commande',
     'orders'   => 'Commandes',
     'customer' => 'Client',

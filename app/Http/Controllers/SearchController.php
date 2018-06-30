@@ -127,4 +127,78 @@ class SearchController extends Controller
             ->with('items', $items);
     }
 
+    
+    public function edit(Request $request){
+        $this->middleware('auth');
+        
+        $id = $request->search;
+        $search = Search::find($id);
+        if(!$search){
+            return response()->json([
+                'state'=>0,
+                'code' => 'invalid_param',
+                'message' => 'Object not found'
+            ]);
+        }
+        
+        if($search->author && ($search->author->id != \Auth::user()->id)){
+            return response()->json([
+                'state'=>0,
+                'code' => 'unauthorized',
+                'message' => 'Vous n\'etes pas autorise a modifier cette recherche.'
+            ]);
+        }
+        
+        $title = $request->title;
+        if(empty($title)){
+            return response()->json([
+                'state'=>0,
+                'code' => 'invalid_param',
+                'message' => 'Le titre ne peut pas etre vide.'
+            ]);
+        }
+        
+        if(!$search->author){
+            $search->author_id = \Auth::user()->id;
+        }
+
+        $search->title = $title;
+        $search->save();
+        
+        return response()->json([
+                'state'=>1,
+                'code' => 'success',
+                'message' => 'Modification avec succes.'
+        ]);
+    }
+    
+    public function delete(Request $request){
+        $this->middleware('auth');
+        
+        $id = $request->search;
+        $search = Search::find($id);
+        if(!$search){
+            return response()->json([
+                'state'=>0,
+                'code' => 'invalid_param',
+                'message' => 'Object not found'
+            ]);
+        }
+        
+        if(!$search->author || ($search->author->id != \Auth::user()->id)){
+            return response()->json([
+                'state'=>0,
+                'code' => 'unauthorized',
+                'message' => 'Vous n\'etes pas autorise a modifier cette recherche.'
+            ]);
+        }
+        
+        $search->delete();
+        
+        return response()->json([
+                'state'=>1,
+                'code' => 'success',
+                'message' => 'Suppression avec succes.'
+        ]);
+    }
 }

@@ -66,12 +66,25 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
         window.Laravel.userId = <?php echo auth()->user()->id; ?>
     </script>
 @endif
+<style>
+#mute {
+  position: absolute;
+}
+#mute.on {
+  opacity: 0.7;
+  z-index: 1000;
+  background: white;
+  height: 100%;
+  width: 100%;
+}
+</style>
 
 @yield('style')
     
 @yield('style-stripe')
 </head>
 <body>
+<div id="mute"></div>
 <header id="head">
     <div id="site-header-top" class="barreNoir">
         <div class="container">
@@ -260,7 +273,6 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
     </div>
 </footer>
 <a href="#top" id="scroll-top"><i class="fa fa-angle-up"></i></a>
-
     
 <script src="{{ asset('js/app.js') }}"></script>
     
@@ -297,15 +309,11 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
                 return 'Current value: ' + value;
             }
         });
-    });
-    $(document).ready(function () {
         $("#ex3").slider({
             formatter: function (value) {
                 return 'Current value: ' + value;
             }
         });
-    });
-    $(document).ready(function () {
         $("#ex4").slider({
             formatter: function (value) {
                 return 'Current value: ' + value;
@@ -315,7 +323,9 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
 </script>
     
     
-@yield('script')
+@section('script')
+@show
+
 @yield('stripe')
 @yield('braintree')
 </body>

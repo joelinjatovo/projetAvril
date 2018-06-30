@@ -19,7 +19,7 @@
                     
                     @if(!Auth::user()->isAdmin())
                         <li><a href="{{url(Auth::user()->role.'/favorites')}}"><i class="fa fa-gratipay" aria-hidden="true"></i> @lang('app.favorites')</a></li>
-                        <li><a href="{{url(Auth::user()->role.'/pins')}}"><i class="fa fa-search" aria-hidden="true"></i> @lang('app.saved_searches')</a></li>
+                        <li><a href="{{url(Auth::user()->role.'/searches')}}"><i class="fa fa-search" aria-hidden="true"></i> @lang('app.saved_searches')</a></li>
                         <li>
                              <a href="{{route(Auth::user()->role.'.mail.list',['filter'=>'inbox'])}}">
                                 <i class="fa fa-envelope"></i> @lang('app.mails')

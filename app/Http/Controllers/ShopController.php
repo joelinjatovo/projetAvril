@@ -44,14 +44,13 @@ class ShopController extends Controller
             $items = $items->where("category_id", $category->id);
         }
         
+        $search = new Search();
         $q = $request->q;
         if($q){
             $items = $items->where(function($query) use ($q){
                 return $query->where('content', 'LIKE', '%'.$q.'%')
                     ->orWhere('title', 'LIKE', '%'.$q.'%');
             });
-            
-            $search = new Search();
             $search->keyword = $q;
             $search->save();
         }
@@ -94,6 +93,7 @@ class ShopController extends Controller
         
         return view('shop.index')
             ->with('items', $items)
+            ->with('search', $search)
             ->with('q', $q)
             ->with('orderBy', $orderBy)
             ->with('order', $order)

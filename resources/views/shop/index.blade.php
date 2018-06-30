@@ -11,6 +11,9 @@
                         <h3 class="pull-left">
                             @if(isset($q)&&$q)
                                 @lang('app.search_result', ['q'=>$q])
+                                <a class="btn btn-default btn-save-search" 
+                                       data-search-id="{{$search->id}}" 
+                                       data-search-title="{{$search->title}}" >@lang('app.btn.save')</a>
                             @else
                                 @if($category&&$category->id>0) 
                                     {{$category->title}} 
@@ -19,6 +22,8 @@
                                 @endif
                             @endif
                         </h3>
+                        <br><p id="success-message" style="color:green;"></p>
+                        <br><p id="error-message" style="color:red;"></p>
                     </div>
                 </div>
             </header>
@@ -84,51 +89,115 @@
         </div>
     </div>
 </div>
+
+
+@if(isset($q)&&$q)
+<!-- Modal -->
+<div id="modal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h4 class="modal-title" id="title">Enregister la recherche</h4>
+      </div>
+      <div class="modal-body">
+          <form id="form-save-search" action="{{route('search.edit')}}" method="post">
+            {{csrf_field()}}
+            <input type="hidden" id="input-search-id" name="search" value="{{$search->id}}">
+            <p class="form-subject">
+                <input id="input-search-title" name="title" type="text" placeholder="Titre *" required="required" value="{{$search->title}}">
+            </p>
+                <a class="btn btn-default" data-dismiss="modal" aria-hidden="true">@lang('app.btn.cancel')</a>
+                <button class="btn btn-success" type="submit">@lang('app.btn.save')</button>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+@endif
+
 @endsection
+
 @section('script')
-<script type="text/javascript">
-var page = {{$page}};
-var norecord = false;
-var load = false;
-$(window).scroll(function() {
-    if($(window).scrollTop() + $(window).height() >= 
-       $('#infinite-scroll').height()) {
-        if(!load){
-            if(!norecord){
-                page++;
-                loadMoreData(page);
-            }else{
-                $('.ajax-load').show();
+    @parent
+    <script type="text/javascript">
+    $(document).ready(function () {
+        var page = {{$page}};
+        var norecord = false;
+        var load = false;
+        $(window).scroll(function() {
+            if($(window).scrollTop() + $(window).height() >= 
+               $('#infinite-scroll').height()) {
+                if(!load){
+                    if(!norecord){
+                        page++;
+                        loadMoreData(page);
+                    }else{
+                        $('.ajax-load').show();
+                    }
+                }
             }
+        });
+        function loadMoreData(page){
+            $.ajax({
+                url: "{!!route("shop.index", ["category"=>$category, "q"=>$q, "order"=>$order, "orderBy"=>$orderBy])!!}&page="+page,
+                type: "get",
+                beforeSend: function()
+                {
+                    load = true;
+                    $('.ajax-load').show();
+                }
+            }).done(function(data)
+            {
+                if(data.html == ""){
+                    norecord = true;
+                    $('.ajax-load').html("@lang('app.no_more_data')");
+                    return;
+                }
+                $('.ajax-load').hide();
+                $(".product-data").append(data.html);
+                load = false;
+            }).fail(function(jqXHR, ajaxOptions, thrownError)
+            {
+                page--;
+                $('.ajax-load').html("Server not responding....");
+                load = false;
+            });
         }
-    }
-});
-function loadMoreData(page){
-    $.ajax({
-        url: "{!!route("shop.index", ["q"=>$q, "category"=>$category, "order"=>$order, "orderBy"=>$orderBy])!!}&page="+page,
-        type: "get",
-        beforeSend: function()
-        {
-            load = true;
-            $('.ajax-load').show();
-        }
-    }).done(function(data)
-    {
-        if(data.html == ""){
-            norecord = true;
-            $('.ajax-load').html("@lang('app.no_more_data')");
-            return;
-        }
-        $('.ajax-load').hide();
-        $(".product-data").append(data.html);
-        load = false;
-    }).fail(function(jqXHR, ajaxOptions, thrownError)
-    {
-        page--;
-        $('.ajax-load').html("Server not responding....");
-        load = false;
     });
-}
-</script>
+    </script>
+
+    @if(isset($q)&&$q)
+        <script>
+        $(document).ready(function () {
+            $('.btn-save-search').on('click', function(e){
+                $('#modal').modal('show');
+                e.preventDefault();
+            });
+
+            $('#form-save-search').on('submit', function(e){
+                $('#mute').addClass('on');
+                $('#modal').modal('hide');
+                var data = {
+                    _token: $('meta[name=csrf-token]').attr('content'),
+                    search: $('#input-search-id').val(),
+                    title: $('#input-search-title').val(),
+                };
+                
+                $('#success-message').html('');
+                $('#error-message').html('');
+                $.post('{{route("search.edit")}}', data, function(res){
+                    if(res.state == 1){
+                        $('#success-message').html(res.message);
+                    }else{
+                        $('#error-message').html(res.message);
+                    }
+                    $('#mute').removeClass('on');
+                });
+                e.preventDefault();
+            });
+        });
+        </script>
+    @endif
 @endsection
+
 

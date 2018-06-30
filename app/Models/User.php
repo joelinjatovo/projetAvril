@@ -389,6 +389,16 @@ class User extends Authenticatable
     }
     
     /**
+     * An Client can have many searches
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function searches()
+    {
+      return $this->hasMany(Search::class, 'author_id', 'id');
+    }
+    
+    /**
      * An many afa/apl can have many products from sales table
      *
      * @return \Illuminate\Database\Eloquent\Relations\ManyToMany

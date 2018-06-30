@@ -30,6 +30,16 @@ class Search extends BaseModel
      */
     public function __construct()
     {
-        $this->author_id = (\Auth::check()?\Auth::user()->id:0);
+        //$this->author_id = (\Auth::check()?\Auth::user()->id:0);
+    }
+    
+    /**
+     * A user can have one parent
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function author()
+    {
+      return $this->hasOne(User::class, 'id', 'author_id');
     }
 }

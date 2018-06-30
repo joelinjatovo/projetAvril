@@ -153,6 +153,22 @@ class BackendController extends Controller
             ->with('title', __('app.favorites'))
             ->with('items', $items);
     }
+    
+    /**
+     * Liste des recherches sauvegardees par l'utilisateur
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function searches()
+    {
+        $items = Auth::user()->searches()
+            ->whereNotNull('keyword')
+            ->paginate($this->pageSize);
+        
+        return view('backend.search.all')
+            ->with('title', __('app.searches'))
+            ->with('items', $items);
+    }
 
     /**
      * 

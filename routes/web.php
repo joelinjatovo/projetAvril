@@ -105,6 +105,9 @@ Route::middleware(["auth"])->group(function(){
         Route::get('location', 'ProfileController@location')->name('location.edit');
         Route::post('location', 'ProfileController@updateLocation');
     });
+    
+    Route::post('search', 'SearchController@edit')->name('search.edit');
+    Route::post('search/delete', 'SearchController@delete')->name('search.delete');
 
 });
 
@@ -128,6 +131,7 @@ Route::middleware(["auth", "role:member"])->group(function(){
         Route::get('/', 'BackendController@dashboard');
         Route::get('favorites', 'BackendController@favorites');
         Route::get('pins', 'BackendController@pins');
+        Route::get('searches', 'BackendController@searches');
         
         Route::get('contact/role/{role}', 'MemberController@contact')->name('member.contact');
         Route::post('contact/role/{role}', 'MemberController@sendMail');
