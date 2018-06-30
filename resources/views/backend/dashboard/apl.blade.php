@@ -5,7 +5,7 @@
     <div id="property-sidebar">
         <div class="col-sm-12">
             <div class="col-sm-4">
-                <a href="#s">
+                <a href="#">
                     <section class="widget text-center">
                         <strong>@lang('app.customers')</strong>
                         <h3>{{$count['customers']}}</h3>

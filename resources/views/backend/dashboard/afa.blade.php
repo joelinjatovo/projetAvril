@@ -7,8 +7,8 @@
             <div class="col-sm-6">
                 <a href="#">
                     <section class="widget text-center">
-                        <strong>@lang('app.pins')/@lang('app.favorites')</strong>
-                        <h3>{{$count['pins']}}/{{$count['favorites']}}</h3>
+                        <strong>@lang('app.favorites')</strong>
+                        <h3>{{$count['favorites']}}</h3>
                     </section>
                 </a>
             </div>
