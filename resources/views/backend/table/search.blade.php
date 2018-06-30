@@ -26,7 +26,7 @@
     </tbody>
 </table>
 
-{{$items->links()}}
+{{$searches->links()}}
 
 <!-- Modal -->
 <div id="modal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">

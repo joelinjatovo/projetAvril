@@ -64,6 +64,8 @@
     </tbody>
 </table>
 
+{{$sales->links()}}
+
 @if($sale->status == 'pinged')
 <form action="{{route('shop.order.last')}}" method="post">
 {{csrf_field()}}
