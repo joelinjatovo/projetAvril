@@ -2,11 +2,13 @@
 
 return [
 
-    "cart" => "Commande a poursuivre",
+    "cart" => "Panier",
     "carts" => "Mes Paniers",
     "order" => "Votre commande",
+    "empty" => "Aucun élément trouvé.",
     "empty_order" => "Vous n'avez pas encore effecutée une commande.",
     "cancel_order" => "Annuler la derniere commande",
+    "cancel_orders" => "Vider les commandes",
     "add_to_cart" => "Je veux acheter ce produit",
     "pay_order" => "Payer la commande",
     "pay_now" => "Payer maintenant",

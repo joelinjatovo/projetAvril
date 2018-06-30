@@ -285,6 +285,19 @@ class ShopController extends Controller
         $this->middleware('role:member');
         
         $this->validate($request, [
+            'action' => 'required',
+        ]);
+        
+        $action = $request->action;
+        if($action == 'update_session'){
+            $sale = Sale::findOrFail($request->sale);
+            Session::put('sale', $sale);
+            return redirect()
+                ->route('shop.checkout')
+                ->with('success', 'Votre commande a ete reprise. Veuillez effectuer le paiement.');
+        }
+        
+        $this->validate($request, [
             'stripe_token' => 'required',
         ]);
         
@@ -378,6 +391,15 @@ class ShopController extends Controller
         
         $action = $request->input('action');
         switch($action){
+            case 'item':
+                $sale = Sale::findOrFail($request->sale);
+                $sale->delete();
+                
+                $session = Session::has('sale') ? Session::get('sale') : null;
+                if ($session && $session->id == $sale->id ) {
+                    Session::forget('sale');
+                }
+                break;
             case 'session':
                 $sale = Session::has('sale') ? Session::get('sale') : null;
                 if (!$sale) {

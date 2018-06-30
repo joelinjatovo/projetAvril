@@ -85,6 +85,7 @@ SUCCESS PAGE
       <div class="panel-body">
         <form id="form" action="{{route('shop.checkout')}}" method="POST">
             {{ csrf_field() }}
+            <input type="hidden" name="action" value="checkout">
             <input name="stripe_token" type="hidden"/>
             <div id="card-element" class="field"></div>
             <hr>

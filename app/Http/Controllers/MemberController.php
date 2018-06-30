@@ -28,54 +28,52 @@ class MemberController extends Controller
     }
 
     /**
-     * 
+     * Liste des commandes en attente
      *
      * @return \Illuminate\Http\Response
      */
     public function carts()
     {
-        $items = Auth::user()->purchases()
-            ->wherePivot('status', 'pinged')
+        $items = Auth::user()->orders()
+            ->where('status', 'pinged')
             ->paginate($this->pageSize);
         
-        return view('backend.product.all')
+        return view('backend.sale.all')
             ->with('title', __('member.carts'))
             ->with('items', $items);
     }
 
     /**
-     * 
+     * Liste des commandes en cours d'achat effectue par le client
      *
      * @return \Illuminate\Http\Response
      */
     public function orders()
     {
-        $items = Auth::user()->purchases()
-            ->wherePivot('status', 'ordered')
+        $items = Auth::user()->orders()
+            ->where('status', 'ordered')
             ->paginate($this->pageSize);
         
-        return view('backend.product.all')
+        return view('backend.sale.all')
             ->with('title', __('member.orders'))
             ->with('items', $items);
     }
 
     /**
-     * 
+     * Liste des achats effectues par le client
      *
      * @return \Illuminate\Http\Response
      */
     public function purchases()
     {
-        $items = Auth::user()->purchases()
-            ->wherePivot('status', 'paid')
+        $items = Auth::user()->orders()
+            ->where('status', 'paid')
             ->paginate($this->pageSize);
         
-        return view('backend.product.all')
+        return view('backend.sale.all')
             ->with('title', __('member.purchases'))
             ->with('items', $items);
     }
-    
-    
 
     public function contact(Request $request, $role){
         $action = route('member.contact', ['role'=>$role]);

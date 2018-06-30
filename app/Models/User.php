@@ -39,7 +39,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $dates = ['trial_ends_at', 'subscription_ends_at'];
+    protected $dates = ['apl_ends_at', 'trial_ends_at', 'subscription_ends_at'];
     
     /**
      * The event map for the model.
@@ -58,20 +58,8 @@ class User extends Authenticatable
      */
     public function routeNotificationForMail()
     {
-        return 'joelinjatovo@gmail.com';
+        //return 'joelinjatovo@gmail.com';
     }
-
-    /**
-     * The channels the user receives notification broadcasts on.
-     *
-     * @return string
-     */
-    /*
-    public function receivesBroadcastNotificationsOn()
-    {
-        return 'users.'.$this->id;
-    }
-    */
     
     /**
      * Scope a query to only include users of a given $role.
