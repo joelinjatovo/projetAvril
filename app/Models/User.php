@@ -216,7 +216,10 @@ class User extends Authenticatable
      */
     public function hasApl()
     {
-      return ($this->hasRole('member')&&$this->apl);
+      return $this->hasRole('member')
+              &&$this->apl
+              &&(!empty($this->apl_ends_at))
+              &&($this->apl_ends_at>=\Carbon\Carbon::now());
     }
     
     /**
