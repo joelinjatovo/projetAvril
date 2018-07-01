@@ -186,9 +186,6 @@ class BackendController extends Controller
             ->with('items', $items);
     }
     
-    
-    
-    
     /*
     *
     *
@@ -224,7 +221,8 @@ class BackendController extends Controller
         $validator = Validator::make($datas,[
             'method' => 'required',
             'subject' => 'required|max:100',
-            'content' => 'required|max:1000'
+            'content' => 'required|max:1000',
+            //'files.*'    => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         if ($validator->fails()) {
@@ -251,9 +249,6 @@ class BackendController extends Controller
             break;
         }
 
-        $receiverIds = [];
-        $receiverIds[] = $user->id;
-
         $mailItem = new MailUser();
         $mailItem->mail_id = $item->id;
         $mailItem->user_id = $user->id;
@@ -261,12 +256,26 @@ class BackendController extends Controller
         $mailItem->read    = 0;
         $mailItem->save();
         
+        $files = $request->file('files');
+        if(!$files){
+            $files = [];
+        }
+        
         try{
             $data = array('name'=>"Virat Gandhi");
-            \Mail::send('mail', $data, function($message) use($mailItem, $user, $item) {
+            \Mail::send('mail', $data, function($message) use($mailItem, $user, $item, $files) {
                 $message->to($user->email, $user->name)
                         ->subject($item->subject)
                         ->from($user->email, $user->name);
+                
+                if(count($files)>0) {
+                    foreach($files as $file) {
+                        $message->attach($file->getRealPath(), array(
+                            'as' => $file->getClientOriginalName(), // If you want you can change original name to custom name      
+                            'mime' => $file->getMimeType())
+                        );
+                    }
+                }
             });
         }catch(\Exception $e){
             $mailItem->is_sent = 0;
@@ -274,7 +283,7 @@ class BackendController extends Controller
             return back()->with('success', 'Message non envoyé. '. $e->getMessage());
         }
         
-        return back()->with('success', 'Messages envoyés avec succes. '.count($receiverIds));
+        return back()->with('success', 'Messages envoyés avec succes.');
     }
 
 }

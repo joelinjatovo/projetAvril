@@ -570,6 +570,8 @@ return [
     
     'contact_admin'  => "Contacter l'administrateur",
     'contact_apl'    => "Contacter l'APL",
+    'attachment'     => "Attachement",
+    'attachments'    => "Attachements",
     
     'saved_searches'    => "Recherches sauvegardées",
     

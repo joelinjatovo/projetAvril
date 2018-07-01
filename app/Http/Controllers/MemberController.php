@@ -102,7 +102,8 @@ class MemberController extends Controller
         $datas = $request->all();
         $validator = Validator::make($datas,[
             'subject' => 'required|max:100',
-            'content' => 'required|max:1000'
+            'content' => 'required|max:1000',
+            //'files.*' => 'mimes:jpeg,jpg,png,gif,svg|max:2048',
         ]);
         
         
@@ -144,16 +145,32 @@ class MemberController extends Controller
 
         try{
             $receiver->notify(new NewMail($item));
-        }catch(\Exception $e){
-            // DO nothing
-        }
+        }catch(\Exception $e){}
         
+        $to = 'joelinjatovo@gmail.com';
+        
+        $files = $request->file('files');
+        if(!$files){
+            $files = [];
+        }
         try{
-            $data = array('name'=>"Admin");
-            \Mail::send('mail', $data, function($message) use($item, $to, $toName) {
+            $data = array(
+                'name'    => $toName,
+                'content' => $item->content
+            );
+            \Mail::send('mail', $data, function($message) use($item, $to, $toName, $files) {
                 $message->to($to, $toName)
-                        ->subject($item->subject)
+                        ->subject($item->subject.' '.count($files))
                         ->from($item->sender->email, $item->sender->name);
+                
+                if(count($files)>0) {
+                    foreach($files as $file) {
+                        $message->attach($file->getRealPath(), array(
+                            'as' => $file->getClientOriginalName(), // If you want you can change original name to custom name      
+                            'mime' => $file->getMimeType())
+                        );
+                    }
+                }
             });
         }catch(\Exception $e){
             return back()->with('error', $e->getMessage());
