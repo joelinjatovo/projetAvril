@@ -321,6 +321,12 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
         });
     });
 </script>
+<script>
+$('.btn-select-apl').on('click', function(e){
+    $('#modal-select-apl').modal('show');
+    e.preventDefault();
+});
+</script>
     
     
 @section('script')

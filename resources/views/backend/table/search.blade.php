@@ -4,6 +4,7 @@
             <th>Titre</th>
             <th>Mot cle</th>
             <th>Date</th>
+            <th class="pull-right">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -16,11 +17,13 @@
             </td>
             <td>{{$search->keyword}}</td>
             <td>{{$search->created_at->diffForHumans()}}</td>
-            <td><a class="btn btn-default btn-edit-search" 
+            <td>
+                <a class="btn btn-danger btn-delete pull-right" 
+                   data-search-id="{{$search->id}}">x</a>
+                <a class="btn btn-default btn-edit-search pull-right" 
                    data-search-id="{{$search->id}}" 
                    data-search-title="{{$search->title}}" >@lang('app.btn.edit')</a>
-                <a class="btn btn-danger btn-delete" 
-                   data-search-id="{{$search->id}}">@lang('app.btn.delete')</a></td>
+            </td>
         </tr>
         @endforeach
     </tbody>

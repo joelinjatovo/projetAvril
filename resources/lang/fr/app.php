@@ -563,6 +563,8 @@ return [
     'btn.add_to_cart'    => "Acheter Produit",
     'btn.reply'          => "Repondre",
     'btn.draft'          => "Brouillon",
+    'btn.next'           => "Suivant",
+    'btn.prev'           => "Precedent",
     'btn.save_as_model'  => "Enregistrer en tant que Model",
     'btn.register'       => "Valider l'inscription",
     

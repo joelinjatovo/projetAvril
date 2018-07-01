@@ -18,6 +18,10 @@ return [
     "purchases" => "Achats Précédents",
     
     "contact_admin" => "Contacter ADMIN",
-    "contact_apl" => "Contacter APL",
-    "select.apl" => "Choisir un APL",
+    "contact_apl"   => "Contacter APL",
+    "select.apl"    => "Choisir un APL",
+    
+    "info"         => "Information",
+    "info_has_apl" => "Vous etes deja en relation exclusive avec un APL.",
+    "info_no_apl"  => "Vous avez 180 jours pour etre en relation avec un APL.",
 ];

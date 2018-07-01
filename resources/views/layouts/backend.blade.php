@@ -8,6 +8,10 @@
             <div class="sidebar content-box" style="display: block; background: #fff; margin-bottom: 10px;">
                 <ul class="nav nav-side">
                     
+                    @if(Auth::user()->hasRole('member'))
+                        <li><a class="btn-select-apl btn btn-success" href="{{route('member.select.apl')}}">@lang('member.select.apl')</a></li>
+                    @endif
+                    
                     <li><a href="{{url(Auth::user()->role)}}"><i class="fa fa-tachometer" aria-hidden="true"></i> @lang('app.dashboard')</a></li>
                     <li><a href="{{route('profile')}}"><i class="fa fa-pencil-square" aria-hidden="true"></i> @lang('app.profile')</a></li>
                     
@@ -19,8 +23,6 @@
                         <li><a href="{{route('member.contact', ['role'=>'admin'])}}"><i class="fa fa-envelope" aria-hidden="true"></i> @lang('member.contact_admin')</a></li>
                         @if(Auth::user()->hasApl())
                             <li><a href="{{route('member.contact', ['role'=>'apl'])}}"><i class="fa fa-envelope" aria-hidden="true"></i> @lang('member.contact_apl')</a></li>
-                        @else
-                            <li><a href="{{route('member.select.apl')}}"><i class="fa fa-user" aria-hidden="true"></i> @lang('member.select.apl')</a></li>
                         @endif
                     @endif
                     
@@ -68,4 +70,33 @@
       </div>
   </div>
 </div>
+
+@if(Auth::user()->hasRole('member'))
+<!-- Modal -->
+<div id="modal-select-apl" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h4 class="modal-title" id="title">@lang('member.info')</h4>
+      </div>
+      <div class="modal-body">
+          @if(Auth::user()->hasAPl())
+          <p>@lang('member.info_has_apl')</p>
+          @else
+          <p>@lang('member.info_no_apl')</p>
+          @endif
+      </div>
+      <div class="modal-footer">
+          <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">@lang('app.btn.cancel')</button>
+          @if(Auth::user()->hasAPl())
+            <a href="{{route('member.select.apl')}}" class="btn btn-success" type="submit">@lang('app.btn.next')</a>
+          @else
+            <a href="{{route('member.select.apl')}}" class="btn btn-success" type="submit">@lang('member.select.apl')
+          @endif
+      </div>
+    </div>
+  </div>
+</div>
+@endif
+
 @endsection
