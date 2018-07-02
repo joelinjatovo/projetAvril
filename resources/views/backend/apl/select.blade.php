@@ -93,14 +93,14 @@
         if(!$('#check-confirm').is(":checked"))
         {
             $('.row-confirm').removeClass('hidden');
-            e.preventDefault();
+            event.preventDefault();
         }
     });
     $('#apl-form-modal').submit(function(event){
         if(!$('#check-confirm-modal').is(":checked"))
         {
             $('.row-confirm-modal').removeClass('hidden');
-            e.preventDefault();
+            event.preventDefault();
         }
     });
 </script>
