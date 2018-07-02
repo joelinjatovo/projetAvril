@@ -265,6 +265,11 @@ class MemberController extends Controller
                ->with('error','Vous devez choisir un apl.');
         }
         
+        if(!$request->input('confirm')){
+            return back()->withInput()
+               ->with('error','Vous devez accepter les termes et les conditions.');
+        }
+        
         // Update APL
         Auth::user()->apl_id = $apl->id;
         Auth::user()->apl_ends_at = \Carbon\Carbon::now()->addDays(option('payment.apl_ends_at', 180));

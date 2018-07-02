@@ -34,7 +34,7 @@
                         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <select id="apl"  name="apl" class="form-control">
+                                <select id="apl"  name="apl" class="form-control" style="width:100%;">
                                     @foreach($items as $item)
                                     <option 
                                         {{Auth::check()
@@ -43,6 +43,9 @@
                                     @endforeach
                                 </select>
                             </div>
+                        </div>
+                        <div class="pull-left hidden row-confirm" style="margin-bottom: 20px;">
+                            <input id="check-confirm" type="checkbox" name="confirm" value="1"><span style="color:red;"> {!!__('member.accept_term_and_condition_apl')!!}</span>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-12">
@@ -60,27 +63,46 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-          <h4 class="modal-title" id="title">Modal header</h4>
+          <h4 class="modal-title" id="title">@lang('app.apl')</h4>
       </div>
       <div class="modal-body">
-        <p id="content">One fine body…</p>
+        <p id="content">@lang('app.select_apl')</p>
       </div>
       <div class="modal-footer">
-        <button class="btn pull-right" data-dismiss="modal" aria-hidden="true">Close</button>
-        <button class="btn btn-primary pull-left">Save changes</button>
+        <form id="apl-form-modal" class="form-horizontal" role="form" method="post" action="{{$action}}">
+            <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+            <input type="hidden" id="apl-modal"  name="apl">
+            <div class="pull-left hidden row-confirm-modal" style="margin-bottom: 20px;">
+                <input id="check-confirm-modal" type="checkbox" name="confirm" value="1"><span style="color:red;"> {!!__('member.accept_term_and_condition_apl')!!}</span>
+            </div>
+            <div class="col-md-12">
+                <button class="btn btn-default pull-right" data-dismiss="modal" aria-hidden="true">@lang('app.btn.cancel')</button>
+                <button id="submit" type="submit" class="btn btn-success pull-left">@lang('member.select')</button>
+            </div>
+        </form>
       </div>
     </div>
   </div>
 </div>
-
 @endsection
+
 @section('script')
 @parent
 <script>
-$('#apl-form').on('submit', function(ev) {
-    $('#myModal').modal('show'); 
-    ev.preventDefault();
-});
+    $('#apl-form').on('submit', function(event){
+        if(!$('#check-confirm').is(":checked"))
+        {
+            $('.row-confirm').removeClass('hidden');
+            e.preventDefault();
+        }
+    });
+    $('#apl-form-modal').submit(function(event){
+        if(!$('#check-confirm-modal').is(":checked"))
+        {
+            $('.row-confirm-modal').removeClass('hidden');
+            e.preventDefault();
+        }
+    });
 </script>
 <script>
     var _map;
@@ -118,7 +140,7 @@ $('#apl-form').on('submit', function(ev) {
         
         _map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: _lat, lng:  _long},
-            zoom: 4
+            zoom: 3
         });
         
         _marker = new google.maps.Marker({
@@ -149,6 +171,7 @@ $('#apl-form').on('submit', function(ev) {
         if(data.type == 'apl'){
             google.maps.event.addListener(markers[data.id], 'click', function() {
                 _inputApl.value = data.id;
+                $('#apl-modal').attr("value", data.id);
                 $('#title').html(data.title);
                 $('#content').html(data.html);
                 $('#myModal').modal('show'); 

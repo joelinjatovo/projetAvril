@@ -58,7 +58,7 @@ class User extends Authenticatable
      */
     public function routeNotificationForMail()
     {
-        //return 'joelinjatovo@gmail.com';
+        return 'joelinjatovo@gmail.com';
     }
     
     /**
