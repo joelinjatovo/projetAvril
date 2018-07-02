@@ -278,7 +278,6 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
     
 <!-- javascript search-bar -->
 <script src="{{asset('js/jquery-1.10.2.min.js')}}"></script>
-<script src="{{asset('js/bootstrap.min.js')}}"></script>
 <script src="{{asset('js/bootstrap-select.min.js')}}"></script>
 <script src="{{asset('js/bootstrap-hover-dropdown.js')}}"></script>
 <script src="{{asset('js/owl.carousel.min.js')}}"></script>

@@ -120,6 +120,7 @@ return [
     'form.login.have_not_account'  => "Vous n'avez pas un compte?",
     'form.login.remember'      => "Souvenez de moi",
     'form.login.forgot'        => "Mot de passe oublié?",
+    'form.login.not_registered'=> "Pas encore inscrit?",
     
     'form.register.title'      => "Formulaire d'insription",
     

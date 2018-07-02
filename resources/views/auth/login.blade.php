@@ -68,10 +68,22 @@
                     <p>
                         <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> @lang('app.form.login.remember')
                     </p>
-                    <p>
-                        <a href="{{ route('password.request')}}">@lang('app.form.login.forgot')</a>
-                    </p>
+                    <div>
+                        <a href="{{ route('password.request')}}" class="pull-left" style="margin-right:10px;">@lang('app.form.login.forgot')</a>
+                        <div class="dropdown pull-left">
+                          <a href="#" class="dropdown-toggle" type="button" data-toggle="dropdown">
+                              @lang('app.form.login.not_registered')
+                              <span class="caret"></span></button>
+                          <ul class="dropdown-menu">
+                            <li><a href="{{route('register', ['member'])}}">@lang('app.member')</a></li>
+                            <li><a href="{{route('register', ['seller'])}}">@lang('app.seller')</a></li>
+                            <li><a href="{{route('register', ['afa'])}}">@lang('app.afa')</a></li>
+                            <li><a href="{{route('register', ['apl'])}}">@lang('app.apl')</a></li>
+                          </ul>
+                        </div>
+                    </div>
                     <p class="form-submit">
+                        
                         <button type="submit" class="pull-right btn btn-default btn-lg" data-hover="Connexion">@lang('app.btn.login')</button>
                     </p>
                 </form>
