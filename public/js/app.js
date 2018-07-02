@@ -12011,7 +12011,7 @@ function makeNotification(notification) {
 function routeNotification(notification) {
     var to = '?read=' + notification.id;
     if (notification.type === NOTIFICATION_TYPES.mail) {
-        to = 'mails' + to;
+        to = Laravel.role + '/mail/' + notification.data.mail_id + to;
     }
     return '/' + to;
 }

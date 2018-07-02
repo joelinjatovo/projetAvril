@@ -1,2 +1,2 @@
-<h1>Hi, {{ $name }}</h1>
-l<p>Sending Mail from Laravel.</p>
+<h1>{{__('mail.greeting', ['name'=>$name])}}</h1>
+<p>{{ isset($content)?$content:'' }}</p>

@@ -29,7 +29,7 @@ $(document).ready(function() {
     // check if there's a logged in user
     if(Laravel.userId) {
         $.get('/notifications', function (data) {
-                console.log(data);
+            console.log(data);
             addNotifications(data, "#notifications");
         });
         
@@ -74,7 +74,7 @@ function makeNotification(notification) {
 function routeNotification(notification) {
     var to = '?read=' + notification.id;
     if(notification.type === NOTIFICATION_TYPES.mail) {
-        to = 'mails' + to;
+        to = Laravel.role + '/mail/'+notification.data.mail_id + to;
     }
     return '/' + to;
 }

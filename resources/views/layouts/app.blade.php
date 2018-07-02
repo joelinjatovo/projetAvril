@@ -47,25 +47,20 @@
 <link href="{{asset('css/head.css')}}" rel="stylesheet">
 <link href="{{asset('css/style.css')}}" rel="stylesheet">
 <link href="{{asset('css/responsive.css')}}" rel="stylesheet">
-@if(Auth::check())
-<script>
-window.user = {!! json_encode(['user' => Auth::user()]) !!};
-</script>
-@endif
     
 <!-- Scripts -->
 <script>
     window.Laravel = <?php echo json_encode([
         'csrfToken' => csrf_token(),
     ]); ?>
+        
+    //This makes the current user's id available in javascript
+    @if(!auth()->guest())
+        window.Laravel.role = <?php echo auth()->user()->role; ?>
+        window.Laravel.userId = <?php echo auth()->user()->id; ?>
+    @endif
 </script>
 
-<!-- This makes the current user's id available in javascript -->
-@if(!auth()->guest())
-    <script>
-        window.Laravel.userId = <?php echo auth()->user()->id; ?>
-    </script>
-@endif
 <style>
 #mute {
   position: absolute;

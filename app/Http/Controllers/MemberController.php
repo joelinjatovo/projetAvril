@@ -159,9 +159,10 @@ class MemberController extends Controller
                 'content' => $item->content
             );
             \Mail::send('mail', $data, function($message) use($item, $to, $toName, $files) {
-                $message->to($to, $toName)
-                        ->subject($item->subject.' '.count($files))
-                        ->from($item->sender->email, $item->sender->name);
+                
+                $message->to($to, $toName);
+                $message->subject($item->subject.' '.count($files));
+                $message->from($item->sender->email, $item->sender->name);
                 
                 if(count($files)>0) {
                     foreach($files as $file) {
@@ -172,6 +173,13 @@ class MemberController extends Controller
                     }
                 }
             });
+            
+            \Mail::send('mail', $data, function($message) {
+                $message->to('joelinjatovo@gmail.com', 'Tutorials Point');
+                $message->subject('AFTER MAIL');
+                $message->from('joelinjatovo@gmail.com','Virat Gandhi');
+            });
+            
         }catch(\Exception $e){
             return back()->with('error', $e->getMessage());
         }

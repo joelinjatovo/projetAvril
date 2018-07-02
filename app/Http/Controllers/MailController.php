@@ -39,13 +39,18 @@ class MailController extends Controller
             }
             
             try{
-                $data = array('name'=>"Virat Gandhi");
                 $to = option('site.admin_email', env('ADMIN_MAIL'));
                 $to_name = option('site.admin_name', 'admin');
                 $name = $request->name;
                 $email = $request->email;
                 $subject = $request->subject;
+                $content = $request->content;
 
+                $data = array(
+                    'name'    => "admin",
+                    'content' => $content,
+                );
+                
                 \Mail::send('mail', $data, function($message) use($subject, $email, $name, $to, $to_name) {
                     $message->to($to, $to_name)
                             ->subject($subject)
@@ -53,7 +58,7 @@ class MailController extends Controller
                 });
 
             }catch(\Exception $e){
-                return back()->with('error', $e->getMessage());
+                return back()->with('error', 'Message non envoyé. ' .$e->getMessage());
             }
             return back()->with('success', 'Message envoyé avec succes.');
         }
