@@ -661,7 +661,9 @@ label small{
 .modal-header {
     border: 0 none;
 }
-
+.modal {
+    top: 0;
+}
 
 .navbar-default .navbar-nav > li > a{
     color: #929292;

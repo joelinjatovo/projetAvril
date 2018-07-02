@@ -23,7 +23,7 @@
 <link href="{{asset('css/bootstrap.css')}}" rel="stylesheet">
 <link href="{{asset('css/bootstrap-slider.min.css')}}" rel="stylesheet" />
 <link rel="stylesheet" href="{{asset('css/bootstrap-select.min.css')}}">
-
+    
 <!-- sylesheet css search-bar -->
 <link rel="stylesheet" href="{{asset('css/icheck.min_all.css')}}">
 <link rel="stylesheet" href="{{asset('css/price-range.css')}}">
@@ -277,7 +277,6 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
 <script src="{{ asset('js/app.js') }}"></script>
     
 <!-- javascript search-bar -->
-<script src="{{asset('js/jquery-1.10.2.min.js')}}"></script>
 <script src="{{asset('js/bootstrap-select.min.js')}}"></script>
 <script src="{{asset('js/bootstrap-hover-dropdown.js')}}"></script>
 <script src="{{asset('js/owl.carousel.min.js')}}"></script>
@@ -294,7 +293,6 @@ window.user = {!! json_encode(['user' => Auth::user()]) !!};
 <script src="{{asset('plugins/wow/wow.min.js')}}"></script>
 <script src="{{asset('plugins/zoom/zoom.js')}}"></script>
 <script src="{{asset('plugins/mixitup/mixitup.min.js')}}"></script>
-<script src="{{asset('plugins/whats-nearby/source/WhatsNearby.js')}}"></script>
 
 <script src="{{asset('js/theme.js')}}"></script>
 <script src="{{asset('js/multirange.js')}}"></script>

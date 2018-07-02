@@ -2,11 +2,10 @@
 
 @section('subcontent')
 <div class="row">
-    
         <fieldset>
             <legend>@lang('app.select_apl')</legend>
             <div class="row">
-                <div class="col-sm-9">
+                <div class="col-sm-12">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="property-sorting">        
@@ -28,31 +27,6 @@
                             <div id="map"></div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-3">
-                    <form id="apl-form" class="form-horizontal" role="form" method="post" action="{{$action}}">
-                        <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <select id="apl"  name="apl" class="form-control" style="width:100%;">
-                                    @foreach($items as $item)
-                                    <option 
-                                        {{Auth::check()
-                                        &&Auth::user()->apl
-                                        &&(Auth::user()->apl->id==$item->id)?'selected':''}} value="{{$item->id}}">{{$item->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="pull-left hidden row-confirm" style="margin-bottom: 20px;">
-                            <input id="check-confirm" type="checkbox" name="confirm" value="1"><span style="color:red;"> {!!__('member.accept_term_and_condition_apl')!!}</span>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <button id="submit" type="submit" class="btn btn-primary">@lang('app.btn.select_apl')</button>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </fieldset>
@@ -89,13 +63,6 @@
 @section('script')
 @parent
 <script>
-    $('#apl-form').on('submit', function(event){
-        if(!$('#check-confirm').is(":checked"))
-        {
-            $('.row-confirm').removeClass('hidden');
-            event.preventDefault();
-        }
-    });
     $('#apl-form-modal').submit(function(event){
         if(!$('#check-confirm-modal').is(":checked"))
         {
@@ -110,7 +77,6 @@
     var _marker;
     var _lat = {{$location?$location->latitude:-25.647467468105795}};
     var _long = {{$location?$location->longitude:146.89921517372136}};
-    var _inputApl = document.getElementById("apl");
     
     var iconBase = "{{url('')}}";
     var icons = {
@@ -170,7 +136,6 @@
         
         if(data.type == 'apl'){
             google.maps.event.addListener(markers[data.id], 'click', function() {
-                _inputApl.value = data.id;
                 $('#apl-modal').attr("value", data.id);
                 $('#title').html(data.title);
                 $('#content').html(data.html);
