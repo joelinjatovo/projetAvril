@@ -29,7 +29,9 @@ $(function () {
         $(targetContainer).css('margin-top', -( mainSliderContentsHeight/2 ));
         console.log(mainSliderContentsHeight);
     }
+    
     sliderContents();
+    
     $( window ).on("load", function() {
         sliderContents();
     });
