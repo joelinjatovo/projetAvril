@@ -147,39 +147,14 @@ class MemberController extends Controller
             $receiver->notify(new NewMail($item));
         }catch(\Exception $e){}
         
-        $to = 'joelinjatovo@gmail.com';
-        
         $files = $request->file('files');
         if(!$files){
             $files = [];
         }
+        
         try{
-            $data = array(
-                'name'    => $toName,
-                'content' => $item->content
-            );
-            \Mail::send('mail', $data, function($message) use($item, $to, $toName, $files) {
-                
-                $message->to($to, $toName);
-                $message->subject($item->subject.' '.count($files));
-                $message->from($item->sender->email, $item->sender->name);
-                
-                if(count($files)>0) {
-                    foreach($files as $file) {
-                        $message->attach($file->getRealPath(), array(
-                            'as' => $file->getClientOriginalName(), // If you want you can change original name to custom name      
-                            'mime' => $file->getMimeType())
-                        );
-                    }
-                }
-            });
-            
-            \Mail::send('mail', $data, function($message) {
-                $message->to('joelinjatovo@gmail.com', 'Tutorials Point');
-                $message->subject('AFTER MAIL');
-                $message->from('joelinjatovo@gmail.com','Virat Gandhi');
-            });
-            
+            $to = 'joelinjatovo@gmail.com';
+            \Mail::to($to, $toName)->send(new \App\Mail\Email($item, $files));
         }catch(\Exception $e){
             return back()->with('error', $e->getMessage());
         }

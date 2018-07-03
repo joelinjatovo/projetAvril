@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'twistmacg@gmail.com'),
-        'name' => env('MAIL_FROM_NAME', 'twistmacg'),
+        'address' => env('MAIL_FROM_ADDRESS', 'admin.iea@gmail.com'),
+        'name'    => env('MAIL_FROM_NAME',    'Administrateur IEA'),
     ],
 
     /*
@@ -84,9 +84,9 @@ return [
     |
     */
 
-    'username' => env('MAIL_USERNAME', 'twistmacg@gmail.com'),
+    'username' => env('MAIL_USERNAME', 'tsorakoto@gmail.com'),
 
-    'password' => env('MAIL_PASSWORD', 'aNQRvYdNLyP3'),
+    'password' => env('MAIL_PASSWORD', 'pAw72cXMzJIZ'),
 
     /*
     |--------------------------------------------------------------------------

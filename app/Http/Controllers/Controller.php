@@ -23,7 +23,7 @@ class Controller extends BaseController
     /**
      * Recent records size
      */
-    protected $recentSize = 4;
+    protected $recentSize = 6;
     
     /**
      * Array of distances

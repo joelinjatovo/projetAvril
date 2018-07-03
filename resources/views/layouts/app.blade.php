@@ -268,15 +268,16 @@
     </div>
 </footer>
 <a href="#top" id="scroll-top"><i class="fa fa-angle-up"></i></a>
-    
-    
-    
+
+@if(!request()->is('login'))
+<script src="{{ asset('js/app.js') }}"></script>
+@endif
+
 <!-- javascript search-bar -->
 <script src="{{asset('js/jquery-1.10.2.min.js')}}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
 <!--
 -->
-<script src="{{ asset('js/app.js') }}"></script>
     
 <script src="{{asset('js/bootstrap-select.min.js')}}"></script>
 <script src="{{asset('js/bootstrap-hover-dropdown.js')}}"></script>

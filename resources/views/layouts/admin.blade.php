@@ -40,8 +40,8 @@
         
     //This makes the current user's id available in javascript
     @if(!auth()->guest())
-        window.Laravel.role = <?php echo auth()->user()->role; ?>
-        window.Laravel.userId = <?php echo auth()->user()->id; ?>
+        window.Laravel.role = '<?php echo auth()->user()->role; ?>';
+        window.Laravel.userId = <?php echo auth()->user()->id; ?>;
     @endif
 </script>
 
