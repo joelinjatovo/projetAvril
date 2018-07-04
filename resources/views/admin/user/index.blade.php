@@ -7,13 +7,29 @@
         <div id="TabTop1" class="tab-pane padding-bottom30 active fade in">
             @include('includes.alerts')
             <div>
+                
+                 <form id="form-item-action-delete" class="pull-left" action="{{route('admin.user.list')}}" method="post">
+                     {{csrf_field()}}
+                     <input type="hidden" name="user" value="{{$item->id}}">
+                     <input type="hidden" name="action" value="delete">
+                     <button type="submit" class="btn btn-small btn-warning">@lang('app.btn.delete')</button>
+                 </form>
                  @if($item->status=='active')
-                    <a href="{{route('admin.user.disable', $item)}}" class="btn btn-small btn-success">@lang('app.btn.disable')</a>
+                 <form id="form-item-action-disable" class="pull-left" action="{{route('admin.user.list')}}" method="post">
+                     {{csrf_field()}}
+                     <input type="hidden" name="user" value="{{$item->id}}">
+                     <input type="hidden" name="action" value="disable">
+                     <button type="submit" class="btn btn-small btn-success">@lang('app.btn.disable')</button>
+                 </form>
                  @else
-                    <a href="{{route('admin.user.active', $item)}}" class="btn btn-small btn-info">@lang('app.btn.active')</a>
+                 <form id="form-item-action-active" class="pull-left" action="{{route('admin.user.list')}}" method="post">
+                     {{csrf_field()}}
+                     <input type="hidden" name="user" value="{{$item->id}}">
+                     <input type="hidden" name="action" value="active">
+                     <button type="submit" class="btn btn-small btn-info">@lang('app.btn.active')</button>
+                 </form>
                  @endif
-                    <a href="{{route('admin.user.delete', $item)}}" class="btn btn-small btn-warning">@lang('app.btn.delete')</a>
-                    <a href="{{route('admin.user.contact', $item)}}" class="btn btn-small btn-default">@lang('app.btn.contact')</a>
+                 <a href="{{route('admin.user.contact', $item)}}" class="btn btn-small btn-default">@lang('app.btn.contact')</a>
             </div>
             <div class="page-header">
                 <h3>

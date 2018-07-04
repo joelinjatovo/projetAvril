@@ -18,9 +18,10 @@
                                     <option value="">Etats</option>
                                     @if(isset($states))
                                         @foreach($states as $state)
-                                            <option value="{{$state->id}}">{{$state->content}}</option>
+                                            <option value="{{$state->id}}">{{$state->content.' ('.$state->products()->where('products.status', 'published')->count().')'}}</option>
                                         @endforeach
                                     @endif
+                                    
                                 </select>
                             </div>
                             <div class="form-group">
@@ -28,7 +29,7 @@
                                     <option value="">Type</option>
                                     @if(isset($types))
                                         @foreach($types as $type)
-                                            <option value="{{$type->id}}">{{$type->title}}</option>
+                                            <option value="{{$type->id}}">{{$type->title.' ('.$type->products()->where('products.status', 'published')->count().')'}}</option>
                                         @endforeach
                                     @endif
                                 </select>
@@ -38,7 +39,7 @@
                                     <option value="">Localisation</option>
                                     @if(isset($locationTypes))
                                         @foreach($locationTypes as $locationType)
-                                            <option value="{{$locationType->id}}">{{$locationType->title}}</option>
+                                            <option value="{{$locationType->id}}">{{$locationType->title.' ('.$locationType->products()->where('products.status', 'published')->count().')'}}</option>
                                         @endforeach
                                     @endif
                                 </select>
@@ -55,13 +56,13 @@
                                         <label for="price">Prix (AU $):</label>
                                         <select name="price" id="price" class="form-control" >
                                         <?php $prices = [
-                                                    "Selectionner un prix",
-                                                    "<100.000",
-                                                    "<200.000",
-                                                    "<300.000",
-                                                    ">100.000",
-                                                    ">200.000",
-                                                    ">300.000",
+                                                    "0" => "Selectionner un prix",
+                                                    "<100.000" => "Jusqu'a 100.000",
+                                                    "<200.000" => "Jusqu'a 200.000",
+                                                    "<300.000" => "Jusqu'a 300.000",
+                                                    ">100.000" => "Superieur a 100.000",
+                                                    ">200.000" => "Superieur a 200.000",
+                                                    ">300.000" => "Superieur a 300.000",
                                                 ];
                                             ?>
                                             @foreach($prices as $index => $price)
@@ -93,35 +94,20 @@
                                         <label for="bathrooms">Nombre de salle de bain :</label>
                                         <input type="number" min="0" class="form-control" id="bathrooms" name="bathrooms"><br />
                                     </div>
-                                    <div class="form-group mar-r-20">
+                                    <div class="form-group mar-l-20">
                                         <label for="bedrooms">Nombre de chambre :</label>
                                         <input type="number" min="0" class="form-control" id="bedrooms" name="bedrooms"><br />
                                     </div>
                                 </div>
-                                <br>
                                 <div class="search-row">
-                                    <div class="form-group">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"> Suburbs voisins
-                                            </label>
-                                        </div>
+                                    <div class="form-group mar-r-20">
+                                        <label for="toillet">Nombre de toilette :</label>
+                                        <input type="number" min="0" class="form-control" id="toillet" name="toillet"><br />
                                     </div>
-                                    <div class="form-group">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"> Salle d'eau
-                                            </label>
-                                        </div>
+                                    <div class="form-group mar-l-20">
+                                        <label for="garage_spaces">Nombre de garage :</label>
+                                        <input type="number" min="0" class="form-control" id="garage_spaces" name="garage_spaces"><br />
                                     </div>
-                                    <div class="form-group">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"> Toilette
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <br>
                                 </div>
                                 <button class="btn search-btn prop-btm-sheaerch" type="submit"><i class="fa fa-search"></i></button>
                             </div><!-- end div residentiel -->

@@ -35,13 +35,16 @@ class IndexController extends Controller
     {
         $types = Type::orderBy('title', 'asc')
             ->where('object_type', 'type')
+            ->withCount('products')
             ->get();
         
         $locationTypes = Type::orderBy('title', 'asc')
             ->where('object_type', 'location')
+            ->withCount('products')
             ->get();
         
         $states = State::orderBy('content', 'asc')
+            ->withCount('products')
             ->get();
         
         return $this->render($request, 1)

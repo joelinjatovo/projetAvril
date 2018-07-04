@@ -45,22 +45,28 @@
              </a>
          </td>
          <td>
-             <form id="form-item-action" class="pull-right" action="{{route('admin.user.list')}}" method="post">
+             <form id="form-item-action-delete" class="pull-right" action="{{route('admin.user.list')}}" method="post">
                  {{csrf_field()}}
                  <input type="hidden" name="user" value="{{$item->id}}">
-                 @if($item->status=='active')
-                    <input type="hidden" name="action" value="disable">
-                    <button type="submit" class="btn btn-small btn-success">@lang('app.btn.disable')</button>
-                 @else
-                    <input type="hidden" name="action" value="active">
-                    <button type="submit" class="btn btn-small btn-info">@lang('app.btn.active')</button>
-                 @endif
+                 <input type="hidden" name="action" value="delete">
+                 <button type="submit" class="btn btn-small btn-warning">@lang('app.btn.delete')</button>
              </form>
-             <form id="form-item-action" class="pull-right" action="{{route('admin.user.list')}}" method="post">
+             @if($item->status=='active')
+             <form id="form-item-action-disable" class="pull-right" action="{{route('admin.user.list')}}" method="post">
                  {{csrf_field()}}
                  <input type="hidden" name="user" value="{{$item->id}}">
-                 <button type="submit" class="btn btn-small btn-warning" name="action" value="delete">@lang('app.btn.delete')</button>
+                 <input type="hidden" name="action" value="disable">
+                 <button type="submit" class="btn btn-small btn-success">@lang('app.btn.disable')</button>
              </form>
+             @else
+             <form id="form-item-action-active" class="pull-right" action="{{route('admin.user.list')}}" method="post">
+                 {{csrf_field()}}
+                 <input type="hidden" name="user" value="{{$item->id}}">
+                 <input type="hidden" name="action" value="active">
+                 <button type="submit" class="btn btn-small btn-info">@lang('app.btn.active')</button>
+                 
+             </form>
+             @endif
              <a href="{{route('admin.user.contact', $item)}}" class="btn btn-small btn-default pull-right">@lang('app.btn.contact')</a>
          </td>
      </tr>

@@ -32,6 +32,7 @@ class CreateProductsTable extends Migration
             $table->integer('bathrooms')->default(0);
             $table->integer('bedrooms')->default(0);
             $table->integer('ensuite')->default(0);
+            $table->integer('toillet')->default(0);
             $table->integer('land_area')->default(0);
             $table->integer('floor_area')->default(0);
             $table->integer('number_of_floors')->default(0);

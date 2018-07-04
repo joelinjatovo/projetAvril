@@ -114,6 +114,29 @@ gbks.common.scroller.mousewheelFunction = $.proxy(gbks.common.scroller.onMouseWh
             });
     };
 
+    
+   $('#form-item-action-active').on('click', function(e){
+       e.preventDefault();
+       var $form=$(this);
+       $('#confirm-active').modal({backdrop: 'static', keyboard: false }).on('click', '#btn-continue', function(){
+               $form.submit();
+           });
+   });
+   $('#form-item-action-disable').on('click', function(e){
+       e.preventDefault();
+       var $form=$(this);
+       $('#confirm-disable').modal({backdrop: 'static', keyboard: false }).on('click', '#btn-continue', function(){
+               $form.submit();
+           });
+   });
+   $('#form-item-action-delete').on('click', function(e){
+       e.preventDefault();
+       var $form=$(this);
+       $('#confirm-delete').modal({backdrop: 'static', keyboard: false }).on('click', '#btn-continue', function(){
+               $form.submit();
+           });
+   });
+
     $("#btnToggleSidebar").click(function () {
             $(this).toggleClass('fontello-icon-resize-full-2 fontello-icon-resize-small-2');
             $(this).toggleClass('active');
@@ -467,6 +490,7 @@ gbks.common.scroller.mousewheelFunction = $.proxy(gbks.common.scroller.onMouseWh
     });*/
 
     // bootstrap daterangepicker pre-defined Ranges
+    /*
     $('#customRange').daterangepicker({
             opens: 'left',
             format: 'dd/MM/yyyy',
@@ -488,6 +512,7 @@ gbks.common.scroller.mousewheelFunction = $.proxy(gbks.common.scroller.onMouseWh
             }
 
     });
+    */
 
     // bootstrap daterangepicker demo
     $('#selectrange').daterangepicker();
@@ -854,14 +879,5 @@ gbks.common.scroller.mousewheelFunction = $.proxy(gbks.common.scroller.onMouseWh
                         $('#' + target).val(value);
                 }
         };
-    
-       $('#form-item-action').on('submit', function(e){
-           e.preventDefault();
-           var $form=$(this);
-           $('#confirm').modal({backdrop: 'static', keyboard: false })
-               .on('click', '#btn-continue', function(){
-                   $form.submit();
-               });
-       });
 
 })(jQuery, this, document);

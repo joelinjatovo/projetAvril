@@ -29,4 +29,14 @@ class State extends BaseModel
     {
         //
     }
+    
+    /**
+     * A state can have many products
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function products()
+    {
+      return $this->hasMany(Product::class, 'state_id', 'id');
+    }
 }
