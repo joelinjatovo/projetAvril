@@ -9,7 +9,7 @@
                 <ul class="nav nav-side" id="nav-accordion">
                     
                     @if(Auth::user()->hasRole('member'))
-                        <li><a class="btn-select-apl btn btn-success" href="{{route('member.select.apl')}}">@lang('member.select.apl')</a></li>
+                        <li><a class="btn-select-apl btn btn-success" href="{{route('member.select.apl')}}" style="color: #000000;">{!!__('member.choose.apl')!!}</a></li>
                     @endif
                     
                     <li><a href="{{url(Auth::user()->role)}}"><i class="fa fa-tachometer" aria-hidden="true"></i> @lang('app.dashboard')</a></li>
@@ -48,7 +48,7 @@
                         <li><a href="{{url(Auth::user()->role.'/favorites')}}"><i class="fa fa-gratipay" aria-hidden="true"></i> @lang('app.favorites')</a></li>
                         <li><a href="{{url(Auth::user()->role.'/searches')}}"><i class="fa fa-search" aria-hidden="true"></i> @lang('app.saved_searches')</a></li>
                         <li>
-                            <a href="#" data-toggle="collapse" data-target="#collapse-mail" aria-controls="collapse-mail"> @lang('app.mails')</a>
+                            <a href="#" data-toggle="collapse" data-target="#collapse-mail" aria-controls="collapse-mail"><i class="fa fa-envelope" aria-hidden="true"></i> @lang('app.mails')</a>
                             <ul id="collapse-mail" class="collapse {{request()->is('*mail*')?'show':''}}" aria-labelledby="headingOne" data-parent="#nav-accordion">
                                 <li><a href="{{route(Auth::user()->role.'.mail.list',['filter'=>'inbox'])}}"> @lang('app.mails')</a></li>
                                 @if(Auth::user()->hasRole('member'))

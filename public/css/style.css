@@ -3021,3 +3021,6 @@ padding: 10px;
 #map {
     height: 300px;
 }
+.page-header{
+    margin: 0;
+}

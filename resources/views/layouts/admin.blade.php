@@ -60,24 +60,20 @@
                           <span class="icon-bar"></span>
                           <span class="icon-bar"></span>
                       </button> -->
-                      <a class="brand" href="{{route('home')}}">
-                          <img src="{{asset('administrator/img/logo.png')}}" width="100" height="50">
+                      <a class="brand pull-left" href="{{route('home')}}">
+                          <img src="{{asset('administrator/img/logo.png')}}" height="50px">
                       </a>
-                      <div class="search-global">
-                          <input id="globalSearch" class="search search-query input-medium" type="search">
-                          <a class="search-button" href="#"><i class="fontello-icon-search-5"></i></a>
-                      </div>
                       @if(Auth::check())
-                      <div class="pull-right">
+                      <div class="pull-left">
                             <ul class="nav">
                                 <!-- // add this dropdown // -->
                                 <li class="dropdown">
-                                    <a class="dropdown-toggle" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        <span class="fa fa-envelope"></span>
-                                        <span id="notificationsCount" class="badge badge-info hidden" style="margin-left:-5px; margin-top:-10px; background-color: red;">&nbsp;</span>
+                                    <a class="dropdown-toggle" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="padding: 15px;">
+                                        <span class="fa fa-2x fa-envelope"></span>
+                                        <span id="notificationsCount" class="badge badge-info hidden" style="margin-left:-5px; margin-top:-20px; background-color: red;">&nbsp;</span>
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="notificationsMenu" id="notificationsMenu">
-                                        <li class="dropdown-header">No notifications</li>
+                                        <li class="dropdown-header">@lang('app.no_notification')</li>
                                     </ul>
                                 </li>
                             </ul>

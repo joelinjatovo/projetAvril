@@ -20,6 +20,7 @@ return [
     "contact_admin" => "Contacter ADMIN",
     "contact_apl"   => "Contacter APL",
     "select.apl"    => "Choisir un APL",
+    "choose.apl"    => "Choisir une agence <br> partenaire locale",
     "choose"        => "Choisir",
     "select"        => "Selectionner",
     
