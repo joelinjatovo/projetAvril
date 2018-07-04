@@ -335,6 +335,8 @@
 </div>
 <!-- // main-container -->
     
+@include('includes.modal')
+    
 <script src="{{asset('js/app.js')}}"></script>
 <script src="{{asset('administrator/js/lib/jquery-ui.js')}}"></script>
 

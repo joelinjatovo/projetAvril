@@ -1,5 +1,9 @@
 <div id="property-sidebar">
-    <a href="{{route('apls')}}" class="btn btn-default col-md-12" style="margin-bottom: 20px;">@lang('app.list_apl')</a>
+    <a href="{{route('apls')}}" class="btn btn-success btn-block" style="margin-bottom: 5px;">{!!__('app.list_apl')!!}</a>
+    
+    @if(\Auth::check()&&\Auth::user()->hasApl())
+    <a href="{{route('member.contact', ['role'=>'apl'])}}" class="btn btn-primary btn-block" style="margin-bottom: 20px;">{!!__('app.btn.contact_apl')!!}</a>
+    @endif
     
     @foreach($pubs as $pub)
     <section class="widget property-meta-wrapper clearfix">
@@ -30,13 +34,6 @@
         </div>
         @endforeach
     </section>
-    
-    @if(\Auth::check()&&\Auth::user()->hasRole('member'))
-    <section class="widget recent-properties clearfix">
-        <a href="{{route('member.contact', ['role'=>'admin'])}}" class="btn btn-primary col-sm-12"><i class="fa fa-envelope-open-o"></i> @lang('app.btn.contact_admin')</a>
-        <a href="{{route('member.contact', ['role'=>'apl'])}}" class="btn btn-default col-sm-12"><i class="fa fa-envelope-open-o"></i> @lang('app.btn.contact_apl')</a>
-    </section>
-    @endif
     
     <section class="widget property-taxonomies clearfix">
         <h5 class="title">@lang('app.recent.category')</h5>

@@ -230,6 +230,7 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
 
     // User Controller Groups
     Route::get('users/{filter?}', 'UserController@all')->name('admin.user.list');
+    Route::post('users/{filter?}', 'UserController@action');
     Route::prefix('user')->group(function(){
         Route::get('/', 'UserController@create')->name('admin.user.create');
         Route::post('/', 'UserController@store')->name('admin.user.store');

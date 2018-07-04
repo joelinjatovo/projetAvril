@@ -11,7 +11,7 @@ return [
     'last_update'         => 'Derniere Modification, :date',
     'contact_user'        => 'Contacter: :name (:email)',
     'contact_us_phone'    => 'Contactez-nous: :phone',
-    'list_apl'    => 'Lister les APL',
+    'list_apl'    => 'Listes des agences <br> partenaires locales',
     'read_more'    => 'Continuer de lire',
     
     'trial_end'    => 'Vous devez mettre a jour votre inscription. Choisissez un plan.',
@@ -216,8 +216,6 @@ return [
     'purchase' => 'Achat',
     'purchases'=> 'Achats',
     'empty_cart'  => 'Panier vide',
-    
-    'list_apl'  => 'Listes des Agences Partenaires Locales',
 
     'immobilier'        => 'Immobilier',
     'residentiel'       => 'residentiel',
@@ -553,11 +551,12 @@ return [
     'btn.archive'        => 'Archiver',
     'btn.trash'          => 'Ajouter aux corbeilles',
     'btn.star'           => 'Favoris',
+    'btn.unstar'         => 'Favoris',
     'btn.back'           => 'Allez au precedent',
     'btn.pin'            => 'Epingler',
     'btn.select_apl'     => 'Selectionner cet APL',
     'btn.contact_admin'  => "Contacter l'administrateur",
-    'btn.contact_apl'    => "Contacter l'APL",
+    'btn.contact_apl'    => "Contacter <br>l'agence partenaire locale",
     'btn.login'          => "Connexion",
     'btn.send'           => "Envoyer",
     'btn.send_mail'      => "Envoyer email",

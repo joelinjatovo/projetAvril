@@ -31,21 +31,25 @@ class LabelController extends Controller
      */
     public function storeOrUpdate(Request $request, Product $product, $type)
     {
-        $label = Label::where('product_id','=', $product->id)
-            ->where('label', $type)
+        $this->middleware('auth');
+        
+        $label = $product->isStarred()
+            ->where('author_id', \Auth::user()->id)
             ->first();
         
         if(!$label){
             $label = new Label();
+            $label->label = $type;
+            $label->product_id = $product->id;
+            $label->save();
+            $message = 'Produit ajoute au favoris';
+        }else{
+            $label->delete();
+            $message = 'Produit supprime du favoris';
         }
         
-        $label->label = $type;
-        $label->product_id = $product->id;
-        $label->save();
-        
-        //return response()->json(array('msg'=>'Product $type'),200);
-        
-        return back()->with('success', 'Product '+$type);
+        return redirect()->route('product.index', $product)
+            ->with('success', $message);
     }
     
     /**

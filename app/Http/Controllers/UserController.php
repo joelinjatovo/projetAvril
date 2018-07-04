@@ -232,81 +232,61 @@ class UserController extends Controller
     }
     
     /**
-    * Active User
+    * Do some action with user
     *
     * @param  \Illuminate\Http\Request  $request
-     * @param  App\Models\User  $user
     * @return \Illuminate\Http\Response
     */
-    public function active(Request $request,User $user)
+    public function action(Request $request)
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
+        
+        // Validate request
+        $this->validate($request, [
+            'action' => 'required|max:10',
+            'user'   => 'required|numeric'
+        ]);
+        
+        $user = User::findOrFail($request->user);
         
         if($user->id==1){
             return back()->with('error',"Cette action ne peut pas etre réalisée.");
         }
         
-        if($user->status == 'pinged'){
-            $user->trial_ends_at = \Carbon\Carbon::now()->addDays(option('payment.trial_delay', 14));
-        }
-        $user->status = 'active';
-        $user->save();
-        
-        try{
-            $user->notify(new AccountActivated($user, $status));
-        }catch(\Exception $e){}
-        
-        return back()->with('success',"L'utilsateur a été activé avec succés");
-    }
-    
-    /**
-    * Disable User
-    *
-    * @param  \Illuminate\Http\Request  $request
-     * @param  App\Models\User  $user
-    * @return \Illuminate\Http\Response
-    */
-    public function disable(Request $request,User $user)
-    {
-        $this->middleware('auth');
-        $this->middleware('role:admin');
-        
-        if($user->id==1){
-            return back()->with('error',"Cette action ne peut pas etre réalisée.");
-        }
-        
-        $status = $user->status;
-        
-        $user->status = 'disabled';
-        $user->save();
-        
-        try{
-            $user->notify(new AccountDisabled($user, $status));
-        }catch(\Exception $e){}
-        
-        return back()->with('success',"L'utilsateur a été desactivé avec succés");
-    }
-    
-    /**
-    * Delete User
-    *
-    * @param  \Illuminate\Http\Request  $request
-     * @param  App\Models\User  $user
-    * @return \Illuminate\Http\Response
-    */
-    public function delete(Request $request,User $user)
-    {
-        $this->middleware('auth');
-        $this->middleware('role:admin');
-        
-        if($user->id==1){
-            return back()->with('error',"Cette action ne peut pas etre réalisée.");
+        $action = $request->action;
+        switch($action){
+            case 'disable':
+                $status = $user->status;
+                $user->status = 'disabled';
+                $user->save();
+                try{
+                    $user->notify(new AccountDisabled($user, $status));
+                }catch(\Exception $e){}
+                $message = "L'utilsateur a été desactivé avec succés";
+            break;
+            case 'active':
+                $status = $user->status;
+                if($status == 'pinged'){
+                    $user->trial_ends_at = \Carbon\Carbon::now()->addDays(option('payment.trial_delay', 14));
+                }
+                $user->status = 'active';
+                $user->save();
+                try{
+                    $user->notify(new AccountActivated($user, $status));
+                }catch(\Exception $e){}
+                $message = "L'utilsateur a été activé avec succés";
+            break;
+            case 'delete':
+                $user->delete();
+                $message = "L'utilsateur a été supprimé avec succés";
+            break;
+            default:
+                abort(404);
+            break;
         }
         
-        $user->delete();
-        
-        return redirect()->route('admin.dashboard')
-            ->with('success',"L'utilsateur a été supprimé avec succés");
+        return redirect()->route('admin.user.list')
+            ->with('success', "L'utilsateur a été activé avec succés");
     }
 }

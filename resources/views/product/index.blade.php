@@ -51,7 +51,7 @@
                                 {{csrf_field()}}
                                 <button type="submit" class="btn btn-success col-sm-9"><i class="fa fa-shopping-cart"></i> @lang('member.add_to_cart')</button>
                             </form>
-                            <a href="{{route('label.store', ['product'=>$item,'type'=>'starred'])}}" class="btn btn-primary col-sm-3"><i class="fa fa-star" aria-hidden="true"></i>  @lang('app.btn.star')</a>
+                            <a href="{{route('label.store', ['product'=>$item,'type'=>'starred'])}}" class="btn btn-primary col-sm-3"><i class="fa {{$item->isStarred()->exists()?'fa-star':'fa-star-o'}}"></i> {{__('app.btn.star')}}</a>
                         </div>
                     </div>
                 </section>

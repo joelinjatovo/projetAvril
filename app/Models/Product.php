@@ -157,6 +157,28 @@ class Product extends BaseModel
     }
     
     /**
+     * A product is starred
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function isStarred()
+    {
+      return $this->hasOne(Label::class, 'product_id', 'id')
+          ->where('label', 'starred');
+    }
+    
+    /**
+     * A product is saved
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function isSaved()
+    {
+      return $this->hasOne(Label::class, 'product_id', 'id')
+          ->where('label', 'saved');
+    }
+    
+    /**
      * A product can have one category
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne

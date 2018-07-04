@@ -6,7 +6,7 @@
         <div class="row">
           <div class="col-md-3">
             <div class="sidebar content-box" style="display: block; background: #fff; margin-bottom: 10px;">
-                <ul class="nav nav-side">
+                <ul class="nav nav-side" id="nav-accordion">
                     
                     @if(Auth::user()->hasRole('member'))
                         <li><a class="btn-select-apl btn btn-success" href="{{route('member.select.apl')}}">@lang('member.select.apl')</a></li>
@@ -19,11 +19,6 @@
                         <li><a href="{{route('shop.order.last')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> @lang('member.cart')</a></li>
                         <li><a href="{{route('member.orders')}}"><i class="fa fa-shopping-basket" aria-hidden="true"></i> @lang('member.orders')</a></li>
                         <li><a href="{{route('member.purchases')}}"><i class="fa fa-shopping-bag" aria-hidden="true"></i> @lang('member.purchases')</a></li>
-                    
-                        <li><a href="{{route('member.contact', ['role'=>'admin'])}}"><i class="fa fa-envelope" aria-hidden="true"></i> @lang('member.contact_admin')</a></li>
-                        @if(Auth::user()->hasApl())
-                            <li><a href="{{route('member.contact', ['role'=>'apl'])}}"><i class="fa fa-envelope" aria-hidden="true"></i> @lang('member.contact_apl')</a></li>
-                        @endif
                     @endif
                     
                     @If(Auth::user()->hasRole('apl'))
@@ -53,10 +48,18 @@
                         <li><a href="{{url(Auth::user()->role.'/favorites')}}"><i class="fa fa-gratipay" aria-hidden="true"></i> @lang('app.favorites')</a></li>
                         <li><a href="{{url(Auth::user()->role.'/searches')}}"><i class="fa fa-search" aria-hidden="true"></i> @lang('app.saved_searches')</a></li>
                         <li>
-                             <a href="{{route(Auth::user()->role.'.mail.list',['filter'=>'inbox'])}}">
-                                <i class="fa fa-envelope"></i> @lang('app.mails')
-                             </a>
+                            <a href="#" data-toggle="collapse" data-target="#collapse-mail" aria-controls="collapse-mail"> @lang('app.mails')</a>
+                            <ul id="collapse-mail" class="collapse {{request()->is('*mail*')?'show':''}}" aria-labelledby="headingOne" data-parent="#nav-accordion">
+                                <li><a href="{{route(Auth::user()->role.'.mail.list',['filter'=>'inbox'])}}"> @lang('app.mails')</a></li>
+                                @if(Auth::user()->hasRole('member'))
+                                    <li><a href="{{route('member.contact', ['role'=>'admin'])}}"> @lang('member.contact_admin')</a></li>
+                                    @if(Auth::user()->hasApl())
+                                        <li><a href="{{route('member.contact', ['role'=>'apl'])}}"> @lang('member.contact_apl')</a></li>
+                                    @endif
+                                @endif
+                            </ul>
                         </li>
+                        
                     @endif
                     
                     <li><a href="{{route('logout')}}"><i class="fa fa-sign-out" aria-hidden="true"></i> @lang('app.logout')</a></li>

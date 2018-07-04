@@ -360,9 +360,11 @@ gbks.common.scroller.mousewheelFunction = $.proxy(gbks.common.scroller.onMouseWh
 
     // FORM - UNIFORM PLUGIN 
     // ------------------------------------------------------------------------------------------------ * -->
+    /*
     $("input.checkbox, input.radio, input:file.input-file").uniform({
             radioClass: 'radios' // edited class - the original radio
     });
+    */
 
     // FORM - INPUTMASK PLUGIN
     // ------------------------------------------------------------------------------------------------ * -->
@@ -852,5 +854,14 @@ gbks.common.scroller.mousewheelFunction = $.proxy(gbks.common.scroller.onMouseWh
                         $('#' + target).val(value);
                 }
         };
+    
+       $('#form-item-action').on('submit', function(e){
+           e.preventDefault();
+           var $form=$(this);
+           $('#confirm').modal({backdrop: 'static', keyboard: false })
+               .on('click', '#btn-continue', function(){
+                   $form.submit();
+               });
+       });
 
 })(jQuery, this, document);
