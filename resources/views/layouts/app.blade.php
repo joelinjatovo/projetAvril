@@ -24,23 +24,23 @@
 <link href="{{asset('css/bootstrap-slider.min.css')}}" rel="stylesheet" />
 <link rel="stylesheet" href="{{asset('css/bootstrap-select.min.css')}}">
 
-<!-- sylesheet css search-bar -->
-<link rel="stylesheet" href="{{asset('css/icheck.min_all.css')}}">
-<link rel="stylesheet" href="{{asset('css/price-range.css')}}">
-
-<link href="{{asset('css/multirange.css')}}" rel="stylesheet">
-<link href="{{asset('css/owl.carousel.css')}}" rel="stylesheet">
-<link href="{{asset('css/owl.transitions.css')}}" rel="stylesheet">
-<link href="{{asset('css/owl.theme.css')}}" rel="stylesheet">
-<link href="{{asset('plugins/slick/slick.css')}}" rel="stylesheet">
-<link href="{{asset('plugins/slick-nav/slicknav.css')}}" rel="stylesheet">
-<link href="{{asset('plugins/wow/animate.css')}}" rel="stylesheet">
-
 <!-- Plugins -->
 <link rel="stylesheet" href="{{asset('plugins/font-awesome/css/font-awesome.min.css')}}">
 <link rel="stylesheet" href="{{asset('plugins/fontello/css/fontello.css')}}">
 <link rel="stylesheet" href="{{asset('plugins/icon-7-stroke/css/pe-icon-7-stroke.css')}}">
 <link rel="stylesheet" href="{{asset('plugins/icon-7-stroke/css/helper.css')}}" rel="stylesheet">
+<link rel="stylesheet" href="{{asset('plugins/slick/slick.css')}}">
+<link rel="stylesheet" href="{{asset('plugins/slick-nav/slicknav.css')}}">
+    
+<!-- sylesheet css search-bar -->
+<link rel="stylesheet" href="{{asset('css/icheck.min_all.css')}}">
+<link rel="stylesheet" href="{{asset('css/price-range.css')}}">
+<link href="{{asset('css/multirange.css')}}" rel="stylesheet">
+<link href="{{asset('css/owl.carousel.css')}}" rel="stylesheet">
+<link href="{{asset('css/owl.transitions.css')}}" rel="stylesheet">
+<link href="{{asset('css/owl.theme.css')}}" rel="stylesheet">
+<link href="{{asset('plugins/wow/animate.css')}}" rel="stylesheet">
+
 
 <!-- Styles -->
 <link href="{{asset('css/theme.css')}}" rel="stylesheet">
@@ -120,8 +120,7 @@
                             </select>
                         </div>
                         <div class="currency-in-header">
-                            <i class="fa fa-mouse-pointer"></i>
-                            <label for="currency-dropdown"> <a href="{{route('login')}}">@lang('app.connexion')</a> </label>
+                            <a href="{{route('login')}}"><i class="fa fa-mouse-pointer"></i> @lang('app.connexion')</a>
                         </div>
                         @else
                         <div class="currency-in-header">
@@ -189,7 +188,7 @@
                     </ul>
                 </nav>
             </div>
-            <div class="col-md-3 col-sm-4">
+            <div class="col-md-3 col-sm-4 hidden-sm hidden-xs">
                 <form method="get" class="navbar-form form-search searchMenu" role="search" action="{{route('shop.index')}}">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search" name="q" value="{{isset($q)?$q:''}}">
@@ -279,6 +278,8 @@
 <!--
 -->
     
+<script src="{{asset('plugins/slick-nav/jquery.slicknav.min.js')}}"></script>
+<script src="{{asset('plugins/slick/slick.min.js')}}"></script>
 <script src="{{asset('js/bootstrap-select.min.js')}}"></script>
 <script src="{{asset('js/bootstrap-hover-dropdown.js')}}"></script>
 <script src="{{asset('js/owl.carousel.min.js')}}"></script>

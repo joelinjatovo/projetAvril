@@ -61,7 +61,8 @@
         background-color: #FFF !important;
     }
     .slider-content {
-        top: 10%;
+        position: relative;
+        top: 0px;
     }
     .search-btn, .toggle-btn { 
         margin-bottom: 15px;
@@ -163,7 +164,8 @@
     }
 
     .slider-content {
-        top: 5%;
+        position: relative;
+        top: 0px;
     }
     .slider-area{
         height:440px; 
@@ -354,11 +356,12 @@
     .navbar-default .navbar-nav > li > a::after {
         background-color: #FFF !important;
     }
-    .slider-content {
-        top: 10%;
+    .slider-content {        
+        position: relative;
+        top: 0px;
     }
     .register-area {
-    padding: 50px 0px;
+        padding: 50px 0px;
     }
      .register-area .col-md-6 {
         margin-bottom: 15px;
@@ -466,7 +469,8 @@
     }
 
     .slider-content {
-        top: 5%;
+        position: relative;
+        top: 0px;
     }
     .slider-area{
         height:440px;        
@@ -614,6 +618,10 @@
         margin-bottom: 15px;
     }
     .slider-content {
+        position: relative;
+        top: 0px;
+    }
+    .slider-content {
         margin-left: 0px;
         padding: 35px;
     }
@@ -740,6 +748,11 @@
     }
     .slider-area{
         height: 540px;
+    }
+    .slider-content {
+        position: relative;
+        top: 0px;
+        padding: 35px;
     }
     #bg-slider .item img {
         height: 540px;
