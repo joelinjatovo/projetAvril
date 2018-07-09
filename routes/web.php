@@ -107,23 +107,28 @@ Route::middleware(["auth"])->group(function(){
 
 
 Route::middleware(["auth", "role:member"])->group(function(){
-    // Buy product
+    // 1 Order product
     Route::post('product/{product}', 'ShopController@order')->name('shop.order');
-    Route::get('product/{product}/apl', 'ShopController@selectApl')->name('shop.select.apl');
-
-    Route::get('cart', 'ShopController@lastOrder')->name('shop.cart');
-    Route::post('cart', 'ShopController@cancel');
     
+    // 2. Select APL
+    Route::get('product/{product}/apl', 'ShopController@apl')->name('shop.select.apl');
+    Route::post('product/{product}/apl', 'ShopController@postApl');
+    
+    // 3. Checkout
     Route::get('checkout', 'ShopController@getCheckout')->name('shop.checkout');
     Route::post('checkout', 'ShopController@postCheckout');
+
+    // 4. Select AFA
+    Route::get('select-afa', 'ShopController@afa')->name('shop.select.apl');
+    Route::post('select-afa', 'ShopController@postAfa');
+
+    Route::get('cart', 'ShopController@lastOrder')->name('shop.cart');
+    Route::post('cart', 'ShopController@cancelOrder');
     
     Route::prefix('member')->group(function(){
 
         Route::get('select-apl', 'MemberController@selectApl')->name('member.select.apl');
         Route::post('select-apl', 'MemberController@updateApl');
-
-        Route::get('select-afa', 'MemberController@selectAfa')->name('member.select.afa');
-        Route::post('select-afa', 'MemberController@updateAfa');
 
         Route::get('/', 'BackendController@dashboard');
         Route::get('favorites', 'BackendController@favorites');

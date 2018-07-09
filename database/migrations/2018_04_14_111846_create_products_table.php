@@ -41,6 +41,7 @@ class CreateProductsTable extends Migration
             
             $table->string('display_address')->nullable();
             
+            $table->float('reservation', 20, 2)->nullable();
             $table->float('price', 20, 2)->nullable();
             $table->string('currency', 10)->nullable();
             

@@ -27,15 +27,6 @@ class ShopController extends Controller
      */
     public function index(Request $request, Category $category = null)
     {
-        $page = $request->get('page');
-        if(empty($page)) $page = 1;
-        
-        $orderBy = $request->get('orderBy');
-        if(!in_array($orderBy, ['price', 'created_at', 'view_count'])) $orderBy = 'price';
-        
-        $order = $request->get('order');
-        if(!in_array($order, ['desc', 'asc'])) $order = 'desc';
-        
         $items = Product::ofStatus('published')
                 ->where('quantity', '>', 0);
         
@@ -54,8 +45,16 @@ class ShopController extends Controller
             $search->save();
         }
         
+        $page = $request->get('page');
+        if(empty($page)) $page = 1;
+        
+        $orderBy = $request->get('orderBy');
+        if(!in_array($orderBy, ['price', 'created_at', 'view_count'])) $orderBy = 'price';
+        
+        $order = $request->get('order');
+        if(!in_array($order, ['desc', 'asc'])) $order = 'desc';
+        
         $items = $items->orderBy($orderBy, $order);
-
         $items = $items->paginate($this->pageSize);
         
         if($request->ajax()){
@@ -78,7 +77,6 @@ class ShopController extends Controller
         $page2 = Page::where('path', '=', '/products*')->first();
         if($page2){$pubs = $page2->pubs;}else{$pubs=[];}
 
-        
         $types = Type::orderBy('title', 'asc')
             ->where('object_type', 'type')
             ->withCount('products')
@@ -116,7 +114,7 @@ class ShopController extends Controller
      * @param  \App\Models\Product
      * @return \Illuminate\Http\Response
      */
-    public function selectApl(Request $request, Product $product){
+    public function apl(Request $request, Product $product){
         $this->middleware('auth');
         $this->middleware('role:member');
         
@@ -127,7 +125,7 @@ class ShopController extends Controller
         if($product && $product->id>0){
             if(!$product->isDisponible()){
                return redirect()->route('product.index', $product)
-                   ->with('error','Stock en rupture');
+               ->withInput()->with('error', "Ce produit n'est plus disponible.");
             }
 
             if(!$product->location){
@@ -142,8 +140,6 @@ class ShopController extends Controller
               'title' => $product->title,
               'type' => 'product',
             ];
-        }else{
-            
         }
         
         $apls = User::ofRole('apl')
@@ -173,8 +169,7 @@ class ShopController extends Controller
             }
         }
         
-        
-        $action = route('shop.order', $product);
+        $action = route('shop.select.apl', $product);
     	return view('backend.apl.select')
             ->with('action', $action)
             ->with('location', Auth::user()->location)
@@ -187,6 +182,36 @@ class ShopController extends Controller
     }
     
     /**
+     * Select an apl
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Product
+     * @return \Illuminate\Http\Response
+     */
+    public function postApl(Request $request, Product $product){
+        $this->middleware('auth');
+        $this->middleware('role:member');
+        
+        $apl = User::ofRole('apl')
+            ->isActive()
+            ->where('id', '=', $request->apl)
+            ->first();
+        
+        if(!$apl){
+    	   return redirect()
+               ->route('shop.select.apl', $product)
+               ->withInput()
+               ->with('error','Vous devez choisir un apl avant de reserver un produit.');
+        }
+        
+        // Update User's APL
+        \Auth::user()->apl_id = $apl->id;
+        \Auth::user()->save();
+        
+        return $this->order($request, $product);
+    }
+    
+    /**
      * Order product
      *
      * @param  \Illuminate\Http\Request  $request
@@ -196,41 +221,9 @@ class ShopController extends Controller
     public function order(Request $request, Product $product){
         $this->middleware('auth');
         $this->middleware('role:member');
-        
-        if(!$product->isDisponible()){
-    	   return redirect()
-               ->route('product.index', $product)
-               ->withInput()->with('error','Stock en rupture');
-        }
-        
-        $apl = null;
-        if($request->has('apl')){
-            $apl = User::ofRole('apl')
-                ->isActive()
-                ->where('id', '=', $request->apl)
-                ->first();
-        }
-        
-        // No APL selected
-        if(!$apl && !Auth::user()->apl){
-    	   return redirect()
-               ->route('shop.select.apl', $product)
-               ->withInput()
-               ->with('error','Vous devez choisir un apl.');
-        }
-        
-        // Update APL
-        if($apl){
-            Auth::user()->apl_id = $apl->id;
-            Auth::user()->save();
-        }
-        
-        // Get Default APL if no APL chosen
-        if(!$apl || $apl->id==0){
-            $apl = Auth::user()->apl;
-        }
-        
+
         // Get AFA
+        /*
         if($product->location){
             $afas = User::ofRole('afa')->isActive()
                 ->hasLocation()->get();
@@ -253,17 +246,43 @@ class ShopController extends Controller
                ->withInput()
                ->with('error','Vous ne pouvez pas encore faire cet achat. Il n\'y a pas d\'agence dans la base');
         }
+        */
         
-        try{
-            $order = Order::add($product, $apl, $afa);
-        }catch(\Exception $e){
-            //return redirect()->route('product.index', $product)
-              //  ->with('error', $e->getMessage());
+        
+        // Check if product is disponible
+        if(!$product->isDisponible()){
+    	   return redirect()
+               ->route('product.index', $product)
+               ->withInput()->with('error', "Ce produit n'est plus disponible.");
         }
+        
+        // Check if user have selected an APL
+        if(!\Auth::user()->hasApl()){
+    	   return redirect()
+               ->route('shop.select.apl', $product)
+               ->withInput()
+               ->with('error','Vous devez choisir un apl avant de reserver un produit.');
+        }
+        
+        // Get selected APL
+        $apl = Auth::user()->apl;
+        
+        // Montant de reservation du produit
+        $reservation = max(option('payment.amount_of_reservation'), $product->reservation);
+        if($reservation<=0){
+    	   return redirect()
+               ->route('product.index', $product)
+               ->withInput()->with('error', 'Le montant de reservation ne paut pas etre zero.');
+        }
+        
+        // Save order in database
+        $order = Order::add($product, $apl, $reservation);
 
+        // Put it in session
     	Session::put('order', $order);
     	Session::save();
 
+        // Go to checkout
     	return redirect()
             ->route('shop.checkout')
             ->with('success', 'Produit en cours d\'achat. Veuillez effectuer le paiement.');
@@ -273,10 +292,9 @@ class ShopController extends Controller
         $this->middleware('auth');
         $this->middleware('role:member');
         
-        $order = Session::has('order') ? Session::get('order') : null;
+        $order = Session::has('order') ? Session::get('order') : false;
         if (!$order) {
-            return redirect()->route('profile')
-                ->with('error', 'Votre carte est encore vide.');
+            return redirect()->route('shop.cart');
         }
         
         return view('shop.checkout')->with(['item' => $order]);
@@ -296,41 +314,37 @@ class ShopController extends Controller
             Session::put('order', $order);
             return redirect()
                 ->route('shop.checkout')
-                ->with('success', 'Votre commande a ete reprise. Veuillez effectuer le paiement.');
+                ->with('success', 'Votre commande a été reprise. Veuillez effectuer le paiement.');
         }
         
         $this->validate($request, [
             'stripe_token' => 'required',
         ]);
         
-        $order = Session::has('order') ? Session::get('order') : null;
+        $order = Session::has('order') ? Session::get('order') : false;
         if (!$order) {
-            return redirect()->route('profile')
-                ->with('error', 'Votre carte est encore vide.');
+            return redirect()->route('shop.cart');
         }
 
         $user = Auth::user();
-                
-        $total    = $order->price;
-        $currency = $order->currency;
         
         // Get the submitted Stripe token
         $token = $request->stripe_token;
 
         // If empty stripe_id then create new customer
-        if (empty($user->strip_id)) {
+        if (empty($user->stripe_id)) {
             // Create a new Stripe customer
             try {
                 $customer = \Stripe\Customer::create([
-                'source' => $token,
-                'email' => $user->email,
-                'metadata' => [
-                    "First Name" => $user->name,
-                    "Last Name" => $user->name
-                ]
+                    'source' => $token,
+                    'email' => $user->email,
+                    'metadata' => [
+                        "First Name" => $user->name,
+                        "Last Name" => $user->name
+                    ]
                 ]);
             } catch (\Stripe\Error\Card $e) {
-                return redirect()->to($action)
+                return redirect()->to('shop.checkout')
                     ->withErrors($e->getMessage())
                     ->withInput();
             }
@@ -338,36 +352,150 @@ class ShopController extends Controller
             // Update user in the database with Stripe
             $user->stripe_id = $customer->id;
             $user->save();
-
         }
+        
+                
+        $total    = $order->reservation;
+        $currency = $order->currency;
 
         try{
             // Create the charge
             $result = \Stripe\Charge::create(array(
                 "amount" => $total,
-                "currency" => "eur",
+                "currency" => $currency,
                 "customer" => $user->stripe_id,
                 "description" => 'Purchase'
             ));
-            
         }catch(\Exception $e){
-            return back()->with('error', $e->getMessage());
+            return redirect()->to('shop.checkout')
+                ->withErrors($e->getMessage())
+                ->withInput();
         }
         
         if ($result->status != 'succeeded') {
-          return back()->with('error', "Votre commande n'a pas été éffectué. ".$result->message);
+          return redirect()->to('shop.checkout')
+              ->with('error', "Votre commande n'a pas été éffectuée. ".$result->message);
         }
     
         // Set as order and notify user
         $order->setAsOrdered();
 
-        Session::forget('order');
+        Session::put('order', $order);
+        Session::save();
         
-        //do some other stuffs
-        return redirect()->route('home');
+        return redirect()->route('shop.select.afa')
+              ->with('success', "Votre commande a été éffectuée. Veuillez choisir l'AFA le plus proche du produit.");
     }
 
 
+    
+    /**
+     * Select Afa for an ordered product
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Product
+     * @return \Illuminate\Http\Response
+     */
+    public function afa(Request $request){
+        $this->middleware('auth');
+        $this->middleware('role:member');
+        
+        $order = Session::has('order') ? Session::get('order') : false;
+        if (!$order) {
+            return redirect()->route('shop.cart');
+        }
+        
+        $product = $order->product;
+        
+        $data = [];
+        if(!$product || !$product->isDisponible()){
+           return redirect()->route('product.index', $product)
+           ->withInput()->with('error', "Ce produit n'est plus disponible.");
+        }
+
+        if(!$product->location){
+           return redirect()->route('product.index', $product)
+                ->with('error','Le systeme ne peut pas localiser le produit');
+        }
+
+        if(!$product->state_id){
+           return redirect()->route('product.index', $product)
+                ->with('error', "L'Etat sur lequel le produit se trouve est inconnu.");
+        }
+            
+        $data[] = [
+          'id' => $product->id,
+          'lat' => $product->location->latitude:0,
+          'lng' => $product->location->longitude:0,
+          'title' => $product->title,
+          'type' => 'product',
+        ];
+        
+        $afas = User::ofRole('afa')
+            ->isActive()
+            ->where('state_id', $product->state_id)
+            ->has('location')
+            ->with('location')
+            ->get();
+        
+        foreach($afas as $item){
+            $data[] = [
+              'id' => $item->id,
+              'lat' => $item->location?$item->location->latitude:0,
+              'lng' => $item->location?$item->location->longitude:0,
+              'title' => $item->name,
+              'content' => $item->meta('orga_description'),
+              'type' => $item->role,
+            ];
+        }
+        
+        $action = route('shop.select.afa', $product);
+    	return view('backend.afa.select')
+            ->with('action', $action)
+            ->with('location', Auth::user()->location)
+            ->with('items', $afas)
+            ->with('item', $product)
+            ->with('distance', $distance)
+            ->with('distances', $this->distances)
+            ->with('data', json_encode($data));
+    }
+    
+    /**
+     * Select an apl
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Product
+     * @return \Illuminate\Http\Response
+     */
+    public function postAfa(Request $request, Product $product){
+        $this->middleware('auth');
+        $this->middleware('role:member');
+        
+        $order = Session::has('order') ? Session::get('order') : false;
+        if (!$order) {
+            return redirect()->route('shop.cart');
+        }
+        
+        $afa = User::ofRole('afa')
+            ->isActive()
+            ->where('id', '=', $request->afa)
+            ->first();
+        
+        if(!$afa){
+    	   return redirect()
+               ->route('shop.select.afa')
+               ->withInput()
+               ->with('error','Vous devez choisir un afa.');
+        }
+        
+        $order->setAfa($afa);
+        
+        return redirect()
+               ->route('member.orders')
+               ->with('error', 'Votre achat est en cours. Vous pouvez contacter votre agence partenaire locale.');
+        
+    }
+    
     /**
      * Show last order
      *
@@ -376,9 +504,11 @@ class ShopController extends Controller
     public function lastOrder(){
         $this->middleware('auth');
         $this->middleware('role:member');
+        
         $count = Order::where('author_id', \AUth::user()->id)
             ->where('status', 'pinged')
             ->count();
+        
         $order = Session::has('order') ? Session::get('order') : null;
         return view('shop.order')->with(['item' => $order])
             ->with('count', $count);
@@ -387,7 +517,7 @@ class ShopController extends Controller
     /*
     * Cancelling order
     */
-    public function cancel(Request $request){
+    public function cancelOrder(Request $request){
         $this->middleware('auth');
         $this->middleware('role:member');
         
@@ -423,5 +553,4 @@ class ShopController extends Controller
         
         return redirect()->route('shop.cart')->with('success', "Votre commande a bien été annulée.");
     }
-
 }

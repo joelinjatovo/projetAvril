@@ -29,7 +29,7 @@ class Order extends BaseModel
      *
      * @var array
      */
-    protected $dates =  ['apl_paid_at', 'afa_paid_at', 'cancelled_at'];
+    protected $dates =  ['afa_selected_at','apl_paid_at', 'afa_paid_at', 'cancelled_at'];
     
     
     /**
@@ -75,18 +75,16 @@ class Order extends BaseModel
     }
     
 	/*
-	*id du produit et le produit lui même
+	* Ajouter le produit dans le panier
 	*/
-	public static function add($product, $apl){        
-        // One product item
-        $tma = max(option('payment.percent_reservation', 0.10), $product->tma);
-        
+	public static function add($product, $apl, $reservation){
         $line = new Order();
-        $line->apl_id     = $apl->id;
-        $line->product_id = $product->id;
-		$line->price      = $product->price;
-		$line->tma        = $product->price*$tma;
-		$line->currency   = $product->currency;
+        $line->apl_id      = $apl->id;
+        $line->product_id  = $product->id;
+		$line->reservation = $reservation;
+		$line->price       = $product->price;
+		$line->tma         = $product->price*$tma;
+		$line->currency    = $product->currency;
         $line->save();
         return $line;
 	}
@@ -97,7 +95,6 @@ class Order extends BaseModel
      */
     public function setAsOrdered()
     {
-        
         $this->status = 'ordered';
         $this->save();
         
@@ -108,17 +105,50 @@ class Order extends BaseModel
             $this->product->save();
         }
         
-        // Notify AFA
-        if($this->afa){
-            try{
-                $this->afa->notify(new NewOrder($this->afa, $this));
-            }catch(\Exception $e){}
-        }
-            
         // Notify APL
         if($this->apl){
             try{
                 $this->apl->notify(new NewOrder($this->apl, $this));
+            }catch(\Exception $e){}
+        }
+        
+        // Notify Customer
+        if($this->author){
+            try{
+                $this->author->notify(new NewOrder($this->author, $this));
+            }catch(\Exception $e){}
+        }
+        
+        // Notify Admin
+        $adminId = option('site.admin', 1);
+        $admin = User::find($adminId);
+        if($admin){
+            try{
+                $admin->notify(new NewOrder($admin, $this));
+            }catch(\Exception $e){}
+        }
+    }
+    /**
+     * Set status as ordered
+     *
+     */
+    public function setAfa(User $afa)
+    {
+        $this->afa_id = $afa->id;
+        $this->afa_selected_at = \Carbon\Carbon::now();
+        $this->save();
+
+        // Notify APL
+        if($this->apl){
+            try{
+                $this->apl->notify(new NewOrder($this->apl, $this));
+            }catch(\Exception $e){}
+        }
+        
+        // Notify AFA
+        if($this->afa){
+            try{
+                $this->afa->notify(new NewOrder($this->afa, $this));
             }catch(\Exception $e){}
         }
         

@@ -22,6 +22,14 @@ class Search extends BaseModel
     protected $fillable = [
         'title', 'content', 'author_id'
     ];
+
+    /**
+     * The attributes that should be a date
+     *
+     * @var array
+     */
+    protected $dates = ['saved_at'];
+    
     
     /**
      * Create a new model instance.
@@ -30,7 +38,7 @@ class Search extends BaseModel
      */
     public function __construct()
     {
-        //$this->author_id = (\Auth::check()?\Auth::user()->id:0);
+        $this->author_id = (\Auth::check()?\Auth::user()->id:0);
     }
     
     /**

@@ -15,9 +15,10 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('status', 150)->default('pinged')->index();
-            $table->double('price', 10, 2)->default(0);
-            $table->double('tma', 10, 2)->default(0);
+            $table->string('status', 20)->default('pinged')->index();
+            $table->double('price', 20, 2)->default(0);
+            $table->double('tma', 20, 2)->default(0);
+            $table->double('reservation', 20, 2)->nullable();
             $table->string('currency', 20)->nullable();
             
             $table->bigInteger('apl_id')->default(0)->index();
@@ -27,6 +28,7 @@ class CreateOrdersTable extends Migration
             $table->string('apl_payment_type')->nullable();
             
             $table->bigInteger('afa_id')->default(0)->index();
+            $table->dateTime('afa_selected_at')->nullable()->index();
             $table->datetime('afa_paid_at')->nullable();
             $table->double('afa_amount', 10, 2)->default(0);
             $table->string('afa_transaction_id')->nullable();
