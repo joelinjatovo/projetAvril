@@ -286,7 +286,6 @@
 <script src="{{asset('js/wow.js')}}"></script>
 <script src="{{asset('js/icheck.min.js')}}"></script>
 <script src="{{asset('js/price-range.js')}}"></script>
-<script src="{{asset('js/main.js')}}"></script>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="{{asset('plugins/jquery-ui/jquery-ui.min.js')}}"></script>
@@ -296,9 +295,10 @@
 <script src="{{asset('plugins/wow/wow.min.js')}}"></script>
 <script src="{{asset('plugins/zoom/zoom.js')}}"></script>
 <script src="{{asset('plugins/mixitup/mixitup.min.js')}}"></script>
-
-<script src="{{asset('js/theme.js')}}"></script>
+    
 <script src="{{asset('js/multirange.js')}}"></script>
+<script src="{{asset('js/main.js')}}"></script>
+<script src="{{asset('js/theme.js')}}"></script>
 <script src="{{asset('js/head.js')}}"></script>
 
 <!-- Slider Range -->
@@ -328,10 +328,7 @@ $('.btn-select-apl').on('click', function(e){
 });
 </script>
     
-    
-@section('script')
-@show
-
+@yield('script')
 @yield('stripe')
 @yield('braintree')
 </body>

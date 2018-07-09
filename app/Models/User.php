@@ -388,9 +388,9 @@ class User extends Authenticatable
      */
     public function orders()
     {
-        if($this->hasRole('member')) return $this->hasMany(Sale::class, 'author_id', 'id');
-        if($this->hasRole('apl'))    return $this->hasMany(Sale::class, 'apl_id', 'id');
-        if($this->hasRole('afa'))    return $this->hasMany(Sale::class, 'afa_id', 'id');
+        if($this->hasRole('member')) return $this->hasMany(Order::class, 'author_id', 'id');
+        if($this->hasRole('apl'))    return $this->hasMany(Order::class, 'apl_id', 'id');
+        if($this->hasRole('afa'))    return $this->hasMany(Order::class, 'afa_id', 'id');
         return null;
     }
     
@@ -405,27 +405,27 @@ class User extends Authenticatable
     }
     
     /**
-     * An many afa/apl can have many products from sales table
+     * An many afa/apl can have many products from orders table
      *
      * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
      */
     public function sales()
     {
         if($this->hasRole('afa')){
-            return $this->belongsToMany(Product::class, 'sales', 'afa_id', 'product_id');
+            return $this->belongsToMany(Product::class, 'orders', 'afa_id', 'product_id');
         }
         // else APL
-        return $this->belongsToMany(Product::class, 'sales', 'apl_id', 'product_id');
+        return $this->belongsToMany(Product::class, 'orders', 'apl_id', 'product_id');
     }
     
     /**
-     * An many clients can buy many products from sales table
+     * An many clients can buy many products from orders table
      *
      * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
      */
     public function purchases()
     {
-      return $this->belongsToMany(Product::class, 'sales', 'author_id', 'product_id');
+      return $this->belongsToMany(Product::class, 'orders', 'author_id', 'product_id');
     }
     
     /**

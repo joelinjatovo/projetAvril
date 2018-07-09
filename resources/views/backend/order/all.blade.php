@@ -8,7 +8,7 @@
     <div class="row-fluid">
         <div class="col-md-12">
             @if(count($items)>0)
-                @include('backend.table.sale', ['sales'=>$items])
+                @include('backend.table.order', ['orders'=>$items])
             @else
             <div class="panel panel-default">
                 <div class="panel-body">

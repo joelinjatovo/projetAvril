@@ -338,6 +338,7 @@ img.zoom-img {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 /*Contact Form*/
 .contact-form {
   margin-bottom: 70px;
@@ -347,12 +348,20 @@ img.zoom-img {
   text-transform: uppercase;
   margin: 0 0 20px 0;
 }
-.contact-form input[type="password"], input[type="text"], input[type="email"],
-.contact-form textarea {
+.contact-form input[type="password"], 
+.contact-form textarea,
+input[type="text"], 
+input[type="email"] {
   border: 1px solid #e5e5e5;
-  padding: 13px 10px 13px 35px;
+  padding: 13px 10px 13px 10px;
   width: 100%;
   outline: none;
+}
+.contact-form input[type="password"], 
+.contact-form input[type="text"], 
+.contact-form input[type="email"], 
+.contact-form textarea {
+  padding: 13px 10px 13px 35px;
 }
 .contact-form .common {
   float: left;

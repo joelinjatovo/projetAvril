@@ -7,7 +7,7 @@ use Session;
 use Auth;
 
 use App\Models\Product;
-use App\Models\Sale;
+use App\Models\Order;
 use App\Models\Category;
 use App\Models\Page;
 use App\Models\Pub;
@@ -18,7 +18,6 @@ use App\Models\Search;
 
 class ShopController extends Controller
 {
-    
     /**
      * Show the list of product.
      *
@@ -256,13 +255,13 @@ class ShopController extends Controller
         }
         
         try{
-            $sale = Sale::add($product, $apl, $afa);
+            $order = Order::add($product, $apl, $afa);
         }catch(\Exception $e){
             //return redirect()->route('product.index', $product)
               //  ->with('error', $e->getMessage());
         }
 
-    	Session::put('sale', $sale);
+    	Session::put('order', $order);
     	Session::save();
 
     	return redirect()
@@ -274,13 +273,13 @@ class ShopController extends Controller
         $this->middleware('auth');
         $this->middleware('role:member');
         
-        $sale = Session::has('sale') ? Session::get('sale') : null;
-        if (!$sale) {
+        $order = Session::has('order') ? Session::get('order') : null;
+        if (!$order) {
             return redirect()->route('profile')
                 ->with('error', 'Votre carte est encore vide.');
         }
         
-        return view('shop.checkout')->with(['item' => $sale]);
+        return view('shop.checkout')->with(['item' => $order]);
     }
 
     public function postCheckout(Request $request){
@@ -293,8 +292,8 @@ class ShopController extends Controller
         
         $action = $request->action;
         if($action == 'update_session'){
-            $sale = Sale::findOrFail($request->sale);
-            Session::put('sale', $sale);
+            $order = Order::findOrFail($request->order);
+            Session::put('order', $order);
             return redirect()
                 ->route('shop.checkout')
                 ->with('success', 'Votre commande a ete reprise. Veuillez effectuer le paiement.');
@@ -304,16 +303,16 @@ class ShopController extends Controller
             'stripe_token' => 'required',
         ]);
         
-        $sale = Session::has('sale') ? Session::get('sale') : null;
-        if (!$sale) {
+        $order = Session::has('order') ? Session::get('order') : null;
+        if (!$order) {
             return redirect()->route('profile')
                 ->with('error', 'Votre carte est encore vide.');
         }
 
         $user = Auth::user();
                 
-        $total    = $sale->price;
-        $currency = $sale->currency;
+        $total    = $order->price;
+        $currency = $order->currency;
         
         // Get the submitted Stripe token
         $token = $request->stripe_token;
@@ -360,9 +359,9 @@ class ShopController extends Controller
         }
     
         // Set as order and notify user
-        $sale->setAsOrdered();
+        $order->setAsOrdered();
 
-        Session::forget('sale');
+        Session::forget('order');
         
         //do some other stuffs
         return redirect()->route('home');
@@ -377,11 +376,11 @@ class ShopController extends Controller
     public function lastOrder(){
         $this->middleware('auth');
         $this->middleware('role:member');
-        $count = Sale::where('author_id', \AUth::user()->id)
+        $count = Order::where('author_id', \AUth::user()->id)
             ->where('status', 'pinged')
             ->count();
-        $sale = Session::has('sale') ? Session::get('sale') : null;
-        return view('shop.order')->with(['item' => $sale])
+        $order = Session::has('order') ? Session::get('order') : null;
+        return view('shop.order')->with(['item' => $order])
             ->with('count', $count);
     }
     
@@ -395,25 +394,25 @@ class ShopController extends Controller
         $action = $request->input('action');
         switch($action){
             case 'item':
-                $sale = Sale::findOrFail($request->sale);
-                $sale->delete();
+                $order = Order::findOrFail($request->order);
+                $order->delete();
                 
-                $session = Session::has('sale') ? Session::get('sale') : null;
-                if ($session && $session->id == $sale->id ) {
-                    Session::forget('sale');
+                $session = Session::has('order') ? Session::get('order') : null;
+                if ($session && $session->id == $order->id ) {
+                    Session::forget('order');
                 }
                 break;
             case 'session':
-                $sale = Session::has('sale') ? Session::get('sale') : null;
-                if (!$sale) {
+                $order = Session::has('order') ? Session::get('order') : null;
+                if (!$order) {
                     return redirect()->route('profile')
                         ->with('error', 'Votre carte est encore vide.');
                 }
-                $sale->delete();
-                Session::forget('sale');
+                $order->delete();
+                Session::forget('order');
                 break;
             case 'all':
-                Sale::where('author_id', \Auth::user()->id)
+                Order::where('author_id', \Auth::user()->id)
                     ->where('status', 'pinged')
                     ->delete();
                 break;

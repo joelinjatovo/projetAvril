@@ -29,7 +29,7 @@ class AfaController extends Controller
             ->where('status', 'ordered')
             ->paginate($this->pageSize);
         
-        return view('backend.sale.all')
+        return view('backend.order.all')
             ->with('title', __('afa.orders'))
             ->with('items', $items);
     }
@@ -45,7 +45,7 @@ class AfaController extends Controller
             ->where('status', 'paid')
             ->paginate($this->pageSize);
         
-        return view('backend.sale.all')
+        return view('backend.order.all')
             ->with('title', __('afa.sales'))
             ->with('items', $items);
     }
@@ -76,7 +76,7 @@ class AfaController extends Controller
         
         $items = $items->paginate($this->pageSize);
         
-        return view('backend.sale.all')
+        return view('backend.order.all')
             ->with('title', $title)
             ->with('items', $items);
     }

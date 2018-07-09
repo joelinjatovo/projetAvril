@@ -8,14 +8,14 @@ use App\Notifications\NewOrder;
 use Auth;
 
 // Eloquent\Model to manage Product and Service to sell
-class Sale extends BaseModel
+class Order extends BaseModel
 {
    /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'sales';
+    protected $table = 'orders';
     
     /**
      * The attributes that are mass assignable.
@@ -77,23 +77,18 @@ class Sale extends BaseModel
 	/*
 	*id du produit et le produit lui même
 	*/
-	public static function add($product, $apl, $afa){        
+	public static function add($product, $apl){        
         // One product item
         $tma = max(option('payment.percent_reservation', 0.10), $product->tma);
         
-        $storedItem = new Sale();
-        
-        $storedItem->afa_id     = $afa->id;
-        $storedItem->apl_id     = $apl->id;
-        
-        $storedItem->product_id = $product->id;
-		$storedItem->price      = $product->price;
-		$storedItem->tma        = $product->price*$tma;
-		$storedItem->currency   = $product->currency;
-        
-        $storedItem->save();
-        
-        return $storedItem;
+        $line = new Order();
+        $line->apl_id     = $apl->id;
+        $line->product_id = $product->id;
+		$line->price      = $product->price;
+		$line->tma        = $product->price*$tma;
+		$line->currency   = $product->currency;
+        $line->save();
+        return $line;
 	}
     
     /**

@@ -50,7 +50,7 @@ class SellerController extends Controller
     }
     
     /**
-     * List of sale products
+     * List of ordered products
      *
      * @return \Illuminate\Http\Response
      */
