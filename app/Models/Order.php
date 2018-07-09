@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Notifications\NewOrder;
+use App\Notifications\AfaSelected;
 use Auth;
 
 // Eloquent\Model to manage Product and Service to sell
@@ -141,21 +142,21 @@ class Order extends BaseModel
         // Notify APL
         if($this->apl){
             try{
-                $this->apl->notify(new NewOrder($this->apl, $this));
+                $this->apl->notify(new AfaSelected($this->apl, $this));
             }catch(\Exception $e){}
         }
         
         // Notify AFA
         if($this->afa){
             try{
-                $this->afa->notify(new NewOrder($this->afa, $this));
+                $this->afa->notify(new AfaSelected($this->afa, $this));
             }catch(\Exception $e){}
         }
         
         // Notify Customer
         if($this->author){
             try{
-                $this->author->notify(new NewOrder($this->author, $this));
+                $this->author->notify(new AfaSelected($this->author, $this));
             }catch(\Exception $e){}
         }
         
@@ -164,7 +165,7 @@ class Order extends BaseModel
         $admin = User::find($adminId);
         if($admin){
             try{
-                $admin->notify(new NewOrder($admin, $this));
+                $admin->notify(new AfaSelected($admin, $this));
             }catch(\Exception $e){}
         }
     }

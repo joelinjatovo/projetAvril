@@ -11,7 +11,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use App\Models\Order;
 use App\Models\User;
 
-class NewOrder extends Notification implements ShouldQueue
+class AfaSelected extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -59,19 +59,19 @@ class NewOrder extends Notification implements ShouldQueue
         
         switch($user->role){
             case 'apl':
-                $message = $message->subject('APL: New Order')
+                $message = $message->subject('APL: Afa Selected')
                     ->line('Someone ordered product that you are the selected APL.')
                     ->action('View More', route('apl.order.show', $order));
             break;
                 
             case 'afa':
-                $message = $message->subject('AFA: New Order')
+                $message = $message->subject('AFA: Afa Selected')
                     ->line('Someone ordered product that you are the selected AFA.')
                     ->action('View More', route('afa.order.show', $order));
             break;
                 
             case 'member':
-                $message = $message->subject('Member: NewOrder')
+                $message = $message->subject('Member: Afa Selected')
                     ->line('Someone ordered product for an account with this email address.')
 
                     ->line(sprintf('Price %s', $order->price))
@@ -80,7 +80,7 @@ class NewOrder extends Notification implements ShouldQueue
             break;
                 
             case 'admin':
-                $message = $message->subject('Admin: New Order')
+                $message = $message->subject('Admin: Afa Selected')
                     ->line('A customer ordered product')
 
                     ->line(sprintf('Customer %s', $cart->author->name))

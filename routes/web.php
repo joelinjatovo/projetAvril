@@ -165,7 +165,7 @@ Route::prefix('afa')->middleware(["auth","role:afa"])->group(function(){
     Route::get('orders', 'AfaController@orders')->name('afa.orders');
     Route::get('sales', 'AfaController@sales')->name('afa.sales');
     Route::get('commissions/{filter?}', 'AfaController@commissions')->name('afa.commissions');
-    Route::get('cartitem/{cartitem}', 'CartItemController@show')->name('afa.cartitem.show');
+    Route::get('order/{order}', 'OrderController@show')->name('afa.order.show');
         
     Route::get('contact/{user}' , 'BackendController@contact')->name('afa.user.contact');
     Route::post('contact/{user}', 'BackendController@postContact');
@@ -190,7 +190,7 @@ Route::prefix('apl')->middleware(["auth","role:apl"])->group(function(){
     Route::get('sales', 'AplController@sales')->name('apl.sales');
     Route::get('customers', 'AplController@customers')->name('apl.customers');
     Route::get('commissions/{filter?}', 'AplController@commissions')->name('apl.commissions');
-    Route::get('cartitem/{cartitem}', 'CartItemController@show')->name('apl.cartitem.show');
+    Route::get('order/{order}', 'OrderController@show')->name('apl.order.show');
         
     Route::get('contact/{user}' , 'BackendController@contact')->name('apl.user.contact');
     Route::post('contact/{user}', 'BackendController@postContact');
@@ -214,7 +214,7 @@ Route::prefix('seller')->middleware(["auth","role:seller"])->group(function(){
     Route::get('products', 'SellerController@products')->name('seller.products');
     Route::get('sales', 'SellerController@sales')->name('seller.sales');
     Route::get('orders', 'SellerController@orders')->name('seller.orders');
-    Route::get('cartitem/{cartitem}', 'CartItemController@show')->name('seller.cartitem.show');
+    Route::get('order/{order}', 'OrderController@show')->name('seller.order.show');
         
     Route::get('contact/{user}' , 'BackendController@contact')->name('seller.user.contact');
     Route::post('contact/{user}', 'BackendController@postContact');
@@ -264,13 +264,13 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::get('delete/{product}', 'ProductController@delete')->name('admin.product.delete');
     });
     
-    // Sale Controller
-    Route::get('sales/{filter?}', 'SaleController@all')->name('admin.sale');
-    Route::prefix('sale')->group(function(){
-        Route::get('{sale}', 'SaleController@show')->name('admin.sale.show');
-        Route::get('pay/{sale}/{role}', 'SaleController@pay')->name('admin.sale.pay');
-        Route::post('pay/{sale}/{role}', 'SaleController@postPay');
-        Route::get('delete/{sale}', 'SaleController@delete')->name('admin.sale.delete');
+    // Order Controller
+    Route::get('orders/{filter?}', 'OrderController@all')->name('admin.sale');
+    Route::prefix('order')->group(function(){
+        Route::get('{order}', 'OrderController@show')->name('admin.order.show');
+        Route::get('pay/{order}/{role}', 'OrderController@pay')->name('admin.order.pay');
+        Route::post('pay/{order}/{role}', 'OrderController@postPay');
+        Route::get('delete/{order}', 'OrderController@delete')->name('admin.order.delete');
     });
     
     Route::get('/', 'AdminController@dashboard')->name('admin.dashboard');
