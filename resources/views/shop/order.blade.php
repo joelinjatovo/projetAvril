@@ -36,7 +36,7 @@
                   </li>
                 @endif
               </ul>
-              <form action="{{route('shop.order.last')}}" method="post">
+              <form action="{{route('shop.cart')}}" method="post">
                 {{csrf_field()}}
                   <input type="hidden" name="action" value="session">
                 <button type="submit" class="btn btn-default pull-left">@lang('member.cancel_order')</button>

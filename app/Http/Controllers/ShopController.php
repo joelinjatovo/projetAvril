@@ -421,7 +421,7 @@ class ShopController extends Controller
                 break;
         }
         
-        return redirect()->route('shop.order.last')->with('success', "Votre commande a bien été annulée.");
+        return redirect()->route('shop.cart')->with('success', "Votre commande a bien été annulée.");
     }
 
 }

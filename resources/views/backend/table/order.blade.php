@@ -45,7 +45,7 @@
             
             <td class="product-action">
                 @if($order->status == 'pinged')
-                <form action="{{route('shop.order.last')}}" method="post" class="pull-right">
+                <form action="{{route('shop.cart')}}" method="post" class="pull-right">
                     {{csrf_field()}}
                     <input type="hidden" name="order" value="{{$order->id}}">
                     <input type="hidden" name="action" value="item">
@@ -67,7 +67,7 @@
 {{$sales->links()}}
 
 @if($sale->status == 'pinged')
-<form action="{{route('shop.order.last')}}" method="post">
+<form action="{{route('shop.cart')}}" method="post">
 {{csrf_field()}}
 <input type="hidden" name="action" value="all">
 <button type="submit" class="btn btn-default pull-right">@lang('member.cancel_orders')</button>

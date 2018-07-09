@@ -17,7 +17,6 @@ Route::get('mail/basic','MailController@basic_email');
 Route::get('mail/html','MailController@html_email');
 Route::get('mail/attachment','MailController@attachment_email');
 
-
 Auth::routes();
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
@@ -70,7 +69,7 @@ Route::middleware('guest')->group(function(){
     Route::get('resend-code/{user}', 'Auth\RegisterController@resendActivation')->name('resend_code');
 });
 
-// Contact Page
+// Contact Page OR Contact Admin
 Route::get('contact','MailController@contact');
 Route::post('contact','MailController@contact')->name('contact');
 
@@ -78,14 +77,9 @@ Route::middleware(["auth"])->group(function(){
     // Notification
     Route::get('notifications/{filter?}', 'NotificationController@all')->name('notification.list');
 
-    //Chat
-    Route::get('chat', 'ChatController@index');
-    Route::post('chat/threads', 'ThreadController@store');
-    Route::post('chat/messages', 'ChatController@store');
-
-    // Label
-    Route::get('product/{product}/label/{type}', 'LabelController@storeOrUpdate')->name('label.store');// Save OR Star Product
-    Route::get('products/label/{type}', 'LabelController@all')->name('label.list');// List saved products OR starred Product
+    // Favorites and pined product
+    Route::get('product/{product}/label/{type}', 'LabelController@storeOrUpdate')->name('label.store');
+    Route::get('products/label/{type}', 'LabelController@all')->name('label.list');
 
     // Subscription Plan
     Route::get('/plans', 'PlanController@index')->name('plans');
@@ -117,8 +111,8 @@ Route::middleware(["auth", "role:member"])->group(function(){
     Route::post('product/{product}', 'ShopController@order')->name('shop.order');
     Route::get('product/{product}/apl', 'ShopController@selectApl')->name('shop.select.apl');
 
-    Route::get('order/last', 'ShopController@lastOrder')->name('shop.order.last');
-    Route::post('order/last', 'ShopController@cancel');
+    Route::get('cart', 'ShopController@lastOrder')->name('shop.cart');
+    Route::post('cart', 'ShopController@cancel');
     
     Route::get('checkout', 'ShopController@getCheckout')->name('shop.checkout');
     Route::post('checkout', 'ShopController@postCheckout');
@@ -127,6 +121,9 @@ Route::middleware(["auth", "role:member"])->group(function(){
 
         Route::get('select-apl', 'MemberController@selectApl')->name('member.select.apl');
         Route::post('select-apl', 'MemberController@updateApl');
+
+        Route::get('select-afa', 'MemberController@selectAfa')->name('member.select.afa');
+        Route::post('select-afa', 'MemberController@updateAfa');
 
         Route::get('/', 'BackendController@dashboard');
         Route::get('favorites', 'BackendController@favorites');
