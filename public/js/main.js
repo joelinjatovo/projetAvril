@@ -4,8 +4,6 @@ $(window).load(function () { // makes sure the whole site is loaded
     $('body').delay(350).css({'overflow': 'visible'});
 })
 $(document).ready(function () {
-
-    
     $('input').iCheck({
         checkboxClass: 'icheckbox_square-yellow',
         radioClass: 'iradio_square-yellow',
@@ -16,23 +14,17 @@ $(document).ready(function () {
     $('.layout-grid').on('click', function () {
         $('.layout-grid').addClass('active');
         $('.layout-list').removeClass('active');
-
         $('#list-type').removeClass('proerty-th-list');
         $('#list-type').addClass('proerty-th');
-
     });
 
     $('.layout-list').on('click', function () {
         $('.layout-grid').removeClass('active');
         $('.layout-list').addClass('active');
-
         $('#list-type').addClass('proerty-th-list');
         $('#list-type').removeClass('proerty-th');
-
     });
 
-});
-$(document).ready(function () {
     $("#bg-slider").owlCarousel({
         navigation: false, // Show next and prev buttons
         slideSpeed: 100,
@@ -125,5 +117,4 @@ $(document).ready(function () {
 })
 
 // Initializing WOW.JS
-
 new WOW().init();

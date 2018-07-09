@@ -16,7 +16,6 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \App\Http\Middleware\Language::class,
-        \App\Http\Middleware\TalkMiddleware::class,
         \App\Http\Middleware\EditPassword::class,
         \App\Http\Middleware\CheckSubscription::class,
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
