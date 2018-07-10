@@ -294,7 +294,8 @@ class ShopController extends Controller
         
         $order = Session::has('order') ? Session::get('order') : false;
         if (!$order) {
-            return redirect()->route('shop.cart');
+            return redirect()->route('shop.cart')
+                ->with('error', 'Votre panier est vide.');
         }
         
         return view('shop.checkout')->with(['item' => $order]);
@@ -322,8 +323,9 @@ class ShopController extends Controller
         ]);
         
         $order = Session::has('order') ? Session::get('order') : false;
-        if (!$order) {
-            return redirect()->route('shop.cart');
+        if(!$order){
+            return redirect()->route('shop.cart')
+                ->with('error', 'Votre panier est vide.');
         }
 
         $user = Auth::user();
@@ -425,8 +427,8 @@ class ShopController extends Controller
             
         $data[] = [
           'id' => $product->id,
-          'lat' => $product->location->latitude:0,
-          'lng' => $product->location->longitude:0,
+          'lat' => $product->location->latitude,
+          'lng' => $product->location->longitude,
           'title' => $product->title,
           'type' => 'product',
         ];
@@ -509,7 +511,7 @@ class ShopController extends Controller
             ->where('status', 'pinged')
             ->count();
         
-        $order = Session::has('order') ? Session::get('order') : null;
+        $order = Session::has('order')?Session::get('order'):false;
         return view('shop.order')->with(['item' => $order])
             ->with('count', $count);
     }

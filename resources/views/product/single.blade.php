@@ -21,8 +21,9 @@
             <span><i class="fa fa-bathtub"></i> @lang('app.num.bath', ['num'=>$item->bathrooms])</span>
             <span><i class="fa fa-cab"></i> {{$item->garage_spaces?__('app.yes'):__('app.no')}}</span>
         </div>
-        <a href="{{route('product.index',['product'=>$item])}}" class="btn btn-default btn-price pull-right">
-            <strong>{{$item->currency}} {{$item->price}}</strong>
+        <a href="{{route('product.index',['product'=>$item])}}">
+            <strong>${{$item->price}}</strong>
         </a>
+        <a href="{{route('product.index', $item)}}" class="more pull-right">Voir le detail <i class="fa fa-angle-double-right"></i></a> 
     </div>
 </article>

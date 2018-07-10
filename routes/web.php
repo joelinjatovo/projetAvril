@@ -265,7 +265,7 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
     });
     
     // Order Controller
-    Route::get('orders/{filter?}', 'OrderController@all')->name('admin.sale');
+    Route::get('orders/{filter?}', 'OrderController@all')->name('admin.order.list');
     Route::prefix('order')->group(function(){
         Route::get('{order}', 'OrderController@show')->name('admin.order.show');
         Route::get('pay/{order}/{role}', 'OrderController@pay')->name('admin.order.pay');

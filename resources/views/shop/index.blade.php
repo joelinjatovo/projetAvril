@@ -11,9 +11,11 @@
                         <h3 class="pull-left">
                             @if(isset($q)&&$q)
                                 @lang('app.search_result', ['q'=>$q])
+                                @if(\Auth::check())
                                 <a class="btn btn-default btn-save-search" 
                                        data-search-id="{{$search->id}}" 
                                        data-search-title="{{$search->title}}" >@lang('app.btn.save')</a>
+                                @endif
                             @else
                                 @if($category&&$category->id>0) 
                                     {{$category->title}} 
