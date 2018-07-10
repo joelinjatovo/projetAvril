@@ -136,7 +136,6 @@ return [
     */
 
     'providers' => [
-
         /*
          * Laravel Framework Service Providers...
          */
@@ -171,7 +170,6 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\TalkServiceProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\BroadcastServiceProvider::class,
@@ -241,7 +239,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 		'MetaData' => AstritZeqiri\Metadata\Models\MetaDada::class,
         'InterventionImage' => Intervention\Image\Facades\Image::class,
-        'Talk' => App\Talk\Facades\Talk::class,
         'Pusher' => Pusher\Pusher::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
