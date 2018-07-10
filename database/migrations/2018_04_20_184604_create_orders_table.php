@@ -24,8 +24,7 @@ class CreateOrdersTable extends Migration
             $table->bigInteger('apl_id')->default(0)->index();
             $table->datetime('apl_paid_at')->nullable();
             $table->double('apl_amount', 10, 2)->default(0);
-            $table->string('apl_transaction_id')->nullable();
-            $table->string('apl_payment_type')->nullable();
+            $table->bigInteger('apl_paid_by')->default(0)->index();
             
             $table->bigInteger('afa_id')->default(0)->index();
             $table->dateTime('afa_selected_at')->nullable()->index();

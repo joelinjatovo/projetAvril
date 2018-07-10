@@ -268,7 +268,7 @@ class ShopController extends Controller
         $apl = Auth::user()->apl;
         
         // Montant de reservation du produit
-        $reservation = max(option('payment.amount_of_reservation'), $product->reservation);
+        $reservation = option('payment.taux_de_reservation', 0);
         if($reservation<=0){
     	   return redirect()
                ->route('product.index', $product)

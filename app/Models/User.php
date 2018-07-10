@@ -164,6 +164,21 @@ class User extends Authenticatable
      *
      * @return Boolean
      */
+    public function isMaj()
+    {
+        $mio_maj = option('payment.valeur_mio_maj', 0);
+        return Order::select(\DB::raw('sum(apl_amount) as total'))
+            //->where('apl_id', $this->id)
+            //->where('total', '>=', $mio_maj)
+            ->groupBy('apl_id')
+            ->get();
+    }
+    
+    /**
+     * Is user active
+     *
+     * @return Boolean
+     */
     public function active()
     {
       return ($this->status == 'active');

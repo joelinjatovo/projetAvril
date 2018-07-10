@@ -79,12 +79,19 @@ class Order extends BaseModel
 	* Ajouter le produit dans le panier
 	*/
 	public static function add($product, $apl, $reservation){
+        
+        $tma = max(option('payment.commission_sur_vente', 0), $product->tma);
+        $mio = $apl->isMaj()?option('payment.taux_mio_maj', 0):option('payment.taux_mio_nor', 0);
+        $cpc = option('payment.commission_presentation_client', 0);
+        
         $line = new Order();
         $line->apl_id      = $apl->id;
         $line->product_id  = $product->id;
-		$line->reservation = $reservation;
 		$line->price       = $product->price;
-		$line->tma         = $product->price*$tma;
+		$line->reservation = $product->price*($reservation/100);
+		$line->tma         = $product->price*($tma/100);
+		$line->apl_amount  = $line->tma*($mio/100);
+		$line->afa_amount  = $line->tma*($cpc/100) - $line->reservation;
 		$line->currency    = $product->currency;
         $line->save();
         return $line;

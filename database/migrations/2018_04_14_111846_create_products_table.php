@@ -41,13 +41,12 @@ class CreateProductsTable extends Migration
             
             $table->string('display_address')->nullable();
             
-            $table->float('reservation', 20, 2)->nullable();
             $table->float('price', 20, 2)->nullable();
             $table->string('currency', 10)->nullable();
             
-            $table->float('tma', 8, 2)->nullable();
-            $table->float('commision', 8, 2)->nullable();
-            $table->integer('commision_edited')->default(0);
+            $table->integer('tma')->nullable();
+            $table->dateTime('tma_edited_at')->nullable();
+            $table->bigInteger('tma_edited_by')->default(0);
             
             $table->string('status', 20)->default('published')->index(); // pinged published blocked drafted trashed archived
             
