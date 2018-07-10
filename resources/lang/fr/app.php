@@ -272,18 +272,18 @@ return [
     'shop.pay.apl'           => 'Payer commission APL',
     'shop.pay.afa'           => 'Payer commission AFA',
     
-    'admin.sale.pay.apl'    => 'Payer commission APL',
-    'admin.sale.pay.afa'    => 'Payer commission AFA',
+    'admin.order.pay.apl'    => 'Payer commission APL',
+    'admin.order.pay.afa'    => 'Payer commission AFA',
     
-    'admin.sale'              => 'Ventes',
-    'admin.sale.list'         => 'Toutes les Ventes',
-    'admin.sale.pinged'       => 'Ventes En Attente',
-    'admin.sale.ordered'      => 'Ventes En Cours',
-    'admin.sale.paid'         => 'Ventes Effectué',
-    'admin.sale.apl-not-paid' => 'Ventes: APL non payé',
-    'admin.sale.apl-paid'     => 'Ventes: APL payé',
-    'admin.sale.afa-not-paid' => 'Ventes: AFA non payé',
-    'admin.sale.afa-paid'     => 'Ventes: AFA payé',
+    'admin.order'              => 'Ventes',
+    'admin.order.list'         => 'Toutes les Ventes',
+    'admin.order.pinged'       => 'Ventes En Attente',
+    'admin.order.ordered'      => 'Ventes En Cours',
+    'admin.order.paid'         => 'Ventes Effectué',
+    'admin.order.apl-not-paid' => 'Ventes: APL non payé',
+    'admin.order.apl-paid'     => 'Ventes: APL payé',
+    'admin.order.afa-not-paid' => 'Ventes: AFA non payé',
+    'admin.order.afa-paid'     => 'Ventes: AFA payé',
     
     'blogs'                 => 'Blogs',
     'blog'                  => 'Blog',
@@ -576,28 +576,33 @@ return [
     'saved_searches'    => "Recherches sauvegardées",
     
     'inscription' => "Inscription",
+    'percent.desc' => "Entrer un nombre entre 0 et 100",
+    
     'trial_delay' => "Delai d'essai des membres",
-    'percent.desc' => "Entrer un nombre entre 0 et 1",
     'placeholder.trial_delay' => "Nombre de jour de la duree d'essai",
+    
     'disable_payed_inscription' => "Desactiver l'inscription payant",
     'placeholder.disable_payed_inscription' => "Cochez si vous voulez mettre l'inscription gratuit",
-    'value_inscription' => "Droit d'inscription",
-    'value_inscription_member' => "Droit d'inscription des membres",
-    'placeholder.value_inscription_member' => "Droit d'inscription des membres, ex: $200",
-    'value_inscription_seller' => "Droit d'inscription des vendeurs",
-    'placeholder.value_inscription_seller' => "Droit d'inscription des vendeurs, ex: $400",
-    'value_inscription_afa' => "Droit d'inscription des AFA",
-    'placeholder.value_inscription_afa' => "Droit d'inscription des AFA, ex: $250",
-    'value_inscription_apl' => "Droit d'inscription des agences partenaires locales",
-    'placeholder.value_inscription_apl' => "Droit d'inscription des agences partenaires locales, ex: $270",
-    'reservation' => "Reservation",
-    'percent_reservation' => "Pourcentage de reservation",
-    'placeholder.percent_reservation' => "Valeur en pourcentage de la valeur a deduire lors de la reservation du produit. Payer par les clients acheteurs",
-    'percent_presentation' => "Presentation du produit",
-    'percent_presentation_afa' => "Pourcentage de presentation du produit AFA",
-    'placeholder.percent_presentation_afa' => "Valeur en pourcentage de la valeur a payer par IEA aux AFA responsable du produit.",
-    'percent_presentation_apl' => "Pourcentage de presentation du produit APL",
-    'placeholder.percent_presentation_apl' => "Valeur en pourcentage de la valeur a payer par IEA aux APL responsable du produit.",
-
+    
+    'taux_de_reservation' => "Taux de reservation",
+    'placeholder.taux_de_reservation' => "Valeur en pourcentage pour calculer le montant de reservation d'un produit. (en %)",
+    
+    'commission_sur_vente' => "Taux de la commission sur vente",
+    'placeholder.commission_sur_vente' => "Valeur en pourcentage pour calculer le montant de la commission sur vente payée par les vendeurs aux agences francophones australiennes. (en %)",
+    
+    'commission_sur_vente_min' => "Taux de la commission sur vente minimal",
+    'placeholder.commission_sur_vente_min' => "Valeur en pourcentage du taux de la commission sur vente minimum accordée. (en %)",
+    
+    'commission_presentation_client' => "Taux de la commission de presentation de client",
+    'placeholder.commission_presentation_client' => "Valeur en pourcentage pour calculer le montant de la commission de presentation de client. (en %)",
+    
+    'taux_mio_nor' => "Taux de la commission MIO Normale",
+    'placeholder.taux_mio_nor' => "Valeur en pourcentage pour calculer le montant de la commission de mission d'information et d'orientation normale pour les agences partenaires locales. (en %)",
+    
+    'taux_mio_maj' => "Taux de la commission MIO Majorée",
+    'placeholder.taux_mio_maj' => "Valeur en pourcentage pour calculer le montant de la commission de mission d'information et d'orientation majorée pour les agences partenaires locales. (en %)",
+    
+    'valeur_mio_maj' => "Montant de la commission MIO Majorée",
+    'placeholder.valeur_mio_maj' => "Seuille de la commission de mission d'information et d'orientation majorée. (en $)",
 ];
 

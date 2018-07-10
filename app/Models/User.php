@@ -448,7 +448,6 @@ class User extends Authenticatable
         if(!$meta) return $default;
 
         return $meta->value;
-        
     }
     
     /*

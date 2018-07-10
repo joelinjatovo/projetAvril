@@ -123,11 +123,13 @@ class Config extends BaseModel
     
     public static function paymentRules(){
         return [
-            'percent_reservation' => 'required',
-
-            'percent_presentation_afa' => 'required',
-            'percent_presentation_apl' => 'required',
-
+            'taux_de_reservation' => 'required|numeric|min:0|max:100',
+            'commission_sur_vente' => 'required|numeric|min:0|max:100',
+            'commission_sur_vente_min' => 'required|numeric|min:0|max:100',
+            'commission_presentation_client' => 'required|numeric|min:0|max:100',
+            'taux_mio_nor' => 'required|numeric|min:0|max:100',
+            'taux_mio_maj' => 'required|numeric|min:0|max:100',
+            'valeur_mio_maj' => 'required',
             'disable_payed_inscription' => 'max:1',
             'trial_delay' => 'required|integer|min:0|max:365',
         ];
@@ -147,5 +149,17 @@ class Config extends BaseModel
     public function update_meta_array($key, $value){
         $value = serialize($value);
         $meta = $this->update_meta($key, $value);
+    }
+    
+    /*
+    * Alias to get_meta()->value
+    *
+    */
+    public function meta($key, $default = '')
+    {
+        $meta = $this->get_meta($key);
+        if(!$meta) return $default;
+
+        return $meta->value;
     }
 }
