@@ -4,7 +4,7 @@
             <th colspan="2">Produits</th>
             
             @if(\Auth::check()&&\Auth::user()->hasRole('apl'))
-            <th colspan="2">User</th>
+            <th colspan="2">Client</th>
             @endif
             
             <th>Prix</th>

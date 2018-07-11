@@ -172,7 +172,6 @@ class User extends Authenticatable
             ->whereNotNull('apl_paid_at')
             ->whereNotNull('afa_paid_at')
             ->whereNull('cancelled_at')
-            ->whereNull('status', 'ordered')
             ->where('created_at', '>=', (date('Y')-1).'-01-01 00:00:00')
             ->where('created_at', '<=', (date('Y')-1).'-12-31 23:59:59')
             ->first();

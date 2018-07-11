@@ -7,7 +7,6 @@
         <div id="TabTop1" class="tab-pane padding-bottom30 active fade in">
             @include('includes.alerts')
             <div>
-                
                  <form id="form-item-action-delete" class="pull-left" action="{{route('admin.user.list')}}" method="post">
                      {{csrf_field()}}
                      <input type="hidden" name="user" value="{{$item->id}}">
@@ -60,24 +59,24 @@
                         @include('admin.table.observation',['item'=>$item])
                     </div>
                     
-                    @if($item->role=='member')
+                    @if($item->hasRole('member'))
                         @if($item->apl)
-                            @include('admin.user.info.apl',    ['item'=>$item->apl])
+                            @include('admin.user.info.apl', ['item'=>$item->apl])
                         @endif
                         <div class="widget widget-simple">
                             <div class="widget-header">
-                                <h4><small>@lang('app.orders')</small></h4>
+                                <h4><small>@lang('member.orders')</small></h4>
                             </div>
-                            @include('admin.table.product',[
-                                'products'=>$item->purchases()->wherePivot('status', 'ordered')
+                            @include('admin.table.order',[
+                                'orders'=>$item->orders()->where('status', 'ordered')->get()
                             ])
                         </div>
                         <div class="widget widget-simple">
                             <div class="widget-header">
-                                <h4><small>@lang('app.purchases')</small></h4>
+                                <h4><small>@lang('member.purchases')</small></h4>
                             </div>
-                            @include('admin.table.product',[
-                                'products'=>$item->purchases()->wherePivot('status', 'paid')
+                            @include('admin.table.order',[
+                                'orders'=>$item->orders()->where('status', 'paid')->get()
                             ])
                         </div>
                         <div class="widget widget-simple">
@@ -88,7 +87,7 @@
                         </div>
                     @endif
                     
-                    @if($item->role=='apl')
+                    @if($item->hasRole('apl'))
                         <div class="widget widget-simple">
                             <div class="widget-header">
                                 <h4><small>@lang('app.customers')</small></h4>
@@ -97,23 +96,23 @@
                         </div>
                         <div class="widget widget-simple">
                             <div class="widget-header">
-                                <h4><small>@lang('app.orders')</small></h4>
+                                <h4><small>@lang('apl.orders')</small></h4>
                             </div>
-                            @include('admin.table.product',[
-                                'products'=>$item->sales()->wherePivot('status', 'ordered')
+                            @include('admin.table.order',[
+                                'orders'=>$item->orders()->where('status', 'ordered')->get()
                             ])
                         </div>
                         <div class="widget widget-simple">
                             <div class="widget-header">
-                                <h4><small>@lang('app.sales')</small></h4>
+                                <h4><small>@lang('apl.sales')</small></h4>
                             </div>
-                            @include('admin.table.product',[
-                                'products'=>$item->sales()->wherePivot('status', 'paid')
+                            @include('admin.table.order',[
+                                'orders'=>$item->orders()->where('status', 'paid')->get()
                             ])
                         </div>
                     @endif
                     
-                    @if($item->role=='seller')
+                    @if($item->hasRole('seller'))
                         <div class="widget widget-simple">
                             <div class="widget-header">
                                 <h4><small>@lang('app.products')</small></h4>
@@ -127,7 +126,7 @@
                                 <h4><small>@lang('app.orders')</small></h4>
                             </div>
                             @include('admin.table.product',[
-                                'products'=>$item->products()->where('products.status', 'ordered')
+                                'products'=>$item->products()->where('products.status', 'ordered')->get()
                             ])
                         </div>
                         <div class="widget widget-simple">
@@ -135,26 +134,26 @@
                                 <h4><small>@lang('app.sales')</small></h4>
                             </div>
                             @include('admin.table.product',[
-                                'products'=>$item->products()->where('products.status', 'paid')
+                                'products'=>$item->products()->where('products.status', 'paid')->get()
                             ])
                         </div>
                     @endif
                     
-                    @if($item->role=='afa')
+                    @if($item->hasRole('afa'))
                         <div class="widget widget-simple">
                             <div class="widget-header">
-                                <h4><small>@lang('app.orders')</small></h4>
+                                <h4><small>@lang('afa.orders')</small></h4>
                             </div>
-                            @include('admin.table.product',[
-                                'products'=>$item->sales()->wherePivot('status', 'ordered')
+                            @include('admin.table.order',[
+                                'orders'=>$item->orders()->where('status', 'ordered')->get()
                             ])
                         </div>
                         <div class="widget widget-simple">
                             <div class="widget-header">
-                                <h4><small>@lang('app.sales')</small></h4>
+                                <h4><small>@lang('afa.sales')</small></h4>
                             </div>
-                            @include('admin.table.product',[
-                                'products'=>$item->sales()->wherePivot('status', 'paid')
+                            @include('admin.table.order',[
+                                'orders'=>$item->orders()->where('status', 'paid')->get()
                             ])
                         </div>
                     @endif
