@@ -25,7 +25,7 @@
         <section>
             <div class="row-fluid">
                 <div class="span12">
-                    @include('admin.table.cartitem', ['cartitems'=>$items])
+                    @include('admin.table.order', ['orders'=>$items])
                 </div>
             </div>
         </section>

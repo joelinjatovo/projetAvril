@@ -104,7 +104,7 @@ class OrderController extends Controller
         
         $items = $items->paginate($record);
         
-        return view('admin.shop.all')
+        return view('admin.order.all')
             ->with('q', $q) 
             ->with('record', $record) 
             ->with('title', $title)
@@ -128,25 +128,25 @@ class OrderController extends Controller
                 if(!$order->afa||$order->afa->id!=\Auth::user()->id){
                     abort(404);
                 }else{
-                    $view = view('backend.cartitem.index');
+                    $view = view('backend.order.index');
                 }
                 break;
             case 'apl':
                 if(!$order->apl||$order->apl->id!=\Auth::user()->id){
                     abort(404);
                 }else{
-                    $view = view('backend.cartitem.index');
+                    $view = view('backend.order.index');
                 }
                 break;
             case 'member':
                 if(!$order->author||$order->author->id!=\Auth::user()->id){
                     abort(404);
                 }else{
-                    $view = view('backend.cartitem.index');
+                    $view = view('backend.order.index');
                 }
                 break;
             case 'admin':
-                $view = view('admin.cartitem.index');
+                $view = view('admin.order.index');
                 break;
             default:
                 abort(404);
