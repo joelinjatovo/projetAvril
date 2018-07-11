@@ -7,8 +7,8 @@
             <th colspan="2">User</th>
             @endif
             
-            <th>Price</th>
-            <th>Reservation</th>
+            <th>Prix</th>
+            <th>Montant de reservation</th>
             
             @if($orders[0]->status == 'pinged')
             <th>Action</th>
@@ -16,14 +16,16 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($$orders as $order)
+        @foreach($orders as $order)
         <tr>
             <td class="product-thumbnail" width="100">
                 <a href="{{route('product.index', $order->product)}}">
                     <img width="100" height="100" src="{{$order->product->imageUrl()}}" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail wp-post-image" alt="" />
                 </a>
             </td>
-            <td class="product-name"> <a href="{{route('product.index', $order->product)}}">{{$order->product->title}}</a></td>
+            <td class="product-name">
+                <a href="{{route('product.index', $order->product)}}">{{$order->product->title}}</a>
+            </td>
             
             @if(\Auth::check()&&\Auth::user()->hasRole('apl'))
                 <td class="product-thumbnail" width="100">
@@ -34,7 +36,7 @@
                     @endif
                 </td>
                 <td>
-                     @if($sale->author)
+                     @if($order->author)
                      <a href="{{route(\Auth::user()->role.'.user.contact', $order->author)}}">{{$order->author->email}}</a>
                      @endif
                 </td>
@@ -64,9 +66,9 @@
     </tbody>
 </table>
 
-{{$sales->links()}}
+{{$orders->links()}}
 
-@if($sale->status == 'pinged')
+@if($order->status == 'pinged')
 <form action="{{route('shop.cart')}}" method="post">
 {{csrf_field()}}
 <input type="hidden" name="action" value="all">

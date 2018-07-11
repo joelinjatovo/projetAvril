@@ -208,7 +208,6 @@
 
 @yield('content')
 
-<?php if(\Auth::check()) echo var_dump(\Auth::user()->isMaj()); ?>
 <footer id="footer">
     <div class="site-footer">
         <div class="container">

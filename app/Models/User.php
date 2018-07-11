@@ -167,11 +167,17 @@ class User extends Authenticatable
     public function isMaj()
     {
         $mio_maj = option('payment.valeur_mio_maj', 0);
-        return Order::select(\DB::raw('sum(apl_amount) as total'))
-            //->where('apl_id', $this->id)
-            //->where('total', '>=', $mio_maj)
-            ->groupBy('apl_id')
-            ->get();
+        $item = Order::select(\DB::raw('sum(apl_amount) as total'))
+            ->where('apl_id', $this->id)
+            ->whereNotNull('apl_paid_at')
+            ->whereNotNull('afa_paid_at')
+            ->whereNull('cancelled_at')
+            ->whereNull('status', 'ordered')
+            ->where('created_at', '>=', (date('Y')-1).'-01-01 00:00:00')
+            ->where('created_at', '<=', (date('Y')-1).'-12-31 23:59:59')
+            ->first();
+        $value = $item?$item->total:0;
+        return ($mio_maj>0 && $value>=$mio_maj);
     }
     
     /**
