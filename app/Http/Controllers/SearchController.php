@@ -163,6 +163,7 @@ class SearchController extends Controller
         }
 
         $search->title = $title;
+        $search->saved_at = \Carbon\Carbon::now();
         $search->save();
         
         return response()->json([
@@ -170,6 +171,47 @@ class SearchController extends Controller
                 'code' => 'success',
                 'message' => 'Modification avec succes.'
         ]);
+    }
+    
+    /**
+     * Show the list of search.
+     * Admin Only
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  String $filter
+     * @return \Illuminate\Http\Response
+     */
+    public function all(Request $request, $filter='all')
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        $items = new Search();
+        
+        $title = __('app.admin.search.list');
+        
+        $page = $request->get('page');
+        if(!$page){$page =1;}
+        
+        $record = $request->get('record');
+        if(!$record) $record = $this->pageSize;
+        
+        $q = $request->get('q');
+        $q = trim($q);
+        if($q){
+            $items = $items->where(function($query) use($q){
+                return $query->orWhere('title', 'LIKE', '%'.$q.'%')
+                    ->orWhere('keyword', 'LIKE', '%'.$q.'%')
+                    ->orWhere('content', 'LIKE', '%'.$q.'%');
+            });
+        }
+        
+        $items = $items->paginate($record);
+        
+        return view('admin.search.all', compact('items', 'filter', 'page'))
+            ->with('q', $q) 
+            ->with('record', $record) 
+            ->with('title', $title); 
     }
     
     public function delete(Request $request){

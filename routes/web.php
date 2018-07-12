@@ -341,6 +341,13 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::get('delete/{page}', 'PageController@delete')->name('admin.page.delete');
     });
 
+    // Searches Controller Groups
+    Route::get('searches/{filter?}', 'SearchController@all')->name('admin.search.list');
+    Route::prefix('search')->group(function(){
+        Route::get('show/{search}', 'SearchController@show')->name('admin.search.show');
+        Route::get('delete/{search}', 'SearchController@delete')->name('admin.search.delete');
+    });
+
     // Pub Controller Groups
     Route::get('pubs/{filter?}', 'PubController@allAdmin')->name('admin.pub.list');
     Route::prefix('pub')->group(function(){

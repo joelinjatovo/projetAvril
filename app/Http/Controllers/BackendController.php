@@ -163,6 +163,7 @@ class BackendController extends Controller
     {
         $items = Auth::user()->searches()
             ->whereNotNull('keyword')
+            ->whereNotNull('saved_at')
             ->orderBy('created_at', 'DESC')
             ->paginate($this->pageSize);
         

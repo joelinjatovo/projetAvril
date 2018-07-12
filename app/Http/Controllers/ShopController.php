@@ -42,7 +42,7 @@ class ShopController extends Controller
                     ->orWhere('title', 'LIKE', '%'.$q.'%');
             });
             $search->keyword = $q;
-            $search->save();
+            if(!$request->ajax()) $search->save();
         }
         
         $page = $request->get('page');
