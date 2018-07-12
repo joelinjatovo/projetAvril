@@ -11,11 +11,12 @@ use Illuminate\Notifications\Messages\MailMessage;
 use App\Models\Order;
 use App\Models\User;
 
-class AfaSelected extends Notification implements ShouldQueue
+class ShopAfaSelected extends Notification implements ShouldQueue
 {
     use Queueable;
 
     private $user;
+
     private $order;
     
     /**
@@ -23,10 +24,32 @@ class AfaSelected extends Notification implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(User $user, Order $order)
+    public function __construct(Order $order)
+    {
+        $this->order = $order;
+    }
+
+    /**
+     * Set user
+     *
+     * @param  \User|null $user
+     * @return $this
+     */
+    public function setUser($user)
     {
         $this->user = $user;
-        $this->order = $order;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return $this->user
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 
     /**

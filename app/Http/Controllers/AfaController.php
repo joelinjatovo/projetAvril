@@ -57,16 +57,19 @@ class AfaController extends Controller
      */
     public function commissions($filter = 'paid')
     {
-        $items = Auth::user()->orders()
-            ->where('status', 'ordered');
+        $items = \Auth::user()->orders()
+            ->where(function($query){
+                return $query->orWhere('status', 'ordered')
+                    ->orWhere('status', 'paid');
+            });
         
         switch($filter){
             case 'paid':
-                $items = $items->where('apl_paid_at', '<>', 'NULL');
+                $items = $items->whereNotNull('afa_paid_at');
                 $title = __('app.commissions.paid');
                 break;
             case 'not-paid':
-                $items = $items->where('apl_paid_at', 'NULL');
+                $items = $items->whereNull('afa_paid_at');
                 $title = __('app.commissions.not_paid');
                 break;
             default:

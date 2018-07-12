@@ -2,13 +2,17 @@
     <thead>
         <tr>
             <th colspan="2">Produits</th>
-            
-            @if(\Auth::check()&&\Auth::user()->hasRole('apl'))
-            <th colspan="2">Client</th>
-            @endif
-            
             <th>Prix</th>
             <th>Montant de reservation</th>
+            
+            @if(\Auth::check()&&\Auth::user()->hasRole('apl'))
+            <th colspan="2">Clients</th>
+            <th>Commission sur presentation client</th>
+            @endif
+            
+            @if(\Auth::check()&&\Auth::user()->hasRole('afa'))
+            <th>Commission sur vente a payer</th>
+            @endif
             
             @if($orders[0]->status == 'pinged')
             <th>Action</th>
@@ -27,6 +31,9 @@
                 <a href="{{route('product.index', $order->product)}}">{{$order->product->title}}</a>
             </td>
             
+            <td class="product-price"><span>{{$order->currency}}</span> {{$order->price}}</td>
+            <td class="product-price"><span>{{$order->currency}}</span> {{$order->tma}}</td>
+            
             @if(\Auth::check()&&\Auth::user()->hasRole('apl'))
                 <td class="product-thumbnail" width="100">
                     @if($order->author)
@@ -40,10 +47,16 @@
                      <a href="{{route(\Auth::user()->role.'.user.contact', $order->author)}}">{{$order->author->email}}</a>
                      @endif
                 </td>
+                <td><span>{{$order->currency}}</span> {{$order->apl_amount}}</td>
             @endif
             
-            <td class="product-price"><span>{{$order->currency}}</span> {{$order->price}}</td>
-            <td class="product-price"><span>{{$order->currency}}</span> {{$order->tma}}</td>
+            @if(\Auth::check()&&\Auth::user()->hasRole('afa'))
+                <td><span>{{$order->currency}}</span> {{$order->afa_amount}}</td>
+            @endif
+            
+            @if(\Auth::check()&&\Auth::user()->hasRole('seller'))
+                <td><span>{{$order->currency}}</span> {{$order->tma}}</td>
+            @endif
             
             <td class="product-action">
                 @if($order->status == 'pinged')

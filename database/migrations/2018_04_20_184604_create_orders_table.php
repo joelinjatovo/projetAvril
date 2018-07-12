@@ -17,9 +17,13 @@ class CreateOrdersTable extends Migration
             $table->bigIncrements('id');
             $table->string('status', 20)->default('pinged')->index();
             $table->double('price', 20, 2)->default(0);
-            $table->double('tma', 20, 2)->default(0);
-            $table->double('reservation', 20, 2)->nullable();
             $table->string('currency', 20)->nullable();
+            
+            $table->double('reservation', 20, 2)->nullable();
+            $table->datetime('reserved_at')->nullable();
+            
+            $table->double('tma', 20, 2)->default(0);
+            $table->datetime('tma_paid_at')->nullable();
             
             $table->bigInteger('apl_id')->default(0)->index();
             $table->datetime('apl_paid_at')->nullable();
@@ -37,6 +41,10 @@ class CreateOrdersTable extends Migration
             $table->datetime('cancelled_at')->nullable();
             $table->string('cancelled_by_role', 150)->nullable();
             $table->string('cancelled_desc')->nullable();
+            
+            $table->bigInteger('confirmed_by')->default(0)->index();
+            $table->datetime('confirmed_at')->nullable();
+            $table->string('confirmed_by_role', 150)->nullable();
             
             $table->bigInteger('product_id')->default(0)->index();
             $table->bigInteger('author_id')->default(0)->index();

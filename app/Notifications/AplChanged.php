@@ -28,6 +28,29 @@ class AplChanged extends Notification
     }
 
     /**
+     * Set user
+     *
+     * @param  \User|null $user
+     * @return $this
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return $this->user
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
      * Get the notification's delivery channels.
      *
      * @param  mixed  $notifiable

@@ -12,25 +12,45 @@ use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\User;
 
-class OrderPaid extends Notification implements ShouldQueue
+class ShopOrderPaid extends Notification implements ShouldQueue
 {
     use Queueable;
-
     
     private $user;
-    private $cart;
-    private $cartItem;
+    
+    private $order;
     
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(User $user, Cart $cart, $cartItem)
+    public function __construct(Order $order)
+    {
+        $this->order = $order;
+    }
+
+    /**
+     * Set user
+     *
+     * @param  \User|null $user
+     * @return $this
+     */
+    public function setUser($user)
     {
         $this->user = $user;
-        $this->cart = $cart;
-        $this->cartItem = $cartItem;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return $this->user
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 
     /**
@@ -55,16 +75,12 @@ class OrderPaid extends Notification implements ShouldQueue
         /** @var User $user */
         $user = $this->user;
         
-        /** @var mixed $cart */
-        $cart = $this->cart;
-        
-        /** @var mixed $cartItem */
-        $cartItem = $this->cartItem;
+        /** @var mixed $order */
+        $order = $this->order;
         
         switch($user->role){
             case 'apl':
                 return (new MailMessage)
-                    ->from(env('ADMIN_MAIL'))
                     ->subject('Order paid that you are the selected APL')
                     ->greeting(sprintf('Hello %s', $user->name))
                     ->line('Someone ordered product that you are the selected APL.')
@@ -72,7 +88,6 @@ class OrderPaid extends Notification implements ShouldQueue
                     ->line('Thank you for using our application!');
             case 'afa':
                 return (new MailMessage)
-                    ->from(env('ADMIN_MAIL'))
                     ->subject('Order paid that you are the selected AFA')
                     ->greeting(sprintf('Hello %s', $user->name))
                     ->line('Someone ordered product that you are the selected AFA.')
@@ -81,7 +96,6 @@ class OrderPaid extends Notification implements ShouldQueue
             case 'member':
                 if($cartitem){
                     return (new MailMessage)
-                        ->from(env('ADMIN_MAIL'))
                         ->subject('Order paid')
                         ->greeting(sprintf('Hello %s', $user->name))
                         ->line('Someone ordered product for an account with this email address.')
@@ -93,7 +107,6 @@ class OrderPaid extends Notification implements ShouldQueue
                         ->line('Thank you for using our application!');
                 }else{
                     return (new MailMessage)
-                        ->from(env('ADMIN_MAIL'))
                         ->subject('Order paid')
                         ->greeting(sprintf('Hello %s', $user->name))
                         ->line('Someone ordered product for an account with this email address.')
@@ -108,7 +121,6 @@ class OrderPaid extends Notification implements ShouldQueue
             case 'admin':
                 if($cartitem){
                     return (new MailMessage)
-                        ->from(env('ADMIN_MAIL'))
                         ->subject('Order paid')
                         ->greeting(sprintf('Hello %s', $user->name))
                         ->line('A customer ordered product')

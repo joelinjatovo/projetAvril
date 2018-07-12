@@ -19,7 +19,7 @@ class SellerController extends Controller
     }
     
     /**
-     * List of products
+     * Liste des produits du vendeur
      *
      * @return \Illuminate\Http\Response
      */
@@ -34,7 +34,7 @@ class SellerController extends Controller
     }
     
     /**
-     * List of ordered products
+     * Listes des produits en cours de vente
      *
      * @return \Illuminate\Http\Response
      */
@@ -50,7 +50,7 @@ class SellerController extends Controller
     }
     
     /**
-     * List of ordered products
+     * Listes des produits vendus
      *
      * @return \Illuminate\Http\Response
      */
@@ -63,6 +63,32 @@ class SellerController extends Controller
         return view('backend.product.all')
             ->with('title', __('seller.sales'))
             ->with('items', $items);
+    }
+    
+    /*
+    * Cancelling order
+    */
+    public function cancelOrder(Request $request, Order $order){
+        $this->middleware('auth');
+        $this->middleware('role:seller');
+    
+        $order->setAsCancelled();
+        
+        return redirect()->route('profile')
+            ->with('success', "La commande a bien été annulée.");
+    }
+    
+    /*
+    * Confirm order
+    */
+    public function confirmOrder(Request $request, Order $order){
+        $this->middleware('auth');
+        $this->middleware('role:seller');
+    
+        $order->setAsConfirmed();
+        
+        return redirect()->route('profile')
+            ->with('success', "La commande a bien été confirmée.");
     }
     
 }

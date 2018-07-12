@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notification;
 
-use App\Notifications\NewOrder;
-use App\Notifications\AfaSelected;
 use Auth;
+
+use App\Notifications\ShopNewOrder;
+use App\Notifications\ShopAfaSelected;
+use App\Notifications\ShopTmaPaid;
 
 // Eloquent\Model to manage Product and Service to sell
 class Order extends BaseModel
@@ -104,6 +107,7 @@ class Order extends BaseModel
     public function setAsOrdered()
     {
         $this->status = 'ordered';
+        $this->reserved_at = \Carbon\Carbon::now();
         $this->save();
         
         // Update product buyers
@@ -113,29 +117,10 @@ class Order extends BaseModel
             $this->product->save();
         }
         
-        // Notify APL
-        if($this->apl){
-            try{
-                $this->apl->notify(new NewOrder($this->apl, $this));
-            }catch(\Exception $e){}
-        }
-        
-        // Notify Customer
-        if($this->author){
-            try{
-                $this->author->notify(new NewOrder($this->author, $this));
-            }catch(\Exception $e){}
-        }
-        
-        // Notify Admin
-        $adminId = option('site.admin', 1);
-        $admin = User::find($adminId);
-        if($admin){
-            try{
-                $admin->notify(new NewOrder($admin, $this));
-            }catch(\Exception $e){}
-        }
+        $notification = new ShopNewOrder($this)
+        $this->notify($notification);
     }
+    
     /**
      * Set status as ordered
      *
@@ -145,36 +130,99 @@ class Order extends BaseModel
         $this->afa_id = $afa->id;
         $this->afa_selected_at = \Carbon\Carbon::now();
         $this->save();
-
-        // Notify APL
-        if($this->apl){
-            try{
-                $this->apl->notify(new AfaSelected($this->apl, $this));
-            }catch(\Exception $e){}
-        }
         
-        // Notify AFA
-        if($this->afa){
-            try{
-                $this->afa->notify(new AfaSelected($this->afa, $this));
-            }catch(\Exception $e){}
-        }
+        $notification = new ShopAfaSelected($this)
+        $this->notify($notification);
+    }
+    
+    /**
+     * Payer Commission sur ventes
+     *
+     */
+    public function setTmaPaid()
+    {
+        $this->tma_paid_at = \Carbon\Carbon::now();
+        $this->save();
         
-        // Notify Customer
-        if($this->author){
-            try{
-                $this->author->notify(new AfaSelected($this->author, $this));
-            }catch(\Exception $e){}
-        }
+        $notification = new ShopTmaPaid($this)
+        $this->notify($notification);
+    }
+    
+    /**
+     * Payer AFA
+     *
+     */
+    public function setAfaPaid()
+    {
+        $this->afa_paid_at = \Carbon\Carbon::now();
+        $this->save();
         
-        // Notify Admin
-        $adminId = option('site.admin', 1);
-        $admin = User::find($adminId);
-        if($admin){
-            try{
-                $admin->notify(new AfaSelected($admin, $this));
-            }catch(\Exception $e){}
+        $notification = new ShopAfaPaid($this)
+        $this->notify($notification);
+    }
+    
+    /**
+     * Payer APL
+     *
+     */
+    public function setAplPaid()
+    {
+        $this->apl_paid_at = \Carbon\Carbon::now();
+        $this->save();
+        
+        $notification = new ShopAplPaid($this)
+        $this->notify($notification);
+    }
+    
+    /**
+     * Cancelling order
+     *
+     */
+    public function setAsCancelled()
+    {
+        $this->status = 'cancelled';
+        $this->cancelled_by = \Auth::user()->id;
+        $this->cancelled_by_role = \Auth::user()->role;
+        $this->cancelled_at = \Carbon\Carbon::now();
+        $this->save();
+        
+        $notification = new ShopOrderCancelled($this)
+        $this->notify($notification);
+    }
+    
+    /**
+     * Confirm order
+     *
+     */
+    public function setAsConfirmed()
+    {
+        $this->confirmed_by = \Auth::user()->id;
+        $this->confirmed_by_role = \Auth::user()->role;
+        $this->confirmed_at = \Carbon\Carbon::now();
+        $this->save();
+        
+        $notification = new ShopOrderConfirmed($this)
+        $this->notify($notification);
+    }
+    
+    private function notify(Notification $notification){
+        if(!$notification){
+            return;
+        }
+        foreach($this->notifiable() as $user){
+            if($user){
+                try{
+                    $notification->setUser($user);
+                    $user->notify($notification);
+                }catch(\Exception $e){}
+            }
         }
     }
     
+    private function notifiable(){
+        yield $this->author;
+        yield $this->afa;
+        yield $this->apl;
+        yield User::find(option('site.admin', 1));
+    }
 }
