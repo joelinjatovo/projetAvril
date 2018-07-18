@@ -278,15 +278,23 @@ return [
     'admin.order.pay.apl'    => 'Payer commission APL',
     'admin.order.pay.afa'    => 'Payer commission AFA',
     
+    'admin.invoice'            => 'Facture',
+    'admin.invoices'           => 'Factures',
+    'admin.invoices.member'    => 'Factures clients',
+    'admin.invoices.seller'    => 'Factures vendeurs',
+    'admin.invoices.afa'       => 'Factures des commissions payées par AFA',
+    'admin.invoices.apl'       => 'Factures des commissions MIO',
+    
     'admin.order'              => 'Ventes',
-    'admin.order.list'         => 'Toutes les Ventes',
-    'admin.order.pinged'       => 'Ventes En Attente',
-    'admin.order.ordered'      => 'Ventes En Cours',
-    'admin.order.paid'         => 'Ventes Effectué',
+    'admin.order.list'         => 'Toutes les ventes',
+    'admin.order.pinged'       => 'Ventes en attente',
+    'admin.order.ordered'      => 'Ventes en cours',
+    'admin.order.paid'         => 'Ventes effectuées',
     'admin.order.apl-not-paid' => 'Ventes: APL non payé',
     'admin.order.apl-paid'     => 'Ventes: APL payé',
     'admin.order.afa-not-paid' => 'Ventes: AFA non payé',
     'admin.order.afa-paid'     => 'Ventes: AFA payé',
+    'admin.order.cancelled'    => 'Ventes annulées',
     
     'blogs'                 => 'Blogs',
     'blog'                  => 'Blog',
@@ -534,6 +542,7 @@ return [
     'reply'  => "Repondre",
     
     
+    'btn.confirm'        => 'Confirmer',
     'btn.contact'        => 'Contacter',
     'btn.add'            => 'Ajouter',
     'btn.search'         => 'Rechercher',
@@ -549,6 +558,7 @@ return [
     'btn.remove'         => 'Effacer',
     'btn.delete'         => 'Supprimer',
     'btn.view'           => 'Voir',
+    'btn.view_invoice'   => 'Voir la facture',
     'btn.more'           => 'Plus',
     'btn.reset'          => 'Annuler',
     'btn.archive'        => 'Archiver',

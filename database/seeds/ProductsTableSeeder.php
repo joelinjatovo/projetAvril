@@ -27,6 +27,7 @@ class ProductsTableSeeder extends Seeder
             'location_id' => 1,
             'category_id' => 1,
             'image_id' => 1,
+            'seller_id' => 9,
             'author_id' => 1,
         ]);
         DB::table('products')->insert([
@@ -44,6 +45,7 @@ class ProductsTableSeeder extends Seeder
             'location_type_id' => 8,
             'category_id' => 1,
             'image_id' => 2,
+            'seller_id' => 9,
             'author_id' => 1,
         ]);
         DB::table('products')->insert([
@@ -62,6 +64,7 @@ class ProductsTableSeeder extends Seeder
             'location_id' => 3,
             'category_id' => 2,
             'image_id' => 3,
+            'seller_id' => 9,
             'author_id' => 1,
         ]);
         DB::table('products')->insert([
@@ -80,6 +83,7 @@ class ProductsTableSeeder extends Seeder
             'category_id' => 2,
             'location_id' => 4,
             'image_id' => 4,
+            'seller_id' => 9,
             'author_id' => 1,
         ]);
         DB::table('products')->insert([
@@ -98,6 +102,7 @@ class ProductsTableSeeder extends Seeder
             'category_id' => 3,
             'location_id' => 5,
             'image_id' => 5,
+            'seller_id' => 9,
             'author_id' => 1,
         ]);
         DB::table('products')->insert([
@@ -116,6 +121,7 @@ class ProductsTableSeeder extends Seeder
             'category_id' => 3,
             'location_id' => 6,
             'image_id' => 6,
+            'seller_id' => 9,
             'author_id' => 1,
         ]);
         DB::table('products')->insert([
@@ -134,6 +140,7 @@ class ProductsTableSeeder extends Seeder
             'category_id' => 4,
             'location_id' => 5,
             'image_id' => 7,
+            'seller_id' => 9,
             'author_id' => 1,
         ]);
         DB::table('products')->insert([
@@ -152,6 +159,7 @@ class ProductsTableSeeder extends Seeder
             'category_id' => 4,
             'location_id' => 4,
             'image_id' => 25,
+            'seller_id' => 9,
             'author_id' => 1,
         ]);
     }

@@ -8,8 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 use Illuminate\Notifications\Messages\MailMessage;
 
-use App\Models\Cart;
-use App\Models\CartItem;
+use App\Models\Order;
 use App\Models\User;
 
 class ShopTmaPaid extends Notification implements ShouldQueue

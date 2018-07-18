@@ -16,7 +16,7 @@ use App\Models\Page;
 use App\Models\Pub;
 use App\Models\User;
 
-class OrderController extends Controller
+class InvoiceController extends Controller
 {
     /**
      * Show the list of product.
@@ -25,18 +25,17 @@ class OrderController extends Controller
      * @param  String $category
      * @return \Illuminate\Http\Response
      */
-    public function all(Request $request, $filter = 'all')
+    public function all(Request $request, User $user)
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
         
-        $title = __('app.shop.list');
+        $title = __('app.invoice.list');
         
-        $items = new Order();
-        $items = $items->with('product')
-            ->with('apl')
-            ->with('afa')
-            ->with('author');
+        $items = $user->orders()->where(function($query){
+                    return $query->where('status', 'ordered')
+                        ->orWhere('status', 'paid');
+                });
         
         $record = $request->get('record');
         if(!$record) $record = $this->pageSize;
@@ -46,62 +45,8 @@ class OrderController extends Controller
         if($q){
             $items = $items->where(function($query) use($q){
                 return $query;
-                /*->join('products AS product', 'product.id', '=', 'product_id')
-                    ->join('users AS afa', 'afa.id', '=', 'afa_id')
-                    ->join('users AS apl', 'afa.id', '=', 'apl_id')
-                    ->join('users AS author', 'author.id', '=', 'author_id')
-                    ->where('products.title', 'LIKE', '%'.$q.'%')
-                    ->orWhere('products.content', 'LIKE', '%'.$q.'%')
-                    ->orWhere('author.name', 'LIKE', '%'.$q.'%')
-                    ->orWhere('apl.name', 'LIKE', '%'.$q.'%')
-                    ->orWhere('afa.name', 'LIKE', '%'.$q.'%');
-                    */
             });
         }
-        
-        switch($filter){
-            case 'pinged':
-            case 'paid':
-            case 'ordered':
-                $title = __('app.shop.list.status', ['status'=>__('app.'.$filter)]);
-                $items = $items->where('status', $filter);
-                break;
-            case 'apl-not-paid':
-                $items = $items->where('status', 'ordered')
-                    ->whereNull('apl_paid_at');
-                $title = __('admin.commissions.not-paid');
-                break;
-            case 'apl-paid':
-                $items = $items->where(function($query){
-                    return $query->where('status', 'ordered')
-                        ->orWhere('status', 'paid');
-                })->whereNotNull('apl_paid_at');
-                $title = __('admin.commissions.not-paid');
-                break;
-            case 'afa-not-received':
-                $items = $items->where('status', 'ordered')
-                    ->whereNull('afa_paid_at');
-                $title = __('admin.commissions.not-received');
-                break;
-            case 'afa-received':
-                $items = $items->where(function($query){
-                    return $query->where('status', 'ordered')
-                        ->orWhere('status', 'paid');
-                })->whereNotNull('afa_paid_at');
-                $title = __('admin.commissions.not-received');
-                break;
-            case 'cancelled':
-                $items = $items->where('status', 'ordered')
-                    ->whereNotNull('cancelled_at');
-                break;
-            case 'all':
-                $title = __('app.shop.list');
-                break;
-            default:
-                abort(404);
-        }
-        
-        
         $items = $items->paginate($record);
         
         return view('admin.order.all')
@@ -128,39 +73,39 @@ class OrderController extends Controller
                 if(!$order->afa||$order->afa->id!=\Auth::user()->id){
                     abort(404);
                 }else{
-                    $view = view('backend.order.index');
+                    $view = view('backend.invoice.index');
                 }
                 break;
             case 'apl':
                 if(!$order->apl||$order->apl->id!=\Auth::user()->id){
                     abort(404);
                 }else{
-                    $view = view('backend.order.index');
+                    $view = view('backend.invoice.index');
                 }
                 break;
             case 'member':
                 if(!$order->author||$order->author->id!=\Auth::user()->id){
                     abort(404);
                 }else{
-                    $view = view('backend.order.index');
+                    $view = view('backend.invoice.index');
                 }
                 break;
             case 'seller':
                 if(!$order->product||!$order->product->seller||$order->product->seller->id!=\Auth::user()->id){
                     abort(404);
                 }else{
-                    $view = view('backend.order.index');
+                    $view = view('backend.invoice.index');
                 }
                 break;
             case 'admin':
-                $view = view('admin.order.index');
+                $view = view('admin.invoice.index');
                 break;
             default:
                 abort(404);
                 break;
         }
         
-        $title = __('app.order.index');
+        $title = __('app.invoice.index');
         
         return $view->with('title', $title)
             ->with('item', $order)

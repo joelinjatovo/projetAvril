@@ -180,6 +180,31 @@ class User extends Authenticatable
     }
     
     /**
+     * Get reference name of this user
+     *
+     * @return String
+     */
+    public function name()
+    {
+        switch($this->role){
+            case 'admin':
+                return 'ADM-'.$this->id;
+            case 'member':
+                if($this->isPerson()) return 'MP-'.$this->id;
+                return 'MO-'.$this->id;
+            case 'seller':
+                if($this->type=='builder')    return 'SBU-'.$this->id;
+                if($this->type=='developper') return 'SDE-'.$this->id;
+                return 'SEL-'.$this->id;
+            case 'afa':
+                if($this->type=='seller') return 'AFS'.$this->id;
+                return 'AFA-'.$this->id;
+            case 'apl':
+                return 'APL-'.$this->id;
+        }
+    }
+    
+    /**
      * Is user active
      *
      * @return Boolean
@@ -411,6 +436,7 @@ class User extends Authenticatable
         if($this->hasRole('member')) return $this->hasMany(Order::class, 'author_id', 'id');
         if($this->hasRole('apl'))    return $this->hasMany(Order::class, 'apl_id', 'id');
         if($this->hasRole('afa'))    return $this->hasMany(Order::class, 'afa_id', 'id');
+        if($this->hasRole('seller')) return $this->hasMany(Order::class, 'seller_id', 'id');
         return null;
     }
     

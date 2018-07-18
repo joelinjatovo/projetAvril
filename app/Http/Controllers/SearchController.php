@@ -206,6 +206,13 @@ class SearchController extends Controller
             });
         }
         
+        if($filter=='saved'){
+            $items = $items->whereNotNull('saved_at');
+        }
+        if($filter=='unsaved'){
+            $items = $items->whereNull('saved_at');
+        }
+        
         $items = $items->paginate($record);
         
         return view('admin.search.all', compact('items', 'filter', 'page'))

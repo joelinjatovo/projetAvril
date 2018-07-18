@@ -8,11 +8,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 use Illuminate\Notifications\Messages\MailMessage;
 
-use App\Models\Cart;
-use App\Models\CartItem;
+use App\Models\Order;
 use App\Models\User;
 
-class ShopOrderPaid extends Notification implements ShouldQueue
+class ShopOrderConfirmed extends Notification implements ShouldQueue
 {
     use Queueable;
     
@@ -84,14 +83,14 @@ class ShopOrderPaid extends Notification implements ShouldQueue
                     ->subject('Order paid that you are the selected APL')
                     ->greeting(sprintf('Hello %s', $user->name))
                     ->line('Someone ordered product that you are the selected APL.')
-                    ->action('View More', route('apl.cartitem.show', $cartItem))
+                    ->action('View More', route('apl.order.show', $order))
                     ->line('Thank you for using our application!');
             case 'afa':
                 return (new MailMessage)
                     ->subject('Order paid that you are the selected AFA')
                     ->greeting(sprintf('Hello %s', $user->name))
                     ->line('Someone ordered product that you are the selected AFA.')
-                    ->action('View More', route('afa.cartitem.show', $cartItem))
+                    ->action('View More', route('afa.order.show', $order))
                     ->line('Thank you for using our application!');
             case 'member':
                 if($cartitem){
@@ -100,8 +99,8 @@ class ShopOrderPaid extends Notification implements ShouldQueue
                         ->greeting(sprintf('Hello %s', $user->name))
                         ->line('Someone ordered product for an account with this email address.')
 
-                        ->line(sprintf('APL %s', $cartitem->apl_paid_at))
-                        ->line(sprintf('AFA %s', $cartitem->afa_paid_at))
+                        ->line(sprintf('APL %s', $order->apl_paid_at))
+                        ->line(sprintf('AFA %s', $order->afa_paid_at))
                         ->action('View More', route('member.cart', $cart))
 
                         ->line('Thank you for using our application!');
@@ -111,9 +110,9 @@ class ShopOrderPaid extends Notification implements ShouldQueue
                         ->greeting(sprintf('Hello %s', $user->name))
                         ->line('Someone ordered product for an account with this email address.')
 
-                        ->line(sprintf('Quantity %s', $cart->totalQuantity))
-                        ->line(sprintf('Amount %s', $cart->totalPrice))
-                        ->line(sprintf('TMA %s', $cart->totalTma))
+                        ->line(sprintf('Quantity %s', $order->totalQuantity))
+                        ->line(sprintf('Amount %s', $order->totalPrice))
+                        ->line(sprintf('TMA %s', $order->totalTma))
                         ->action('View More', route('member.cart', $cart))
 
                         ->line('Thank you for using our application!');
@@ -125,16 +124,16 @@ class ShopOrderPaid extends Notification implements ShouldQueue
                         ->greeting(sprintf('Hello %s', $user->name))
                         ->line('A customer ordered product')
 
-                        ->line(sprintf('Customer %s', $cartItem->author->name))
-                        ->action('View Customer', route('admin.user.show', $cartItem->author))
+                        ->line(sprintf('Customer %s', $order->author->name))
+                        ->action('View Customer', route('admin.user.show', $order->author))
 
-                        ->line(sprintf('APL %s', $cartItem->apl->name))
-                        ->action('View APL', route('admin.user.show', $cartItem->apl))
+                        ->line(sprintf('APL %s', $order->apl->name))
+                        ->action('View APL', route('admin.user.show', $order->apl))
 
-                        ->line(sprintf('AFA %s', $cartItem->afa->name))
-                        ->action('View AFA', route('admin.user.show', $cartItem->afa))
+                        ->line(sprintf('AFA %s', $order->afa->name))
+                        ->action('View AFA', route('admin.user.show', $order->afa))
 
-                        ->action('View More', route('admin.cartitem.show', $cartItem))
+                        ->action('View More', route('admin.order.show', $order))
                         ->line('Thank you for using our application!');
                 }else{
                     return (new MailMessage)

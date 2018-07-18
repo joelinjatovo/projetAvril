@@ -47,6 +47,7 @@ class CreateOrdersTable extends Migration
             $table->string('confirmed_by_role', 150)->nullable();
             
             $table->bigInteger('product_id')->default(0)->index();
+            $table->bigInteger('seller_id')->default(0)->index();
             $table->bigInteger('author_id')->default(0)->index();
             
             $table->timestamps();

@@ -180,19 +180,20 @@
               </li>
               <li class="accordion-group">
                   <div class="accordion-heading">
-                      <a href="#accShop" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Request::is('admin/sale*')?'collapsed':''}}">
+                      <a href="#accShop" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Request::is('admin/order*')?'collapsed':''}}">
                         <i class="fa fa-shopping-cart"></i>
                         <i class="chevron fontello-icon-right-open-3"></i> @lang('app.admin.order')</a>
                   </div>
-                  <ul class="accordion-content nav nav-list collapse {{\Request::is('admin/sale*')?'in':''}}" id="accShop">
+                  <ul class="accordion-content nav nav-list collapse {{\Request::is('admin/order*')?'in':''}}" id="accShop">
                       <li><a href="{{route('admin.order.list')}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.order.list')</a></li>
                       <li><a href="{{route('admin.order.list', ['filter'=>'pinged'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.order.pinged')</a></li>
                       <li><a href="{{route('admin.order.list', ['filter'=>'ordered'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.order.ordered')</a></li>
-                      <li><a href="{{route('admin.order.list', ['filter'=>'apl-not-paid'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.order.apl-not-paid')</a></li>
-                      <li><a href="{{route('admin.order.list', ['filter'=>'apl-paid'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.order.apl-paid')</a></li>
-                      <li><a href="{{route('admin.order.list', ['filter'=>'afa-not-paid'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.order.afa-not-paid')</a></li>
-                      <li><a href="{{route('admin.order.list', ['filter'=>'afa-paid'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.order.afa-paid')</a></li>
+                      <li><a href="{{route('admin.order.list', ['filter'=>'afa-not-received'])}}"><i class="fontello-icon-right-dir"></i>@lang('admin.commissions.not-received')</a></li>
+                      <li><a href="{{route('admin.order.list', ['filter'=>'afa-received'])}}"><i class="fontello-icon-right-dir"></i>@lang('admin.commissions.received')</a></li>
+                      <li><a href="{{route('admin.order.list', ['filter'=>'apl-not-paid'])}}"><i class="fontello-icon-right-dir"></i>@lang('admin.commissions.not-paid')</a></li>
+                      <li><a href="{{route('admin.order.list', ['filter'=>'apl-paid'])}}"><i class="fontello-icon-right-dir"></i>@lang('admin.commissions.paid')</a></li>
                       <li><a href="{{route('admin.order.list', ['filter'=>'paid'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.order.paid')</a></li>
+                      <li><a href="{{route('admin.order.list', ['filter'=>'cancelled'])}}"><i class="fontello-icon-right-dir"></i>@lang('app.admin.order.cancelled')</a></li>
                   </ul>
               </li>
               <li class="accordion-group">

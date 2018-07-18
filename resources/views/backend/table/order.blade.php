@@ -3,15 +3,19 @@
         <tr>
             <th colspan="2">Produits</th>
             <th>Prix</th>
-            <th>Montant de reservation</th>
+            <th>Reservation</th>
             
             @if(\Auth::check()&&\Auth::user()->hasRole('apl'))
             <th colspan="2">Clients</th>
-            <th>Commission sur presentation client</th>
+            <th>Commission MIO</th>
             @endif
             
             @if(\Auth::check()&&\Auth::user()->hasRole('afa'))
-            <th>Commission sur vente a payer</th>
+            <th>Commission PC</th>
+            @endif
+            
+            @if(\Auth::check()&&\Auth::user()->hasRole('seller'))
+            <th>Commission sur vente</th>
             @endif
             
             @if($orders[0]->status == 'pinged')
@@ -32,7 +36,7 @@
             </td>
             
             <td class="product-price"><span>{{$order->currency}}</span> {{$order->price}}</td>
-            <td class="product-price"><span>{{$order->currency}}</span> {{$order->tma}}</td>
+            <td class="product-price"><span>{{$order->currency}}</span> {{$order->reservation}}</td>
             
             @if(\Auth::check()&&\Auth::user()->hasRole('apl'))
                 <td class="product-thumbnail" width="100">
@@ -51,7 +55,12 @@
             @endif
             
             @if(\Auth::check()&&\Auth::user()->hasRole('afa'))
-                <td><span>{{$order->currency}}</span> {{$order->afa_amount}}</td>
+                <td>
+                    <span>{{$order->currency}}</span> {{$order->afa_amount}}
+                    @if(!$order->isTmaPaid())
+                        <div class="badge badge-danger">Commission sur vente pas encore payée par le vendeur</div>
+                    @endif
+                </td>
             @endif
             
             @if(\Auth::check()&&\Auth::user()->hasRole('seller'))
@@ -59,19 +68,52 @@
             @endif
             
             <td class="product-action">
-                @if($order->status == 'pinged')
-                <form action="{{route('shop.cart')}}" method="post" class="pull-right">
-                    {{csrf_field()}}
-                    <input type="hidden" name="order" value="{{$order->id}}">
-                    <input type="hidden" name="action" value="item">
-                    <button type="submit" class="btn btn-default pull-left">x</button>
-                </form>
-                <form action="{{route('shop.checkout')}}" method="post" class="pull-right">
-                    {{csrf_field()}}
-                    <input type="hidden" name="order" value="{{$order->id}}">
-                    <input type="hidden" name="action" value="update_session">
-                    <input type="submit" class="btn btn-success pull-left" value="@lang('member.pay_order')">
-                </form>
+                @if(\Auth::check()&&\Auth::user()->hasRole('member'))
+                    @if($order->status == 'pinged')
+                    <form action="{{route('shop.cart')}}" method="post" class="pull-right">
+                        {{csrf_field()}}
+                        <input type="hidden" name="order" value="{{$order->id}}">
+                        <input type="hidden" name="action" value="item">
+                        <button type="submit" class="btn btn-default pull-left">x</button>
+                    </form>
+                    <form action="{{route('shop.checkout')}}" method="post" class="pull-right">
+                        {{csrf_field()}}
+                        <input type="hidden" name="order" value="{{$order->id}}">
+                        <input type="hidden" name="action" value="update_session">
+                        <input type="submit" class="btn btn-success pull-left" value="@lang('member.pay_order')">
+                    </form>
+                    @endif
+                @endif
+                
+                @if(\Auth::check()&&\Auth::user()->hasRole('seller'))
+                    @if(!$order->isConfirmed())
+                    <form action="{{route('seller.order.show', $order)}}" method="post" class="pull-right">
+                        {{csrf_field()}}
+                        <input type="hidden" name="action" value="cancel">
+                        <button type="submit" class="btn btn-default pull-left">x</button>
+                    </form>
+                    <form action="{{route('seller.order.show', $order)}}" method="post" class="pull-right">
+                        {{csrf_field()}}
+                        <input type="hidden" name="action" value="confirm">
+                        <button type="submit" class="btn btn-success pull-left">@lang('app.btn.confirm')</button>
+                    </form>
+                    @elseif(!$order->isTmaPaid())
+                    <form action="{{route('seller.order.show', $order)}}" method="post" class="pull-right">
+                        {{csrf_field()}}
+                        <input type="hidden" name="action" value="pay-tma">
+                        <button type="submit" class="btn btn-success pull-left">@lang('seller.btn.pay-tma')</button>
+                    </form>
+                    @endif
+                @endif
+                
+                @if(\Auth::check()&&\Auth::user()->hasRole('afa'))
+                    @if(!$order->isAfaPaid())
+                    <form action="{{route('afa.order.show', $order)}}" method="post" class="pull-right">
+                        {{csrf_field()}}
+                        <input type="hidden" name="action" value="pay-cpc">
+                        <button type="submit" class="btn btn-success pull-left">@lang('afa.btn.pay-cpc')</button>
+                    </form>
+                    @endif
                 @endif
             </td>
         </tr>

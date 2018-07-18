@@ -79,13 +79,13 @@ class AplController extends Controller
             });
         
         switch($filter){
-            case 'paid':
+            case 'received':
                 $items = $items->whereNotNull('apl_paid_at');
-                $title = __('app.commissions.paid');
+                $title = __('apl.commissions.received');
                 break;
-            case 'not-paid':
+            case 'not-received':
                 $items = $items->whereNull('apl_paid_at');
-                $title = __('app.commissions.not_paid');
+                $title = __('apl.commissions.not-received');
                 break;
             default:
                 abort(404);

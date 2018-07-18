@@ -10,8 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use Intervention\Image\ImageManagerStatic as InterventionImage;
-use Illuminate\Support\Facades\Storage;
 
 Route::get('mail/basic','MailController@basic_email');
 Route::get('mail/html','MailController@html_email');
@@ -142,6 +140,7 @@ Route::middleware(["auth", "role:member"])->group(function(){
         Route::get('orders', 'MemberController@orders')->name('member.orders');
         Route::get('purchases', 'MemberController@purchases')->name('member.purchases');
         Route::get('sale/{sale}', 'SaleController@show')->name('member.cart');
+        Route::get('order/{order}', 'OrderController@show')->name('member.order.show');
         
         Route::get('contact/{user}' , 'BackendController@contact')->name('member.user.contact');
         Route::post('contact/{user}', 'BackendController@postContact');
@@ -166,6 +165,7 @@ Route::prefix('afa')->middleware(["auth","role:afa"])->group(function(){
     Route::get('sales', 'AfaController@sales')->name('afa.sales');
     Route::get('commissions/{filter?}', 'AfaController@commissions')->name('afa.commissions');
     Route::get('order/{order}', 'OrderController@show')->name('afa.order.show');
+    Route::post('order/{order}', 'AfaController@postAction');
         
     Route::get('contact/{user}' , 'BackendController@contact')->name('afa.user.contact');
     Route::post('contact/{user}', 'BackendController@postContact');
@@ -214,7 +214,10 @@ Route::prefix('seller')->middleware(["auth","role:seller"])->group(function(){
     Route::get('products', 'SellerController@products')->name('seller.products');
     Route::get('sales', 'SellerController@sales')->name('seller.sales');
     Route::get('orders', 'SellerController@orders')->name('seller.orders');
+    Route::get('confirms', 'SellerController@toConfirm')->name('seller.orders.to-confirm');
+    Route::get('commissions/{filter?}', 'SellerController@commissions')->name('seller.commissions');
     Route::get('order/{order}', 'OrderController@show')->name('seller.order.show');
+    Route::post('order/{order}', 'SellerController@postAction');
         
     Route::get('contact/{user}' , 'BackendController@contact')->name('seller.user.contact');
     Route::post('contact/{user}', 'BackendController@postContact');
@@ -268,9 +271,14 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
     Route::get('orders/{filter?}', 'OrderController@all')->name('admin.order.list');
     Route::prefix('order')->group(function(){
         Route::get('{order}', 'OrderController@show')->name('admin.order.show');
-        Route::get('pay/{order}/{role}', 'OrderController@pay')->name('admin.order.pay');
-        Route::post('pay/{order}/{role}', 'OrderController@postPay');
-        Route::get('delete/{order}', 'OrderController@delete')->name('admin.order.delete');
+        Route::post('{order}', 'OrderController@postAction');
+    });
+    
+    // Invoice Controller
+    Route::get('invoices/user/{user}', 'InvoiceController@all')->name('admin.invoice.list');
+    Route::prefix('invoice')->group(function(){
+        Route::get('{order}', 'InvoiceController@show')->name('admin.invoice.show');
+        Route::post('{order}', 'InvoiceController@postAction');
     });
     
     Route::get('/', 'AdminController@dashboard')->name('admin.dashboard');

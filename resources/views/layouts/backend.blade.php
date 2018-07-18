@@ -51,26 +51,36 @@
                     @endif
                     
                     @if(\Auth::check()&&\Auth::user()->hasRole('apl'))
+                        <li><a href="{{route('apl.commissions', ['filter'=>'not-received'])}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('apl.commissions.not-received')</a></li>
+                        <li><a href="{{route('apl.commissions', ['filter'=>'received'])}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('apl.commissions.received')</a></li>
+                    
                         <li><a href="{{route('apl.orders')}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('apl.orders')</a></li>
                         <li><a href="{{route('apl.sales')}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('apl.sales')</a></li>
                         <li><a href="{{route('apl.customers')}}"><i class="fa fa-users" aria-hidden="true"></i> @lang('apl.customers')</a></li>
-                    
-                        <li><a href="{{route('apl.commissions', ['filter'=>'not-paid'])}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('app.commissions.not_paid')</a></li>
-                        <li><a href="{{route('apl.commissions', ['filter'=>'paid'])}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('app.commissions.paid')</a></li>
                     @endif
                     
                     @if(\Auth::check()&&\Auth::user()->hasRole('afa'))
+                    
+                        <li><a href="{{route('afa.commissions', ['filter'=>'not-received'])}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('afa.commissions.not-received')</a></li>
+                        <li><a href="{{route('afa.commissions', ['filter'=>'received'])}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('afa.commissions.received')</a></li>
+                    
+                        <li><a href="{{route('afa.commissions', ['filter'=>'not-paid'])}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('afa.commissions.not-paid')</a></li>
+                        <li><a href="{{route('afa.commissions', ['filter'=>'paid'])}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('afa.commissions.paid')</a></li>
+                    
                         <li><a href="{{route('afa.orders')}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('afa.orders')</a></li>
                         <li><a href="{{route('afa.sales')}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('afa.sales')</a></li>
-                    
-                        <li><a href="{{route('afa.commissions', ['filter'=>'paid'])}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('app.commissions.paid')</a></li>
-                        <li><a href="{{route('afa.commissions', ['filter'=>'not-paid'])}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('app.commissions.not_paid')</a></li>
                     @endif
                     
                     @if(\Auth::check()&&\Auth::user()->hasRole('seller'))
                         <li><a href="{{route('seller.products')}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('seller.products')</a></li>
+                    
+                        <li><a href="{{route('seller.orders.to-confirm')}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('seller.orders.to-confirm')</a></li>
+                        <li><a href="{{route('seller.commissions', ['filter'=>'not-paid'])}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('seller.commissions.not-paid')</a></li>
+                        <li><a href="{{route('seller.commissions', ['filter'=>'paid'])}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('seller.commissions.paid')</a></li>
+                    
                         <li><a href="{{route('seller.orders')}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('seller.orders')</a></li>
                         <li><a href="{{route('seller.sales')}}"><i class="fa fa-paperclip" aria-hidden="true"></i> @lang('seller.sales')</a></li>
+                    
                     @endif
                     
                     @if(\Auth::check()&&!\Auth::user()->isAdmin())

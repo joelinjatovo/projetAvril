@@ -33,7 +33,7 @@ class Order extends BaseModel
      *
      * @var array
      */
-    protected $dates =  ['afa_selected_at','apl_paid_at', 'afa_paid_at', 'cancelled_at'];
+    protected $dates =  ['reserved_at', 'afa_selected_at', 'tma_paid_at','apl_paid_at', 'afa_paid_at', 'cancelled_at'];
     
     
     /**
@@ -78,11 +78,43 @@ class Order extends BaseModel
         return $this->belongsTo(User::class, 'author_id', 'id');
     }
     
-	/*
+    /**
+     * 
+     */
+    public function isConfirmed()
+    {
+        return !empty($this->confirmed_at);
+    }
+    
+    /**
+     * 
+     */
+    public function isAfaPaid()
+    {
+        return !empty($this->afa_paid_at);
+    }
+    
+    /**
+     * 
+     */
+    public function isTmaPaid()
+    {
+        return !empty($this->tma_paid_at);
+    }
+    
+    /**
+     * 
+     */
+    public function isAplPaid()
+    {
+        return !empty($this->apl_paid_at);
+    }
+
+	/**
 	* Ajouter le produit dans le panier
+    * Exemple: si le prix de vente est de A$450,000, que la commission sur vente accordée à l'agence immobilière par le vendeur est de 5% sur le prix de vente, que la Commission de Présentation de Clientèle reversée à IEA par l'AFA est de 40% de la commission sur vente, et que le montant de la {Réservation} a été de A$3,000, le montant de la CPC pour cette vente sera de :   (A$450,000 X 5% x 40%) - (A$3,000) = A$6,000.
 	*/
 	public static function add($product, $apl, $reservation){
-        
         $tma = max(option('payment.commission_sur_vente', 0), $product->tma);
         $mio = $apl->isMaj()?option('payment.taux_mio_maj', 0):option('payment.taux_mio_nor', 0);
         $cpc = option('payment.commission_presentation_client', 0);
@@ -91,10 +123,10 @@ class Order extends BaseModel
         $line->apl_id      = $apl->id;
         $line->product_id  = $product->id;
 		$line->price       = $product->price;
-		$line->reservation = $product->price*($reservation/100);
-		$line->tma         = $product->price*($tma/100);
-		$line->apl_amount  = $line->tma*($mio/100);
-		$line->afa_amount  = $line->tma*($cpc/100) - $line->reservation;
+		$line->reservation = $product->price*($reservation/100); // raisin admin / aloan client
+		$line->tma         = $product->price*($tma/100); // raisin afa / aloan seller
+		$line->apl_amount  = $line->tma*($mio/100); // raisin apl  / aloan admin
+		$line->afa_amount  = $line->tma*($cpc/100) - $line->reservation; // raisin admin / aloan afa
 		$line->currency    = $product->currency;
         $line->save();
         return $line;
@@ -117,7 +149,7 @@ class Order extends BaseModel
             $this->product->save();
         }
         
-        $notification = new ShopNewOrder($this)
+        $notification = new ShopNewOrder($this);
         $this->notify($notification);
     }
     
@@ -131,12 +163,12 @@ class Order extends BaseModel
         $this->afa_selected_at = \Carbon\Carbon::now();
         $this->save();
         
-        $notification = new ShopAfaSelected($this)
+        $notification = new ShopAfaSelected($this);
         $this->notify($notification);
     }
     
     /**
-     * Payer Commission sur ventes
+     * Paiement commission sur vente pour AFA par le seller
      *
      */
     public function setTmaPaid()
@@ -144,12 +176,12 @@ class Order extends BaseModel
         $this->tma_paid_at = \Carbon\Carbon::now();
         $this->save();
         
-        $notification = new ShopTmaPaid($this)
+        $notification = new ShopTmaPaid($this);
         $this->notify($notification);
     }
     
     /**
-     * Payer AFA
+     * Paiement Commission sur presentation de clientelle pour ADMIN par AFA
      *
      */
     public function setAfaPaid()
@@ -157,12 +189,12 @@ class Order extends BaseModel
         $this->afa_paid_at = \Carbon\Carbon::now();
         $this->save();
         
-        $notification = new ShopAfaPaid($this)
+        $notification = new ShopAfaPaid($this);
         $this->notify($notification);
     }
     
     /**
-     * Payer APL
+     * Paiement Commission MIO pour APL par ADMIN
      *
      */
     public function setAplPaid()
@@ -170,7 +202,7 @@ class Order extends BaseModel
         $this->apl_paid_at = \Carbon\Carbon::now();
         $this->save();
         
-        $notification = new ShopAplPaid($this)
+        $notification = new ShopAplPaid($this);
         $this->notify($notification);
     }
     
@@ -186,7 +218,7 @@ class Order extends BaseModel
         $this->cancelled_at = \Carbon\Carbon::now();
         $this->save();
         
-        $notification = new ShopOrderCancelled($this)
+        $notification = new ShopOrderCancelled($this);
         $this->notify($notification);
     }
     
@@ -201,7 +233,7 @@ class Order extends BaseModel
         $this->confirmed_at = \Carbon\Carbon::now();
         $this->save();
         
-        $notification = new ShopOrderConfirmed($this)
+        $notification = new ShopOrderConfirmed($this);
         $this->notify($notification);
     }
     

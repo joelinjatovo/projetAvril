@@ -6,89 +6,88 @@
     <div id="page-content" class="page-content tab-content overflow-y">
         <div class="tab-pane padding-bottom30 active fade in">
             @include('includes.alerts')
-            <div>
-                @if($item->status=='ordered')
-                    @if(!$item->apl_paid_at)
-                    <a href="{{route('admin.shop.pay', ['sale'=>$item, 'role'=>'apl'])}}" class="btn btn-small btn-info btn-delete">@lang('app.admin.shop.pay.apl')</a>
-                    @endif
-
-                    @if(!$item->afa_paid_at)
-                    <a href="{{route('admin.shop.pay', ['sale'=>$item, 'role'=>'afa'])}}" class="btn btn-small btn-info btn-delete">@lang('app.admin.shop.pay.afa')</a>
-                    @endif
-                @endif
-            </div>
+            @if($product = $item->product)
             <div class="page-header">
-                <h3>{{$title}}</h3>
+                <h3>{{$product->title}}</h3>
             </div>
             <div class="row-fluid">
                 <div class="grider">
                     <div class="widget widget-simple">
                         <div class="widget-content">
                             <div class="widget-body">
-                                @if($item->product)
                                 <div class="col-md-3">
                                     <img src="{{$item->product->imageUrl(true)}}" style="width:100%;">
                                 </div>
-                                @endif
                                 <div class="col-md-9">
-                                    
-                                    <span class="pull-right label label-default">{{$item->created_at->diffForHumans()}}</span>
-                                    <h4>@lang('app.status') : <a href="{{route('admin.shop', ['filter'=>$item->status])}}">@lang('app.'.$item->status)</a></h4> 
-                                    <hr> 
-                                    
-                                    
-                                    @if($item->author)
-                                        <h4>@lang('app.customer') : <a href="{{route('admin.user.show', $item->author)}}">{{$item->author->name}}</a></h4> 
-                                    <hr>
-                                    @endif
-                                    
-                                    @if($item->apl)
-                                        <h4>@lang('app.apl') : <a href="{{route('admin.user.show', $item->apl)}}">{{$item->apl->name}}</a></h4>
-                                        @if($item->status=='ordered')
-                                            @if($item->apl_paid_at)
-                                                <span class="label label-info">@lang('app.paid')</span>
-                                                <span class="pull-right label label-default">{{$item->apl_paid_at->diffForHumans()}}</span>
-                                            @else
-                                                <span class="label label-warning">@lang('app.not_paid')</span>
-                                            @endif
-                                        @endif
-                                    <hr>
-                                    @endif
-                                    
-                                    @if($item->afa)
-                                        <h4>@lang('app.afa') : <a href="{{route('admin.user.show', $item->afa)}}">{{$item->afa->name}}</a></h4> 
-                                        @if($item->status=='ordered')
-                                            @if($item->afa_paid_at)
-                                                <span class="label label-info">@lang('app.paid')</span>
-                                                <span class="pull-right label label-default">{{$item->afa_paid_at->diffForHumans()}}</span>
-                                            @else
-                                                <span class="label label-warning">@lang('app.not_paid')</span>
-                                            @endif
-                                        @endif
-                                    <hr>
-                                    @endif
-                                    
-                                    @if($item->product&&$item->product->seller)
-                                        <h4>@lang('app.seller') : <a href="{{route('admin.user.show', $item->product->seller)}}">{{$item->product->seller->name}}</a></h4> 
-                                    @endif
+                                    <p><strong>Prix du produit: </strong>{{$product->price}}</p>
+                                    <p><strong>Status de la commande: </strong>{{$item->status=='ordered'?'En cours':$item->status=='paid'?'Payé':'-'}}</p>
+                                    <table class="table table-stripped">
+                                        <tbody>
+                                            <tr>
+                                                <th>Client</th>
+                                                <td>
+                                                    @if($item->author)
+                                                    <a href="{{route('admin.user.show', $item->author)}}">
+                                                    {{$item->author->name}}
+                                                    </a>
+                                                    @endif
+                                                </td>
+                                                <th>Reservation</th>
+                                                <td>{{$item->reservation}}</td>
+                                                <th>Date</th>
+                                                <td>{{$item->reserved_at}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Vendeur</th>
+                                                <td>
+                                                    @if($product->seller)
+                                                    <a href="{{route('admin.user.show', $product->seller)}}">
+                                                    {{$product->seller->name}}
+                                                    </a>
+                                                    @endif
+                                                </td>
+                                                <th>Montant CSV</th>
+                                                <td>{{$item->tma}}</td>
+                                                <th>Date</th>
+                                                <td>{{$item->tma_paid_at}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>AFA</th>
+                                                <td>
+                                                    @if($item->afa)
+                                                    <a href="{{route('admin.user.show', $item->afa)}}">
+                                                    {{$item->afa->name}}
+                                                    </a>
+                                                    @endif
+                                                </td>
+                                                <th>Montant CPC</th>
+                                                <td>{{$item->afa_amount}}</td>
+                                                <th>Date</th>
+                                                <td>{{$item->afa_paid_at}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>APL</th>
+                                                <td>
+                                                    @if($item->apl)
+                                                    <a href="{{route('admin.user.show', $item->apl)}}">
+                                                    {{$item->apl->name}}
+                                                    </a>
+                                                    @endif
+                                                </td>
+                                                <th>Montant Com MIO</th>
+                                                <td>{{$item->apl_amount}}</td>
+                                                <th>Date</th>
+                                                <td>{{$item->apl_paid_at}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    @if($item->product)
-                    <div class="widget widget-simple">
-                        <div class="widget-content">
-                            <div class="widget-body">
-                                <fieldset>
-                                    <h4>@lang('app.description')</h4>
-                                    <p>{!!$item->product->content!!}</p>
-                                </fieldset>
-                            </div>
-                        </div>
-                    </div>
-                    @endif
                 </div>
             </div>
+            @endif
         </div>
     </div>
 </div>
