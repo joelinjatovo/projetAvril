@@ -83,36 +83,35 @@ class ShopAfaSelected extends Notification implements ShouldQueue
         switch($user->role){
             case 'apl':
                 $message = $message->subject('APL: Afa Selected')
-                    ->line('Someone ordered product that you are the selected APL.')
-                    ->action('View More', route('apl.order.show', $order));
+                    ->line("Un client vient de selectionner l'agence francophone australienne qui va s'ocupper de sa commande.")
+                    ->action('Voir la commande', route('apl.order.show', $order));
             break;
                 
             case 'afa':
                 $message = $message->subject('AFA: Afa Selected')
-                    ->line('Someone ordered product that you are the selected AFA.')
-                    ->action('View More', route('afa.order.show', $order));
+                    ->line("Un client vient de vous choisir d'etre son agence francophone australienne qui va s'ocupper de sa commande.")
+                    ->action('Voir la commande', route('afa.order.show', $order));
             break;
                 
             case 'member':
                 $message = $message->subject('Member: Afa Selected')
-                    ->line('Someone ordered product for an account with this email address.')
-
+                    ->line("Quelqu'un vient de selectionner une agence francophone australienne qui va s'ocupper d'une commande.")
                     ->line(sprintf('Price %s', $order->price))
                     ->line(sprintf('Reservation %s', $order->reservation))
-                    ->action('View More', route('afa.order.show', $order));
+                    ->action('Voir la commande', route('member.order.show', $order));
             break;
                 
             case 'admin':
                 $message = $message->subject('Admin: Afa Selected')
-                    ->line('A customer ordered product')
+                    ->line("Un client vient de selectionner l'agence francophone australienne qui va s'ocupper de sa commande.")
 
-                    ->line(sprintf('Customer %s', $cart->author->name))
-                    ->action('View Customer', route('admin.user.show', $cart->author))
+                    ->line(sprintf('Customer %s', $order->author->name))
+                    ->action('Voir le client', route('admin.user.show', $cart->author))
 
-                    ->line(sprintf('Quantity %s', $cart->totalQuantity))
-                    ->line(sprintf('Amount %s', $cart->totalPrice))
-                    ->line(sprintf('TMA %s', $cart->totalTma))
-                    ->action('View More', route('admin.order.show', $order));
+                    ->line(sprintf('AFA selected %s', $order->author->name))
+                    ->action("Voir l'agence francophone australienne", route('admin.user.show', $order->author))
+
+                    ->action('Voir la commande', route('admin.order.show', $order));
             break;
         }
         
@@ -127,16 +126,24 @@ class ShopAfaSelected extends Notification implements ShouldQueue
      */
     public function toArray($notifiable)
     {
+        /** @var User $user */
+        $user = $this->user;
+        
+        /** @var mixed $order */
+        $order = $this->order;
+        
         switch($user->role){
+            case 'admin':
+            case 'seller':
             case 'apl':
                 return [
                     'id' => $this->id,
                     'read_at' => null,
                     'data' => [
-                        'cartitem_id' => $this->cartitem->id,
-                        'author_id' => $this->cartitem->author->id,
-                        'author_name' => $this->cartitem->author->name,
-                        'message' => 'Commission MIO payée',
+                        'order_id' => $order->id,
+                        'author_id' => $order->author->id,
+                        'author_name' => $order->author->name(),
+                        'message' => "Un client vient de selectionner l'agence francophone australienne qui va s'ocupper de sa commande.",
                     ],
                 ];
             case 'afa':
@@ -144,32 +151,10 @@ class ShopAfaSelected extends Notification implements ShouldQueue
                     'id' => $this->id,
                     'read_at' => null,
                     'data' => [
-                        'cartitem_id' => $this->cartitem->id,
-                        'author_id' => $this->cartitem->author->id,
-                        'author_name' => $this->cartitem->author->name,
-                        'message' => 'Commission MIO payée',
-                    ],
-                ];
-            case 'seller':
-                return [
-                    'id' => $this->id,
-                    'read_at' => null,
-                    'data' => [
-                        'cartitem_id' => $this->cartitem->id,
-                        'author_id' => $this->cartitem->author->id,
-                        'author_name' => $this->cartitem->author->name,
-                        'message' => 'Commissions MIO payées',
-                    ],
-                ];
-            case 'admin':
-                return [
-                    'id' => $this->id,
-                    'read_at' => null,
-                    'data' => [
-                        'cart_id' => $this->cart->id,
-                        'author_id' => $this->cart->author->id,
-                        'author_name' => $this->cart->author->name,
-                        'message' => 'Commissions MIO payées',
+                        'order_id' => $order->id,
+                        'author_id' => $order->author->id,
+                        'author_name' => $order->author->name(),
+                        'message' => "Un client vient de vous choisir d'etre son agence francophone australienne qui va s'ocupper de sa commande.",
                     ],
                 ];
             case 'member':
@@ -177,10 +162,10 @@ class ShopAfaSelected extends Notification implements ShouldQueue
                     'id' => $this->id,
                     'read_at' => null,
                     'data' => [
-                        'cart_id' => $this->cart->id,
-                        'author_id' => $this->cart->author->id,
-                        'author_name' => $this->cart->author->name,
-                        'message' => 'Commissions MIO payées',
+                        'order_id' => $order->id,
+                        'author_id' => $order->author->id,
+                        'author_name' => $order->author->name(),
+                        'message' => "Vous venez de selectionner une agence francophone australienne qui va s'ocupper d'une commande.",
                     ],
                 ];
         }
@@ -189,7 +174,7 @@ class ShopAfaSelected extends Notification implements ShouldQueue
             'id' => 0,
             'read_at' => null,
             'data' => [
-                'cart_id' => 0,
+                'order_id' => 0,
                 'author_id' => 0,
                 'author_name' => null,
                 'message' => 'Commande',

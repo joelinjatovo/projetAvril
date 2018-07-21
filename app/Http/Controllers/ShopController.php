@@ -221,33 +221,6 @@ class ShopController extends Controller
     public function order(Request $request, Product $product){
         $this->middleware('auth');
         $this->middleware('role:member');
-
-        // Get AFA
-        /*
-        if($product->location){
-            $afas = User::ofRole('afa')->isActive()
-                ->hasLocation()->get();
-            
-            $dists = [];
-            $value = 10000000000;
-            foreach($afas as $item){
-                if($item->location){
-                    $dist = $product->location->getDistance($item->location);
-                    if($dist<=$value){
-                        $value = $dist;
-                        $afa = $item;
-                    }
-                }
-            }
-        }
-        
-        if(!isset($afa) || $afa->id==0){
-    	   return redirect()->route('product.index', $product)
-               ->withInput()
-               ->with('error','Vous ne pouvez pas encore faire cet achat. Il n\'y a pas d\'agence dans la base');
-        }
-        */
-        
         
         // Check if product is disponible
         if(!$product->isDisponible()){
@@ -267,16 +240,8 @@ class ShopController extends Controller
         // Get selected APL
         $apl = Auth::user()->apl;
         
-        // Montant de reservation du produit
-        $reservation = option('payment.taux_de_reservation', 0);
-        if($reservation<=0){
-    	   return redirect()
-               ->route('product.index', $product)
-               ->withInput()->with('error', 'Le montant de reservation ne paut pas etre zero.');
-        }
-        
         // Save order in database
-        $order = Order::add($product, $apl, $reservation);
+        $order = Order::add($product, $apl);
 
         // Put it in session
     	Session::put('order', $order);
@@ -298,6 +263,13 @@ class ShopController extends Controller
                 ->with('error', 'Votre panier est vide.');
         }
         
+        if($order->status == 'ordered'){
+            if($order->reserved_at && !$order->afa){
+                return redirect()->route('shop.select.afa')
+                                ->with('success', "Votre commande a été déjá éffectuée. Veuillez choisir l'AFA le plus proche du produit.");
+            }
+        }
+        
         return view('shop.checkout')->with(['item' => $order]);
     }
 
@@ -305,6 +277,13 @@ class ShopController extends Controller
         $this->middleware('auth');
         $this->middleware('role:member');
         
+        $order = Session::has('order') ? Session::get('order') : false;
+        if(!$order){
+            return redirect()->route('shop.cart')
+                ->with('error', 'Votre panier est vide.');
+        }
+        
+        /**
         $this->validate($request, [
             'action' => 'required',
         ]);
@@ -321,12 +300,6 @@ class ShopController extends Controller
         $this->validate($request, [
             'stripe_token' => 'required',
         ]);
-        
-        $order = Session::has('order') ? Session::get('order') : false;
-        if(!$order){
-            return redirect()->route('shop.cart')
-                ->with('error', 'Votre panier est vide.');
-        }
 
         $user = Auth::user();
         
@@ -355,7 +328,6 @@ class ShopController extends Controller
             $user->stripe_id = $customer->id;
             $user->save();
         }
-        
                 
         $total    = $order->reservation;
         $currency = $order->currency;
@@ -378,6 +350,7 @@ class ShopController extends Controller
           return redirect()->to('shop.checkout')
               ->with('error', "Votre commande n'a pas été éffectuée. ".$result->message);
         }
+        **/
     
         // Set as order and notify user
         $order->setAsOrdered();
@@ -388,8 +361,6 @@ class ShopController extends Controller
         return redirect()->route('shop.select.afa')
               ->with('success', "Votre commande a été éffectuée. Veuillez choisir l'AFA le plus proche du produit.");
     }
-
-
     
     /**
      * Select Afa for an ordered product
@@ -410,8 +381,8 @@ class ShopController extends Controller
         $product = $order->product;
         
         $data = [];
-        if(!$product || !$product->isDisponible()){
-           return redirect()->route('product.index', $product)
+        if(!$product){
+           return redirect()->route('shop.cart')
            ->withInput()->with('error', "Ce produit n'est plus disponible.");
         }
 
@@ -463,7 +434,7 @@ class ShopController extends Controller
     }
     
     /**
-     * Select an apl
+     * Select an afa
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Product
@@ -477,6 +448,10 @@ class ShopController extends Controller
         if (!$order) {
             return redirect()->route('shop.cart');
         }
+        
+        $this->validate($request, [
+            'afa' => 'required|numeric',
+        ]);
         
         $afa = User::ofRole('afa')
             ->isActive()

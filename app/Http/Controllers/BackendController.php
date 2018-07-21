@@ -263,26 +263,14 @@ class BackendController extends Controller
             $files = [];
         }
         
+        //$to = $user->email;
+        $to = 'joelinjatovo@gmail.com';
+        $toName = $user->name;
+        
         try{
-            $data = array('name'=>"Virat Gandhi");
-            \Mail::send('mail', $data, function($message) use($mailItem, $user, $item, $files) {
-                $message->to($user->email, $user->name)
-                        ->subject($item->subject)
-                        ->from($user->email, $user->name);
-                
-                if(count($files)>0) {
-                    foreach($files as $file) {
-                        $message->attach($file->getRealPath(), array(
-                            'as' => $file->getClientOriginalName(), // If you want you can change original name to custom name      
-                            'mime' => $file->getMimeType())
-                        );
-                    }
-                }
-            });
+            \Mail::to($to, $toName)->send(new \App\Mail\Email($item, $mailItem, $files));
         }catch(\Exception $e){
-            $mailItem->is_sent = 0;
-            $mailItem->save();
-            return back()->with('success', 'Message non envoyé. '. $e->getMessage());
+            return back()->with('error', 'Message non envoyé. '.$e->getMessage());
         }
         
         return back()->with('success', 'Messages envoyés avec succes.');

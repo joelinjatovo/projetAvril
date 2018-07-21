@@ -60,7 +60,7 @@ class ShopOrderConfirmed extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -77,87 +77,36 @@ class ShopOrderConfirmed extends Notification implements ShouldQueue
         /** @var mixed $order */
         $order = $this->order;
         
+        /** @var MailMessage $message */
+        $message = (new MailMessage)->greeting(sprintf('Hello %s', $user->name));
+        
         switch($user->role){
             case 'apl':
-                return (new MailMessage)
-                    ->subject('Order paid that you are the selected APL')
-                    ->greeting(sprintf('Hello %s', $user->name))
-                    ->line('Someone ordered product that you are the selected APL.')
-                    ->action('View More', route('apl.order.show', $order))
-                    ->line('Thank you for using our application!');
+                $message = $message->subject('APL: Confirmation de la disponibilité de produit')
+                    ->line('Le produit est disponible et la reservation a été confirmée.')
+                    ->action('Voir la commande', route('apl.order.show', $order));
+            break;
+                
             case 'afa':
-                return (new MailMessage)
-                    ->subject('Order paid that you are the selected AFA')
-                    ->greeting(sprintf('Hello %s', $user->name))
-                    ->line('Someone ordered product that you are the selected AFA.')
-                    ->action('View More', route('afa.order.show', $order))
-                    ->line('Thank you for using our application!');
+                $message = $message->subject('AFA: Confirmation de la disponibilité de produit')
+                    ->line('Le produit est disponible et la reservation a été confirmée.')
+                    ->action('Voir la commande', route('afa.order.show', $order));
+            break;
+                
             case 'member':
-                if($cartitem){
-                    return (new MailMessage)
-                        ->subject('Order paid')
-                        ->greeting(sprintf('Hello %s', $user->name))
-                        ->line('Someone ordered product for an account with this email address.')
-
-                        ->line(sprintf('APL %s', $order->apl_paid_at))
-                        ->line(sprintf('AFA %s', $order->afa_paid_at))
-                        ->action('View More', route('member.cart', $cart))
-
-                        ->line('Thank you for using our application!');
-                }else{
-                    return (new MailMessage)
-                        ->subject('Order paid')
-                        ->greeting(sprintf('Hello %s', $user->name))
-                        ->line('Someone ordered product for an account with this email address.')
-
-                        ->line(sprintf('Quantity %s', $order->totalQuantity))
-                        ->line(sprintf('Amount %s', $order->totalPrice))
-                        ->line(sprintf('TMA %s', $order->totalTma))
-                        ->action('View More', route('member.cart', $cart))
-
-                        ->line('Thank you for using our application!');
-                }
+                $message = $message->subject('Member: Confirmation de la disponibilité de produit')
+                    ->line('Le produit est disponible et la reservation a été confirmée.')
+                    ->action('Voir la commande', route('member.order.show', $order));
+            break;
+                
             case 'admin':
-                if($cartitem){
-                    return (new MailMessage)
-                        ->subject('Order paid')
-                        ->greeting(sprintf('Hello %s', $user->name))
-                        ->line('A customer ordered product')
-
-                        ->line(sprintf('Customer %s', $order->author->name))
-                        ->action('View Customer', route('admin.user.show', $order->author))
-
-                        ->line(sprintf('APL %s', $order->apl->name))
-                        ->action('View APL', route('admin.user.show', $order->apl))
-
-                        ->line(sprintf('AFA %s', $order->afa->name))
-                        ->action('View AFA', route('admin.user.show', $order->afa))
-
-                        ->action('View More', route('admin.order.show', $order))
-                        ->line('Thank you for using our application!');
-                }else{
-                    return (new MailMessage)
-                        ->from(env('ADMIN_MAIL'))
-                        ->subject('Order paid')
-                        ->greeting(sprintf('Hello %s', $user->name))
-                        ->line('A customer ordered product')
-
-                        ->line(sprintf('Customer %s', $cart->author->name))
-                        ->action('View Customer', route('admin.user.show', $cart->author))
-
-                        ->line(sprintf('Quantity %s', $cart->totalQuantity))
-                        ->line(sprintf('Amount %s', $cart->totalPrice))
-                        ->line(sprintf('TMA %s', $cart->totalTma))
-                        ->action('View More', route('admin.cart.show', $cart))
-
-                        ->line('Thank you for using our application!');
-                }
+                $message = $message->subject('Admin: Confirmation de la disponibilité de produit')
+                    ->line('Le produit est disponible et la reservation a été confirmée.')
+                    ->action('Voir la commande', route('admin.order.show', $order));
+            break;
         }
         
-        return (new MailMessage)
-                    ->from(env('ADMIN_MAIL'))
-                    ->subject('Hello with Order paid')
-                    ->line('Thank you for using our application!');
+        return $message->line('Thank you for using our application!');
     }
 
     /**
@@ -168,72 +117,20 @@ class ShopOrderConfirmed extends Notification implements ShouldQueue
      */
     public function toArray($notifiable)
     {
-        switch($user->role){
-            case 'apl':
-                return [
-                    'id' => $this->id,
-                    'read_at' => null,
-                    'data' => [
-                        'cartitem_id' => $this->cartitem->id,
-                        'author_id' => $this->cartitem->author->id,
-                        'author_name' => $this->cartitem->author->name,
-                        'message' => 'Commission MIO payée',
-                    ],
-                ];
-            case 'afa':
-                return [
-                    'id' => $this->id,
-                    'read_at' => null,
-                    'data' => [
-                        'cartitem_id' => $this->cartitem->id,
-                        'author_id' => $this->cartitem->author->id,
-                        'author_name' => $this->cartitem->author->name,
-                        'message' => 'Commission MIO payée',
-                    ],
-                ];
-            case 'seller':
-                return [
-                    'id' => $this->id,
-                    'read_at' => null,
-                    'data' => [
-                        'cartitem_id' => $this->cartitem->id,
-                        'author_id' => $this->cartitem->author->id,
-                        'author_name' => $this->cartitem->author->name,
-                        'message' => 'Commissions MIO payées',
-                    ],
-                ];
-            case 'admin':
-                return [
-                    'id' => $this->id,
-                    'read_at' => null,
-                    'data' => [
-                        'cart_id' => $this->cart->id,
-                        'author_id' => $this->cart->author->id,
-                        'author_name' => $this->cart->author->name,
-                        'message' => 'Commissions MIO payées',
-                    ],
-                ];
-            case 'member':
-                return [
-                    'id' => $this->id,
-                    'read_at' => null,
-                    'data' => [
-                        'cart_id' => $this->cart->id,
-                        'author_id' => $this->cart->author->id,
-                        'author_name' => $this->cart->author->name,
-                        'message' => 'Commissions MIO payées',
-                    ],
-                ];
-        }
+        /** @var User $user */
+        $user = $this->user;
+        
+        /** @var mixed $order */
+        $order = $this->order;
         
         return [
-            'id' => 0,
+            'id' => $this->id,
             'read_at' => null,
             'data' => [
-                'cart_id' => 0,
-                'author_id' => 0,
-                'author_name' => null,
-                'message' => 'Commande',
+                'order_id' => $order->id,
+                'author_id' => $order->author->id,
+                'author_name' => $order->author->name,
+                'message' => 'Une commande a été confirmée'
             ],
         ];
     }

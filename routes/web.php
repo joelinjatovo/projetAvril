@@ -117,7 +117,7 @@ Route::middleware(["auth", "role:member"])->group(function(){
     Route::post('checkout', 'ShopController@postCheckout');
 
     // 4. Select AFA
-    Route::get('select-afa', 'ShopController@afa')->name('shop.select.apl');
+    Route::get('select-afa', 'ShopController@afa')->name('shop.select.afa');
     Route::post('select-afa', 'ShopController@postAfa');
 
     Route::get('cart', 'ShopController@lastOrder')->name('shop.cart');
@@ -133,8 +133,8 @@ Route::middleware(["auth", "role:member"])->group(function(){
         Route::get('pins', 'BackendController@pins');
         Route::get('searches', 'BackendController@searches');
         
-        Route::get('contact/role/{role}', 'MemberController@contact')->name('member.contact');
-        Route::post('contact/role/{role}', 'MemberController@sendMail');
+        Route::get('contact', 'MemberController@contact')->name('member.contact');
+        Route::post('contact', 'MemberController@sendMail');
         
         Route::get('carts', 'MemberController@carts')->name('member.carts');
         Route::get('orders', 'MemberController@orders')->name('member.orders');

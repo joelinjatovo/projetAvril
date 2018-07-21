@@ -11,7 +11,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use App\Models\Order;
 use App\Models\User;
 
-class ShopTmaPaid extends Notification implements ShouldQueue
+class ShopAplPaid extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -82,27 +82,27 @@ class ShopTmaPaid extends Notification implements ShouldQueue
         
         switch($user->role){
             case 'apl':
-                $message = $message->subject('APL: Commission sur vente payée')
-                    ->line("La commission sur vente de la commande suivante a été payée par le vendeur.")
+                $message = $message->subject('APL: Commission MIO payée')
+                    ->line("La commission MIO de la commande suivante a été payée.")
+                    ->line(sprintf('Commission MIO %s', $order->apl_amount))
                     ->action('Voir la commande', route('apl.order.show', $order));
             break;
                 
             case 'afa':
-                $message = $message->subject('AFA: Commission sur vente payée')
-                    ->line("La commission sur vente de la commande suivante a été payée par le vendeur.")
-                    ->line(sprintf('Commission sur vente %s', $order->tma))
+                $message = $message->subject('AFA: Commission MIO payée')
+                    ->line("La commission MIO de la commande suivante a été payée.")
                     ->action('Voir la commande', route('afa.order.show', $order));
             break;
                 
             case 'member':
-                $message = $message->subject('Member: Commission sur vente payée')
-                    ->line("La commission sur vente de la commande suivante a été payée par le vendeur.")
+                $message = $message->subject('Member: Commission MIO payée')
+                    ->line("La commission MIO de la commande suivante a été payée.")
                     ->action('Voir la commande', route('member.order.show', $order));
             break;
                 
             case 'admin':
-                $message = $message->subject('Admin: Commission sur vente payée')
-                    ->line("La commission sur vente de la commande suivante a été payée par le vendeur.")
+                $message = $message->subject('Admin: Commission MIO payée')
+                    ->line("La commission MIO de la commande suivante a été payée.")
                     ->action('Voir la commande', route('admin.order.show', $order))
 
                     ->line(sprintf('Customer %s', $order->author->name))
@@ -143,7 +143,7 @@ class ShopTmaPaid extends Notification implements ShouldQueue
                 'order_id' => $order->id,
                 'author_id' => $order->author->id,
                 'author_name' => $order->author->name,
-                'message' => "Une commission sur vente a été payée par le vendeur."
+                'message' => "Une commission MIO a été payée."
             ],
         ];
     }

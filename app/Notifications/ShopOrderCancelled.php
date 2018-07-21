@@ -11,12 +11,12 @@ use Illuminate\Notifications\Messages\MailMessage;
 use App\Models\Order;
 use App\Models\User;
 
-class ShopTmaPaid extends Notification implements ShouldQueue
+class ShopOrderCancelled extends Notification implements ShouldQueue
 {
     use Queueable;
-
+    
     private $user;
-
+    
     private $order;
     
     /**
@@ -82,40 +82,27 @@ class ShopTmaPaid extends Notification implements ShouldQueue
         
         switch($user->role){
             case 'apl':
-                $message = $message->subject('APL: Commission sur vente payée')
-                    ->line("La commission sur vente de la commande suivante a été payée par le vendeur.")
+                $message = $message->subject('APL: Annulation de la reservation de produit')
+                    ->line("Le produit n'est plus disponible et la reservation a été annulée.")
                     ->action('Voir la commande', route('apl.order.show', $order));
             break;
                 
             case 'afa':
-                $message = $message->subject('AFA: Commission sur vente payée')
-                    ->line("La commission sur vente de la commande suivante a été payée par le vendeur.")
-                    ->line(sprintf('Commission sur vente %s', $order->tma))
+                $message = $message->subject('AFA: Annulation de la reservation de produit')
+                    ->line("Le produit n'est plus disponible et la reservation a été annulée.")
                     ->action('Voir la commande', route('afa.order.show', $order));
             break;
                 
             case 'member':
-                $message = $message->subject('Member: Commission sur vente payée')
-                    ->line("La commission sur vente de la commande suivante a été payée par le vendeur.")
+                $message = $message->subject('Member: Annulation de la reservation de produit')
+                    ->line("Le produit n'est plus disponible et la reservation a été annulée.")
                     ->action('Voir la commande', route('member.order.show', $order));
             break;
                 
             case 'admin':
-                $message = $message->subject('Admin: Commission sur vente payée')
-                    ->line("La commission sur vente de la commande suivante a été payée par le vendeur.")
-                    ->action('Voir la commande', route('admin.order.show', $order))
-
-                    ->line(sprintf('Customer %s', $order->author->name))
-                    ->action('Voir le client', route('admin.user.show', $cart->author))
-
-                    ->line(sprintf('AFA selected %s', $order->author->name))
-                    ->action("Voir l'agence francophone australienne", route('admin.user.show', $order->author))
-
-                    ->line(sprintf('Amount %s', $order->price))
-                    ->line(sprintf('Reservation %s', $order->reservation))
-                    ->line(sprintf('Commission sur vente %s', $order->tma))
-                    ->line(sprintf('Commission sur presentation de la clientelle %s', $order->afa_amount))
-                    ->line(sprintf('Commission MIO %s', $order->apl_amount));
+                $message = $message->subject('Admin: Annulation de la reservation de produit')
+                    ->line("Le produit n'est plus disponible et la reservation a été annulée.")
+                    ->action('Voir la commande', route('admin.order.show', $order));
             break;
         }
         
@@ -143,7 +130,7 @@ class ShopTmaPaid extends Notification implements ShouldQueue
                 'order_id' => $order->id,
                 'author_id' => $order->author->id,
                 'author_name' => $order->author->name,
-                'message' => "Une commission sur vente a été payée par le vendeur."
+                'message' => 'Une commande a été annulée'
             ],
         ];
     }

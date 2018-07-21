@@ -504,6 +504,9 @@ return [
     
     'admin.comment.list'    => 'Commentaires',
     
+    'order.index'           => 'Detail de la vente',
+    'invoice.index'           => 'Detail de la vente',
+    
     'admin.orders'          => 'Orders',
     'admin.carts'           => 'Carts',
     'carts'                 => 'Carts',

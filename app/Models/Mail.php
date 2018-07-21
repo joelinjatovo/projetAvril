@@ -33,6 +33,22 @@ class Mail extends BaseModel
     }
     
     /**
+     * Filter badwords
+     *
+     * @param int $length
+     * @return String
+     */
+    public function filter()
+    {
+        $content = $this->content;
+        $badwords = BadWord::get();
+        foreach($badwords as $badword){
+            $content = str_ireplace($badword->content, '*****', $content);
+        }
+        return $content;
+    }
+    
+    /**
      * Excerpt
      *
      * @param int $length

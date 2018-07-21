@@ -75,28 +75,25 @@ class MemberController extends Controller
             ->with('items', $items);
     }
 
-    public function contact(Request $request, $role){
-        $action = route('member.contact', ['role'=>$role]);
+    public function contact(Request $request){
+        $action = route('member.contact');
         
-        if(($role=='apl') && !Auth::user()->apl){
+        if(!Auth::user()->apl){
             return redirect()->route('member.select.apl')
                 ->with('error', 'Vous devez choisir un APL d\'abord.');
         }
         
         return view('backend.contact.member')
             ->with('action', $action)
-            ->with('title', __('app.contact_'.$role));
+            ->with('title', __('app.contact_apl'));
     }
 
-    public function sendMail(Request $request, $role)
+    public function sendMail(Request $request)
     {
-        
-        if(($role=='apl') && !Auth::user()->apl){
+        if(!Auth::user()->apl){
             return redirect()->route('member.select.apl')
                 ->with('error', 'Vous devez choisir un APL d\'abord.');
         }
-        
-        $current = Auth::user();
 
         // Validate request
         $datas = $request->all();
@@ -106,30 +103,15 @@ class MemberController extends Controller
             //'files.*' => 'mimes:jpeg,jpg,png,gif,svg|max:2048',
         ]);
         
-        
         if ($validator->fails()) {
             return back()->withErrors($validator)
                         ->withInput();
         }
 
-        if($role=='admin'){
-            $receiver = User::ofRole('admin')
-                    ->isActive()
-                    ->first();
-            if(!$receiver){
-                return back()->with('error', 'Une erreur est survenue.');
-            }
-            $to = option('site.admin_email', $receiver->email);
-            $toName = option('site.admin_name', $receiver->name);
-        }else if($role=='apl'){
-            $receiver = $current->apl;
-            if(!$receiver||!$receiver->active()){
-                return back()->with('error', 'Une erreur est survenue.');
-            }
-            $to = $receiver->email;
-            $toName = $receiver->name;
-        }else{
-            abort(404);
+        $current = Auth::user();
+        $receiver = $current->apl;
+        if(!$receiver||!$receiver->active()){
+            return back()->with('error', 'Une erreur est survenue.');
         }
 
         $item = new Mail();
@@ -152,9 +134,12 @@ class MemberController extends Controller
             $files = [];
         }
         
+        //$to = $receiver->email;
+        $to = 'joelinjatovo@gmail.com';
+        $toName = $receiver->name;
+        
         try{
-            $to = 'joelinjatovo@gmail.com';
-            \Mail::to($to, $toName)->send(new \App\Mail\Email($item, $files));
+            \Mail::to($to, $toName)->send(new \App\Mail\Email($item, $mailItem, $files));
         }catch(\Exception $e){
             return back()->with('error', $e->getMessage());
         }

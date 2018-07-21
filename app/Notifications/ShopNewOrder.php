@@ -99,19 +99,21 @@ class ShopNewOrder extends Notification implements ShouldQueue
 
                     ->line(sprintf('Price %s', $order->price))
                     ->line(sprintf('Reservation %s', $order->reservation))
-                    ->action('View More', route('afa.order.show', $order));
+                    ->action('View More', route('member.order.show', $order));
             break;
                 
             case 'admin':
                 $message = $message->subject('Admin: New Order')
                     ->line('A customer ordered product')
 
-                    ->line(sprintf('Customer %s', $cart->author->name))
-                    ->action('View Customer', route('admin.user.show', $cart->author))
+                    ->line(sprintf('Customer %s', $order->author->name))
+                    ->action('View Customer', route('admin.user.show', $order->author))
 
-                    ->line(sprintf('Quantity %s', $cart->totalQuantity))
-                    ->line(sprintf('Amount %s', $cart->totalPrice))
-                    ->line(sprintf('TMA %s', $cart->totalTma))
+                    ->line(sprintf('Amount %s', $order->price))
+                    ->line(sprintf('Reservation %s', $order->reservation))
+                    ->line(sprintf('Commission sur vente %s', $order->tma))
+                    ->line(sprintf('Commission sur presentation de la clientelle %s', $order->afa_amount))
+                    ->line(sprintf('Commission MIO %s', $order->apl_amount))
                     ->action('View More', route('admin.order.show', $order));
             break;
         }
@@ -127,72 +129,20 @@ class ShopNewOrder extends Notification implements ShouldQueue
      */
     public function toArray($notifiable)
     {
-        switch($user->role){
-            case 'apl':
-                return [
-                    'id' => $this->id,
-                    'read_at' => null,
-                    'data' => [
-                        'cartitem_id' => $this->cartitem->id,
-                        'author_id' => $this->cartitem->author->id,
-                        'author_name' => $this->cartitem->author->name,
-                        'message' => 'Commission MIO payée',
-                    ],
-                ];
-            case 'afa':
-                return [
-                    'id' => $this->id,
-                    'read_at' => null,
-                    'data' => [
-                        'cartitem_id' => $this->cartitem->id,
-                        'author_id' => $this->cartitem->author->id,
-                        'author_name' => $this->cartitem->author->name,
-                        'message' => 'Commission MIO payée',
-                    ],
-                ];
-            case 'seller':
-                return [
-                    'id' => $this->id,
-                    'read_at' => null,
-                    'data' => [
-                        'cartitem_id' => $this->cartitem->id,
-                        'author_id' => $this->cartitem->author->id,
-                        'author_name' => $this->cartitem->author->name,
-                        'message' => 'Commissions MIO payées',
-                    ],
-                ];
-            case 'admin':
-                return [
-                    'id' => $this->id,
-                    'read_at' => null,
-                    'data' => [
-                        'cart_id' => $this->cart->id,
-                        'author_id' => $this->cart->author->id,
-                        'author_name' => $this->cart->author->name,
-                        'message' => 'Commissions MIO payées',
-                    ],
-                ];
-            case 'member':
-                return [
-                    'id' => $this->id,
-                    'read_at' => null,
-                    'data' => [
-                        'cart_id' => $this->cart->id,
-                        'author_id' => $this->cart->author->id,
-                        'author_name' => $this->cart->author->name,
-                        'message' => 'Commissions MIO payées',
-                    ],
-                ];
-        }
+        /** @var User $user */
+        $user = $this->user;
+        
+        /** @var mixed $order */
+        $order = $this->order;
         
         return [
-            'id' => 0,
+            'id' => $this->id,
             'read_at' => null,
             'data' => [
-                'cart_id' => 0,
-                'author_id' => 0,
-                'author_name' => null,
-                'message' => 'Commande',
+                'order_id' => $order->id,
+                'author_id' => $order->author->id,
+                'author_name' => $order->author->name,
+                'message' => 'Une commande a été effectuée par '.ucfirst($order->author->name())
             ],
         ];
     }

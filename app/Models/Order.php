@@ -114,7 +114,8 @@ class Order extends BaseModel
 	* Ajouter le produit dans le panier
     * Exemple: si le prix de vente est de A$450,000, que la commission sur vente accordée à l'agence immobilière par le vendeur est de 5% sur le prix de vente, que la Commission de Présentation de Clientèle reversée à IEA par l'AFA est de 40% de la commission sur vente, et que le montant de la {Réservation} a été de A$3,000, le montant de la CPC pour cette vente sera de :   (A$450,000 X 5% x 40%) - (A$3,000) = A$6,000.
 	*/
-	public static function add($product, $apl, $reservation){
+	public static function add($product, $apl){
+        $reservation = option('payment.taux_de_reservation', 0);
         $tma = max(option('payment.commission_sur_vente', 0), $product->tma);
         $mio = $apl->isMaj()?option('payment.taux_mio_maj', 0):option('payment.taux_mio_nor', 0);
         $cpc = option('payment.commission_presentation_client', 0);
@@ -154,6 +155,33 @@ class Order extends BaseModel
     }
     
     /**
+     * Set status as paid
+     *
+     */
+    private function setAsPaid()
+    {
+        if(empty($this->reserved_at)) return;
+        if(empty($this->afa_selected_at)) return;
+        if(empty($this->tma_paid_at)) return;
+        if(empty($this->afa_paid_at)) return;
+        if(empty($this->apl_paid_at)) return;
+        if(empty($this->confirmed_at)) return;
+        if(!empty($this->cancelled_at)) return;
+        
+        $this->status = 'paid';
+        $this->save();
+        
+        // Update product buyers
+        if($this->product){
+            $this->product->status = 'paid';
+            $this->product->save();
+        }
+        
+        $notification = new ShopOrderPaid($this);
+        $this->notify($notification);
+    }
+    
+    /**
      * Set status as ordered
      *
      */
@@ -178,6 +206,8 @@ class Order extends BaseModel
         
         $notification = new ShopTmaPaid($this);
         $this->notify($notification);
+        
+        $this->setAsPaid();
     }
     
     /**
@@ -191,6 +221,8 @@ class Order extends BaseModel
         
         $notification = new ShopAfaPaid($this);
         $this->notify($notification);
+        
+        $this->setAsPaid();
     }
     
     /**
@@ -204,6 +236,8 @@ class Order extends BaseModel
         
         $notification = new ShopAplPaid($this);
         $this->notify($notification);
+        
+        $this->setAsPaid();
     }
     
     /**
@@ -235,6 +269,8 @@ class Order extends BaseModel
         
         $notification = new ShopOrderConfirmed($this);
         $this->notify($notification);
+        
+        $this->setAsPaid();
     }
     
     private function notify(Notification $notification){

@@ -12,6 +12,7 @@ class Email extends Mailable
     use Queueable, SerializesModels;
     
     private $email;
+    private $line;
     private $files;
 
     /**
@@ -19,9 +20,10 @@ class Email extends Mailable
      *
      * @return void
      */
-    public function __construct(\App\Models\Mail $email, $files = [])
+    public function __construct(\App\Models\Mail $email, \App\Models\MailUser $line, $files = [])
     {
         $this->email = $email;
+        $this->line = $line;
         $this->files = $files;
     }
 
@@ -34,6 +36,7 @@ class Email extends Mailable
     {
         $message = $this->markdown('email.markdown');
         $message = $message->with('item', $this->email);
+        $message = $message->with('line', $this->line);
         $message = $message->with('url', route('home'));
         foreach($this->files as $file){
             $message = $message->attach($file->getRealPath());
