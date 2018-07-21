@@ -94,24 +94,81 @@ class AfaController extends Controller
             ->with('items', $items);
     }
     
-    public function postAction(Request $request, Order $order){
+    /*
+    * Pay Commission sur vente
+    */
+    public function payCpc(Request $request, Order $order){
         $this->middleware('auth');
         $this->middleware('role:afa');
-        $this->validate($request, ['action'=>'required']);
-        $action = $request->action;
-        switch($action){
-            case 'pay-cpc':
-                return $this->payCpc($request, $order);
-        }
+        
+        return view('backend.afa.pay')->with(['item' => $order]);
     }
     
     /*
-    * Cancelling order
+    * Pay Commission sur vente
     */
-    private function payCpc(Request $request, Order $order){
+    public function postPayCpc(Request $request, Order $order){
+        $this->middleware('auth');
+        $this->middleware('role:afa');
+        
+        $this->validate($request, [
+            'stripe_token' => 'required',
+        ]);
+
+        $user = \Auth::user();
+        
+        // Get the submitted Stripe token
+        $token = $request->stripe_token;
+
+        // If empty stripe_id then create new customer
+        if (empty($user->stripe_id)) {
+            // Create a new Stripe customer
+            try {
+                $customer = \Stripe\Customer::create([
+                    'source' => $token,
+                    'email' => $user->email,
+                    'metadata' => [
+                        "First Name" => $user->name,
+                        "Last Name" => $user->name
+                    ]
+                ]);
+            } catch (\Stripe\Error\Card $e) {
+            return redirect()->route('afa.pay.cpc')
+                    ->withErrors($e->getMessage())
+                    ->withInput();
+            }
+
+            // Update user in the database with Stripe
+            $user->stripe_id = $customer->id;
+            $user->save();
+        }
+                
+        $total    = $order->afa_amount;
+        $currency = $order->currency;
+
+        try{
+            // Create the charge
+            $result = \Stripe\Charge::create(array(
+                "amount" => $total,
+                "currency" => $currency,
+                "customer" => $user->stripe_id,
+                "description" => 'Commission sur presernation de clientelle'
+            ));
+        }catch(\Exception $e){
+            return redirect()->route('afa.pay.cpc')
+                ->withErrors($e->getMessage())
+                ->withInput();
+        }
+        
+        if ($result->status != 'succeeded') {
+            return redirect()->route('afa.pay.cpc')
+              ->with('error', "La commission sur presernation de clientelle n'a pas été éffectuée. ".$result->message);
+        }
+    
         $order->setAfaPaid();
-        return redirect()->route('profile')
-            ->with('success', "La commission a bien été payée.");
+        
+        return redirect()->route('afa.pay.cpc')
+              ->with('success', "La commission sur presernation de clientelle a été bien payée");
     }
     
 }

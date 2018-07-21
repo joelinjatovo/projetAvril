@@ -9,7 +9,12 @@ use Auth;
 
 use App\Notifications\ShopNewOrder;
 use App\Notifications\ShopAfaSelected;
+use App\Notifications\ShopAfaPaid;
+use App\Notifications\ShopAplPaid;
+use App\Notifications\ShopOrderPaid;
 use App\Notifications\ShopTmaPaid;
+use App\Notifications\ShopOrderConfirmed;
+use App\Notifications\ShopOrderCancelled;
 
 // Eloquent\Model to manage Product and Service to sell
 class Order extends BaseModel

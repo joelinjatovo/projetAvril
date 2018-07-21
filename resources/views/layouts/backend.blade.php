@@ -86,18 +86,12 @@
                     @if(\Auth::check()&&!\Auth::user()->isAdmin())
                         <li><a href="{{url(Auth::user()->role.'/favorites')}}"><i class="fa fa-gratipay" aria-hidden="true"></i> @lang('app.favorites')</a></li>
                         <li><a href="{{url(Auth::user()->role.'/searches')}}"><i class="fa fa-search" aria-hidden="true"></i> @lang('app.saved_searches')</a></li>
-                        <li>
-                            <a href="#" data-toggle="collapse" data-target="#collapse-mail" aria-controls="collapse-mail"><i class="fa fa-envelope" aria-hidden="true"></i> @lang('app.mails')</a>
-                            <ul id="collapse-mail" class="collapse {{request()->is('*mail*')?'show':''}}" aria-labelledby="headingOne" data-parent="#nav-accordion">
-                                <li><a href="{{route(Auth::user()->role.'.mail.list',['filter'=>'inbox'])}}"> @lang('app.mails')</a></li>
-                                @if(\Auth::check()&&\Auth::user()->hasRole('member'))
-                                    <li><a href="{{route('member.contact', ['role'=>'admin'])}}"> @lang('member.contact_admin')</a></li>
-                                    @if(\Auth::check()&&\Auth::user()->hasApl())
-                                        <li><a href="{{route('member.contact', ['role'=>'apl'])}}"> @lang('member.contact_apl')</a></li>
-                                    @endif
-                                @endif
-                            </ul>
-                        </li>
+                        <li><a href="{{route(Auth::user()->role.'.mail.list',['filter'=>'inbox'])}}"><i class="fa fa-envelope" aria-hidden="true"></i> @lang('app.mails')</a></li>
+                        @if(\Auth::check()&&\Auth::user()->hasRole('member'))
+                            @if(\Auth::check()&&\Auth::user()->hasApl())
+                                <li><a href="{{route('member.contact', ['role'=>'apl'])}}"><i class="fa fa-envelope" aria-hidden="true"></i> @lang('member.contact_apl')</a></li>
+                            @endif
+                        @endif
                     @endif
                     
                     <li><a href="{{route('logout')}}"><i class="fa fa-sign-out" aria-hidden="true"></i> @lang('app.logout')</a></li>

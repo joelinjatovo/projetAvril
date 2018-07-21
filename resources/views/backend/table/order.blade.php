@@ -108,11 +108,7 @@
                 
                 @if(\Auth::check()&&\Auth::user()->hasRole('afa'))
                     @if(!$order->isAfaPaid())
-                    <form action="{{route('afa.order.show', $order)}}" method="post" class="pull-right">
-                        {{csrf_field()}}
-                        <input type="hidden" name="action" value="pay-cpc">
-                        <button type="submit" class="btn btn-success pull-left">@lang('afa.btn.pay-cpc')</button>
-                    </form>
+                    <a href="{{route('afa.pay.cpc')}}" class="btn btn-success pull-left">@lang('afa.btn.pay-cpc')</a>
                     @endif
                 @endif
             </td>

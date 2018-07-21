@@ -167,6 +167,9 @@ Route::prefix('afa')->middleware(["auth","role:afa"])->group(function(){
     Route::get('order/{order}', 'OrderController@show')->name('afa.order.show');
     Route::post('order/{order}', 'AfaController@postAction');
         
+    Route::get('pay/cpc' , 'AfaController@payCpc')->name('afa.pay.cpc');
+    Route::post('pay/cpc', 'AfaController@postPayCpc');
+        
     Route::get('contact/{user}' , 'BackendController@contact')->name('afa.user.contact');
     Route::post('contact/{user}', 'BackendController@postContact');
     
