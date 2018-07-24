@@ -42,26 +42,6 @@ class User extends Authenticatable
     protected $dates = ['apl_ends_at', 'trial_ends_at', 'subscription_ends_at'];
     
     /**
-     * The event map for the model.
-     *
-     * @var array
-     */
-    protected $events = [
-        //'saved' => UserSaved::class,
-        //'deleted' => UserDeleted::class,
-    ];
-    
-    /**
-     * Route notifications for the mail channel.
-     *
-     * @return string
-     */
-    public function routeNotificationForMail()
-    {
-        return 'joelinjatovo@gmail.com';
-    }
-    
-    /**
      * Scope a query to only include users of a given $role.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query

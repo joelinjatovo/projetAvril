@@ -45,19 +45,19 @@
 
                     <div class="content-box-large">
                         <div class="panel-heading">
-                            <div class="panel-title">Inscription en Qualité de Membre</div>
+                            <div class="panel-title"><h2>Inscription en qualité de membre</h2></div>
                         </div>
                         <div class="panel-body">
                             @include('includes.alerts')
-                            <div class="row">
+                            <fieldset>
                                 <label for="type" class="col-sm-3 control-label">Type de membre *</label>
                                 <div class="col-md-3">
                                     <select name="type" class="form-control" id="type" style="background-color:#ebeee7;" required>
-                                        <option value="person" selected>Particulier</option>
-                                        <option value="organization">Organisation</option>
+                                        <option value="person" {{old('type', 'person')=='person'?'selected':''}}>Particulier</option>
+                                        <option value="organization" {{old('type', 'person')=='organization'?'selected':''}}>Organisation</option>
                                     </select>
                                 </div>
-                            </div>
+                            </fieldset>
                             <br>
                             <form class="form-horizontal" role="form" id="particulierForm" action="{{$action}}" method="post" enctype="multipart/form-data">
                                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
@@ -288,7 +288,7 @@
 @endsection
 
 @section('script')
-<script src="{{asset('js/myJs.js')}}"></script>
+<script src="{{asset('js/register.js')}}"></script>
 <script type="text/javascript">
     $(window).on('load',function(){
         $('#myModal').modal('show');

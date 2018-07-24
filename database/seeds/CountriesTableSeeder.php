@@ -22,7 +22,7 @@ class CountriesTableSeeder extends Seeder
                 DB::table('countries')->insert([
                     'code' => $code,
                     'content' => $content,
-                    'prefixPhone' => $content,
+                    'prefixPhone' => $prefixPhone,
                     'created_at' => date("Y-m-d H:i:s"),
                 ]);
             }

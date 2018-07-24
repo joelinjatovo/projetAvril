@@ -22,7 +22,6 @@ class CreateUsersTable extends Migration
             $table->string('type', 20)->default('organization')->index(); // person organization
             $table->string('language')->default('fr'); // fr en
             $table->string('status', 20); // active disabled blocked pinged
-            $table->double('percent', 8, 2)->nullable();
             
             $table->dateTime('enabled_at')->nullable();
             $table->dateTime('disabled_at')->nullable();
@@ -43,10 +42,6 @@ class CreateUsersTable extends Migration
             $table->bigInteger('operation_range')->default(0)->index();
             $table->bigInteger('state_id')->default(0)->index();
             
-            $table->string('activation_code')->nullable();
-            $table->rememberToken();
-            $table->timestamps();
-            
             // Baintree
             $table->string('braintree_id')->nullable();
             $table->string('paypal_email')->nullable();
@@ -60,6 +55,10 @@ class CreateUsersTable extends Migration
             
             $table->timestamp('trial_ends_at')->nullable();
             $table->timestamp('subscription_ends_at')->nullable();
+            
+            $table->string('activation_code')->nullable();
+            $table->rememberToken();
+            $table->timestamps();
             
         });
     }
