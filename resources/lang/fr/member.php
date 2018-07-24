@@ -23,6 +23,7 @@ return [
     "choose.apl"    => "Choisir une agence <br> partenaire locale",
     "choose"        => "Choisir",
     "select"        => "Selectionner",
+    "select_afa"    => "Selectionner une agence francophone australienne",
     
     "info"         => "Information",
     "info_has_apl" => "Vous etes deja en relation exclusive avec une agence partenaire locale.",

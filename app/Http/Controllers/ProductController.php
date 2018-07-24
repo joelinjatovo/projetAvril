@@ -27,8 +27,8 @@ class ProductController extends Controller
      */
     public function index(Request $request, Product $product)
     {
-        if($product->status != 'published'){
-            abort(404);
+        if(!$product->isDisponible()){
+            return view('product.unavailable');
         }
         
         $product->view_count++;

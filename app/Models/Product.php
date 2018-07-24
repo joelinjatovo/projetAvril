@@ -199,7 +199,6 @@ class Product extends BaseModel
           ->wherePivot('object_type', Product::class);
     }
     
-    
     /**
      * A product can have one location
      *
@@ -208,6 +207,16 @@ class Product extends BaseModel
     public function location()
     {
       return $this->hasOne(Localisation::class, 'id', 'location_id');
+    }
+    
+    /**
+     * A product can have one state
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function state()
+    {
+      return $this->hasOne(State::class, 'id', 'state_id');
     }
     
 }

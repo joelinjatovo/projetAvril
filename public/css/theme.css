@@ -1216,6 +1216,20 @@ input[type="email"] {
   color: #6c98e1;
   cursor: pointer;
 }
+.display-view {
+  margin-top: 15px;
+}
+.display-view .fa {
+  margin: 5px 0 0 10px;
+  float: right;
+  cursor: pointer;
+}
+.display-view .fa:hover {
+  color: #6c98e1;
+}
+.display-view .selected {
+  color: #6c98e1;
+}
 .layout-view {
   margin-top: 15px;
 }

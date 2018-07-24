@@ -5,6 +5,10 @@
             <th>Prix</th>
             <th>Reservation</th>
             
+            @if(\Auth::check()&&\Auth::user()->hasRole('member'))
+            <th>@lang('app.afa')</th>
+            @endif
+            
             @if(\Auth::check()&&\Auth::user()->hasRole('apl'))
             <th colspan="2">Clients</th>
             <th>Commission MIO</th>
@@ -37,6 +41,22 @@
             
             <td class="product-price"><span>{{$order->currency}}</span> {{$order->price}}</td>
             <td class="product-price"><span>{{$order->currency}}</span> {{$order->reservation}}</td>
+            
+            
+            @if(\Auth::check()&&\Auth::user()->hasRole('member'))
+            <td>
+                @if($order->afa)
+                    {{$order->afa->name}}
+                @else
+                    <form action="{{route('shop.checkout')}}" method="post" class="pull-right">
+                        {{csrf_field()}}
+                        <input type="hidden" name="order" value="{{$order->id}}">
+                        <input type="hidden" name="action" value="update_session">
+                        <input type="submit" value="@lang('member.select')">
+                    </form>
+                @endif
+            </td>
+            @endif
             
             @if(\Auth::check()&&\Auth::user()->hasRole('apl'))
                 <td class="product-thumbnail" width="100">

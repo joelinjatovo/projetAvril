@@ -228,13 +228,15 @@ return [
     'commercial'        => 'Commercial',
     'services'          => 'Services',
     'terms'             => 'Termes',
+    'terms&conditions'  => 'Termes et Conditions',
     'term'              => 'Terme',
     'conditions'        => 'Conditions',
     'condition'         => 'Condition',
     'compte'            => 'Compte',
-    'account'            => 'Compte',
+    'account'           => 'Compte',
     'confidential'      => 'Confidentialite',
-    'user_guide'        => "Guide de l'utilisateur",
+    'confidentials'     => 'Confidentialités',
+    'user_guide'        => "Guide de l'investisseur",
     
     'search'       => 'Recherche',
     'search_result' => 'Resultat de recherche ":q"',
@@ -588,6 +590,9 @@ return [
     'contact_apl'    => "Contacter l'agence partenaire locale",
     'attachment'     => "Attachement",
     'attachments'    => "Attachements",
+    
+    'unavailable.title'    => "Ce produit n'est plus disponible",
+    'unavailable.content'    => "Il est en cours de vente ou déjá vendu.",
     
     'saved_searches'    => "Recherches sauvegardées",
     

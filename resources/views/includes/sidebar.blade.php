@@ -6,10 +6,11 @@
     @endif
     
     @foreach($pubs as $pub)
-    <section class="widget property-meta-wrapper clearfix">
-        <h2 class="title wow slideInLeft">{{$pub->title}}</h2>
+    <section class="widget property-meta-wrapper clearfix" style="padding:0px;">
         <div class="content-box-large box-with-header">
-            <a target="_blank" href="{{$pub->links?$pub->links:'#'}}"><img src="{{$pub->imageUrl()}}" class="img-rounded" alt="Cinque Terre" width="604" height="236"></a>
+            <a target="_blank" href="{{$pub->links?$pub->links:'#'}}">
+                <img src="{{$pub->imageUrl()}}" title="{{$pub->title}}" alt="{{$pub->title}}">
+            </a>
         </div>
     </section>
     @endforeach

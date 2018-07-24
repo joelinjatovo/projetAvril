@@ -19,7 +19,7 @@ class AccountActivated extends Notification
      *
      * @return void
      */
-    public function __construct($user , $status)
+    public function __construct($user, $status)
     {
         $this->user = $user;
         $this->status = $status;
@@ -48,7 +48,6 @@ class AccountActivated extends Notification
         $user = $this->user;
         
         return (new MailMessage)
-            ->from(env('ADMIN_MAIL'))
             ->subject(__('mail.activated.subject', ['app'=>app_name()]))
             ->greeting(__('mail.greeting', ['name'=>$user->name]))
             ->line(__('mail.activated.content'))

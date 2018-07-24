@@ -247,8 +247,8 @@
                     <section class="widget address-widget clearfix">
                         <h4 class="title"></h4>
                         <ul>
-                            <li><a href="{{route('terms')}}">@lang('app.terms')</a></li>
-                            <li><a href="{{route('confidentialities')}}">@lang('app.confidential')</a></li>
+                            <li><a href="{{route('terms')}}">@lang('app.terms&conditions')</a></li>
+                            <li><a href="{{route('confidentialities')}}">@lang('app.confidentials')</a></li>
                             <li><a href="{{route('help')}}">@lang('app.user_guide')</a></li>
                             <li><a href="{{route('publicities')}}">@lang('app.pubs')</a></li>
                         </ul>

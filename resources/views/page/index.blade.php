@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 @if($item->id==1)
     @include('includes.slider')
 @else
@@ -8,6 +9,7 @@
         {{$item->title}}
     @endcomponent
 @endif
+
 <div id="property-single">
     <div class="container">
         <div class="row">
@@ -39,7 +41,7 @@
                 </section>
                     @foreach($child->pubs as $pub)
                     <section class="widget property-meta-wrapper clearfix">
-                        <h2 class="title wow slideInLeft">{{$pub->title}}</h2>
+                        <h4 class="title wow slideInLeft">{{$pub->title}}</h4>
                         <div class="content-box-large box-with-header">
                             <a target="_blank" href="{{$pub->links?$pub->links:'#'}}"><img src="{{$pub->imageUrl()}}" class="img-rounded" alt="Cinque Terre" width="604" height="236"></a>
                         </div>
@@ -55,11 +57,11 @@
 </div>
 
 
-       <!-- ARTICLE ENREGISTREES -->
+<!-- Derniers Produits -->
 <div class="container">
   <header class="section-header text-center">
      <div class="container">
-       <h4 class="pull-left">Derniers Produits </h4>
+       <h4 class="pull-left">Derniers Produits</h4>
      </div>
   </header>
    <div class="row">
@@ -82,7 +84,7 @@
    </div>
 </div>
 
-   <!-- ARTICLE ENREGISTREES -->
+<!-- ARTICLE ENREGISTREES -->
 <div class="container">
  <header class="section-header text-center">
      <div class="container">

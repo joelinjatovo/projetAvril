@@ -277,13 +277,6 @@ class ShopController extends Controller
         $this->middleware('auth');
         $this->middleware('role:member');
         
-        $order = Session::has('order') ? Session::get('order') : false;
-        if(!$order){
-            return redirect()->route('shop.cart')
-                ->with('error', 'Votre panier est vide.');
-        }
-        
-        /**
         $this->validate($request, [
             'action' => 'required',
         ]);
@@ -297,6 +290,13 @@ class ShopController extends Controller
                 ->with('success', 'Votre commande a été reprise. Veuillez effectuer le paiement.');
         }
         
+        $order = Session::has('order') ? Session::get('order') : false;
+        if(!$order){
+            return redirect()->route('shop.cart')
+                ->with('error', 'Votre panier est vide.');
+        }
+        
+        /**
         $this->validate($request, [
             'stripe_token' => 'required',
         ]);
@@ -391,10 +391,15 @@ class ShopController extends Controller
                 ->with('error','Le systeme ne peut pas localiser le produit');
         }
 
-        if(!$product->state_id){
+        /*
+        if(!$product->state){
            return redirect()->route('product.index', $product)
                 ->with('error', "L'Etat sur lequel le produit se trouve est inconnu.");
         }
+        */
+        
+        $distance = $request->get('distance');
+        if(empty($distance)) $distance = 100;
             
         $data[] = [
           'id' => $product->id,
@@ -406,7 +411,7 @@ class ShopController extends Controller
         
         $afas = User::ofRole('afa')
             ->isActive()
-            ->where('state_id', $product->state_id)
+            //->where('state_id', $product->state_id)
             ->has('location')
             ->with('location')
             ->get();
@@ -422,9 +427,17 @@ class ShopController extends Controller
             ];
         }
         
+        $display = $request->display?$request->display:(Session::has('display')?Session::get('display'):'map');
+        if($display == 'list'){
+            Session::put('display', 'list');
+            $view = view('backend.afa.select_list');
+        }else{
+            Session::put('display', 'map');
+            $view = view('backend.afa.select_map');
+        }
+        
         $action = route('shop.select.afa', $product);
-    	return view('backend.afa.select')
-            ->with('action', $action)
+    	return $view->with('action', $action)
             ->with('location', Auth::user()->location)
             ->with('items', $afas)
             ->with('item', $product)

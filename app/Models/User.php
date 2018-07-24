@@ -324,6 +324,16 @@ class User extends Authenticatable
     }
     
     /**
+     * An user can have one state
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function state()
+    {
+      return $this->hasOne(State::class, 'id', 'state_id');
+    }
+    
+    /**
      * A user can have many session
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
