@@ -213,7 +213,7 @@
 @endsection
 
 @section('script')
-<script src="{{asset('js/myJs.js')}}"></script>
+<script src="{{asset('js/register.js')}}"></script>
 <script type="text/javascript">
     $(window).on('load',function(){
         $('#myModal').modal('show');
