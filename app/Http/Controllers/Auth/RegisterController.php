@@ -155,8 +155,6 @@ class RegisterController extends Controller
             ->first();
         switch($role){
             case "member":
-                $pays = $this->getPaysFromCsv();
-                $tels = $this->getTelsFromCsv();
                 return view('login.'.$role)
                     ->with('action', $action)
                     ->with('countries', Country::all())

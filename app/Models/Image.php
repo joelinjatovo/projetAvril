@@ -36,6 +36,19 @@ class Image extends BaseModel
         return $image;
     }
     
+    /**
+     * Get Url of Image OR Default Image
+     *
+     * @param Boolean $thumb
+     * @return String
+     */
+    public function imageUrl($thumb=false)
+    {
+        // Image is setted
+        if($thumb) return thumbnail($this->filepath);
+        return storage($this->filepath);
+    }
+    
     
     /**
      * A image can have many products

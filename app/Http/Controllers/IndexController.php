@@ -47,7 +47,7 @@ class IndexController extends Controller
             ->withCount('products')
             ->get();
         
-        return $this->render($request, 1)
+        return $this->render($request, '/')
             ->with('states',$states)
             ->with('locationTypes',$locationTypes)
             ->with('types',$types);
@@ -93,7 +93,7 @@ class IndexController extends Controller
      */
     public function services(Request $request)
     {
-        return $this->render($request, 3);
+        return $this->render($request, '/services');
     }
 
     /**
@@ -103,7 +103,7 @@ class IndexController extends Controller
      */
     public function publicities(Request $request)
     {
-        return $this->render($request, 5);
+        return $this->render($request, '/pubs');
     }
 
     /**
@@ -113,7 +113,7 @@ class IndexController extends Controller
      */
     public function terms(Request $request)
     {
-        return $this->render($request, 6);
+        return $this->render($request, '/terms');
     }
 
     /**
@@ -123,7 +123,7 @@ class IndexController extends Controller
      */
     public function help(Request $request)
     {
-        return $this->render($request, 8);
+        return $this->render($request, '/help');
     }
 
     /**
@@ -133,7 +133,7 @@ class IndexController extends Controller
      */
     public function confidentialities(Request $request)
     {
-        return $this->render($request, 7);
+        return $this->render($request, '/confidentialities');
     }
 
     /**
@@ -142,9 +142,12 @@ class IndexController extends Controller
      * @param Integer $id
      * @return \Illuminate\Http\Response
      */
-    private function render(Request $request, $id)
+    private function render(Request $request, $path)
     {
-        $page = Page::findOrFail($id);
+        $page = Page::where('path', $path)->where('parent_id', 0)->first();
+        if(!$page){
+            abort(404);
+        }
         $ctrl = new PageController();
         return $ctrl->index($request, $page);
     }

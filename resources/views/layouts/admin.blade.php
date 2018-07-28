@@ -260,6 +260,16 @@
                   </ul>
               </li>
               <li class="accordion-group">
+                <div class="accordion-heading">
+                    <a href="{{route('admin.image.list')}}" data-parent="" class="accordion-toggle"><i class="fontello-icon-user-4"></i> @lang('app.image.list')</a>
+                </div>
+              </li>
+              <li class="accordion-group">
+                <div class="accordion-heading">
+                    <a href="{{route('admin.search.list')}}" data-parent="" class="accordion-toggle"><i class="fontello-icon-user-4"></i> @lang('app.search')</a>
+                </div>
+              </li>
+              <li class="accordion-group">
                   <div class="accordion-heading">
                       <a href="#accBadWords" data-parent="#mainSideMenu" data-toggle="collapse" class="accordion-toggle {{\Request::is('admin/badword*')?'collapsed':''}}">
                         <i class="fa fa-envelope"></i>

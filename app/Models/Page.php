@@ -37,15 +37,23 @@ class Page extends BaseModel
     }
     
     /**
-     * Scope a query to only include pages of a current language.
+     * Return title switch selected language
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param mixed $role
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return String
      */
-    public function scopeLocale($query)
+    public function title()
     {
-        return $query->where('language', App::getLocale());
+        return \App::getLocale()=='fr'?$this->title:$this->title_en;
+    }
+    
+    /**
+     * Return content switch selected language
+     *
+     * @return String
+     */
+    public function content()
+    {
+        return \App::getLocale()=='fr'?$this->content:$this->content_en;
     }
     
     /**
@@ -54,9 +62,9 @@ class Page extends BaseModel
      * @param int $length
      * @return String
      */
-    public function excerpt($length = 100)
+    public function excerpt($language = 'fr', $length = 100)
     {
-        return substr($this->content, 0, $length);
+        return substr($language=='fr'?$this->content:$this->content_en, 0, $length);
     }
     
     /**
@@ -88,8 +96,7 @@ class Page extends BaseModel
     {
         return $this->hasMany(Page::class, 'parent_id', 'id')
             ->orderBy('page_order' , 'asc')
-            ->orderBy('title' , 'asc')
-            ->locale($this->language);
+            ->orderBy('title' , 'asc');
     }
     
     /**

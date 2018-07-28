@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Session;
 use Auth;
 
+use App\Notifications\AplChanged;
+
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\Category;
@@ -135,8 +137,8 @@ class ShopController extends Controller
             
             $data[] = [
               'id' => $product->id,
-              'lat' => $product->location?$product->location->latitude:0,
-              'lng' => $product->location?$product->location->longitude:0,
+              'lat' => $product->location->latitude,
+              'lng' => $product->location->longitude,
               'title' => $product->title,
               'type' => 'product',
             ];
@@ -191,11 +193,19 @@ class ShopController extends Controller
     public function postApl(Request $request, Product $product){
         $this->middleware('auth');
         $this->middleware('role:member');
-        
-        $apl = User::ofRole('apl')
-            ->isActive()
-            ->where('id', '=', $request->apl)
-            ->first();
+
+        $apl = null;
+        if($request->has('apl')){
+            $apl = User::ofRole('apl')
+                ->isActive()
+                ->where('id', '=', $request->apl)
+                ->first();
+        }else{
+    	   return redirect()
+               ->route('shop.select.apl', $product)
+               ->withInput()
+               ->with('error','Vous devez choisir un apl avant de reserver un produit.');
+        }
         
         if(!$apl){
     	   return redirect()
@@ -204,9 +214,23 @@ class ShopController extends Controller
                ->with('error','Vous devez choisir un apl avant de reserver un produit.');
         }
         
-        // Update User's APL
-        \Auth::user()->apl_id = $apl->id;
-        \Auth::user()->save();
+        if(!$request->input('confirm')){
+            return back()->withInput()
+               ->with('error','Vous devez accepter les termes et les conditions.');
+        }
+        
+        // Update APL
+        Auth::user()->apl_id = $apl->id;
+        Auth::user()->apl_ends_at = \Carbon\Carbon::now()->addDays(option('payment.apl_ends_at', 180));
+        Auth::user()->save();
+        
+        try{
+            Auth::user()->notify(new AplChanged(Auth::user(), $apl));
+        }catch(\Exception $e){}
+        
+        try{
+            $apl->notify(new AplChanged($apl, Auth::user()));
+        }catch(\Exception $e){}
         
         return $this->order($request, $product);
     }
@@ -266,7 +290,7 @@ class ShopController extends Controller
         if($order->status == 'ordered'){
             if($order->reserved_at && !$order->afa){
                 return redirect()->route('shop.select.afa')
-                                ->with('success', "Votre commande a été déjá éffectuée. Veuillez choisir l'AFA le plus proche du produit.");
+                    ->with('success', "Votre commande a été déjá éffectuée. Veuillez choisir l'AFA le plus proche du produit.");
             }
         }
         
@@ -296,7 +320,6 @@ class ShopController extends Controller
                 ->with('error', 'Votre panier est vide.');
         }
         
-        /**
         $this->validate($request, [
             'stripe_token' => 'required',
         ]);
@@ -350,7 +373,6 @@ class ShopController extends Controller
           return redirect()->to('shop.checkout')
               ->with('error', "Votre commande n'a pas été éffectuée. ".$result->message);
         }
-        **/
     
         // Set as order and notify user
         $order->setAsOrdered();

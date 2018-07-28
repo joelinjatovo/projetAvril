@@ -85,11 +85,12 @@ class PageController extends Controller
         
         $item = new Page();
         if($value = $request->old('title'))      $item->title = $value;
+        if($value = $request->old('title_en'))   $item->title_en = $value;
         if($value = $request->old('content'))    $item->content = $value;
+        if($value = $request->old('content_en')) $item->content_en = $value;
         if($value = $request->old('path'))       $item->path = $value;
         if($value = $request->old('page_order')) $item->page_order = $value;
         if($value = $request->old('parent_id'))  $item->parent_id = $value;
-        if($value = $request->old('language'))   $item->language = $value;
         
         $action = route('admin.page.store');
         $pages = Page::where('parent_id', 0)->get();
@@ -111,10 +112,10 @@ class PageController extends Controller
         // Validate request
         $datas = $request->all();
         $validator = Validator::make($datas,[
-                            'title' => 'required|max:100',
-                            'content' => 'required',
-                            'path' => 'required',
-                        ]);
+            'title' => 'required|max:100',
+            'content' => 'required',
+            'path' => 'required',
+        ]);
         
         if ($validator->fails()) {
             return back()->withErrors($validator)
@@ -124,11 +125,12 @@ class PageController extends Controller
         // Create page
         $page = new Page();
         $page->title = $request->title;
+        $page->title_en = $request->title_en;
         $page->content = $request->content;
+        $page->content_en = $request->content_en;
         $page->parent_id = $request->parent_id;
         $page->page_order = $request->page_order;
         $page->path = $request->path;
-        $page->language = $request->language;
         $page->save();
         
         return back()->with('success',"La page a été bien enregistrée.");
@@ -147,7 +149,9 @@ class PageController extends Controller
         $this->middleware('role:admin');
         
         if($value = $request->old('title'))      $page->title = $value;
+        if($value = $request->old('title_en'))   $page->title_en = $value;
         if($value = $request->old('content'))    $page->content = $value;
+        if($value = $request->old('content_en')) $page->content_en = $value;
         if($value = $request->old('path'))       $page->path = $value;
         if($value = $request->old('page_order')) $page->page_order = $value;
         if($value = $request->old('parent_id'))  $page->parent_id = $value;
@@ -173,10 +177,10 @@ class PageController extends Controller
         
         // Validate request
         $validator = Validator::make($request->all(),[
-                            'title' => 'required|max:100',
-                            'content' => 'required',
-                            'path' => 'required|max:100',
-                        ]);
+            'title' => 'required|max:100',
+            'content' => 'required',
+            'path' => 'required|max:100',
+        ]);
         
         if ($validator->fails()) {
             return back()->withErrors($validator)
@@ -184,11 +188,12 @@ class PageController extends Controller
         }
         
         $page->title = $request->title;
+        $page->title_en = $request->title_en;
         $page->content = $request->content;
+        $page->content_en = $request->content_en;
         $page->parent_id = $request->parent_id?$request->parent_id:0;
         $page->page_order = $request->page_order?$request->page_order:0;
         $page->path = $request->path;
-        $page->language = $request->language;
         $page->save();
         
         return back()->with('success',"La page a été bien modifiée.");
@@ -223,6 +228,8 @@ class PageController extends Controller
             $items = $items->where(function($query) use($q){
                 return $query->orWhere('title', 'LIKE', '%'.$q.'%')
                     ->orWhere('content', 'LIKE', '%'.$q.'%')
+                    ->orWhere('title_en', 'LIKE', '%'.$q.'%')
+                    ->orWhere('content_en', 'LIKE', '%'.$q.'%')
                     ->orWhere('path', 'LIKE', '%'.$q.'%');
             });
         }

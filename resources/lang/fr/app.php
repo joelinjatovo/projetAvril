@@ -110,6 +110,8 @@ return [
     'table.meta_desc' => "Meta DESC",
     'table.actions'=> "Actions",
     'table.customer'  => "Clients",
+    'table.path'  => "Path",
+    'table.filemime'  => "Mime Type",
     
     'form.login'      => "Nom d'utilisateur",
     'form.email'      => "Addresse Email",
@@ -267,6 +269,13 @@ return [
     'admin.plan.list'  => 'Liste des plans',
     'admin.plan.create'  => 'Ajouter un plan',
     'admin.plan.update'  => 'Modifier un plan',
+    
+    'name'            => 'Nom',
+    
+    'admin.search.list'      => 'Liste des recherches',
+    
+    'image.list'      => 'Liste des images',
+    'image.update'    => 'Modification des images',
     
     'shop.list'              => 'Liste des ventes',
     'shop.list.status'       => 'Liste des ventes ":status"',

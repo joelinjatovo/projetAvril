@@ -244,11 +244,11 @@ class MemberController extends Controller
         Auth::user()->save();
         
         try{
-            Auth::user()->notify(new AplChanged(Auth::user(), false));
+            Auth::user()->notify(new AplChanged(Auth::user(), $apl));
         }catch(\Exception $e){}
         
         try{
-            $apl->notify(new AplChanged(Auth::user(), true));
+            $apl->notify(new AplChanged($apl, Auth::user()));
         }catch(\Exception $e){}
         
     	return back()

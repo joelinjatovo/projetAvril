@@ -13,18 +13,19 @@ class AplChanged extends Notification
 {
     use Queueable;
 
-    private $user;
-    private $isApl;
+    private $user1;
+    
+    private $user2;
     
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(User $user, $isApl = false)
+    public function __construct(User $user1, User $user2)
     {
-        $this->user = $user;
-        $this->isApl = $isApl;
+        $this->user1 = $user1;
+        $this->user2 = $user2;
     }
 
     /**
@@ -35,7 +36,7 @@ class AplChanged extends Notification
      */
     public function setUser($user)
     {
-        $this->user = $user;
+        $this->user1 = $user;
 
         return $this;
     }
@@ -47,7 +48,7 @@ class AplChanged extends Notification
      */
     public function getUser()
     {
-        return $this->user;
+        return $this->user1;
     }
 
     /**
@@ -69,24 +70,25 @@ class AplChanged extends Notification
      */
     public function toMail($notifiable)
     {
-        if(!$this->isApl){
+        $user1 = $this->user1;
+        $user2 = $this->user2;
+        
+        if($user1->hasRole('member')){
             // Notify USER
             return (new MailMessage)
-                    ->from(env('ADMIN_MAIL'))
-                    ->subject('APL Changed')
-                    ->greeting(sprintf('Hello %s', $user->name))
-                    ->line('You have changed your APL.')
-                    ->action('View More', route('home'))
-                    ->line('Thank you for using our application!');
+                    ->subject('Agence Partenaire Locale modifié')
+                    ->greeting(sprintf('Bonjour %s', $user1->name))
+                    ->line('Vous venez de selectionner une nouvelle agence partenaire locale.')
+                    ->action("Contactez l'agence", route('member.contact'))
+                    ->line("Merci d'avoir utilisé notre application.");
         }
         // Notify APL
         return (new MailMessage)
-                ->from(env('ADMIN_MAIL'))
-                ->subject('Selected as APL')
-                ->greeting(sprintf('Hello %s', $user->name))
-                ->line('Someone have selected your account as APL.')
-                ->action('View More', route('home'))
-                ->line('Thank you for using our application!');
+                ->subject('Nouveau client')
+                ->greeting(sprintf('Bonjour %s', $user1->name))
+                ->line("Vous etes choisi par un client en tant que son agence partenaire locale.")
+                ->action('Contactez le client', route('apl.user.contact', $user2))
+                ->line("Merci d'avoir utilisé notre application.");
     }
 
     /**

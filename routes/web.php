@@ -359,6 +359,14 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::get('delete/{search}', 'SearchController@delete')->name('admin.search.delete');
     });
 
+    // Images Controller Groups
+    Route::get('images/{filter?}', 'ImageController@all')->name('admin.image.list');
+    Route::prefix('image')->group(function(){
+        Route::get('edit/{image}', 'ImageController@edit')->name('admin.image.edit');
+        Route::post('edit/{image}', 'ImageController@update')->name('admin.image.update');
+        Route::get('delete/{image}', 'ImageController@delete')->name('admin.image.delete');
+    });
+
     // Pub Controller Groups
     Route::get('pubs/{filter?}', 'PubController@allAdmin')->name('admin.pub.list');
     Route::prefix('pub')->group(function(){

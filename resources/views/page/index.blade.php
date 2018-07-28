@@ -6,7 +6,7 @@
     @include('includes.slider')
 @else
     @component('includes.breadcrumb')
-        {{$item->title}}
+        {{$item->title()}}
     @endcomponent
 @endif
 
@@ -14,13 +14,13 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-7">
-                @if(!empty($item->content))
+                @if(!empty($item->content()))
                 <section class="property-contents common">
                     <header class="section-header home-section-header">
-                       <h4 class="wow slideInRight">{{$item->title}}</h4>
+                       <h4 class="wow slideInRight">{{$item->title()}}</h4>
                     </header>
                     <div class="row">
-                        <div class="property-single-metax">{!!$item->content!!}</div>
+                        <div class="property-single-metax">{!!$item->content()!!}</div>
                         @if(Auth::check()&&Auth::user()->isAdmin())
                         <a href="{{route('admin.page.update',$item)}}" class="more pull-right"><i class="fa fa-pencil"></i> @lang('app.btn.edit')</a> 
                         @endif
@@ -30,10 +30,10 @@
                 @foreach($item->childs as $child)
                 <section class="property-contents common" id="page-{{$child->id}}">
                     <header class="section-header home-section-header">
-                       <h4 class="wow slideInRight">{{$child->title}}</h4>
+                       <h4 class="wow slideInRight">{{$child->title()}}</h4>
                     </header>
                     <div class="row">
-                        <div class="property-single-metax">{!!$child->content!!}</div>
+                        <div class="property-single-metax">{!!$child->content()!!}</div>
                         @if(Auth::check()&&Auth::user()->isAdmin())
                         <a href="{{route('admin.page.update',$child)}}" class="more pull-right"><i class="fa fa-pencil"></i> @lang('app.btn.edit')</a> 
                         @endif

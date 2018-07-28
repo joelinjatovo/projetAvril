@@ -11,17 +11,34 @@
                 <a href="{{route('admin.page.delete', $item)}}" class="btn btn-small btn-warning btn-delete">@lang('app.btn.delete')</a>
             </div>
             <div class="page-header">
-                <h3>{{$item->title}} <small>{{$item->path}}</small></h3>
+                <h3>{{$item->title}}</h3>
             </div>
             <div class="row-fluid">
                 <div class="grider">
                     <div class="widget widget-simple">
                         <div class="widget-header">
-                            <h4><small>@lang('app.description')</small></h4>
+                            <h4><small>@lang('app.description') (FR)</small></h4>
                         </div>
                         <div class="widget-content">
                             <div class="widget-body">
                                 {!!$item->content!!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-header">
+                <h3>{{$item->title_en}}</h3>
+            </div>
+            <div class="row-fluid">
+                <div class="grider">
+                    <div class="widget widget-simple">
+                        <div class="widget-header">
+                            <h4><small>@lang('app.description') (EN)</small></h4>
+                        </div>
+                        <div class="widget-content">
+                            <div class="widget-body">
+                                {!!$item->content_en!!}
                             </div>
                         </div>
                     </div>

@@ -11,15 +11,27 @@
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <section>
                 <div class="well well-nice">
-                    <h4 class="simple-header">@lang('app.admin.title')</h4>
+                    <h4 class="simple-header">@lang('app.admin.title') (FR)</h4>
                     <div class="control-group">
                         <input type="text" class="input-block-level" value="{{$item->title}}" name="title" placeholder="@lang('app.admin.title.desc')">
                     </div>
                 </div>
                 <div class="well well-nice">
-                    <h4 class="simple-header">@lang('app.admin.content')</h4>
+                    <h4 class="simple-header">@lang('app.admin.content') (FR)</h4>
                     <div class="control-group">
                         <textarea id="ckeditor" class="input-block-level" style="height: 320px" name="content" placeholder="@lang('app.admin.content.desc')">{!!$item->content!!}</textarea>
+                    </div>
+                </div>
+                <div class="well well-nice">
+                    <h4 class="simple-header">@lang('app.admin.title') (EN)</h4>
+                    <div class="control-group">
+                        <input type="text" class="input-block-level" value="{{$item->title_en}}" name="title_en" placeholder="@lang('app.admin.title.desc')">
+                    </div>
+                </div>
+                <div class="well well-nice">
+                    <h4 class="simple-header">@lang('app.admin.content') (EN)</h4>
+                    <div class="control-group">
+                        <textarea id="ckeditor" class="input-block-level" style="height: 320px" name="content_en" placeholder="@lang('app.admin.content.desc')">{!!$item->content_en!!}</textarea>
                     </div>
                 </div>
                 <div class="well well-nice">
@@ -47,17 +59,6 @@
                     <h4 class="simple-header">@lang('app.admin.page_order')</h4>
                     <div class="control-group">
                         <input type="number" min="0" class="input-block-level" value="{{$item->page_order}}" name="page_order" placeholder="@lang('app.admin.page_order.desc')">
-                    </div>
-                </div>
-            </section>
-            <section>
-                <div class="row-fluid">
-                    <div class="well well-nice">
-                        <h4 class="simple-header">@lang('app.admin.language')</h4>
-                        <select name="language" style="width:100%;" class="input-block-level" >
-                            <option value="fr">Francais</option>
-                            <option value="en">English</option>
-                        </select>
                     </div>
                 </div>
             </section>
