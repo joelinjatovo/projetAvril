@@ -176,7 +176,7 @@ class BlogController extends Controller
         
         $items = $items->paginate($record);
         
-        return view('admin.blog.list')
+        return view('admin.blog.all')
             ->with('q', $q) 
             ->with('record', $record) 
             ->with('title', $title)

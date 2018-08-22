@@ -1,9 +1,7 @@
-<table class="table boo-table table-striped table-hover">
+<table class="table boo-table table-striped table-hover items-list">
  <thead>
      <tr>
-         <th scope="col">@lang('app.table.photo') <span class="column-sorter"></span></th>
-         <th scope="col">@lang('app.table.title')/@lang('app.table.content') <span class="column-sorter"></span></th>
-         <th scope="col">@lang('app.table.price')<span class="column-sorter"></span></th>
+         <th scope="col">@lang('app.table.products') <span class="column-sorter"></span></th>
          <th scope="col">@lang('app.table.reservation')<span class="column-sorter"></span></th>
          <th scope="col">@lang('app.table.tma')<span class="column-sorter"></span></th>
          <th scope="col">@lang('app.table.cpc')<span class="column-sorter"></span></th>
@@ -18,15 +16,25 @@
  </thead>
  <tbody>
      @foreach($orders as $order)
-     <tr>
+     <tr class="item">
          <td>
-             <a href="{{route('admin.order.show', ['order'=>$order])}}"><img class="thumb" src="{{$order->product->imageUrl()}}" width="50"></a>
+             @if($product = $order->product)
+             <a  href="{{route('admin.product.show', $product)}}">
+              <div class="item-img">
+                <img src="{{$product->imageUrl()}}" alt="Product Image">
+              </div>
+              <div class="item-info">
+                <span class="item-title">
+                    {{$product->title}}
+                    <span class="label label-warning pull-right" title="@lang('app.price')">{{$product->price}}</span>
+                </span>
+                <span class="item-description">
+                  {{$product->excerpt()}}
+                </span>
+              </div>
+             </a>
+             @endif
          </td>
-         <td>
-             <a href="{{route('admin.order.show', ['order'=>$order])}}">{{$order->product->title}}</a><br>
-             {{$order->product->excerpt()}}
-         </td>
-         <td>{{$order->currency}} {{$order->price}}</td>
          <td>
              {{$order->currency}} {{$order->reservation}}
              <span class="badge badge-success">&nbsp;</span>
@@ -80,15 +88,17 @@
              @endif
          </td>
          <td>
-             @if($order->status=='pinged')
-                <form action="{{route('admin.order.show', $order)}}" method="post" class="pull-right">
-                    {{csrf_field()}}
-                    <input type="hidden" name="action" value="delete">
-                    <button type="submit" class="btn btn-success pull-left">@lang('app.btn.delete')</button>
-                </form>
-             @else
-             <a href="{{route('admin.invoice.show', $order)}}" class="btn btn-default">@lang('app.btn.view_invoice')</a>
-             @endif
+            <form class="pull-right" action="{{route('admin.order.list')}}" method="post">
+                {{csrf_field()}}
+                <input type="hidden" name="order" value="{{$order->id}}">
+                <div class="btn-group">
+                 @if($order->status=='pinged')
+                  <button type="button" class="btn btn-danger btn-delete"><i class="fa fa-trash-o"></i></button>
+                 @else
+                  <a href="{{route('admin.invoice.show', $order)}}" class="btn btn-default">@lang('app.btn.view_invoice')</a>
+                 @endif
+                </div>
+             </form>
              @if(!$order->isAplPaid())
                 <form action="{{route('admin.order.show', $order)}}" method="post" class="pull-right">
                     {{csrf_field()}}

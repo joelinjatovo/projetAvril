@@ -12,6 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
+    'short_name' => env('APP_NAME', 'IEA'),
     'name' => env('APP_NAME', 'Investir En Australie'),
 
     /*

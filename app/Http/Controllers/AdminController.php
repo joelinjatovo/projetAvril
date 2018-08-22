@@ -23,8 +23,18 @@ class AdminController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware('role:admin');
+        //$this->middleware('auth');
+//        /$this->middleware('role:admin');
+    }
+
+    /**
+     * Show the dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return view('admin');
     }
 
     /**

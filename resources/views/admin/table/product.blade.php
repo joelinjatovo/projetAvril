@@ -1,34 +1,40 @@
-<table class="table boo-table table-striped table-hover">
+<table class="table table-striped table-hover items-list">
  <thead>
      <tr>
-         <th scope="col">@lang('app.table.id') <span class="column-sorter"></span></th>
-         <th scope="col">@lang('app.table.photo') <span class="column-sorter"></span></th>
-         <th scope="col">@lang('app.table.title')/@lang('app.table.content') <span class="column-sorter"></span></th>
-         <th scope="col">@lang('app.table.price')/@lang('app.table.tma') <span class="column-sorter"></span></th>
+         <th scope="col">@lang('app.table.products') <span class="column-sorter"></span></th>
          <th scope="col">@lang('app.table.date') <span class="column-sorter"></span></th>
          <th scope="col">@lang('app.table.status') <span class="column-sorter"></span></th>
          <th scope="col">@lang('app.table.seller') <span class="column-sorter"></span></th>
          <th scope="col">@lang('app.table.author') <span class="column-sorter"></span></th>
-         <th scope="col">@lang('app.table.actions') </th>
+         <th scope="col" class="pull-right text-right" width="150px">@lang('app.table.actions') </th>
      </tr>
  </thead>
  <tbody>
      @foreach($products as $product)
-     <tr>
-         <td>{{$product->id}}</td>
+     <tr class="item">
          <td>
-             <a href="{{route('admin.product.show', ['product'=>$product])}}"><img class="thumb" src="{{$product->imageUrl()}}" width="50"></a>
+             <a  href="{{route('admin.product.show', $product)}}">
+              <div class="item-img">
+                <img src="{{$product->imageUrl()}}" alt="Product Image">
+              </div>
+              <div class="item-info">
+                <span class="item-title">
+                    {{$product->title}}
+                    <span class="label label-warning pull-right" title="@lang('app.price')">{{$product->price}}</span>
+                </span>
+                <span class="item-description">
+                  {{$product->excerpt()}}
+                </span>
+              </div>
+             </a>
          </td>
-         <td>
-             <a href="{{route('admin.product.show', ['product'=>$product])}}">{{$product->title}}</a><br>
-             {{$product->excerpt()}}
-         </td>
-         <td>{{$product->currency}} {{$product->price}} / {{$product->tma}}</td>
          <td>{{$product->created_at->diffForHumans()}}</td>
          <td>
              <a href="{{route('admin.product.list', ['filter'=>$product->status])}}">
                  @if($product->status=='published')
                  <span class="label label-success">{{$product->status}}</span>
+                 @elseif($product->status=='ordered')
+                 <span class="label label-danger">{{$product->status}}</span>
                  @else
                  <span class="label label-warning">{{$product->status}}</span>
                  @endif
@@ -45,17 +51,23 @@
              @endif
          </td>
          <td>
-         @if($product->status=='pinged' || $product->status=='archived')
-            <a href="{{route('admin.product.publish', $product)}}" class="btn btn-small btn-success btn-publish">@lang('app.btn.publish')</a>
-            <a href="{{route('admin.product.trash', $product)}}" class="btn btn-small btn-info btn-trash">@lang('app.btn.trash')</a>
-         @elseif($product->status=='trashed')
-            <a href="{{route('admin.product.restore', $product)}}" class="btn btn-small btn-info btn-restore">Restore</a>
-         @endif
-         @if($product->status=='published')
-            <a href="{{route('admin.product.archive', $product)}}" class="btn btn-small btn-default  btn-archive">@lang('app.btn.archive')</a>
-            <a href="{{route('admin.product.trash', $product)}}" class="btn btn-small btn-info btn-trash">@lang('app.btn.trash')</a>
-         @endif
-            <a href="{{route('admin.product.delete', $product)}}" class="btn btn-small btn-warning btn-delete">@lang('app.btn.delete')</a>
+            <form class="pull-right" action="{{route('admin.product.list')}}" method="post">
+                {{csrf_field()}}
+                <input type="hidden" name="product" value="{{$product->id}}">
+                <div class="btn-group">
+                 @if($product->status=='pinged' || $product->status=='archived')
+                  <button type="button" class="btn btn-default btn-publish">@lang('app.btn.publish')</button>
+                  <button type="button" class="btn btn-default btn-trash">@lang('app.btn.trash')</button>
+                 @elseif($product->status=='trashed')
+                  <button type="button" class="btn btn-default btn-restore">@lang('app.btn.restore')</button>
+                  <button type="button" class="btn btn-danger btn-delete"><i class="fa fa-trash-o"></i></button>
+                 @endif
+                 @if($product->status=='published')
+                  <button type="button" class="btn btn-default btn-archive">@lang('app.btn.archive')</button>
+                  <button type="button" class="btn btn-warning btn-delete"><i class="fa fa-trash-o"></i></button>
+                 @endif
+                </div>
+             </form>
          </td>
      </tr>
      @endforeach

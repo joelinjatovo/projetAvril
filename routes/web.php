@@ -11,6 +11,8 @@
 |
 */
 
+Route::get('admin-lte','AdminController@index');
+
 Route::get('mail/basic','MailController@basic_email');
 Route::get('mail/html','MailController@html_email');
 Route::get('mail/attachment','MailController@attachment_email');

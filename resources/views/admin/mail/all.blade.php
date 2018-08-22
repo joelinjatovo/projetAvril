@@ -1,79 +1,111 @@
-@extends('layouts.admin')
+@extends('layouts.admin-mail')
 
-@section('content')
-<div id="main-content" class="main-content container-fluid">
-    <div class="row-fluid page-head">
-        <h2 class="page-title"> @lang('app.admin.mail.list') </h2>
-    </div>
-    <div>
-        <h4>@lang('app.search.filter')</h4>
-        <form method="get" action="">
-            <div class="col-md-3">
-                <input id="q" type="text" class="form-control" name="q" placeholder="@lang('app.search')" title="@lang('app.search')" value="{{$q}}">
-            </div>
-            <div class="col-md-3">
-                <select class="form-control" name="receiver">
-                    <option value="0">@lang('app.select_user')</option>
-                    @foreach($users as $user)
-                        <option {{$receiver==$user->id?'selected':''}} value="{{$user->id}}">{{$user->name}}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-md-3">
-                <input id="number" type="number" class="form-control" name="record" title="Nombre par page" placeholder="Nombre par page" min="10" value="{{$record}}">
-            </div>
-            <div class="col-md-3">
-                <button type="submit" class="btn btn-success">@lang('app.btn.search')</button>
-            </div>
-        </form>
-    </div>
-    <br>
-    <br>
-    <div id="page-content" class="page-content">
-        <div class="row-fluid">
-            <div class="span12">
-                <a href="{{route('admin.mail.compose')}}" class="btn btn-green btn-glyph" >@lang('app.btn.compose')</a>
-            </div>
+@section('mailbox')
+  <div class="box box-primary">
+    <div class="box-header with-border">
+      <h3 class="box-title">Inbox</h3>
+
+      <div class="box-tools pull-right">
+        <div class="has-feedback">
+          <input type="text" class="form-control input-sm" placeholder="Search Mail">
+          <span class="glyphicon glyphicon-search form-control-feedback"></span>
         </div>
-        <br>
-        <section>
-            <div class="row-fluid">
-                <div class="span12">
-                    @include('includes.alerts')
-                    <table class="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">ID <span class="column-sorter"></span></th>
-                                <th scope="col">Subject<span class="column-sorter"></span></th>
-                                <th scope="col">Contenu<span class="column-sorter"></span></th>
-                                <th scope="col">Sender<span class="column-sorter"></span></th>
-                                <th scope="col">Status<span class="column-sorter"></span></th>
-                                <th scope="col">Date<span class="column-sorter"></span></th>
-                                <th scope="col">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                          @foreach($items as $item) 
-                            <tr>
-                                <td>{{$item->id}}</td>
-                                <td>{{$item->subject}}</td>
-                                <td>{{$item->content}}</td>
-                                <td>{{$item->sender?$item->sender->name:''}} <span class="badge badge-info">{{$item->sender?$item->sender->role:''}}</span></td>
-                                <td>{{$item->status}}</span></td>
-                                <td>{{$item->created_at->diffForHumans()}}</td>
-                                <td>
-                                    <a href="{{route('admin.mail.index', $item)}}"  class="btn btn-small btn-info">@lang('app.btn.view')</a>
-                                    <a href="{{route('admin.mail.compose', $item)}}"  class="btn btn-small btn-success">@lang('app.btn.send')</a>
-                                    <a href="{{route('admin.mail.delete', $item)}}" class="btn btn-small btn-warning btn-delete">@lang('app.btn.delete')</a>
-                                </td>
-                            </tr>
-                           @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                {{$items->links()}}
-            </div>
-        </section>
+      </div>
+      <!-- /.box-tools -->
     </div>
-</div>
+    <!-- /.box-header -->
+    <div class="box-body no-padding">
+      <div class="mailbox-controls">
+        <!-- Check all button -->
+        <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
+        </button>
+        <div class="btn-group">
+          <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
+          <button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
+          <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
+        </div>
+        <!-- /.btn-group -->
+        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
+        <div class="pull-right">
+          1-50/200
+          <div class="btn-group">
+            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
+            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
+          </div>
+          <!-- /.btn-group -->
+        </div>
+        <!-- /.pull-right -->
+      </div>
+      <div class="table-responsive mailbox-messages">
+        <table class="table table-hover table-striped items-list">
+          <tbody>
+          @foreach($items as $item) 
+          <tr class="item">
+            <td><input type="checkbox"></td>
+            <td>
+             @if($item->sender)
+                 <a  href="{{route('admin.user.show', $item->sender)}}">
+                  <div class="item-img">
+                    <img class="img-circle" src="{{$item->sender->imageUrl()}}" alt="sender Image">
+                  </div>
+                  <div class="item-info">
+                    <span class="item-title">
+                        {{$item->sender->name}}
+                        @if($item->sender->isOnline())
+                        <span class="badge badge-warning pull-right" style="background-color:green;">&nbsp;</span>
+                        @endif
+                    </span>
+                    <span class="item-description">
+                      {{$item->sender->email}}
+                    </span>
+                  </div>
+                 </a>
+             @endif
+            </td>
+            <td class="mailbox-star"><a href="#"><i class="fa fa-star text-yellow"></i></a></td>
+            <td class="mailbox-subject"><b>{{$item->subject}}</b> - {{$item->excerpt(20)}}
+            </td>
+            <td class="mailbox-attachment"><i class="fa fa-paperclip"></i></td>
+            <td class="mailbox-date">{{$item->created_at->diffForHumans()}}</td>
+            <td>
+               <div class="btn-group">
+                <a href="{{route('admin.mail.index', $item)}}"  class="btn btn-default"><i class="fa fa-eye"></i> @lang('app.btn.view')</a>
+                <a href="{{route('admin.mail.compose', $item)}}"  class="btn btn-default"><i class="fa fa-send"></i> @lang('app.btn.resend')</a>
+                <a href="{{route('admin.mail.delete', $item)}}" class="btn btn-small btn-danger btn-delete"><i class="fa fa-trash-o"></i></a>
+               </div>
+            </td>
+          </tr>
+          @endforeach
+          </tbody>
+        </table>
+        <!-- /.table -->
+      </div>
+      <!-- /.mail-box-messages -->
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer no-padding">
+      <div class="mailbox-controls">
+        <!-- Check all button -->
+        <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
+        </button>
+        <div class="btn-group">
+          <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
+          <button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
+          <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
+        </div>
+        <!-- /.btn-group -->
+        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
+        <div class="pull-right">
+          1-50/200
+          <div class="btn-group">
+            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
+            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
+          </div>
+          <!-- /.btn-group -->
+        </div>
+        <!-- /.pull-right -->
+      </div>
+    </div>
+  </div>
+  <!-- /. box -->
 @endsection
