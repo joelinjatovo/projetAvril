@@ -6,6 +6,8 @@
   <title>Admin{{isset($title)?' - '.$title:''}} - {{app_name()}}</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  
+@section('style')
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="{{asset('lte/plugins/bootstrap/dist/css/bootstrap.min.css')}}">
   <!-- Font Awesome -->
@@ -34,6 +36,8 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 
+@show
+ 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
@@ -395,18 +399,6 @@
             <li><a class="{{Request::is('admin/blogs/trashed')?'active':''}}" href="{{route('admin.blog.list', ['filter'=>'trashed'])}}"><i class="fa fa-circle-o"></i>@lang('app.admin.blog.trash')</a></li>
           </ul>
         </li>
-        <li class="{{Request::is('admin/categor*')?'active':''}} treeview">
-          <a href="#">
-            <i class="fa fa-th"></i> <span>@lang('app.admin.categories')</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a class="{{Request::is('admin/category')?'active':''}}" href="{{route('admin.category.create')}}"><i class="fa fa-plus"></i>@lang('app.admin.category.add')</a></li>
-            <li><a class="{{Request::is('admin/categories')?'active':''}}" href="{{route('admin.category.list')}}"><i class="fa fa-circle-o"></i>@lang('app.admin.category.list')</a></li>
-          </ul>
-        </li>
         <li class="{{Request::is('admin/pub*')?'active':''}} treeview">
           <a href="#">
             <i class="fa fa-columns"></i> <span>@lang('app.admin.pubs')</span>
@@ -431,103 +423,53 @@
             <li><a class="{{Request::is('admin/pages')?'active':''}}" href="{{route('admin.page.list')}}"><i class="fa fa-circle-o"></i>@lang('app.admin.page.list')</a></li>
           </ul>
         </li>
-        <li class="{{Request::is('admin/badword*')?'active':''}} treeview">
-          <a href="#">
-            <i class="fa fa-leaf"></i> <span>@lang('app.admin.badwords')</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+        <li class="{{Request::is('admin/categor*')?'active':''}}">
+          <a href="{{route('admin.category.list')}}">
+            <i class="fa fa-th"></i> <span>@lang('app.admin.categories')</span>
           </a>
-          <ul class="treeview-menu">
-            <li><a class="{{Request::is('admin/badword')?'active':''}}" href="{{route('admin.badword.create')}}"><i class="fa fa-plus"></i>@lang('app.admin.badword.add')</a></li>
-            <li><a class="{{Request::is('admin/badwords')?'active':''}}" href="{{route('admin.badword.list')}}"><i class="fa fa-circle-o"></i>@lang('app.admin.badword.list')</a></li>
-          </ul>
         </li>
-        <li class="{{Request::is('admin/postalcode*')?'active':''}} treeview">
-          <a href="#">
+        <li class="header">LOCALISATIONS</li>
+        <li class="{{Request::is('admin/postalcode*')?'active':''}}">
+          <a href="{{route('admin.postalcode.list')}}">
             <i class="fa fa-map-marker"></i> <span>@lang('app.admin.postalcodes')</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
           </a>
-          <ul class="treeview-menu">
-            <li><a class="{{Request::is('admin/postalcode')?'active':''}}" href="{{route('admin.postalcode.create')}}"><i class="fa fa-plus"></i>@lang('app.admin.postalcode.add')</a></li>
-            <li><a class="{{Request::is('admin/postalcodes')?'active':''}}" href="{{route('admin.postalcode.list')}}"><i class="fa fa-circle-o"></i>@lang('app.admin.postalcode.list')</a></li>
-          </ul>
         </li>
-        <li class="{{Request::is('admin/state*')?'active':''}} treeview">
-          <a href="#">
+        <li class="{{Request::is('admin/state*')?'active':''}}">
+          <a href="{{route('admin.state.list')}}">
             <i class="fa fa-map-signs"></i> <span>@lang('app.admin.states')</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
           </a>
-          <ul class="treeview-menu">
-            <li><a class="{{Request::is('admin/state')?'active':''}}" href="{{route('admin.state.create')}}"><i class="fa fa-plus"></i>@lang('app.admin.state.add')</a></li>
-            <li><a class="{{Request::is('admin/states')?'active':''}}" href="{{route('admin.state.list')}}"><i class="fa fa-circle-o"></i>@lang('app.admin.state.list')</a></li>
-          </ul>
         </li>
-        <li class="{{Request::is('admin/plan*')?'active':''}} treeview">
-          <a href="#">
+        <li class="header">SYSTEMS</li>
+        <li class="{{Request::is('admin/badword*')?'active':''}}">
+          <a href="{{route('admin.badword.list')}}">
+            <i class="fa fa-leaf"></i> <span>@lang('app.admin.badwords')</span>
+          </a>
+        </li>
+        <li class="{{Request::is('admin/plan*')?'active':''}}">
+          <a href="{{route('admin.plan.list')}}">
             <i class="fa fa-bank"></i> <span>@lang('app.admin.plans')</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a class="{{Request::is('admin/plan')?'active':''}}" href="{{route('admin.plan.create')}}"><i class="fa fa-plus"></i>@lang('app.admin.plan.add')</a></li>
-            <li><a class="{{Request::is('admin/plans')?'active':''}}" href="{{route('admin.plan.list')}}"><i class="fa fa-circle-o"></i>@lang('app.admin.plan.list')</a></li>
-          </ul>
-        </li>
-        <li class="{{Request::is('*config*')?'active':''}} treeview">
-          <a href="#">
-            <i class="fa fa-cogs"></i> <span>@lang('app.configs')</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a class="{{Request::is('admin/config')?'active':''}}" href="{{route('config.login')}}"> <i class="fa fa-circle-o text-red"></i>@lang('app.config.login')</a></li>
-            <li><a class="{{Request::is('admin/config')?'active':''}}" href="{{route('config.social')}}"> <i class="fa fa-circle-o text-yellow"></i>@lang('app.config.social')</a></li>
-            <li><a class="{{Request::is('admin/config')?'active':''}}" href="{{route('config.payment')}}"> <i class="fa fa-circle-o text-aqua"></i>@lang('app.config.payment')</a></li>
-          </ul>
-        </li>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-files-o"></i>
-            <span>Layout Options</span>
-            <span class="pull-right-container">
-              <span class="label label-primary pull-right">4</span>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="pages/layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
-            <li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-            <li><a href="pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
-            <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="pages/widgets.html">
-            <i class="fa fa-th"></i> <span>Widgets</span>
-            <span class="pull-right-container">
-              <small class="label pull-right bg-green">new</small>
-            </span>
           </a>
         </li>
-        <li class="header">LABELS</li>
-        <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
+        <li class="header text-red">CONFIGS</li>
+        <li class="{{Request::is('admin/config/site')?'active':''}}">
+          <a href="{{route('config.site')}}">
+            <i class="fa fa-desktop text-aqua"></i> <span>@lang('app.config.site')</span>
+          </a>
+        <li class="{{Request::is('admin/config/login')?'active':''}}">
+          <a href="{{route('config.login')}}">
+            <i class="fa fa-lock text-aqua"></i> <span>@lang('app.config.login')</span>
+          </a>
+        </li>
+        <li class="{{Request::is('admin/config/social')?'active':''}}">
+          <a href="{{route('config.social')}}">
+            <i class="fa fa-snowflake-o text-aqua"></i> <span>@lang('app.config.social')</span>
+          </a>
+        </li>
+        <li class="{{Request::is('admin/config/payment')?'active':''}}">
+          <a href="{{route('config.payment')}}">
+            <i class="fa fa-credit-card text-aqua"></i> <span>@lang('app.config.payment')</span>
+          </a>
+        </li>
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -564,6 +506,7 @@
 
     <!-- Main content -->
     <section class="content">
+    @include('includes.alerts')
     @yield('content')
     </section>
     <!-- /.content -->
@@ -769,6 +712,7 @@
 </div>
 <!-- ./wrapper -->
 
+@section('script')
 <!-- jQuery 3 -->
 <script src="{{asset('lte/plugins/jquery/dist/jquery.min.js')}}"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -806,5 +750,6 @@
 <script src="{{asset('lte/js/pages/dashboard.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('lte/js/demo.js')}}"></script>
+@show
 </body>
 </html>

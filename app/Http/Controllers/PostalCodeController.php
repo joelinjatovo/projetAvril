@@ -30,26 +30,14 @@ class PostalCodeController extends Controller
      */
     public function all(Request $request)
     {
-        $title = __('app.admin.postalcode.list');
+        $postalcode = new PostalCode();
+        if($value = $request->old('content')) $postalcode->content = $value;
+
+        $action = route('admin.postalcode.store');
         
-        $items = new PostalCode();
-        
-        $record = $request->get('record');
-        if(!$record) $record = $this->pageSize;
-        
-        $q = $request->get('q');
-        $q = trim($q);
-        if($q){
-            $items = $items->where('content', 'LIKE', '%'.$q.'%');
-        }
-        
-        $items = $items->paginate($record);
-        
-        return view('admin.postalcode.all')
-            ->with('q', $q) 
-            ->with('record', $record) 
-            ->with('title', $title)
-            ->with('items', $items); 
+        return $this->_listAll($request)
+            ->with('item', $postalcode)
+            ->with('action', $action);
     }
     
     
@@ -61,15 +49,7 @@ class PostalCodeController extends Controller
      */
     public function create(Request $request)
     {
-        $postalcode = new PostalCode();
-        if($value = $request->old('content')) $postalcode->content = $value;
-
-        $action = route('admin.postalcode.store');
-        
-        return view('admin.postalcode.update')
-            ->with('title', __('app.admin.postalcode.create'))
-            ->with('item', $postalcode)
-            ->with('action', $action);
+        return $this->all($request);
     }
 
     /**
@@ -108,11 +88,9 @@ class PostalCodeController extends Controller
     public function edit(Request $request, PostalCode $postalcode)
     {
         if($value = $request->old('content')) $postalcode->content = $value;
-
         $action = route('admin.postalcode.update', ['postalcode'=>$postalcode]);
         
-        return view('admin.postalcode.update')
-            ->with('title', __('app.admin.postalcode.update'))
+        return $this->_listAll($request)
             ->with('item', $postalcode)
             ->with('action', $action);
     }
@@ -158,6 +136,37 @@ class PostalCodeController extends Controller
         
         return redirect()->route('admin.dashboard')
             ->with('success',"Le code postal a été supprimé avec succés");
+    }
+
+    /**
+     * return view to show list of postal code
+     * Admin Only
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    private function _listAll(Request $request)
+    {
+        $title = __('app.admin.postalcode.list');
+        
+        $items = new PostalCode();
+        
+        $record = $request->get('record');
+        if(!$record) $record = $this->pageSize;
+        
+        $q = $request->get('q');
+        $q = trim($q);
+        if($q){
+            $items = $items->where('content', 'LIKE', '%'.$q.'%');
+        }
+        
+        $items = $items->paginate($record);
+        
+        return view('admin.postalcode.all')
+            ->with('q', $q) 
+            ->with('record', $record) 
+            ->with('title', $title)
+            ->with('items', $items); 
     }
 
 }

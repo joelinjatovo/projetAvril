@@ -49,7 +49,7 @@
               <button type="submit" class="btn btn-default" name="method" value="model"><i class="fa fa-tag"></i> @lang('app.btn.save_as_model')</button>
               <button type="submit" class="btn btn-info" name="method" value="send"><i class="fa fa-envelope-o"></i> @lang('app.btn.send')</button>
           </div>
-          <button type="reset" class="btn btn-default"><i class="fa fa-times"></i> Discard</button>
+          <button type="reset" class="btn btn-default"><i class="fa fa-times"></i> @lang('app.btn.discard')</button>
         </div>
         <!-- /.box-footer -->
     </div>

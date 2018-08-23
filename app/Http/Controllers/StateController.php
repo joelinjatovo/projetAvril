@@ -30,27 +30,13 @@ class StateController extends Controller
      */
     public function all(Request $request)
     {
-        $title = __('app.admin.state.list');
+        $state = new State();
+        if($value = $request->old('content')) $state->content = $value;
+        $action = route('admin.state.store');
         
-        $items = new State();
-        
-        $record = $request->get('record');
-        if(!$record) $record = $this->pageSize;
-        
-        $q = $request->get('q');
-        $q = trim($q);
-        if($q){
-            $items = $items->where('content', 'LIKE', '%'.$q.'%');
-        }
-        
-        $items = $items->paginate($record);
-        
-        return view('admin.state.all')
-            ->with('q', $q) 
-            ->with('record', $record) 
-            ->with('title', $title)
-            ->with('items', $items)
-            ->with('breadcrumbs', $title);
+        return $this->_listAll($request)
+            ->with('item', $state)
+            ->with('action', $action);
     }
     
     
@@ -62,16 +48,7 @@ class StateController extends Controller
      */
     public function create(Request $request)
     {
-        $state = new State();
-        if($value = $request->old('content')) $state->content = $value;
-
-        $action = route('admin.state.store');
-        
-        return view('admin.state.update')
-            ->with('title', __('app.admin.state.create'))
-            ->with('item', $state)
-            ->with('action', $action)
-            ->with('breadcrumbs', __('app.admin.state.create'));
+        return $this->all($request);
     }
 
     /**
@@ -110,14 +87,11 @@ class StateController extends Controller
     public function edit(Request $request, State $state)
     {
         if($value = $request->old('content')) $state->content = $value;
-
         $action = route('admin.state.update', ['state'=>$state]);
         
-        return view('admin.state.update')
-            ->with('title', __('app.admin.state.update'))
+        return $this->_listAll($request)
             ->with('item', $state)
-            ->with('action', $action)
-            ->with('breadcrumbs', __('app.admin.state.update'));
+            ->with('action', $action);
     }
 
     /**
@@ -161,6 +135,38 @@ class StateController extends Controller
         
         return redirect()->route('admin.dashboard')
             ->with('success',"L'Etat a été supprimé avec succés");
+    }
+
+    /**
+     * return view to show list of state
+     * Admin Only
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    private function _listAll(Request $request)
+    {
+        $title = __('app.admin.state.list');
+        
+        $items = new State();
+        
+        $record = $request->get('record');
+        if(!$record) $record = $this->pageSize;
+        
+        $q = $request->get('q');
+        $q = trim($q);
+        if($q){
+            $items = $items->where('content', 'LIKE', '%'.$q.'%');
+        }
+        
+        $items = $items->paginate($record);
+        
+        return view('admin.state.all')
+            ->with('q', $q) 
+            ->with('record', $record) 
+            ->with('title', $title)
+            ->with('items', $items)
+            ->with('breadcrumbs', $title);
     }
 
 }

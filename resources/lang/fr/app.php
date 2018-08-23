@@ -377,17 +377,29 @@ return [
     'reference'   => 'Reference',
     'status'      => 'Statut',
     
+    'admin.admin_name'  => "Nom de l'administrateur",
+    'admin.admin_email' => "Email de l'administrateur",
+    'admin.admin_phone' => "Téléphone de l'administrateur",
+    
+    'admin.meta_title' => "Titre du site web",
+    'admin.meta_desc' => "Meta description du site web",
+    'admin.meta_desc.desc' => "Ajouter le meta description du site web",
+    'admin.meta_keywords' => "Mots clés du site web",
+    'admin.meta_keywords.desc' => "Ajouter les mots clés du site web",
+    
     'admin.location'   => 'Localisation',
     'admin.locality'   => 'Localité',
     'admin.zip'        => 'Zip',
     'admin.postalCode' => 'Code Postal',
     'admin.street'     => 'Rue',
-    'admin.address'    => 'Adresse',
     'admin.suburb'     => 'Suburb',
     'admin.city'       => 'Ville',
     'admin.region'     => 'Région',
     'admin.country'    => 'Pays',
     'admin.state'      => 'Etat',
+    
+    'admin.address'    => 'Adresse',
+    'admin.address.desc'   => 'Ajouter une adresse',
     
     'admin.parent'   => 'Parent',
     'admin.language'   => 'Langue',
@@ -424,6 +436,9 @@ return [
     
     'admin.content'   => 'Contenu',
     'admin.content.desc'   => 'Ajouter les paragraphes',
+    
+    'admin.contact'      => 'Contact',
+    'admin.contact.desc' => 'Ajouter un contact',
     
     'admin.link'   => 'Lien URL',
     'admin.link.desc'   => 'Ajouter un lien URL',
@@ -589,6 +604,7 @@ return [
     'btn.view'           => 'Voir',
     'btn.view_invoice'   => 'Voir la facture',
     'btn.more'           => 'Plus',
+    'btn.discard'        => 'Annuler',
     'btn.reset'          => 'Annuler',
     'btn.archive'        => 'Archiver',
     'btn.trash'          => 'Ajouter aux corbeilles',

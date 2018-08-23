@@ -1,71 +1,89 @@
-@extends('layouts.admin')
+@extends('layouts.lte')
 
 @section('content')
-<div id="main-content" class="main-content container-fluid">
-    <div id="page-content" class="page-content">
-        <section>
-            <div class="page-header">
-                <h3>@lang('app.login')</h3>
-            </div>
-            @include('includes.alerts')
-            <form method="post" action="{{route('config.login.update')}}">
-                <input type="hidden" name="_token" value="{{csrf_token()}}">
-                <div class="row-fluid">
-                    <div class="span12 well well-nice">
-                        <div class="span6">
-                            <label for="title[fr]">Titre</label>
-                            <input id="title[fr]" class="input-block-level" type="text" name="title[fr]" 
-                                value="{{old('title.fr')?old('title.fr'):$item->get_meta_array('title', 'fr', '')}}"
-                                   >
-                        </div>
-                        <div class="span6">
-                            <label for="title[en]">Title</label>
-                            <input id="title[en]" class="input-block-level" type="text" name="title[en]" 
-                                value="{{old('title.en')?old('title.en'):$item->get_meta_array('title', 'en', '')}}">
-                        </div>
+<div class="row">
+    <form method="post" action="{{route('config.login.update')}}">
+        {{csrf_field()}}
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Français</h3>
+                  <div class="box-tools">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="box-body">
+                    <!-- title input -->
+                    <div class="form-group">
+                      <label>@lang('app.admin.title')</label>
+                      <input name="title[fr]" type="text" class="form-control" value="{{old('title.fr',$item->get_meta_array('title', 'fr', ''))}}">
+                    </div>
+                    <!-- content -->
+                    <div class="form-group">
+                      <label>@lang('app.admin.content')</label>
+                      <textarea name="content[fr]" class="form-control" rows="3" placeholder="@lang('app.admin.content.desc')">{!!old('content.fr',$item->get_meta_array('content', 'fr', ''))!!}</textarea>
+                      <span class="help-block">@lang('app.admin.content.desc')</span>
+                    </div>
+                    <!-- address -->
+                    <div class="form-group">
+                      <label>@lang('app.admin.address')</label>
+                      <textarea name="address[fr]" class="form-control" rows="3" placeholder="@lang('app.admin.address.desc')">{!!old('address.fr',$item->get_meta_array('address', 'fr', ''))!!}</textarea>
+                      <span class="help-block">@lang('app.admin.address.desc')</span>
+                    </div>
+                    <!-- contact -->
+                    <div class="form-group">
+                      <label>@lang('app.admin.contact')</label>
+                      <textarea name="contact[fr]" class="form-control" rows="3" placeholder="@lang('app.admin.contact.desc')">{!!old('contact.fr',$item->get_meta_array('contact', 'fr', ''))!!}</textarea>
+                      <span class="help-block">@lang('app.admin.contact.desc')</span>
                     </div>
                 </div>
-                <div class="row-fluid">
-                    <div class="span12 well well-nice">
-                        <div class="span6">
-                            <label for="content[fr]">Contenu</label>
-                            <textarea id="content[fr]" class="input-block-level" type="text" name="content[fr]">{{old('content.fr')?old('content.fr'):$item->get_meta_array('content', 'fr', '')}}</textarea>
-                        </div>
-                        <div class="span6">
-                            <label for="content[en]">Content</label>
-                            <textarea id="content[en]" class="input-block-level" type="text" name="content[en]">{{old('content.en')?old('content.en'):$item->get_meta_array('content', 'en', '')}}</textarea>
-                        </div>
+                <!-- /.box-body -->
+           </div>
+        </div>
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">English</h3>
+                  <div class="box-tools">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="box-body">
+                    <!-- title input -->
+                    <div class="form-group">
+                      <label>@lang('app.admin.title')</label>
+                      <input name="title[en]" type="text" class="form-control" value="{{old('title.en',$item->get_meta_array('title', 'en', ''))}}">
+                    </div>
+                    <!-- content -->
+                    <div class="form-group">
+                      <label>@lang('app.admin.content')</label>
+                      <textarea name="content[en]" class="form-control" rows="3" placeholder="@lang('app.admin.content.desc')">{!!old('content.en',$item->get_meta_array('content', 'en', ''))!!}</textarea>
+                      <span class="help-block">@lang('app.admin.content.desc')</span>
+                    </div>
+                    <!-- address -->
+                    <div class="form-group">
+                      <label>@lang('app.admin.address')</label>
+                      <textarea name="address[en]" class="form-control" rows="3" placeholder="@lang('app.admin.address.desc')">{!!old('address.en',$item->get_meta_array('address', 'en', ''))!!}</textarea>
+                      <span class="help-block">@lang('app.admin.address.desc')</span>
+                    </div>
+                    <!-- contact -->
+                    <div class="form-group">
+                      <label>@lang('app.admin.contact')</label>
+                      <textarea name="contact[en]" class="form-control" rows="3" placeholder="@lang('app.admin.contact.desc')">{!!old('contact.en',$item->get_meta_array('contact', 'en', ''))!!}</textarea>
+                      <span class="help-block">@lang('app.admin.contact.desc')</span>
                     </div>
                 </div>
-                <div class="row-fluid">
-                    <div class="span12 well well-nice">
-                        <div class="span6">
-                            <label for="address[fr]">Adresse</label>
-                            <textarea id="address[fr]" class="input-block-level" type="text" name="address[fr]">{{old('address.fr')?old('address.fr'):$item->get_meta_array('address', 'fr', '')}}</textarea>
-                        </div>
-                        <div class="span6">
-                            <label for="address[en]">Address</label>
-                            <textarea id="address[en]" class="input-block-level" type="text" name="address[en]" >{{old('address.en')?old('address.en'):$item->get_meta_array('address', 'en', '')}}</textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="row-fluid">
-                    <div class="span12 well well-nice">
-                        <div class="span6">
-                            <label for="contact[fr]">Contact</label>
-                            <textarea id="contact[fr]" class="input-block-level" type="text" name="contact[fr]">{{old('contact.fr')?old('contact.fr'):$item->get_meta_array('contact', 'fr', '')}}</textarea>
-                        </div>
-                        <div class="span6">
-                            <label for="contact[en]">Contact</label>
-                            <textarea id="contact[en]" class="input-block-level" type="text" name="contact[en]" >{{old('contact.en')?old('contact.en'):$item->get_meta_array('contact', 'en', '')}}</textarea>
-                        </div>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary">@lang('app.btn.save')</button>
-                <button type="reset" class="btn btn-default">@lang('app.btn.cancel')</button>
-            </form>
-        </section>
-    </div>
+                <!-- /.box-body -->
+           </div>
+        </div>
+        <div class="col-md-12">
+            <div class="pull-right">
+              <button type="submit" class="btn btn-info" name="method" value="draft"><i class="fa fa-database"></i> @lang('app.btn.save')</button>
+          </div>
+          <button type="reset" class="btn btn-default"><i class="fa fa-times"></i> @lang('app.btn.discard')</button>
+        </div>
+    </form>
 </div>
-
 @endsection

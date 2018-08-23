@@ -36,22 +36,17 @@ class CategoryController extends Controller
                 ->with('item', $category)
             ->with('breadcrumbs', __('app.category'));
     }
-
+    
     /**
-     * Render form to create a category
+     * Create a category
+     * Admin Only
      *
      * @param  Illuminate\Http\Request  $request
      * @return Illuminate\Http\Response
      */
     public function create(Request $request)
     {
-        $item = new Category();
-        if($value = $request->old('title'))     $item->title = $value;
-        if($value = $request->old('content'))   $item->content = $value;
-
-        $action = route('admin.category.store');
-        return view('admin.category.update', ['item'=>$item, 'action'=>$action])
-            ->with('breadcrumbs', __('app.admin.category.add'));
+        return $this->allAdmin($request);
     }
 
     /**
@@ -94,24 +89,6 @@ class CategoryController extends Controller
     }
 
     /**
-     * Render form to edit a category
-     *
-     * @param  Illuminate\Http\Request  $request
-     * @param  App\Models\Product  $product
-     * @return Illuminate\Http\Response
-     */
-    public function edit(Request $request, Category  $category)
-    {
-        if($value = $request->old('title'))     $item->title = $value;
-        if($value = $request->old('content'))   $item->content = $value;
-
-        $action = route('admin.category.update', ['category'=>$category]);
-        
-        return view('admin.category.update', ['item'=>$category, 'action'=>$action])
-            ->with('breadcrumbs', __('app.admin.category.update'));
-    }
-
-    /**
      * Update category
      *
      * @param  \Illuminate\Http\Request  $request
@@ -146,6 +123,25 @@ class CategoryController extends Controller
     }
 
     /**
+     * Render form to edit a category
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @param  App\Models\Product  $product
+     * @return Illuminate\Http\Response
+     */
+    public function edit(Request $request, Category  $category)
+    {
+        /* update item */
+        if($value = $request->old('title'))     $category->title = $value;
+        if($value = $request->old('content'))   $category->content = $value;
+        $action = route('admin.category.update', ['category'=>$category]);
+        
+        return $this->_listAll($request)
+            ->with('item', $category) 
+            ->with('action', $action);
+    }
+
+    /**
      * Show the list of category.
      * Admin Only
      *
@@ -154,6 +150,44 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function allAdmin(Request $request, $filter='all')
+    {
+        /* New item */
+        $item = new Category();
+        if($value = $request->old('title'))     $item->title = $value;
+        if($value = $request->old('content'))   $item->content = $value;
+        $action = route('admin.category.store');
+        
+        return $this->_listAll($request)
+            ->with('item', $item) 
+            ->with('action', $action);
+    }
+
+
+    /**
+    * Delete Category
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  \App\Models\Category $category
+    * @return \Illuminate\Http\Response
+    */
+    public function delete(Request $request,Category $category)
+    {
+        if($category->id<5){
+            return back()->with('error',"Cette action ne peut pas etre réalisée.");
+        }
+        $category->delete();
+        return redirect()->route('admin.dashboard')
+            ->with('success',"La categorie a été supprimée avec succés");
+    }
+
+    /**
+     * return view to show list of category
+     * Admin Only
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    private function _listAll(Request $request)
     {
         $title = __('app.admin.category.list');
         
@@ -176,28 +210,13 @@ class CategoryController extends Controller
         
         $items = $items->paginate($record);
         
-        return view('admin.category.all', compact('items', 'filter', 'page'))
+        return view('admin.category.all')
+            ->with('items', $items) 
+            ->with('page', $page) 
             ->with('q', $q) 
             ->with('record', $record) 
             ->with('title', $title)
             ->with('breadcrumbs', $title);
     }
 
-
-    /**
-    * Delete Category
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Models\Category $category
-    * @return \Illuminate\Http\Response
-    */
-    public function delete(Request $request,Category $category)
-    {
-        if($category->id<5){
-            return back()->with('error',"Cette action ne peut pas etre réalisée.");
-        }
-        $category->delete();
-        return redirect()->route('admin.dashboard')
-            ->with('success',"La categorie a été supprimée avec succés");
-    }
 }

@@ -100,26 +100,17 @@ class PlanController extends Controller
      */
     public function all(Request $request)
     {
-        $title = __('app.admin.plan.list');
+        $plan = new Plan();
+        if($value = $request->old('name')) $plan->name = $value;
+        if($value = $request->old('description')) $plan->description = $value;
+        if($value = $request->old('cost')) $plan->cost = $value;
+        if($value = $request->old('role')) $plan->role = $value;
+        if($value = $request->old('type')) $plan->type = $value;
+        $action = route('admin.plan.store');
         
-        $items = new Plan();
-        
-        $record = $request->get('record');
-        if(!$record) $record = $this->pageSize;
-        
-        $q = $request->get('q');
-        $q = trim($q);
-        if($q){
-            $items = $items->where('name', 'LIKE', '%'.$q.'%');
-        }
-        
-        $items = $items->paginate($record);
-        
-        return view('admin.plan.all')
-            ->with('q', $q) 
-            ->with('record', $record) 
-            ->with('title', $title)
-            ->with('items', $items); 
+        return $this->_listAll($request)
+            ->with('item', $plan)
+            ->with('action', $action);
     }
     
     
@@ -131,19 +122,7 @@ class PlanController extends Controller
      */
     public function create(Request $request)
     {
-        $plan = new Plan();
-        if($value = $request->old('name')) $plan->name = $value;
-        if($value = $request->old('description')) $plan->description = $value;
-        if($value = $request->old('cost')) $plan->cost = $value;
-        if($value = $request->old('role')) $plan->role = $value;
-        if($value = $request->old('type')) $plan->type = $value;
-
-        $action = route('admin.plan.store');
-        
-        return view('admin.plan.update')
-            ->with('title', __('app.admin.plan.create'))
-            ->with('item', $plan)
-            ->with('action', $action);
+        return $this->all($request);
     }
 
     /**
@@ -205,8 +184,7 @@ class PlanController extends Controller
 
         $action = route('admin.plan.update', ['plan'=>$plan]);
         
-        return view('admin.plan.update')
-            ->with('title', __('app.admin.plan.update'))
+        return $this->_listAll($request)
             ->with('item', $plan)
             ->with('action', $action);
     }
@@ -267,5 +245,36 @@ class PlanController extends Controller
         
         return redirect()->route('admin.dashboard')
             ->with('success',"Le plan a été supprimé avec succés");
+    }
+
+    /**
+     * return view to show list of plan
+     * Admin Only
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    private function _listAll(Request $request)
+    {
+        $title = __('app.admin.plan.list');
+        
+        $items = new Plan();
+        
+        $record = $request->get('record');
+        if(!$record) $record = $this->pageSize;
+        
+        $q = $request->get('q');
+        $q = trim($q);
+        if($q){
+            $items = $items->where('name', 'LIKE', '%'.$q.'%');
+        }
+        
+        $items = $items->paginate($record);
+        
+        return view('admin.plan.all')
+            ->with('q', $q) 
+            ->with('record', $record) 
+            ->with('title', $title)
+            ->with('items', $items); 
     }
 }

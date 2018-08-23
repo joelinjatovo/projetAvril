@@ -19,7 +19,6 @@ class BadWordController extends Controller
         $this->middleware('role:admin');
     }
     
-    
     /**
      * Show the list of bad words.
      * Admin Only
@@ -30,28 +29,14 @@ class BadWordController extends Controller
      */
     public function all(Request $request)
     {
-        $title = __('app.admin.badword.list');
+        $badword = new BadWord();
+        if($value = $request->old('content')) $badword->content = $value;
+        $action = route('admin.badword.store');
         
-        $items = new BadWord();
-        
-        $record = $request->get('record');
-        if(!$record) $record = $this->pageSize;
-        
-        $q = $request->get('q');
-        $q = trim($q);
-        if($q){
-            $items = $items->where('content', 'LIKE', '%'.$q.'%');
-        }
-        
-        $items = $items->paginate($record);
-        
-        return view('admin.badword.all')
-            ->with('q', $q) 
-            ->with('record', $record) 
-            ->with('title', $title)
-            ->with('items', $items); 
+        return $this->_listAll($request)
+            ->with('item', $badword)
+            ->with('action', $action);
     }
-    
     
     /**
      * Render form to create a badwords
@@ -61,15 +46,7 @@ class BadWordController extends Controller
      */
     public function create(Request $request)
     {
-        $badword = new BadWord();
-        if($value = $request->old('content')) $badword->content = $value;
-
-        $action = route('admin.badword.store');
-        
-        return view('admin.badword.update')
-            ->with('title', __('app.admin.badword.create'))
-            ->with('item', $badword)
-            ->with('action', $action);
+        return $this->all($request);
     }
 
     /**
@@ -83,8 +60,8 @@ class BadWordController extends Controller
         // Validate request
         $datas = $request->all();
         $validator = Validator::make($datas,[
-                            'content' => 'required',
-                        ]);
+            'content' => 'required',
+        ]);
 
         if ($validator->fails()) {
             return back()->withErrors($validator)
@@ -108,11 +85,8 @@ class BadWordController extends Controller
     public function edit(Request $request, BadWord $badword)
     {
         if($value = $request->old('content')) $badword->content = $value;
-
         $action = route('admin.badword.update', ['badword'=>$badword]);
-        
-        return view('admin.badword.update')
-            ->with('title', __('app.admin.badword.update'))
+        return $this->_listAll($request)
             ->with('item', $badword)
             ->with('action', $action);
     }
@@ -158,6 +132,37 @@ class BadWordController extends Controller
         
         return redirect()->route('admin.dashboard')
             ->with('success',"Le mot a été supprimé avec succés");
+    }
+
+    /**
+     * return view to show list of badword
+     * Admin Only
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    private function _listAll(Request $request)
+    {
+        $title = __('app.admin.badword.list');
+        
+        $items = new BadWord();
+        
+        $record = $request->get('record');
+        if(!$record) $record = $this->pageSize;
+        
+        $q = $request->get('q');
+        $q = trim($q);
+        if($q){
+            $items = $items->where('content', 'LIKE', '%'.$q.'%');
+        }
+        
+        $items = $items->paginate($record);
+        
+        return view('admin.badword.all')
+            ->with('q', $q) 
+            ->with('record', $record) 
+            ->with('title', $title)
+            ->with('items', $items); 
     }
 
 }

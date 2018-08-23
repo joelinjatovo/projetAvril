@@ -91,7 +91,7 @@ class Config extends BaseModel
         return [
             'facebook' => 'max:100',
             'twitter' => 'max:100',
-            'googleplus' => 'max:100',
+            'google-plus' => 'max:100',
             'linkedin' => 'max:100',
             'tumblr' => 'max:100',
             'youtube-play' => 'max:100',
@@ -104,7 +104,7 @@ class Config extends BaseModel
         return [
             'facebook' => 'Facebook',
             'twitter' => 'Twitter',
-            'googleplus' => 'Google+',
+            'google-plus' => 'Google+',
             'linkedin' => 'LinkedIn',
             'tumblr' => 'Tumblr',
             'youtube' => 'YouTube',
