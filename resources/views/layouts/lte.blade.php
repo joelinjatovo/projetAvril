@@ -347,6 +347,18 @@
             <li><a class="{{Request::is('admin/blogs/trashed')?'active':''}}" href="{{route('admin.blog.list', ['filter'=>'trashed'])}}"><i class="fa fa-circle-o"></i>@lang('app.admin.blog.trash')</a></li>
           </ul>
         </li>
+        <li class="{{Request::is('admin/page*')?'active':''}} treeview">
+          <a href="#">
+            <i class="fa fa-globe"></i> <span>@lang('app.admin.pages')</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a class="{{Request::is('admin/page')?'active':''}}" href="{{route('admin.page.create')}}"><i class="fa fa-plus"></i>@lang('app.admin.page.add')</a></li>
+            <li><a class="{{Request::is('admin/pages')?'active':''}}" href="{{route('admin.page.list')}}"><i class="fa fa-circle-o"></i>@lang('app.admin.page.list')</a></li>
+          </ul>
+        </li>
         <li class="{{Request::is('admin/pub*')?'active':''}} treeview">
           <a href="#">
             <i class="fa fa-columns"></i> <span>@lang('app.admin.pubs')</span>
@@ -359,17 +371,10 @@
             <li><a class="{{Request::is('admin/pubs')?'active':''}}" href="{{route('admin.pub.list')}}"><i class="fa fa-circle-o"></i>@lang('app.admin.pub.list')</a></li>
           </ul>
         </li>
-        <li class="{{Request::is('admin/page*')?'active':''}} treeview">
-          <a href="#">
-            <i class="fa fa-globe"></i> <span>@lang('app.admin.pages')</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+        <li class="{{Request::is('admin/categor*')?'active':''}}">
+          <a href="{{route('admin.category.list')}}">
+            <i class="fa fa-th"></i> <span>@lang('app.admin.categories')</span>
           </a>
-          <ul class="treeview-menu">
-            <li><a class="{{Request::is('admin/page')?'active':''}}" href="{{route('admin.page.create')}}"><i class="fa fa-plus"></i>@lang('app.admin.page.add')</a></li>
-            <li><a class="{{Request::is('admin/pages')?'active':''}}" href="{{route('admin.page.list')}}"><i class="fa fa-circle-o"></i>@lang('app.admin.page.list')</a></li>
-          </ul>
         </li>
         <li class="header text-aqua">SHOP</li>
         <li class="{{Request::is('admin/user*')?'active':''}} treeview">
@@ -405,6 +410,11 @@
             <li><a class="{{Request::is('admin/products/trashed')?'active':''}}" href="{{route('admin.product.list', ['filter'=>'trashed'])}}"><i class="fa fa-circle-o"></i>@lang('app.admin.product.trash')</a></li>
           </ul>
         </li>
+        <li class="{{Request::is('admin/categor*')?'active':''}}">
+          <a href="{{route('admin.category.list')}}">
+            <i class="fa fa-th"></i> <span>@lang('app.admin.categories')</span>
+          </a>
+        </li>
         <li class="{{Request::is('admin/order*')?'active':''}} treeview">
           <a href="#">
             <i class="fa fa-shopping-bag"></i> <span>@lang('app.admin.orders')</span>
@@ -423,11 +433,6 @@
             <li><a class="{{Request::is('admin/orders/paid')?'active':''}}" href="{{route('admin.order.list', ['filter'=>'paid'])}}"><i class="fa fa-circle-o"></i>@lang('app.admin.order.paid')</a></li>
             <li><a class="{{Request::is('admin/orders/cancelled')?'active':''}}" href="{{route('admin.order.list', ['filter'=>'cancelled'])}}"><i class="fa fa-circle-o"></i>@lang('app.admin.order.cancelled')</a></li>
           </ul>
-        </li>
-        <li class="{{Request::is('admin/categor*')?'active':''}}">
-          <a href="{{route('admin.category.list')}}">
-            <i class="fa fa-th"></i> <span>@lang('app.admin.categories')</span>
-          </a>
         </li>
         <li class="header">LOCALISATIONS</li>
         <li class="{{Request::is('admin/postalcode*')?'active':''}}">
