@@ -166,6 +166,7 @@ return [
     
     'rapid_link'      => 'Acces Rapide',
     
+    'location'          => 'Localisation',
     'your_location'     => 'Votre localisation',
     
     'longitude'     => 'Longitude',

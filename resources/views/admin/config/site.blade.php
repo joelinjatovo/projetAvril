@@ -118,3 +118,7 @@
     </div>
 </form>
 @endsection
+@section('script')
+@parent
+
+@endsection

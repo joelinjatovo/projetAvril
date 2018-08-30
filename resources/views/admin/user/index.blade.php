@@ -1,167 +1,183 @@
-@extends('layouts.admin')
+@extends('layouts.lte')
 
 @section('content')
-<div id="main-content" class="main-content container-fluid">
-    <!-- // page head -->
-    <div id="page-content" class="page-content tab-content overflow-y">
-        <div id="TabTop1" class="tab-pane padding-bottom30 active fade in">
-            @include('includes.alerts')
-            <div>
-                 <form id="form-item-action-delete" class="pull-left" action="{{route('admin.user.list')}}" method="post">
-                     {{csrf_field()}}
-                     <input type="hidden" name="user" value="{{$item->id}}">
-                     <input type="hidden" name="action" value="delete">
-                     <button type="submit" class="btn btn-small btn-warning">@lang('app.btn.delete')</button>
-                 </form>
-                 @if($item->status=='active')
-                 <form id="form-item-action-disable" class="pull-left" action="{{route('admin.user.list')}}" method="post">
-                     {{csrf_field()}}
-                     <input type="hidden" name="user" value="{{$item->id}}">
-                     <input type="hidden" name="action" value="disable">
-                     <button type="submit" class="btn btn-small btn-success">@lang('app.btn.disable')</button>
-                 </form>
-                 @else
-                 <form id="form-item-action-active" class="pull-left" action="{{route('admin.user.list')}}" method="post">
-                     {{csrf_field()}}
-                     <input type="hidden" name="user" value="{{$item->id}}">
-                     <input type="hidden" name="action" value="active">
-                     <button type="submit" class="btn btn-small btn-info">@lang('app.btn.active')</button>
-                 </form>
-                 @endif
-                 <a href="{{route('admin.user.contact', $item)}}" class="btn btn-small btn-default">@lang('app.btn.contact')</a>
-            </div>
-            <div class="page-header">
-                <h3>
-                    @if(isset($title))
-                        {{$title}}
-                    @else
-                        @lang('app.user')
-                    @endif
-                </h3>
-            </div>
-            <div class="row-fluid">
-                <div class="grider">
-                    @include('admin.user.info.login',    ['item'=>$item])
-                    
-                    @if($item->hasRole('member') && $item->type=='person')
-                        @include('admin.user.info.person',   ['item'=>$item])
-                    @else
-                        @include('admin.user.info.orga',     ['item'=>$item])
-                        @include('admin.user.info.contact',  ['item'=>$item])
-                    @endif
-                    
-                    @include('admin.user.info.location', ['location'=>$item->location])
-                    
-                    <div class="widget widget-simple">
-                        <div class="widget-header">
-                            <h4><small>@lang('app.observations')</small></h4>
-                        </div>
-                        @include('admin.table.observation',['item'=>$item])
-                    </div>
-                    
-                    @if($item->hasRole('member'))
-                        @if($item->apl)
-                            @include('admin.user.info.apl', ['item'=>$item->apl])
-                        @endif
-                        <div class="widget widget-simple">
-                            <div class="widget-header">
-                                <h4><small>@lang('member.orders')</small></h4>
-                            </div>
-                            @include('admin.table.order',[
-                                'orders'=>$item->orders()->where('status', 'ordered')->get()
-                            ])
-                        </div>
-                        <div class="widget widget-simple">
-                            <div class="widget-header">
-                                <h4><small>@lang('member.purchases')</small></h4>
-                            </div>
-                            @include('admin.table.order',[
-                                'orders'=>$item->orders()->where('status', 'paid')->get()
-                            ])
-                        </div>
-                        <div class="widget widget-simple">
-                            <div class="widget-header">
-                                <h4><small>@lang('app.favorites')</small></h4>
-                            </div>
-                            @include('admin.table.product',['products'=>$item->favorites])
-                        </div>
-                    @endif
-                    
-                    @if($item->hasRole('apl'))
-                        <div class="widget widget-simple">
-                            <div class="widget-header">
-                                <h4><small>@lang('app.customers')</small></h4>
-                            </div>
-                            @include('admin.table.user',['users'=>$item->customers])
-                        </div>
-                        <div class="widget widget-simple">
-                            <div class="widget-header">
-                                <h4><small>@lang('apl.orders')</small></h4>
-                            </div>
-                            @include('admin.table.order',[
-                                'orders'=>$item->orders()->where('status', 'ordered')->get()
-                            ])
-                        </div>
-                        <div class="widget widget-simple">
-                            <div class="widget-header">
-                                <h4><small>@lang('apl.sales')</small></h4>
-                            </div>
-                            @include('admin.table.order',[
-                                'orders'=>$item->orders()->where('status', 'paid')->get()
-                            ])
-                        </div>
-                    @endif
-                    
-                    @if($item->hasRole('seller'))
-                        <div class="widget widget-simple">
-                            <div class="widget-header">
-                                <h4><small>@lang('app.products')</small></h4>
-                            </div>
-                            @include('admin.table.product',[
-                                'products'=>$item->products
-                            ])
-                        </div>
-                        <div class="widget widget-simple">
-                            <div class="widget-header">
-                                <h4><small>@lang('app.orders')</small></h4>
-                            </div>
-                            @include('admin.table.product',[
-                                'products'=>$item->products()->where('products.status', 'ordered')->get()
-                            ])
-                        </div>
-                        <div class="widget widget-simple">
-                            <div class="widget-header">
-                                <h4><small>@lang('app.sales')</small></h4>
-                            </div>
-                            @include('admin.table.product',[
-                                'products'=>$item->products()->where('products.status', 'paid')->get()
-                            ])
-                        </div>
-                    @endif
-                    
-                    @if($item->hasRole('afa'))
-                        <div class="widget widget-simple">
-                            <div class="widget-header">
-                                <h4><small>@lang('afa.orders')</small></h4>
-                            </div>
-                            @include('admin.table.order',[
-                                'orders'=>$item->orders()->where('status', 'ordered')->get()
-                            ])
-                        </div>
-                        <div class="widget widget-simple">
-                            <div class="widget-header">
-                                <h4><small>@lang('afa.sales')</small></h4>
-                            </div>
-                            @include('admin.table.order',[
-                                'orders'=>$item->orders()->where('status', 'paid')->get()
-                            ])
-                        </div>
-                    @endif
-                    
-                </div>
-            </div>
-        </div>
+<div class="row">
+    <div class="col-md-3">
+
+      <!-- Profile Image -->
+      @include('admin/user/inc/profile-image', ['user'=>$item])
+
+      <!-- About Me Box -->
+      @include('admin/user/inc/profile-about')
     </div>
-</div>
+    <!-- /.col -->
+    
+    <div class="col-md-9">
+      <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#observations" data-toggle="tab">@lang('app.observations')</a></li>
+          
+          @if($item->hasRole('member'))
+          <li><a href="#orders" data-toggle="tab">@lang('app.orders')</a></li>
+          <li><a href="#purchases" data-toggle="tab">@lang('app.purchases')</a></li>
+          <li><a href="#favorites" data-toggle="tab">@lang('app.favorites')</a></li>
+          @endif
+          
+          @if($item->hasRole('apl'))
+          <li><a href="#customers" data-toggle="tab">@lang('app.customers')</a></li>
+          <li><a href="#orders" data-toggle="tab">@lang('app.orders')</a></li>
+          <li><a href="#sales" data-toggle="tab">@lang('app.sales')</a></li>
+          @endif
+          
+          @if($item->hasRole('seller'))
+          <li><a href="#products" data-toggle="tab">@lang('app.products')</a></li>
+          <li><a href="#orders" data-toggle="tab">@lang('app.orders')</a></li>
+          <li><a href="#sales" data-toggle="tab">@lang('app.sales')</a></li>
+          @endif
+          
+          @if($item->hasRole('afa'))
+          <li><a href="#orders" data-toggle="tab">@lang('app.orders')</a></li>
+          <li><a href="#sales" data-toggle="tab">@lang('app.sales')</a></li>
+          @endif
+          
+        </ul>
+        <div class="tab-content">
+          <div class="active tab-pane" id="observations">
+            <!-- Post -->
+            @foreach($item->observations as $observation)
+            <div class="post">
+              @if($observation->author)
+              <div class="user-block">
+                <img class="img-circle img-bordered-sm" src="{{$observation->author->imageUrl()}}" alt="user image">
+                    <span class="username">
+                      <a href="#">{{$observation->author->fullname()}}</a>
+                      <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
+                    </span>
+                <span class="description">{{$observation->created_at?$observation->created_at->diffForHumans():''}}</span>
+              </div>
+              @endif
+              <!-- /.user-block -->
+              <p>{{$observation->content}}</p>
+            </div>
+            @endforeach
+            <!-- /.post -->
+            
+            <!-- Post Form -->
+            <div class="post">
+               <form class="form-horizontal" method="post" action="{{route('admin.user.observe', ['user'=>$item])}}">
+                  {{csrf_field()}}
+                  <input type="text" class="form-control" name="content" value="{{old('content')}}" placeholder="Tapez votre observation">
+              </form>
+            </div>
+            <!-- /.post Form -->
+            
+          </div>
+          <!-- /.tab-pane -->
+          
+          @if($item->hasRole('member'))
+          <div class="tab-pane" id="orders">
+            @include('admin.table.order',[
+                'orders'=>$item->orders()->where('status', 'ordered')->get()
+            ])
+          </div>
+          <!-- /.tab-pane -->
+          
+          <div class="tab-pane" id="purchases">
+            @include('admin.table.order',[
+                'orders'=>$item->orders()->where('status', 'paid')->get()
+            ])
+          </div>
+          <!-- /.tab-pane -->
+          
+          <div class="tab-pane" id="favorites">
+            @include('admin.table.product',[
+                'products'=>$item->favorites
+            ])
+          </div>
+          <!-- /.tab-pane -->
+          @endif
+          
+          @if($item->hasRole('apl'))
+           <div class="tab-pane" id="customers">
+            <!-- Customers -->
+            @foreach($item->customers as $user)
+            <div class="post">
+              <div class="user-block">
+                <img class="img-circle img-bordered-sm" src="{{$user->imageUrl()}}" alt="user image">
+                    <span class="username">
+                      <a href="#">{{$user->fullname()}}</a>
+                      <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
+                    </span>
+                <span class="description">{{$user->created_at?$user->created_at->diffForHumans():''}}</span>
+              </div>
+              <!-- /.user-block -->
+            </div>
+            @endforeach
+            <!-- /.post -->
+          </div>
+          <!-- /.tab-pane -->
+
+          <div class="tab-pane" id="orders">
+            @include('admin.table.order',[
+                'orders'=>$item->orders()->where('status', 'ordered')->get()
+            ])
+          </div>
+          <!-- /.tab-pane -->
+          
+          <div class="tab-pane" id="sales">
+            @include('admin.table.order',[
+                'orders'=>$item->orders()->where('status', 'paid')->get()
+            ])
+          </div>
+          <!-- /.tab-pane -->
+         @endif
+          
+         @if($item->hasRole('seller'))
+          <div class="tab-pane" id="products">
+            @include('admin.table.product',[
+                'products'=>$item->products
+            ])
+          </div>
+          <!-- /.tab-pane -->
+
+          <div class="tab-pane" id="orders">
+            @include('admin.table.product',[
+                'products'=>$item->products()->where('products.status', 'ordered')->get()
+            ])
+          </div>
+          <!-- /.tab-pane -->
+          
+          <div class="tab-pane" id="sales">
+            @include('admin.table.product',[
+                'products'=>$item->products()->where('products.status', 'paid')->get()
+            ])
+          </div>
+          <!-- /.tab-pane -->
+         @endif
+          
+         @if($item->hasRole('afa'))
+          <div class="tab-pane" id="orders">
+            @include('admin.table.order',[
+                'orders'=>$item->orders()->where('status', 'ordered')->get()
+            ])
+          </div>
+          <!-- /.tab-pane -->
+          
+          <div class="tab-pane" id="sales">
+            @include('admin.table.order',[
+                'orders'=>$item->orders()->where('status', 'paid')->get()
+            ])
+          </div>
+          <!-- /.tab-pane -->
+         @endif
+          
+        </div>
+        <!-- /.tab-content -->
+      </div>
+      <!-- /.nav-tabs-custom -->
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
 @endsection
 

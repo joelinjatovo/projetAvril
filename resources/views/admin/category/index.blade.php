@@ -1,49 +1,64 @@
-@extends('layouts.admin')
+@extends('layouts.lte')
 
 @section('content')
-<div id="main-content" class="main-content container-fluid">
-    <!-- // page head -->
-    <div id="page-content" class="page-content tab-content overflow-y">
-        <div id="TabTop1" class="tab-pane padding-bottom30 active fade in">
-            <div class="page-header">
-                <h3>@lang('app.category') : {{$item->title}}</h3>
-            </div>
-            <div class="row-fluid">
-                <div class="grider">
-                    <div class="widget widget-simple">
-                        @include('includes.alerts')
-                        <div class="widget-header">
-                            <h4><small>@lang('app.description')</small></h4>
-                        </div>
-                        <div class="widget-content">
-                            <div class="widget-body">
-                                {!!$item->content!!}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="widget widget-simple">
-                        <div class="widget-header">
-                            <h4><small>@lang('app.products')</small></h4>
-                        </div>
-                        @include('admin.table.product',['products'=>$item->products])
-                    </div>
-                    <div class="widget widget-simple">
-                        <div class="widget-header">
-                            <h4><small>@lang('app.blogs')</small></h4>
-                        </div>
-                        @include('admin.table.blog',['blogs'=>$item->blogs])
-                    </div>
-                    <div class="widget widget-simple">
-                        <div class="widget-header">
-                            <h4><small>@lang('app.subproducts')</small></h4>
-                        </div>
-                        @include('admin.table.product',['products'=>$item->subProducts])
-                    </div>
-                </div>
-            </div>
+<div class="row">
+    <div class="col-md-4">
+      <div class="box box-widget widget-user">
+        <!-- Add the bg color to the header using any of the bg-* classes -->
+        <div class="widget-user-header bg-aqua-active">
+          <h3 class="widget-user-username">{{$item->title}}</h3>
+          <h5 class="widget-user-desc">{!!$item->content!!}</h5>
         </div>
+        <div class="box-footer">
+          <div class="row">
+            <div class="col-sm-6 border-right">
+              <div class="description-block">
+                <h5 class="description-header">{{$item->products()->count()}}</h5>
+                <span class="description-text">@lang('app.products')</span>
+              </div>
+              <!-- /.description-block -->
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-6 border-right">
+              <div class="description-block">
+                <h5 class="description-header">{{$item->blogs()->count()}}</h5>
+                <span class="description-text">@lang('app.blogs')</span>
+              </div>
+              <!-- /.description-block -->
+            </div>
+          </div>
+          <!-- /.row -->
+        </div>
+      </div>
     </div>
-</div>
-
+    <div class="col-md-8">
+      <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#products" data-toggle="tab">@lang('app.products')</a></li>
+          <li><a href="#blogs" data-toggle="tab">@lang('app.blogs')</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="active tab-pane" id="products">
+            @include('admin.table.product',[
+                'products'=>$item->products
+            ])
+          </div>
+          <!-- /.tab-pane -->
+          
+          <div class="tab-pane" id="blogs">
+            @include('admin.table.blog',[
+                'blogs'=>$item->blogs
+            ])
+          </div>
+          <!-- /.tab-pane -->
+        </div>
+        <!-- /.tab-content -->
+      </div>
+      <!-- /.nav-tabs-custom -->
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
 @endsection
+
 

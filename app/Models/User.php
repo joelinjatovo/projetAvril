@@ -185,6 +185,25 @@ class User extends Authenticatable
     }
     
     /**
+     * Get reference name of this user
+     *
+     * @return String
+     */
+    public function fullname()
+    {
+        if($this->isPerson()){
+            $first_name = $this->meta('first_name');
+            $last_name  = $this->meta('last_name');
+            $name = strtoupper($first_name).' '.ucfirst($last_name);
+        }else{
+            $name = $this->meta('orga_name');
+        }
+        $name = trim($name);
+        if(empty($name)) return ucfirst($this->name);
+        return $name;
+    }
+    
+    /**
      * Is user active
      *
      * @return Boolean

@@ -1,68 +1,59 @@
-@extends('layouts.admin')
+@extends('layouts.lte')
 
 @section('content')
-<div id="main-content" class="main-content container-fluid">
-    <div id="page-content" class="page-content tab-content overflow-y">
-        <div id="TabTop1" class="tab-pane padding-bottom30 active fade in">
-            @include('includes.alerts')
-            <div>
-                <a href="{{route('admin.page.create')}}" class="btn btn-small btn-success btn-update">@lang('app.btn.add')</a>
-                <a href="{{route('admin.page.edit', $item)}}" class="btn btn-small btn-info btn-update">@lang('app.btn.edit')</a>
-                <a href="{{route('admin.page.delete', $item)}}" class="btn btn-small btn-warning btn-delete">@lang('app.btn.delete')</a>
+<div class="row">
+    <div class="col-md-6">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">{{$item->title}}</h3>
             </div>
-            <div class="page-header">
-                <h3>{{$item->title}}</h3>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <p class="text-muted">{!!$item->content!!}</p>
             </div>
-            <div class="row-fluid">
-                <div class="grider">
-                    <div class="widget widget-simple">
-                        <div class="widget-header">
-                            <h4><small>@lang('app.description') (FR)</small></h4>
-                        </div>
-                        <div class="widget-content">
-                            <div class="widget-body">
-                                {!!$item->content!!}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="page-header">
-                <h3>{{$item->title_en}}</h3>
-            </div>
-            <div class="row-fluid">
-                <div class="grider">
-                    <div class="widget widget-simple">
-                        <div class="widget-header">
-                            <h4><small>@lang('app.description') (EN)</small></h4>
-                        </div>
-                        <div class="widget-content">
-                            <div class="widget-body">
-                                {!!$item->content_en!!}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- /.box-body -->
         </div>
+        <!-- /.box -->
     </div>
-    <div class="page-content tab-content overflow-y">
-        <div class="page-header">
-            <h3>@lang('app.childs')</h3>
+    <div class="col-md-6">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">{{$item->title_en}}</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <p class="text-muted">{!!$item->content_en!!}</p>
+            </div>
+            <!-- /.box-body -->
         </div>
-        <div class="row-fluid">
-            @include('admin.table.page',['pages'=>$item->childs])
-        </div>
+        <!-- /.box -->
     </div>
-    <div class="page-content tab-content overflow-y">
-        <div class="page-header">
-            <h3>@lang('app.pubs')</h3>
+    <div class="col-md-12">
+      <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#childs" data-toggle="tab">@lang('app.childs')</a></li>
+          <li><a href="#pubs" data-toggle="tab">@lang('app.pubs')</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="active tab-pane" id="childs">
+            @include('admin.table.page',[
+                'pages'=>$item->childs
+            ])
+          </div>
+          <!-- /.tab-pane -->
+          
+          <div class="tab-pane" id="pubs">
+            @include('admin.table.pub',[
+                'pubs'=>$item->pubs, 
+                'page'=>$item
+            ])
+          </div>
+          <!-- /.tab-pane -->
         </div>
-        <div class="row-fluid">
-            @include('admin.table.pub',['pubs'=>$item->pubs, 'page'=>$item])
-        </div>
+        <!-- /.tab-content -->
+      </div>
+      <!-- /.nav-tabs-custom -->
     </div>
 </div>
-
 @endsection
 

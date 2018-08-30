@@ -1,71 +1,66 @@
-@extends('layouts.admin')
+@extends('layouts.lte')
 
 @section('content')
-<div id="main-content" class="main-content container-fluid">
-    <!-- // page head -->
-    <div id="page-content" class="page-content tab-content overflow-y">
-        <div id="TabTop1" class="tab-pane padding-bottom30 active fade in">
-            @include('includes.alerts')
-            <div>
+<div class="row">
+    <div class="col-md-12" style="margin-bottom: 5px;">
+        <form action="{{route('admin.product.list')}}" method="post">
+            {{csrf_field()}}
+            <input type="hidden" name="product" value="{{$item->id}}">
+            <div class="btn-group">
              @if($item->status=='pinged' || $item->status=='archived')
-                <a href="{{route('admin.product.publish', $item)}}" class="btn btn-small btn-success btn-publish">@lang('app.btn.publish')</a>
-                <a href="{{route('admin.product.trash', $item)}}" class="btn btn-small btn-info btn-trash">@lang('app.btn.trash')</a>
+              <button type="button" class="btn btn-default btn-publish">@lang('app.btn.publish')</button>
+              <button type="button" class="btn btn-default btn-trash">@lang('app.btn.trash')</button>
              @elseif($item->status=='trashed')
-                <a href="{{route('admin.product.restore', $item)}}" class="btn btn-small btn-info btn-restore">Restore</a>
+              <button type="button" class="btn btn-default btn-restore">@lang('app.btn.restore')</button>
+              <button type="button" class="btn btn-danger btn-delete"><i class="fa fa-trash-o"></i></button>
              @endif
              @if($item->status=='published')
-                <a href="{{route('admin.product.archive', $item)}}" class="btn btn-small btn-default  btn-archive">@lang('app.btn.archive')</a>
-                <a href="{{route('admin.product.trash', $item)}}" class="btn btn-small btn-info btn-trash">@lang('app.btn.trash')</a>
+              <button type="button" class="btn btn-default btn-archive">@lang('app.btn.archive')</button>
+              <button type="button" class="btn btn-warning btn-delete"><i class="fa fa-trash-o"></i></button>
              @endif
-                <a href="{{route('admin.product.delete', $item)}}" class="btn btn-small btn-warning btn-delete">@lang('app.btn.delete')</a>
             </div>
-            <div class="page-header">
-                <h3>{{$item->title}}</h3>
-            </div>
-            <div class="row-fluid">
-                <div class="grider">
-                    <div class="widget widget-simple">
-                        <div class="widget-content">
-                            <div class="widget-body">
-                                <div class="col-md-3">
-                                    <img src="{{$item->imageUrl(true)}}" style="width:100%;">
-                                </div>
-                                <div class="col-md-9">
-                                    <h3>@lang('app.reference') : {{$item->reference}}</h3> 
-                                    
-                                    <h4>@lang('app.status') : <a href="{{route('admin.product.list', ['filter'=>$item->status])}}">@lang('app.'.$item->status)</a></h4> 
-                                    
-                                    @if($item->category)
-                                        <h4>@lang('app.category') : <a href="{{route('admin.category.show', $item->category)}}">{{$item->category->title}}</a></h4> 
-                                    @endif
-                                    
-                                    @if($item->seller)
-                                        <h4>@lang('app.seller') : <a href="{{route('admin.user.show', $item->seller)}}">{{$item->seller->name}}</a></h4> 
-                                    @endif
-                                    
-                                    @if($item->buyer)
-                                        <h4>@lang('app.buyer') : <a href="{{route('admin.user.show', $item->seller)}}">{{$item->buyer->name}}</a></h4> 
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="widget widget-simple">
-                        <div class="widget-content">
-                            <div class="widget-body">
-                                <fieldset>
-                                    <h4>@lang('app.description')</h4>
-                                    <p>{!!$item->content!!}</p>
-                                </fieldset>
-                            </div>
-                        </div>
-                    </div>
-                    @include('admin.product.location', ['location'=>$item->location])
-                </div>
-            </div>
+        </form>
+    </div>
+    
+    <div class="col-md-8">
+      <div class="box box-primary">
+        <!-- /.box-header -->
+        <div class="box-body">
+            <img class="img-responsive pad" src="{{$item->imageUrl()}}" alt="{{$item->title}}">
+            <p>{!!$item->content!!}</p>
+          
+            <p>
+                <span class="label label-danger">UI Design</span>
+                <span class="label label-success">Coding</span>
+                <span class="label label-info">Javascript</span>
+                <span class="label label-warning">PHP</span>
+                <span class="label label-primary">Node.js</span>
+            </p>
         </div>
+        <!-- /.box-body -->
+      </div>
+      
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">@lang('app.location')</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          @if($item->location)
+          <strong><i class="fa fa-map-marker margin-r-5"></i> @lang('app.location')</strong>
+          <p class="text-muted">
+              {{$item->location->toString()}}
+          </p>
+          @endif
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+    </div>
+    <div class="col-md-4">
+      <!-- Profile Image -->
+      @include('admin/user/inc/profile-image', ['user'=>$item->seller])
     </div>
 </div>
-
 @endsection
 
