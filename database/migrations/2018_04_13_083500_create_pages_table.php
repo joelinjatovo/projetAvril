@@ -21,9 +21,14 @@ class CreatePagesTable extends Migration
             $table->longText('content_en')->nullable();
             $table->string('path')->nullable();
             $table->integer('page_order')->nullable();
-            $table->integer('has_pub')->default(0);
             $table->string('type', 128)->nullable();
-            $table->bigInteger('image_id')->default(0);
+            
+            // type = pub
+            $table->longText('pub_url')->nullable();
+            $table->bigInteger('pub_image_id')->default(0);
+            $table->longText('pub_url_en')->nullable();
+            $table->bigInteger('pub_image_en_id')->default(0);
+            
             $table->bigInteger('parent_id')->default(0);
             $table->bigInteger('author_id')->default(0);
             $table->timestamps();
