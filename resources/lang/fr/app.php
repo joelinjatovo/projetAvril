@@ -523,6 +523,7 @@ return [
     'admin.page.list'      => 'Liste des pages',
     'admin.page.add'       => 'Ajouter une page',
     'admin.page.update'    => 'Modifier une page',
+    'admin.page.order'     => 'Ranger les pages',
     'admin.page.gestion'   => 'Gestion des pages',
     
     'pubs'                 => 'Publicités',

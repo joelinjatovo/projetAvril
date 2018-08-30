@@ -319,10 +319,10 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
     });
     
     // Category Controller Groups
-    Route::get('categories/{filter?}', 'CategoryController@allAdmin')->name('admin.category.list');
+    Route::get('categories/{type}/{filter?}', 'CategoryController@allAdmin')->name('admin.category.list');
     Route::prefix('category')->group(function(){
-        Route::get('/', 'CategoryController@create')->name('admin.category.create');
-        Route::post('/', 'CategoryController@store')->name('admin.category.store');
+        Route::get('/{type}', 'CategoryController@create')->name('admin.category.create');
+        Route::post('/{type}', 'CategoryController@store')->name('admin.category.store');
         Route::get('show/{category}', 'CategoryController@show')->name('admin.category.show');
         Route::get('update/{category}', 'CategoryController@edit')->name('admin.category.edit');
         Route::post('update/{category}', 'CategoryController@update')->name('admin.category.update');
@@ -347,6 +347,8 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
     Route::prefix('page')->group(function(){
         Route::get('/', 'PageController@create')->name('admin.page.create');
         Route::post('/', 'PageController@store')->name('admin.page.store');
+        Route::get('/order', 'PageController@order')->name('admin.page.order');
+        Route::post('/order', 'PageController@order')->name('admin.page.order');
         Route::get('show/{page}', 'PageController@show')->name('admin.page.show');
         Route::get('update/{page}', 'PageController@edit')->name('admin.page.edit');
         Route::post('update/{page}', 'PageController@update')->name('admin.page.update');

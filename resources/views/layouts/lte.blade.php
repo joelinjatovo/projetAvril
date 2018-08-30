@@ -6,6 +6,9 @@
   <title>Admin{{isset($title)?' - '.$title:''}} - {{app_name()}}</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+ <!-- CSRF Token -->
+ <meta name="csrf-token" content="{{ csrf_token() }}">
   
 @section('style')
   <!-- Bootstrap 3.3.7 -->
@@ -55,6 +58,7 @@
   </script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
+<div id="mute"></div>
 <div class="wrapper">
 
   <header class="main-header">
@@ -357,6 +361,7 @@
           <ul class="treeview-menu">
             <li><a class="{{Request::is('admin/page')?'active':''}}" href="{{route('admin.page.create')}}"><i class="fa fa-plus"></i>@lang('app.admin.page.add')</a></li>
             <li><a class="{{Request::is('admin/pages')?'active':''}}" href="{{route('admin.page.list')}}"><i class="fa fa-circle-o"></i>@lang('app.admin.page.list')</a></li>
+            <li><a class="{{Request::is('admin/page/order')?'active':''}}" href="{{route('admin.page.order')}}"><i class="fa fa-circle-o"></i>@lang('app.admin.page.order')</a></li>
           </ul>
         </li>
         <li class="{{Request::is('admin/pub*')?'active':''}} treeview">
@@ -371,8 +376,8 @@
             <li><a class="{{Request::is('admin/pubs')?'active':''}}" href="{{route('admin.pub.list')}}"><i class="fa fa-circle-o"></i>@lang('app.admin.pub.list')</a></li>
           </ul>
         </li>
-        <li class="{{Request::is('admin/categor*')?'active':''}}">
-          <a href="{{route('admin.category.list')}}">
+        <li class="{{Request::is('admin/categories/blog')?'active':''}}">
+          <a href="{{route('admin.category.list', ['type'=>'blog'])}}">
             <i class="fa fa-th"></i> <span>@lang('app.admin.categories')</span>
           </a>
         </li>
@@ -410,8 +415,8 @@
             <li><a class="{{Request::is('admin/products/trashed')?'active':''}}" href="{{route('admin.product.list', ['filter'=>'trashed'])}}"><i class="fa fa-circle-o"></i>@lang('app.admin.product.trash')</a></li>
           </ul>
         </li>
-        <li class="{{Request::is('admin/categor*')?'active':''}}">
-          <a href="{{route('admin.category.list')}}">
+        <li class="{{Request::is('admin/categories/product')?'active':''}}">
+          <a href="{{route('admin.category.list', ['type'=>'product'])}}">
             <i class="fa fa-th"></i> <span>@lang('app.admin.categories')</span>
           </a>
         </li>

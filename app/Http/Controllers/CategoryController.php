@@ -10,6 +10,12 @@ use App\Models\Category;
 
 class CategoryController extends Controller
 {
+    
+    private $allowedTypes = [
+        'blog',
+        'product',
+    ];
+    
     /**
      * Create a new controller instance.
      *
@@ -44,9 +50,9 @@ class CategoryController extends Controller
      * @param  Illuminate\Http\Request  $request
      * @return Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(Request $request, $type)
     {
-        return $this->allAdmin($request);
+        return $this->allAdmin($request, $type);
     }
 
     /**
@@ -55,7 +61,7 @@ class CategoryController extends Controller
      * @param  Illuminate\Http\Request  $request
      * @return Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $type)
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
@@ -80,6 +86,7 @@ class CategoryController extends Controller
             $slug = $slugOriginal + '-' + $i++;
         }
         
+        $category->type = $type;
         $category->slug = $slug;
         $category->title = $request->title;
         $category->content = $request->content;
@@ -129,14 +136,14 @@ class CategoryController extends Controller
      * @param  App\Models\Product  $product
      * @return Illuminate\Http\Response
      */
-    public function edit(Request $request, Category  $category)
+    public function edit(Request $request, Category $category)
     {
         /* update item */
         if($value = $request->old('title'))     $category->title = $value;
         if($value = $request->old('content'))   $category->content = $value;
         $action = route('admin.category.update', ['category'=>$category]);
         
-        return $this->_listAll($request)
+        return $this->_listAll($request, $category->type)
             ->with('item', $category) 
             ->with('action', $action);
     }
@@ -149,15 +156,16 @@ class CategoryController extends Controller
      * @param  String $filter
      * @return \Illuminate\Http\Response
      */
-    public function allAdmin(Request $request, $filter='all')
+    public function allAdmin(Request $request, $type, $filter='all')
     {
         /* New item */
         $item = new Category();
         if($value = $request->old('title'))     $item->title = $value;
         if($value = $request->old('content'))   $item->content = $value;
-        $action = route('admin.category.store');
+        $item->type = $type;
+        $action = route('admin.category.store', ['type'=>$type]);
         
-        return $this->_listAll($request)
+        return $this->_listAll($request, $type)
             ->with('item', $item) 
             ->with('action', $action);
     }
@@ -187,11 +195,16 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    private function _listAll(Request $request)
+    private function _listAll(Request $request, $type)
     {
+        if(!in_array($type, $this->allowedTypes)){
+            abort(404);
+        }
+        
         $title = __('app.admin.category.list');
         
         $items = new Category;
+        $items = $items->where('type', $type);
         
         $page = $request->get('page');
         if(!$page) $page = 1;
@@ -211,6 +224,7 @@ class CategoryController extends Controller
         $items = $items->paginate($record);
         
         return view('admin.category.all')
+            ->with('type', $type) 
             ->with('items', $items) 
             ->with('page', $page) 
             ->with('q', $q) 

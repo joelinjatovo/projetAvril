@@ -18,6 +18,7 @@ class CreateCategoriesTable extends Migration
             $table->string('slug', 150)->unique();
             $table->string('title', 150)->index();
             $table->longText('content')->nullable();
+            $table->string('type', 128)->nullable();
             $table->bigInteger('author_id')->default(0)->index();
             $table->timestamps();
         });

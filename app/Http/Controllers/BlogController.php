@@ -203,7 +203,7 @@ class BlogController extends Controller
         if($value = $request->old('meta_description'))  $blog->meta_description = $value;
         if($value = $request->old('category'))          $categoryIds = $value;
 
-        $categories = Category::all();
+        $categories = Category::where('type', 'blog')->get();
         $action = route('admin.blog.store');
         
         return view('admin.blog.update')

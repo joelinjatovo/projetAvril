@@ -241,6 +241,43 @@ class PageController extends Controller
             ->with('record', $record) 
             ->with('title', $title); 
     }
+    
+    /**
+     * Order the list of page.
+     * Admin Only
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  String $filter
+     * @return \Illuminate\Http\Response
+     */
+    public function order(Request $request, $filter='all')
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        if($request->ajax()){
+            $parent_id = (int) $request->parent_id;
+            $order = $request->order;
+            $order = explode(',', $order);
+            foreach($order as $key=>$value){
+                $page = Page::findOrFail($value);
+                $page->page_order = $key;
+                $page->parent_id = $parent_id;
+                $page->save();
+            }
+            return response()->json(array(
+                'parent_id' => $parent_id,
+                'order' => $order
+            ));
+        }
+        
+        $title = __('app.admin.page.order');
+        
+        $items = Page::where('parent_id', 0)->get();
+        
+        return view('admin.page.order', compact('items', 'filter'))
+            ->with('title', $title); 
+    }
 
     
     /**

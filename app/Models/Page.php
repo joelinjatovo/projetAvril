@@ -41,9 +41,9 @@ class Page extends BaseModel
      *
      * @return String
      */
-    public function title()
+    public function getTitle()
     {
-        return \App::getLocale()=='fr'?$this->title:$this->title_en;
+        return (\App::getLocale()=='fr'?$this->title:$this->title_en);
     }
     
     /**
@@ -51,7 +51,7 @@ class Page extends BaseModel
      *
      * @return String
      */
-    public function content()
+    public function getContent()
     {
         return \App::getLocale()=='fr'?$this->content:$this->content_en;
     }

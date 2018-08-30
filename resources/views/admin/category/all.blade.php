@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-4">
             @if($item->id>0)
-            <a href="{{route('admin.category.create')}}" class="btn btn-primary btn-block margin-bottom">@lang('app.admin.category.add')</a>
+            <a href="{{route('admin.category.create', ['type'=>$type])}}" class="btn btn-primary btn-block margin-bottom">@lang('app.admin.category.add')</a>
             @endif
             <form role="form" method="post" action="{{$action}}" enctype="multipart/form-data">
                 {{csrf_field()}}
