@@ -451,6 +451,7 @@ return [
     'admin.metadesc.desc'   => 'Ajouter les metas descriptions',
     
     'admin.category'   => 'Selectionner les catégories',
+    'admin.category.desc' => 'Selectionner les catégories',
     'admin.file'   => 'Uploader un fichier',
     'admin.file.select'   => 'Selectionner un fichier',
     'admin.file.change'   => 'Modifier',
@@ -525,6 +526,8 @@ return [
     'admin.page.update'    => 'Modifier une page',
     'admin.page.order'     => 'Ranger les pages',
     'admin.page.gestion'   => 'Gestion des pages',
+    'admin.pub_url'   => 'Lien URL de la publicité',
+    'admin.pub_url.desc'   => 'Ajouter le lien URL de la publicité',
     
     'pubs'                 => 'Publicités',
     'pub'                  => 'Publicité',

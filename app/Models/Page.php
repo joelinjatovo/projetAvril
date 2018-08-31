@@ -47,14 +47,14 @@ class Page extends BaseModel
         if($lang=='fr'){
             // Image is setted
             if($this->pub_image){
-                if($thumb) return thumbnail($this->image->filepath);
-                return storage($this->image->filepath);
+                if($thumb) return thumbnail($this->pub_image->filepath);
+                return storage($this->pub_image->filepath);
             }
         } 
         if($lang=='en'){
             if($this->pub_image_en){
-                if($thumb) return thumbnail($this->image->filepath);
-                return storage($this->image->filepath);
+                if($thumb) return thumbnail($this->pub_image_en->filepath);
+                return storage($this->pub_image_en->filepath);
             }
         } 
         return asset('images/pub.png');

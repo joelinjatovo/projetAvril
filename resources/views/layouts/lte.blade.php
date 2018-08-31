@@ -13,6 +13,8 @@
 @section('style')
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="{{asset('lte/plugins/bootstrap/dist/css/bootstrap.min.css')}}">
+  <!-- Bootstrap FileUpload -->
+  <link rel="stylesheet" href="{{asset('lte/plugins/bootstrap-fileupload/css/bootstrap-fileupload.css')}}">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{asset('lte/plugins/font-awesome/css/font-awesome.min.css')}}">
   <!-- Ionicons -->
@@ -723,6 +725,8 @@
 </script>
 <!-- Bootstrap 3.3.7 -->
 <script src="{{asset('lte/plugins/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+<!-- Bootstrap FileUpload 3.3.7 -->
+<script src="{{asset('lte/plugins/bootstrap-fileupload/js/bootstrap-fileupload.js')}}"></script>
 <!-- Morris.js charts -->
 <script src="{{asset('lte/plugins/raphael/raphael.min.js')}}"></script>
 <script src="{{asset('lte/plugins/morris.js/morris.min.js')}}"></script>
@@ -750,6 +754,8 @@
 <script src="{{asset('lte/js/pages/dashboard.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('lte/js/demo.js')}}"></script>
+<!-- Script -->
+<script src="{{asset('lte/js/script.js')}}"></script>
 @show
 </body>
 </html>

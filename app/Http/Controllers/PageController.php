@@ -238,12 +238,12 @@ class PageController extends Controller
             
             if($file=$request->file('pub_image')){
                 $image = Image::storeAndSave($file);
-                $$page->pub_image_id = $image->id;
+                $page->pub_image_id = $image->id;
             }
             
             if($file=$request->file('pub_image_en')){
                 $image = Image::storeAndSave($file);
-                $$page->pub_image_en_id = $image->id;
+                $page->pub_image_en_id = $image->id;
             }
             
             $msg = "La publicité a été bien modifiée.";

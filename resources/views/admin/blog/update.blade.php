@@ -25,7 +25,7 @@
                     <!-- content -->
                     <div class="form-group">
                       <label>@lang('app.admin.content')</label>
-                      <textarea name="content" class="form-control" rows="3" placeholder="@lang('app.admin.content.desc')">{!!$item->content!!}</textarea>
+                      <textarea name="content" class="form-control ckeditor" rows="3" placeholder="@lang('app.admin.content.desc')">{!!$item->content!!}</textarea>
                       <span class="help-block">@lang('app.admin.content.desc')</span>
                     </div>
 
@@ -96,6 +96,15 @@
 
 @section('script')
 @parent
+<!-- CK Editor -->
+<script src="{{asset('lte/plugins/ckeditor/ckeditor.js')}}"></script>
+<script>
+  $(function () {
+    // Replace the <textarea id="editor1"> with a CKEditor
+    // instance, using default configuration.
+    CKEDITOR.replace('ckeditor')
+  })
+</script>
     
 <!-- iCheck 1.0.1 -->
 <script src="{{asset('lte/plugins/iCheck/icheck.min.js')}}"></script>

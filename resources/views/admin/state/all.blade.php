@@ -23,9 +23,8 @@
                     <div class="box-body">
                         <!-- content -->
                         <div class="form-group">
-                          <label>@lang('app.admin.content')</label>
-                          <textarea name="content" class="form-control" rows="3" placeholder="@lang('app.admin.content.desc')">{!!$item->content!!}</textarea>
-                          <span class="help-block">@lang('app.admin.content.desc')</span>
+                          <label>@lang('app.admin.state')</label>
+                          <input type="text" name="content" class="form-control" placeholder="@lang('app.admin.state')" value="{{$item->content}}"/>
                         </div>
                     </div>
                     <!-- /.box-body -->
