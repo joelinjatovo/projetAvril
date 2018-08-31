@@ -237,7 +237,10 @@ Route::prefix('seller')->middleware(["auth","role:seller"])->group(function(){
 });
 
 Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
-
+    
+    Route::get('/', 'AdminController@dashboard')->name('admin.dashboard');
+    Route::get('/chart/{type}', 'AdminController@chart')->name('admin.chart');
+    
     // User Controller Groups
     Route::get('users/{filter?}', 'UserController@all')->name('admin.user.list');
     Route::post('users/{filter?}', 'UserController@action');
@@ -249,12 +252,6 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::get('update/{user}', 'UserController@edit')->name('admin.user.edit');
         Route::post('update/{user}', 'UserController@update')->name('admin.user.update');
         
-        Route::get('active/{user}', 'UserController@active')->name('admin.user.active');
-        Route::get('block/{user}', 'UserController@block')->name('admin.user.block');
-        Route::get('disable/{user}', 'UserController@disable')->name('admin.user.disable');
-        
-        Route::get('delete/{user}', 'UserController@delete')->name('admin.user.delete');
-        
         Route::get('contact/{user}' , 'UserController@contact')->name('admin.user.contact');
         Route::post('contact/{user}', 'UserController@postContact');
     });
@@ -264,13 +261,6 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
     Route::post('products/{filter?}', 'ProductController@action');
     Route::prefix('product')->group(function(){
         Route::get('show/{product}', 'ProductController@show')->name('admin.product.show');
-        
-        Route::get('publish/{product}', 'ProductController@publish')->name('admin.product.publish');
-        Route::get('archive/{product}', 'ProductController@archive')->name('admin.product.archive');
-        Route::get('trash/{product}', 'ProductController@trash')->name('admin.product.trash');
-        Route::get('restore/{product}', 'ProductController@restore')->name('admin.product.restore');
-        
-        Route::get('delete/{product}', 'ProductController@delete')->name('admin.product.delete');
     });
     
     // Order Controller
@@ -286,24 +276,15 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::get('{order}', 'InvoiceController@show')->name('admin.invoice.show');
         Route::post('{order}', 'InvoiceController@postAction');
     });
-    
-    Route::get('/', 'AdminController@dashboard')->name('admin.dashboard');
-    Route::get('/chart/{type}', 'AdminController@chart')->name('admin.chart');
 
     // Blog Controller Groups
     Route::get('blogs/{filter?}', 'BlogController@allAdmin')->name('admin.blog.list');
+    Route::post('blogs/{filter?}', 'BlogController@action');
     Route::prefix('blog')->group(function(){
         Route::get('/', 'BlogController@create')->name('admin.blog.create');
         Route::post('/', 'BlogController@store')->name('admin.blog.store');
         Route::get('update/{blog}', 'BlogController@edit')->name('admin.blog.edit');
         Route::post('update/{blog}', 'BlogController@update')->name('admin.blog.update');
-        
-        Route::get('publish/{blog}', 'BlogController@publish')->name('admin.blog.publish');
-        Route::get('archive/{blog}', 'BlogController@archive')->name('admin.blog.archive');
-        Route::get('trash/{blog}', 'BlogController@trash')->name('admin.blog.trash');
-        Route::get('restore/{blog}', 'BlogController@restore')->name('admin.blog.restore');
-        Route::get('star/{blog}', 'BlogController@star')->name('admin.blog.star');
-        Route::get('delete/{blog}', 'BlogController@delete')->name('admin.blog.delete');
     });
 
     // Comment Controller Groups
@@ -343,6 +324,7 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
 
     // Page Controller Groups
     Route::get('pages/{type}/{filter?}', 'PageController@allAdmin')->name('admin.page.list');
+    Route::post('pages/{type}/{filter?}', 'PageController@action');
     Route::prefix('page')->group(function(){
         Route::get('/', 'PageController@create')->name('admin.page.create');
         Route::post('/', 'PageController@store')->name('admin.page.store');

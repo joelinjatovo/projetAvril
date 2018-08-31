@@ -20,6 +20,7 @@ class CreatePagesTable extends Migration
             $table->string('title_en', 150)->index();
             $table->longText('content_en')->nullable();
             $table->string('path')->nullable();
+            $table->integer('is_main')->default(0);
             $table->integer('page_order')->nullable();
             $table->string('type', 128)->default('page')->nullable();
             

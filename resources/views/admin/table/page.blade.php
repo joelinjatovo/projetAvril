@@ -12,7 +12,7 @@
     </thead>
     <tbody>
       @foreach($pages as $page) 
-        <tr>
+        <tr class="data-item-{{$page->id}} item">
             <td>
                 <a href="{{route('admin.page.show', $page)}}">{{$page->title}}</a><br>
                 {{$page->excerpt('fr', 20)}}
@@ -28,7 +28,10 @@
             <td>
                 <div class="btn-group pull-right">
                     <a href="{{route('admin.page.edit', $page)}}" class="btn btn-small btn-default btn-update">@lang('app.btn.edit')</a>
-                    <a href="{{route('admin.page.delete', $page)}}" class="btn btn-small btn-danger btn-delete"><i class="fa fa-trash-o"></i></a>
+                    <a href="#" class="btn btn-small btn-danger btn-delete"
+                      data-action="delete" 
+                      data-id="{{$page->id}}" 
+                      data-href="{{route('admin.page.list', ['type'=>$type])}}"><i class="fa fa-trash-o"></i></a>
                 </div>
             </td>
         </tr>

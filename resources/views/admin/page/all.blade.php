@@ -46,3 +46,8 @@
     </div>
     @endif
 @endsection
+
+@section('script')
+@parent
+@include('admin.inc.sweetalert-delete')
+@endsection

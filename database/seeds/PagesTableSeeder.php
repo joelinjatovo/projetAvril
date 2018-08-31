@@ -18,6 +18,7 @@ class PagesTableSeeder extends Seeder
                 'content'   => '',
                 'title_en'  => 'Home',
                 'content_en'=> '',
+                'is_main'   => '1',
                 'path'      => '/',
                 'childs'    => [
                     [
@@ -128,6 +129,7 @@ class PagesTableSeeder extends Seeder
                 'title_en'  => 'Terms And Conditions',
                 'content_en'=> 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliquan ut enim ad minim veniam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur ac sagittis neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi sollicitudin massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci. Pellentesque fermentum nisl purus, et iaculis lectus pharetra sit amet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur ac sagittis neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi s ollicitudin massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci. P ellentesque',
                 
+                'is_main'   => '1',
                 'path'      => '/terms',
                 'childs'    => [],
             ],
@@ -140,6 +142,7 @@ class PagesTableSeeder extends Seeder
                 'title_en'  => 'Investissor Guid',
                 'content_en'=> 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliquan ut enim ad minim veniam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur ac sagittis neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi sollicitudin massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci. Pellentesque fermentum nisl purus, et iaculis lectus pharetra sit amet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur ac sagittis neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi s ollicitudin massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci. P ellentesque',
                 
+                'is_main'   => '1',
                 'path'      => '/help',
                 'childs'    => [],
             ],
@@ -152,6 +155,7 @@ class PagesTableSeeder extends Seeder
                 'title_en'  => 'Confidentialities',
                 'content_en'=> 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliquan ut enim ad minim veniam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur ac sagittis neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi sollicitudin massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci. Pellentesque fermentum nisl purus, et iaculis lectus pharetra sit amet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur ac sagittis neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi s ollicitudin massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci. P ellentesque',
                 
+                'is_main'   => '1',
                 'path'      => '/confidentialities',
                 'childs'    => [],
             ],
@@ -164,6 +168,7 @@ class PagesTableSeeder extends Seeder
                 'title_en'  => 'Our services',
                 'content_en'=> '',
                 
+                'is_main'   => '1',
                 'path'      => '/services',
                 'childs'    => [
                     [
@@ -239,6 +244,7 @@ class PagesTableSeeder extends Seeder
                 'title_en'  => 'Publicities',
                 'content_en'=> '',
                 
+                'is_main'   => '1',
                 'path'      => 'pubs',
                 'childs'    => [],
             ],
@@ -250,6 +256,7 @@ class PagesTableSeeder extends Seeder
                 'title_en'  => 'Explanation Message',
                 'content_en'=> "Merci de votre intention de vous inscrire en qualité de Membre sur le site \"Investir en Australie\". En plus de pouvoir, comme tout Visiteur, voir dans le détail les produits et opérer des sélections multicritères, votre inscription vous permettra d'enregistrer vos recherches multicritères, d'enregistrer les produits qui vous intéressent dans vos \"favoris\", de partager des produits avec vos amis par emails et sur les réseaux sociaux, d'échanger avec une Agence Francophone Australienne située à proximité du bien qui vous intéresse. Lorsque vous aurez pris la décision d'acheter vous pourrez lancer la procédure d'acquisition en ligne. Au cours de cette procédure il vous sera proposé les services de certains de nos partenaires australiens francophones auxquels vous pourriez faire appel si vous en aviez besoin.",
                 
+                'is_main'   => '1',
                 'path'      => '/register/member',
                 'childs'    => [],
             ],
@@ -261,6 +268,7 @@ class PagesTableSeeder extends Seeder
                 'title_en'  => 'Explanation Message',
                 'content_en'=> "The Seller must accept The Terms and Conditions of Use of \"Investir en Australie\" website and make the commitment to display only products that can be sold to non-resident foreigners in accordance with Australian law and the rules applicable by the Foreign Investment Review Board (FIRB).",
                 
+                'is_main'   => '1',
                 'path'      => '/register/seller',
                 'childs'    => [],
             ],
@@ -272,6 +280,7 @@ class PagesTableSeeder extends Seeder
                 'title_en'  => 'Explanation Message',
                 'content_en'=> "The Australian Francophone Agents are Australian agents who are partners with \"Investir en Australie\" website. They are the essential link in the material realization of the sale of the products posted on the site, but they can also sell their own products.The Australian Francophone Agent must make the commitment to provide prospective or actual purchasers with a service in French during preliminary sales and during sales transactions. They must also accept that a clientele introductory fee (\"Commission de Présentation de Clientèle\" - CPC) will be due to the company managing IEA website in case of actual sale of products, accept and respect the Terms and Conditions of Use of the site, and make the commitment to verify and guarantee that the products for the sale of which they are the operating agent are effectively residential, land, industrial or commercial properties which may be sold to non-resident foreigners in accordance with the Australian law and the rules applicable to foreign investment by the Foreign Investment Review Board (FIRB).",
                 
+                'is_main'   => '1',
                 'path'      => '/register/afa',
                 'childs'    => [],
             ],
@@ -283,6 +292,7 @@ class PagesTableSeeder extends Seeder
                 'title_en'  => 'Explanation Message',
                 'content_en'=> "Les Agences Partenaires Locales (APL) sont des agences immobilières et d'affaires opérant dans des pays et territoires francophones qui souhaitent participer au courant d'investissement que développe le projet \"Investir en Australie\" (IEA). Dans ce cadre, l'APL est chargée d'une Mission d'Information, d'Orientation et de Promotion (MIOP) en direction des Membres du site IEA. Les Membres qui souhaitent une assistance locale pour leur démarche d'investissement en Australie souscrivent une relation exclusive de 180 jours avec une APL près de chez eux. En cas d'achat par le Membre inscrit auprès d'une APL, celle-ci perçoit une \"Commission de Contribution aux Ventes (CCV) égale à un pourcentage du prix de vente du bien. Le montant de cette CCV peut être doublé si l'APL a été à l'origine d'un certain montant de chiffre d'affaires au cours de l'année précédente.",
                 
+                'is_main'   => '1',
                 'path'      => '/register/apl',
                 'childs'    => [],
             ],
@@ -297,6 +307,7 @@ class PagesTableSeeder extends Seeder
                 'title_en'   => $page['title_en'],
                 'content_en' => $page['content_en'],
                 'path'       => $page['path'],
+                'is_main'    => isset($page['is_main'])?$page['is_main']:0,
                 'author_id'  => 1,
                 'created_at' => date("Y-m-d H:i:s"),
             ]);

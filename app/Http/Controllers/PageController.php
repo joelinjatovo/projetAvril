@@ -120,7 +120,9 @@ class PageController extends Controller
         $datas = $request->all();
         $validator = Validator::make($datas,[
             'title' => 'required|max:100',
+            'title_en' => 'required|max:100',
             'content' => 'required',
+            'content_en' => 'required',
             'type' => 'required',
         ]);
         
@@ -148,12 +150,12 @@ class PageController extends Controller
             
             if($file=$request->file('pub_image')){
                 $image = Image::storeAndSave($file);
-                $$page->pub_image_id = $image->id;
+                $page->pub_image_id = $image->id;
             }
             
             if($file=$request->file('pub_image_en')){
                 $image = Image::storeAndSave($file);
-                $$page->pub_image_en_id = $image->id;
+                $page->pub_image_en_id = $image->id;
             }
             
             $msg = "La publicité a été bien enregistrée.";
@@ -212,7 +214,9 @@ class PageController extends Controller
         // Validate request
         $validator = Validator::make($request->all(),[
             'title' => 'required|max:100',
+            'title_en' => 'required|max:100',
             'content' => 'required',
+            'content_en' => 'required',
             'type' => 'required|max:100',
         ]);
         
@@ -293,6 +297,7 @@ class PageController extends Controller
         $items = $items->paginate($record);
         
         return view('admin.page.all', compact('items', 'filter', 'page'))
+            ->with('type', $type) 
             ->with('q', $q) 
             ->with('record', $record) 
             ->with('title', $title); 
@@ -340,15 +345,40 @@ class PageController extends Controller
     * Delete Page
     *
     * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Models\Page $page
+    * @param  String $type
     * @return \Illuminate\Http\Response
     */
-    public function delete(Request $request,Page $page)
+    public function action(Request $request, $type)
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
         
+        // Validate request
+        $this->validate($request, [
+            'action' => 'required|max:10',
+            'data_id'   => 'required|numeric'
+        ]);
+        
+        $page = Page::findOrFail($request->data_id);
+        
+        if($page->is_main){
+            if($request->ajax()){
+                return response()->json([
+                    'status'=>0,
+                    'message' => "Cette action ne peut pas etre réalisée."
+                ]);
+            }
+            return back()->with('error',"Cette action ne peut pas etre réalisée.");
+        }
+        
         $page->delete();
+        
+        if($request->ajax()){
+            return response()->json([
+                'status'=>1,
+                'message' => "La page a été supprimée avec succés"
+            ]);
+        }
         
         return redirect()->route('admin.dashboard')
             ->with('success',"La page a été supprimée avec succés");

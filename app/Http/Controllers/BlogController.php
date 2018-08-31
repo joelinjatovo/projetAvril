@@ -375,99 +375,6 @@ class BlogController extends Controller
         return back()->with('success',"L'article a été bien modifié.");
     }
 
-
-    /**
-    * Mark as starred the Blog
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Models\Blog  $blog
-    * @return \Illuminate\Http\Response
-    */
-    public function star(Request $request,Blog $blog)
-    {
-        $this->middleware('auth');
-        $this->middleware('role:admin');
-
-        $blog->starred = 1;
-        $blog->save();
-        
-        return back()->with('success',"L'article a été ajouté aux favoris avec succés");
-    }
-
-
-    /**
-    * Archive Blog
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Models\Blog  $blog
-    * @return \Illuminate\Http\Response
-    */
-    public function archive(Request $request,Blog $blog)
-    {
-        $this->middleware('auth');
-        $this->middleware('role:admin');
-
-        $blog->status = "archived";
-        $blog->save();
-        return back()->with('success',"L'article a été achivé avec succés");
-    }
-
-
-    /**
-    * Publish Blog
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Models\Blog  $blog
-    * @return \Illuminate\Http\Response
-    */
-    public function publish(Request $request,Blog $blog)
-    {
-        $this->middleware('auth');
-        $this->middleware('role:admin');
-
-        $blog->status = "published";
-        $blog->save();
-        return back()->with('success',"L'article a été publié avec succés");
-    }
-
-
-    /**
-    * Trash Blog
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Models\Blog  $blog
-    * @return \Illuminate\Http\Response
-    */
-    public function trash(Request $request,Blog $blog)
-    {
-        $this->middleware('auth');
-        $this->middleware('role:admin');
-
-        $blog->status = "trashed";
-        $blog->save();
-        
-        return back()->with('success',"L'article a été ajouté aux corbeilles avec succés");
-    }
-
-
-    /**
-    * Restore Blog
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Models\Blog  $blog
-    * @return \Illuminate\Http\Response
-    */
-    public function restore(Request $request,Blog $blog)
-    {
-        $this->middleware('auth');
-        $this->middleware('role:admin');
-
-        $blog->status = "pinged";
-        $blog->save();
-        
-        return back()->with('success',"L'article a été restoré avec succés");
-    }
-
     /**
     * Delete Blog
     *
@@ -475,14 +382,58 @@ class BlogController extends Controller
     * @param  \App\Models\Blog  $blog
     * @return \Illuminate\Http\Response
     */
-    public function delete(Request $request,Blog $blog)
+    public function action(Request $request)
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
         
-        $blog->delete();
+        // Validate request
+        $this->validate($request, [
+            'action' => 'required|max:10',
+            'data_id'   => 'required|numeric'
+        ]);
+        
+        $blog = Blog::findOrFail($request->data_id);
+        
+        $action = $request->action;
+        switch($action){
+            case 'archive':
+                $blog->status = 'archived';
+                $blog->save();
+                $message = "L'article a été achivé avec succés";
+            break;
+            case 'publish':
+                $blog->status = 'published';
+                $blog->save();
+                $message = "L'article a été publié avec succés";
+            break;
+            case 'unstar':
+                $blog->starred = 0;
+                $blog->save();
+                $message = "L'article a été supprimé parmi les articles favoris avec succés";
+            break;
+            case 'star':
+                $blog->starred = 1;
+                $blog->save();
+                $message = "L'article a été ajouté aux favoris avec succés";
+            break;
+            case 'delete':
+                $blog->delete();
+                $message = "L'article a été supprimé avec succés";
+            break;
+            default:
+                abort(404);
+            break;
+        }
+        
+        if($request->ajax()){
+            return response()->json([
+                'status'=>1,
+                'message'=>$message
+            ]);
+        }
         
         return redirect()->route('admin.dashboard')
-            ->with('success',"L'article a été supprimé avec succés");
+            ->with('success', $message);
     }
 }

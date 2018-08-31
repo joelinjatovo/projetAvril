@@ -12,7 +12,7 @@
     </thead>
     <tbody>
       @foreach($blogs as $blog) 
-        <tr class="item">
+        <tr class="data-item-{{$blog->id}} item">
             <td>
              <a  href="{{route('blog.index', $blog)}}">
               <div class="item-img">
@@ -32,7 +32,7 @@
             <td>{{$blog->meta_tag}}</td>
             <td>{{$blog->meta_description}}</td>
             <td>
-                 <a href="{{route('admin.blog.list', ['filter'=>$blog->status])}}">
+                 <a class="data-item-status-{{$blog->id}}" href="{{route('admin.blog.list', ['filter'=>$blog->status])}}">
                      @if($blog->status=='published')
                      <span class="label label-success">{{$blog->status}}</span>
                      @else
@@ -42,19 +42,22 @@
             </td>
             <td>{{$blog->created_at->diffForHumans()}}</td>
             <td>
-                <div class="btn-group">
-                    <a href="{{route('admin.blog.edit', $blog)}}" class="btn btn-small btn-default btn-delete">@lang('app.btn.edit')</a>
-                 @if($blog->status=='pinged' || $blog->status=='archived')
-                    <a href="{{route('admin.blog.publish', $blog)}}" class="btn btn-small btn-success btn-publish">@lang('app.btn.publish')</a>
-                 @elseif($blog->status=='trashed')
-                    <a href="{{route('admin.blog.restore', $blog)}}" class="btn btn-small btn-info btn-restore">Restore</a>
-                 @endif
-                 @if($blog->status=='published')
-                    <a href="{{route('admin.blog.archive', $blog)}}" class="btn btn-small btn-default  btn-archive">@lang('app.btn.archive')</a>
-                    <a href="{{route('admin.blog.delete', $blog)}}" class="btn btn-small btn-danger btn-delete"><i class="fa fa-trash-o"></i></a>
-                 @else
-                    <a href="{{route('admin.blog.delete', $blog)}}" class="btn btn-small btn-warning btn-delete"><i class="fa fa-trash-o"></i></a>
-                 @endif
+               
+                <div class="btn-group pull-right">
+                  <a class="btn btn-default btn-status"
+                      data-action="{{$blog->status=='published'?'archive':'publish'}}" 
+                      data-id="{{$blog->id}}" 
+                      data-href="{{route('admin.blog.list')}}">
+                          @if($blog->status=='published') 
+                              @lang('app.btn.archive') 
+                          @else
+                            @lang('app.btn.publish') 
+                          @endif
+                  </a>
+                  <a class="btn btn-danger btn-delete" 
+                      data-action="delete" 
+                      data-id="{{$blog->id}}" 
+                      data-href="{{route('admin.blog.list')}}"><i class="fa fa-trash-o"></i></a>
                 </div>
             </td>
         </tr>
