@@ -11,7 +11,7 @@
  </thead>
  <tbody>
      @foreach($products as $product)
-     <tr class="item">
+     <tr class="data-item-{{$product->id}} item">
          <td>
              <a  href="{{route('admin.product.show', $product)}}">
               <div class="item-img">
@@ -30,7 +30,7 @@
          </td>
          <td>{{$product->created_at->diffForHumans()}}</td>
          <td>
-             <a href="{{route('admin.product.list', ['filter'=>$product->status])}}">
+             <a class="data-item-status-{{$product->id}}" href="{{route('admin.product.list', ['filter'=>$product->status])}}">
                  @if($product->status=='published')
                  <span class="label label-success">{{$product->status}}</span>
                  @elseif($product->status=='ordered')
@@ -51,23 +51,22 @@
              @endif
          </td>
          <td>
-            <form class="pull-right" action="{{route('admin.product.list')}}" method="post">
-                {{csrf_field()}}
-                <input type="hidden" name="product" value="{{$product->id}}">
-                <div class="btn-group">
-                 @if($product->status=='pinged' || $product->status=='archived')
-                  <button type="button" class="btn btn-default btn-publish">@lang('app.btn.publish')</button>
-                  <button type="button" class="btn btn-default btn-trash">@lang('app.btn.trash')</button>
-                 @elseif($product->status=='trashed')
-                  <button type="button" class="btn btn-default btn-restore">@lang('app.btn.restore')</button>
-                  <button type="button" class="btn btn-danger btn-delete"><i class="fa fa-trash-o"></i></button>
-                 @endif
-                 @if($product->status=='published')
-                  <button type="button" class="btn btn-default btn-archive">@lang('app.btn.archive')</button>
-                  <button type="button" class="btn btn-warning btn-delete"><i class="fa fa-trash-o"></i></button>
-                 @endif
-                </div>
-             </form>
+            <div class="btn-group pull-right">
+              <a class="btn btn-default btn-status"
+                  data-action="{{$product->status=='published'?'archive':'publish'}}" 
+                  data-id="{{$product->id}}" 
+                  data-href="{{route('admin.product.list')}}">
+                      @if($product->status=='published') 
+                          @lang('app.btn.archive') 
+                      @else
+                        @lang('app.btn.publish') 
+                      @endif
+              </a>
+              <a class="btn btn-danger btn-delete" 
+                  data-action="delete" 
+                  data-id="{{$product->id}}" 
+                  data-href="{{route('admin.product.list')}}"><i class="fa fa-trash-o"></i></a>
+            </div>
          </td>
      </tr>
      @endforeach

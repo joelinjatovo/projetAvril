@@ -261,6 +261,7 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
 
     // Product Controller Groups
     Route::get('products/{filter?}', 'ProductController@all')->name('admin.product.list');
+    Route::post('products/{filter?}', 'ProductController@action');
     Route::prefix('product')->group(function(){
         Route::get('show/{product}', 'ProductController@show')->name('admin.product.show');
         

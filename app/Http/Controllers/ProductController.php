@@ -188,42 +188,6 @@ class ProductController extends Controller
     }
     
     /**
-    * Publish product
-    *
-    * @param  \Illuminate\Http\Request  $request
-     * @param  App\Models\Product  $product
-    * @return \Illuminate\Http\Response
-    */
-    public function publish(Request $request,Product  $product)
-    {
-        $this->middleware('auth');
-        $this->middleware('role:admin');
-        
-        $product->status = 'published';
-        $product->save();
-        
-        return back()->with('success',"Le produit a été publié avec succés");
-    }
-    
-    /**
-    * Save product in archive
-    *
-    * @param  \Illuminate\Http\Request  $request
-     * @param  App\Models\Product  $product
-    * @return \Illuminate\Http\Response
-    */
-    public function archive(Request $request,Product  $product)
-    {
-        $this->middleware('auth');
-        $this->middleware('role:admin');
-        
-        $product->status = 'archived';
-        $product->save();
-        
-        return back()->with('success',"Le produit a été archivé avec succés");
-    }
-    
-    /**
     * Restore trashed product
     *
     * @param  \Illuminate\Http\Request  $request
@@ -260,18 +224,51 @@ class ProductController extends Controller
     }
     
     /**
-    * Delete Produt
+    * Handle action Produt
     *
     * @param  \Illuminate\Http\Request  $request
-     * @param  App\Models\Product  $product
     * @return \Illuminate\Http\Response
     */
-    public function delete(Request $request,Product  $product)
+    public function action(Request $request)
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
         
-        $product->delete();
+        // Validate request
+        $this->validate($request, [
+            'action' => 'required|max:10',
+            'data_id'   => 'required|numeric'
+        ]);
+        
+        $product = Product::findOrFail($request->data_id);
+        
+        $action = $request->action;
+        switch($action){
+            case 'archive':
+                $product->status = 'archived';
+                $product->save();
+                $message = "Le produit a été achivé avec succés";
+            break;
+            case 'publish':
+                $product->status = 'published';
+                $product->save();
+                $message = "Le produit a été publié avec succés";
+            break;
+            case 'delete':
+                $product->delete();
+                $message = "Le produit a été supprimé avec succés";
+            break;
+            default:
+                abort(404);
+            break;
+        }
+        
+        if($request->ajax()){
+            return response()->json([
+                'status'=>1,
+                'message'=>$message
+            ]);
+        }
         
         return redirect()->route('admin.dashboard')
             ->with('success',"Le produit a été supprimé avec succés");

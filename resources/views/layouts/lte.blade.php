@@ -403,7 +403,6 @@
             <li><a class="{{Request::is('admin/products/ordered')?'active':''}}" href="{{route('admin.product.list', ['filter'=>'ordered'])}}"><i class="fa fa-circle-o"></i>@lang('app.admin.product.ordered')</a></li>
             <li><a class="{{Request::is('admin/products/paid')?'active':''}}" href="{{route('admin.product.list', ['filter'=>'paid'])}}"><i class="fa fa-circle-o"></i>@lang('app.admin.product.paid')</a></li>
             <li><a class="{{Request::is('admin/products/archived')?'active':''}}" href="{{route('admin.product.list', ['filter'=>'archived'])}}"><i class="fa fa-circle-o"></i>@lang('app.admin.product.archive')</a></li>
-            <li><a class="{{Request::is('admin/products/trashed')?'active':''}}" href="{{route('admin.product.list', ['filter'=>'trashed'])}}"><i class="fa fa-circle-o"></i>@lang('app.admin.product.trash')</a></li>
           </ul>
         </li>
         <li class="{{Request::is('admin/categories/product')?'active':''}}">
