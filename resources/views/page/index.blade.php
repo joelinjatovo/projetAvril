@@ -14,13 +14,13 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-7">
-                @if(!empty($item->content()))
+                @if(!empty($item->getContent()))
                 <section class="property-contents common">
                     <header class="section-header home-section-header">
-                       <h4 class="wow slideInRight">{{$item->title()}}</h4>
+                       <h4 class="wow slideInRight">{{$item->getTitle()}}</h4>
                     </header>
                     <div class="row">
-                        <div class="property-single-metax">{!!$item->content()!!}</div>
+                        <div class="property-single-metax">{!!$item->getContent()!!}</div>
                         @if(Auth::check()&&Auth::user()->isAdmin())
                         <a href="{{route('admin.page.update',$item)}}" class="more pull-right"><i class="fa fa-pencil"></i> @lang('app.btn.edit')</a> 
                         @endif
@@ -30,23 +30,15 @@
                 @foreach($item->childs as $child)
                 <section class="property-contents common" id="page-{{$child->id}}">
                     <header class="section-header home-section-header">
-                       <h4 class="wow slideInRight">{{$child->title()}}</h4>
+                       <h4 class="wow slideInRight">{{$child->getTitle()}}</h4>
                     </header>
                     <div class="row">
-                        <div class="property-single-metax">{!!$child->content()!!}</div>
+                        <div class="property-single-metax">{!!$child->getContent()!!}</div>
                         @if(Auth::check()&&Auth::user()->isAdmin())
                         <a href="{{route('admin.page.update',$child)}}" class="more pull-right"><i class="fa fa-pencil"></i> @lang('app.btn.edit')</a> 
                         @endif
                     </div>
                 </section>
-                    @foreach($child->pubs as $pub)
-                    <section class="widget property-meta-wrapper clearfix">
-                        <h4 class="title wow slideInLeft">{{$pub->title}}</h4>
-                        <div class="content-box-large box-with-header">
-                            <a target="_blank" href="{{$pub->links?$pub->links:'#'}}"><img src="{{$pub->imageUrl()}}" class="img-rounded" alt="Cinque Terre" width="604" height="236"></a>
-                        </div>
-                    </section>
-                    @endforeach
                 @endforeach
            </div>
            <div class="col-lg-4 col-md-5">

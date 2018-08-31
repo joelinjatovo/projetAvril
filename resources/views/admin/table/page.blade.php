@@ -28,9 +28,6 @@
             <td>
                 <div class="btn-group pull-right">
                     <a href="{{route('admin.page.edit', $page)}}" class="btn btn-small btn-default btn-update">@lang('app.btn.edit')</a>
-                    @if(isset($pub))
-                    <a href="{{route('admin.pub.detach', ['pub'=>$pub, 'page'=>$page])}}" class="btn btn-small btn-default btn-detach">@lang('app.btn.detach')</a>
-                    @endif
                     <a href="{{route('admin.page.delete', $page)}}" class="btn btn-small btn-danger btn-delete"><i class="fa fa-trash-o"></i></a>
                 </div>
             </td>

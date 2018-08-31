@@ -18,7 +18,8 @@
                         <div class="col-md-12">
                           <div class="form-group">
                             <label>
-                              <input class="minimal" type="checkbox"> Cochez si c'est une publicité
+                              <input name="type" type="hidden" value="page">
+                              <input name="type" value="pub" class="minimal" type="checkbox" id="checkbox-pub" {{$item->type=="pub"?'checked':''}} > Cochez si c'est une publicité
                             </label>
                           </div>
                         </div>
@@ -167,6 +168,25 @@
       checkboxClass: 'icheckbox_flat-green',
       radioClass   : 'iradio_flat-green'
     })
+    
+    if($("#checkbox-pub").is(':checked')){
+        $(".pub-only").show();
+        $(".page-only").hide();
+    }else{
+        $(".pub-only").hide();
+        $(".page-only").show();
+    }
+      
+    $("#checkbox-pub").on('ifChecked', function(event){ 
+        $(".pub-only").show();
+        $(".page-only").hide();
+    });
+      
+    $("#checkbox-pub").on('ifUnchecked', function(event){ 
+        $(".pub-only").hide();
+        $(".page-only").show();
+    });
+      
   })
 </script>
 @endsection

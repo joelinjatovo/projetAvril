@@ -5,16 +5,6 @@
     <a href="{{route('member.contact', ['role'=>'apl'])}}" class="btn btn-primary btn-block" style="margin-bottom: 20px;">{!!__('app.btn.contact_apl')!!}</a>
     @endif
     
-    @foreach($pubs as $pub)
-    <section class="widget property-meta-wrapper clearfix" style="padding:0px;">
-        <div class="content-box-large box-with-header">
-            <a target="_blank" href="{{$pub->links?$pub->links:'#'}}">
-                <img src="{{$pub->imageUrl()}}" title="{{$pub->title}}" alt="{{$pub->title}}">
-            </a>
-        </div>
-    </section>
-    @endforeach
-    
     <section class="widget recent-properties clearfix">
         <h5 class="title">@lang('app.recent.product')</h5>
         @foreach($products as $product)

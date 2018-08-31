@@ -343,7 +343,7 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
     });
 
     // Page Controller Groups
-    Route::get('pages/{filter?}', 'PageController@allAdmin')->name('admin.page.list');
+    Route::get('pages/{type}/{filter?}', 'PageController@allAdmin')->name('admin.page.list');
     Route::prefix('page')->group(function(){
         Route::get('/', 'PageController@create')->name('admin.page.create');
         Route::post('/', 'PageController@store')->name('admin.page.store');
@@ -369,19 +369,6 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
         Route::get('edit/{image}', 'ImageController@edit')->name('admin.image.edit');
         Route::post('edit/{image}', 'ImageController@update')->name('admin.image.update');
         Route::get('delete/{image}', 'ImageController@delete')->name('admin.image.delete');
-    });
-
-    // Pub Controller Groups
-    Route::get('pubs/{filter?}', 'PubController@allAdmin')->name('admin.pub.list');
-    Route::prefix('pub')->group(function(){
-        Route::get('/', 'PubController@create')->name('admin.pub.create');
-        Route::post('/', 'PubController@store')->name('admin.pub.store');
-        Route::get('show/{pub}', 'PubController@show')->name('admin.pub.show');
-        Route::get('update/{pub}', 'PubController@edit')->name('admin.pub.edit');
-        Route::post('update/{pub}', 'PubController@update')->name('admin.pub.update');
-        Route::get('detach/{pub}/{page}', 'PubController@detach')->name('admin.pub.detach');
-        
-        Route::get('delete/{pub}', 'PubController@delete')->name('admin.pub.delete');
     });
 
     // Bad Words Controller Groups

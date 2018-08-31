@@ -12,6 +12,7 @@ use App\Models\Page;
 use App\Models\PubPage;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Image;
 
 class PageController extends Controller
 {
@@ -44,11 +45,10 @@ class PageController extends Controller
             ->orderBy('created_at', 'desc')
             ->take(6)->get();
         
-        $page->load(['childs', 'childs.pubs', 'pubs']);
+        $page->load(['childs']);
         
         return view('page.index')
             ->with('item', $page)
-            ->with('pubs', $page->pubs)
             ->with('products', $products)
             ->with('blogs', $blogs)
             ->with('recentProducts', $recentProducts)
@@ -88,9 +88,16 @@ class PageController extends Controller
         if($value = $request->old('title_en'))   $item->title_en = $value;
         if($value = $request->old('content'))    $item->content = $value;
         if($value = $request->old('content_en')) $item->content_en = $value;
-        if($value = $request->old('path'))       $item->path = $value;
         if($value = $request->old('page_order')) $item->page_order = $value;
         if($value = $request->old('parent_id'))  $item->parent_id = $value;
+        if($value = $request->old('type'))       $item->type = $value;
+        
+        // type =  PUB
+        if($value = $request->old('pub_url'))    $item->pub_url = $value;
+        if($value = $request->old('pub_url_en')) $item->pub_url_en = $value;
+        
+        // type =  PAGE
+        if($value = $request->old('path'))       $item->path = $value;
         
         $action = route('admin.page.store');
         $pages = Page::where('parent_id', 0)->get();
@@ -114,7 +121,7 @@ class PageController extends Controller
         $validator = Validator::make($datas,[
             'title' => 'required|max:100',
             'content' => 'required',
-            'path' => 'required',
+            'type' => 'required',
         ]);
         
         if ($validator->fails()) {
@@ -128,12 +135,33 @@ class PageController extends Controller
         $page->title_en = $request->title_en;
         $page->content = $request->content;
         $page->content_en = $request->content_en;
-        $page->parent_id = $request->parent_id;
-        $page->page_order = $request->page_order;
-        $page->path = $request->path;
+        $page->parent_id = $request->parent_id?$request->parent_id:0;
+        $page->page_order = $request->page_order?$request->page_order:0;
+        $page->type = $request->type;
+        
+        if($page->type=='page'){
+            $page->path = $request->path;
+            $msg = "La page a été bien enregistrée.";
+        }else{
+            $page->pub_url = $request->pub_url;
+            $page->pub_url_en = $request->pub_url_en;
+            
+            if($file=$request->file('pub_image')){
+                $image = Image::storeAndSave($file);
+                $$page->pub_image_id = $image->id;
+            }
+            
+            if($file=$request->file('pub_image_en')){
+                $image = Image::storeAndSave($file);
+                $$page->pub_image_en_id = $image->id;
+            }
+            
+            $msg = "La publicité a été bien enregistrée.";
+        }
+        
         $page->save();
         
-        return back()->with('success',"La page a été bien enregistrée.");
+        return back()->with('success', $msg);
     }
     
     /**
@@ -152,10 +180,16 @@ class PageController extends Controller
         if($value = $request->old('title_en'))   $page->title_en = $value;
         if($value = $request->old('content'))    $page->content = $value;
         if($value = $request->old('content_en')) $page->content_en = $value;
-        if($value = $request->old('path'))       $page->path = $value;
         if($value = $request->old('page_order')) $page->page_order = $value;
         if($value = $request->old('parent_id'))  $page->parent_id = $value;
-        if($value = $request->old('language'))   $page->language = $value;
+        if($value = $request->old('type'))       $page->type = $value;
+        
+        // type =  PUB
+        if($value = $request->old('pub_url'))    $item->pub_url = $value;
+        if($value = $request->old('pub_url_en')) $item->pub_url_en = $value;
+        
+        // type =  PAGE
+        if($value = $request->old('path'))       $item->path = $value;
         
         $action = route('admin.page.update', ['page'=>$page]);
         $pages = Page::where('parent_id', 0)->get();
@@ -179,7 +213,7 @@ class PageController extends Controller
         $validator = Validator::make($request->all(),[
             'title' => 'required|max:100',
             'content' => 'required',
-            'path' => 'required|max:100',
+            'type' => 'required|max:100',
         ]);
         
         if ($validator->fails()) {
@@ -193,10 +227,31 @@ class PageController extends Controller
         $page->content_en = $request->content_en;
         $page->parent_id = $request->parent_id?$request->parent_id:0;
         $page->page_order = $request->page_order?$request->page_order:0;
-        $page->path = $request->path;
+        $page->type = $request->type;
+        
+        if($page->type=='page'){
+            $page->path = $request->path;
+            $msg = "La page a été bien modifiée.";
+        }else{
+            $page->pub_url = $request->pub_url;
+            $page->pub_url_en = $request->pub_url_en;
+            
+            if($file=$request->file('pub_image')){
+                $image = Image::storeAndSave($file);
+                $$page->pub_image_id = $image->id;
+            }
+            
+            if($file=$request->file('pub_image_en')){
+                $image = Image::storeAndSave($file);
+                $$page->pub_image_en_id = $image->id;
+            }
+            
+            $msg = "La publicité a été bien modifiée.";
+        }
+        
         $page->save();
         
-        return back()->with('success',"La page a été bien modifiée.");
+        return back()->with('success', $msg);
     }
     
     /**
@@ -204,17 +259,18 @@ class PageController extends Controller
      * Admin Only
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  String $type
      * @param  String $filter
      * @return \Illuminate\Http\Response
      */
-    public function allAdmin(Request $request, $filter='all')
+    public function allAdmin(Request $request, $type, $filter='all')
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
         
-        $title = __('app.admin.page.list');
+        $title = __('app.admin.'.$type.'.list');
         
-        $items = new Page;
+        $items = Page::where('type', $type);
         
         $page = $request->get('page');
         if(!$page){$page =1;}

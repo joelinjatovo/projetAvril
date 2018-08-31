@@ -124,16 +124,6 @@ class Page extends BaseModel
     }
     
     /**
-     * An many page can have many pubs from pubs_pages table
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
-     */
-    public function pubs()
-    {
-      return $this->belongsToMany(Pub::class, 'pubs_pages', 'page_id', 'pub_id');
-    }
-    
-    /**
      * Get the image record associated with the pub.
      */
     public function pub_image()

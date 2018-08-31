@@ -21,7 +21,7 @@ class CreatePagesTable extends Migration
             $table->longText('content_en')->nullable();
             $table->string('path')->nullable();
             $table->integer('page_order')->nullable();
-            $table->string('type', 128)->nullable();
+            $table->string('type', 128)->default('page')->nullable();
             
             // type = pub
             $table->longText('pub_url')->nullable();
