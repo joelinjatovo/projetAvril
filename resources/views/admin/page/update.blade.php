@@ -1,5 +1,11 @@
 @extends('layouts.lte')
 
+@section('style')
+@parent
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="{{asset('lte/plugins/iCheck/all.css')}}">
+@endsection
+
 @section('content')
 <div class="row">
     <form role="form" method="post" action="{{$action}}" enctype="multipart/form-data">
@@ -9,32 +15,83 @@
                 <div class="box-body">
                     <!-- title / content -->
                     <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label>
+                              <input class="minimal" type="checkbox"> Cochez si c'est une publicité
+                            </label>
+                          </div>
+                        </div>
                         <div class="col-md-6">
                             <!-- title input -->
-                            <div class="form-group">
+                            <div class="form-group common">
                               <label>@lang('app.admin.title')</label>
                               <input name="title" type="text" class="form-control" value="{{$item->title}}" placeholder="@lang('app.admin.title.desc')">
                               <span class="help-block">@lang('app.admin.title.desc')</span>
                             </div>
+                            
                             <!-- content -->
-                            <div class="form-group">
+                            <div class="form-group common">
                               <label>@lang('app.admin.content')</label>
                               <textarea name="content" class="form-control" rows="3" placeholder="@lang('app.admin.content.desc')">{!!$item->content!!}</textarea>
                               <span class="help-block">@lang('app.admin.content.desc')</span>
                             </div>
+                            
+                            <!-- pub_url input -->
+                            <div class="form-group pub-only">
+                              <label>@lang('app.admin.pub_url')</label>
+                              <input name="pub_url" type="url" class="form-control" value="{{$item->pub_url}}" placeholder="@lang('app.admin.pub_url.desc')">
+                              <span class="help-block">@lang('app.admin.pub_url.desc')</span>
+                            </div>
+                            
+                            <!-- fileupload -->
+                            <div class="fileupload fileupload-new pub-only" data-provides="fileupload">
+                                <div class="fileupload-preview thumbnail" style="width: 200px; height: 120px;">
+                                    <img src="{{$item->imageUrl('fr')}}">
+                                </div>
+                                <div> 
+                                <span class="btn btn-file"> 
+                                    <span class="fileupload-new">@lang('app.admin.file.select')</span> 
+                                    <span class="fileupload-exists">@lang('app.admin.file.change')</span>
+                                    <input type="file" name="pub_image" id="file">
+                                </span> 
+                                <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">@lang('app.admin.file.remove')</a> </div>
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <!-- title input -->
-                            <div class="form-group">
+                            <div class="form-group common">
                               <label>@lang('app.admin.title')</label>
                               <input name="title_en" type="text" class="form-control" value="{{$item->title_en}}" placeholder="@lang('app.admin.title.desc')">
                               <span class="help-block">@lang('app.admin.title.desc')</span>
                             </div>
+                            
                             <!-- content -->
-                            <div class="form-group">
+                            <div class="form-group common">
                               <label>@lang('app.admin.content')</label>
                               <textarea name="content_en" class="form-control" rows="3" placeholder="@lang('app.admin.content.desc')">{!!$item->content_en!!}</textarea>
                               <span class="help-block">@lang('app.admin.content.desc')</span>
+                            </div>
+                            
+                            <!-- pub_url input -->
+                            <div class="form-group pub-only">
+                              <label>@lang('app.admin.pub_url')</label>
+                              <input name="pub_url_en" type="url" class="form-control" value="{{$item->pub_url_en}}" placeholder="@lang('app.admin.pub_url.desc')">
+                              <span class="help-block">@lang('app.admin.pub_url.desc')</span>
+                            </div>
+                            
+                            <!-- fileupload -->
+                            <div class="fileupload fileupload-new pub-only" data-provides="fileupload">
+                                <div class="fileupload-preview thumbnail" style="width: 200px; height: 120px;">
+                                    <img src="{{$item->imageUrl('en')}}">
+                                </div>
+                                <div> 
+                                <span class="btn btn-file"> 
+                                    <span class="fileupload-new">@lang('app.admin.file.select')</span> 
+                                    <span class="fileupload-exists">@lang('app.admin.file.change')</span>
+                                    <input type="file" name="pub_image_en" id="file">
+                                </span> 
+                                <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">@lang('app.admin.file.remove')</a> </div>
                             </div>
                         </div>
                     </div>
@@ -48,21 +105,21 @@
                     </div>
                     
                     <!-- path input -->
-                    <div class="form-group">
+                    <div class="form-group common">
                       <label>@lang('app.admin.page_order')</label>
                       <input name="page_order" type="text" class="form-control" value="{{$item->page_order}}" placeholder="@lang('app.admin.page_order.desc')">
                       <span class="help-block">@lang('app.admin.page_order.desc')</span>
                     </div>
                     
                     <!-- path input -->
-                    <div class="form-group">
+                    <div class="form-group page-only">
                       <label>@lang('app.admin.path')</label>
                       <input name="path" type="text" class="form-control" value="{{$item->path}}" placeholder="@lang('app.admin.path.desc')">
                       <span class="help-block">@lang('app.admin.path.desc')</span>
                     </div>
                     
                     <!-- parent input -->
-                    <div class="form-group">
+                    <div class="form-group common">
                       <label>@lang('app.select_one')</label>
                       <select name="parent_id" class="form-control" >
                             <option value="0">@lang('app.select_one')</option>
@@ -85,4 +142,31 @@
         </div>
     </form>
 </div>
+@endsection
+
+
+@section('script')
+@parent
+    
+<!-- iCheck 1.0.1 -->
+<script src="{{asset('lte/plugins/iCheck/icheck.min.js')}}"></script>
+<script>
+  $(function () {
+    //iCheck for checkbox and radio inputs
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass   : 'iradio_minimal-blue'
+    })
+    //Red color scheme for iCheck
+    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+      checkboxClass: 'icheckbox_minimal-red',
+      radioClass   : 'iradio_minimal-red'
+    })
+    //Flat red color scheme for iCheck
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-green',
+      radioClass   : 'iradio_flat-green'
+    })
+  })
+</script>
 @endsection

@@ -37,6 +37,30 @@ class Page extends BaseModel
     }
     
     /**
+     * Get Url of Attached Image OR Default Image
+     *
+     * @param Boolean $thumb
+     * @return String
+     */
+    public function imageUrl($lang, $thumb=false)
+    {
+        if($lang=='fr'){
+            // Image is setted
+            if($this->pub_image){
+                if($thumb) return thumbnail($this->image->filepath);
+                return storage($this->image->filepath);
+            }
+        } 
+        if($lang=='en'){
+            if($this->pub_image_en){
+                if($thumb) return thumbnail($this->image->filepath);
+                return storage($this->image->filepath);
+            }
+        } 
+        return asset('images/pub.png');
+    }
+    
+    /**
      * Return title switch selected language
      *
      * @return String
@@ -107,5 +131,21 @@ class Page extends BaseModel
     public function pubs()
     {
       return $this->belongsToMany(Pub::class, 'pubs_pages', 'page_id', 'pub_id');
+    }
+    
+    /**
+     * Get the image record associated with the pub.
+     */
+    public function pub_image()
+    {
+        return $this->belongsTo(Image::class, 'pub_image_id', 'id');
+    }
+    
+    /**
+     * Get the image record associated with the pub.
+     */
+    public function pub_image_en()
+    {
+        return $this->belongsTo(Image::class, 'pub_image_en_id', 'id');
     }
 }
