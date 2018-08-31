@@ -245,12 +245,18 @@ class UserController extends Controller
         // Validate request
         $this->validate($request, [
             'action' => 'required|max:10',
-            'user'   => 'required|numeric'
+            'data_id'   => 'required|numeric'
         ]);
         
-        $user = User::findOrFail($request->user);
+        $user = User::findOrFail($request->data_id);
         
         if($user->id==1){
+            if($request->ajax()){
+                return response()->json([
+                    'status'=>0,
+                    'message'=>"Cette action ne peut pas etre réalisée."
+                ]);
+            }
             return back()->with('error',"Cette action ne peut pas etre réalisée.");
         }
         
@@ -284,6 +290,13 @@ class UserController extends Controller
             default:
                 abort(404);
             break;
+        }
+        
+        if($request->ajax()){
+            return response()->json([
+                'status'=>1,
+                'message'=>$message
+            ]);
         }
         
         return redirect()->route('admin.user.list')

@@ -11,7 +11,7 @@
  </thead>
  <tbody>
      @foreach($users as $item)
-     <tr class="user-item-{{$item->id}} item">
+     <tr class="user-item-{{$item->id}} data-item-{{$item->id}} item">
          <td>
              <a  href="{{route('admin.user.show', $item)}}">
               <div class="item-img">
@@ -42,7 +42,7 @@
              @endif
          </td>
          <td>
-             <a href="{{route('admin.user.list', ['filter'=>$item->status])}}">
+             <a class="data-item-status-{{$item->id}}" href="{{route('admin.user.list', ['filter'=>$item->status])}}">
              @if($item->status=='active')
              <span class="label label-success">{{$item->status}}</span>
              @else
@@ -51,19 +51,23 @@
              </a>
          </td>
          <td>
-            <form class="pull-right" action="{{route('admin.user.list')}}" method="post">
-                {{csrf_field()}}
-                <input type="hidden" name="user" value="{{$item->id}}">
-                <div class="btn-group">
-                 @if($item->status=='active')
-                  <button type="button" class="btn btn-default btn-disable">@lang('app.btn.disable')</button>
-                 @else
-                  <button type="button" class="btn btn-default btn-active">@lang('app.btn.active')</button>
-                 @endif
-                  <a type="button" class="btn btn-default" href="{{route('admin.user.contact', $item)}}">@lang('app.btn.contact')</a>
-                  <button type="button" class="btn btn-danger btn-delete"><i class="fa fa-trash-o"></i></button>
-                </div>
-             </form>
+            <div class="btn-group pull-right">
+              <a type="button" class="btn btn-default" href="{{route('admin.user.contact', $item)}}">@lang('app.btn.contact')</a>
+              <a class="btn btn-default btn-status"
+                  data-action="{{$item->status=='active'?'disable':'active'}}" 
+                  data-id="{{$item->id}}" 
+                  data-href="{{route('admin.user.list')}}">
+                      @if($item->status=='active') 
+                          @lang('app.btn.disable') 
+                      @else
+                        @lang('app.btn.active') 
+                      @endif
+              </a>
+              <a class="btn btn-danger btn-delete" 
+                  data-action="delete" 
+                  data-id="{{$item->id}}" 
+                  data-href="{{route('admin.user.list')}}"><i class="fa fa-trash-o"></i></a>
+            </div>
          </td>
      </tr>
      @endforeach
