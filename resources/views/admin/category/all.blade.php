@@ -84,7 +84,7 @@
                     </thead>
                     <tbody>
                       @foreach($items as $item) 
-                        <tr>
+                        <tr class="data-item-{{$item->id}} item">
                             <td><a href="{{route('admin.category.show', $item)}}">{{$item->title}}</a></td>
                             <td>{{$item->created_at->diffForHumans()}}</td>
                             <td>{{count($item->products)}} / {{count($item->subProducts)}}</td>
@@ -92,8 +92,11 @@
                             <td><a href="{{route('admin.user.show', $item->author)}}">{{$item->author->name}}</a></td>
                             <td>
                                 <div class="btn-group pull-right">
-                                  <a href="{{route('admin.category.edit', $item)}}" class="btn btn-small btn-default btn-update">Modifier</a>
-                                  <a href="{{route('admin.category.delete', $item)}}" class="btn btn-small btn-danger btn-delete"><i class="fa fa-trash-o"></i></a>
+                                  <a href="{{route('admin.category.edit', $item)}}" class="btn btn-small btn-default btn-update">@lang('app.btn.edit')</a>
+                                  <a href="#" class="btn btn-small btn-danger btn-delete"
+                                      data-action="delete" 
+                                      data-id="{{$item->id}}" 
+                                      data-href="{{route('admin.category.list', ['type'=>$type])}}"><i class="fa fa-trash-o"></i></a>
                                 </div>
                             </td>
                         </tr>
@@ -118,4 +121,9 @@
         @endif
         </div>
     </div>
+@endsection
+
+@section('script')
+@parent
+@include('admin.inc.sweetalert-delete')
 @endsection

@@ -124,15 +124,29 @@ class PostalCodeController extends Controller
     * Delete PostalCode $postalcode
     *
     * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Models\PostalCode $postalcode
     * @return \Illuminate\Http\Response
     */
-    public function delete(Request $request, PostalCode $postalcode)
+    public function action(Request $request)
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
         
+        // Validate request
+        $this->validate($request, [
+            'action' => 'required|max:10',
+            'data_id'   => 'required|numeric'
+        ]);
+        
+        $postalcode = PostalCode::findOrFail($request->data_id);
+        
         $postalcode->delete();
+        
+        if($request->ajax()){
+            return response()->json([
+                'status'=>1,
+                'message' => "Le code postal a été supprimé avec succés"
+            ]);
+        }
         
         return redirect()->route('admin.dashboard')
             ->with('success',"Le code postal a été supprimé avec succés");

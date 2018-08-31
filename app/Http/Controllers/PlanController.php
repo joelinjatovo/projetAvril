@@ -233,15 +233,29 @@ class PlanController extends Controller
     * Delete Bad Word
     *
     * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Models\Plan $plan
     * @return \Illuminate\Http\Response
     */
-    public function delete(Request $request, Plan $plan)
+    public function action(Request $request)
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
         
+        // Validate request
+        $this->validate($request, [
+            'action' => 'required|max:10',
+            'data_id'   => 'required|numeric'
+        ]);
+        
+        $plan = Plan::findOrFail($request->data_id);
+        
         $plan->delete();
+        
+        if($request->ajax()){
+            return response()->json([
+                'status'=>1,
+                'message' => "Le plan a été supprimé avec succés"
+            ]);
+        }
         
         return redirect()->route('admin.dashboard')
             ->with('success',"Le plan a été supprimé avec succés");

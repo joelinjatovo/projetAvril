@@ -24,7 +24,7 @@
                         <!-- content -->
                         <div class="form-group">
                           <label>@lang('app.admin.postalcode')</label>
-                          <input type="text" name="content" class="form-control" rows="3" placeholder="@lang('app.admin.postalcode')" value="{{$item->content}}"/>
+                          <input type="text" minlength="5" maxlength="5" name="content" class="form-control" rows="3" placeholder="@lang('app.admin.postalcode')" value="{{$item->content}}"/>
                         </div>
                     </div>
                     <!-- /.box-body -->
@@ -72,13 +72,16 @@
                     </thead>
                     <tbody>
                       @foreach($items as $item) 
-                        <tr>
+                        <tr class="data-item-{{$item->id}} item">
                             <td>{{$item->content}}</td>
                             <td>{{$item->created_at->diffForHumans()}}</td>
                             <td>
                                 <div class="btn-group pull-right">
                                     <a href="{{route('admin.postalcode.edit', $item)}}" class="btn btn-small btn-default btn-update">@lang('app.btn.edit')</a>
-                                    <a href="{{route('admin.postalcode.delete', $item)}}" class="btn btn-small btn-danger btn-delete"><i class="fa fa-trash-o"></i></a>
+                                    <a href="#" class="btn btn-small btn-danger btn-delete"
+                                      data-action="delete" 
+                                      data-id="{{$item->id}}" 
+                                      data-href="{{route('admin.postalcode.list')}}"><i class="fa fa-trash-o"></i></a>
                                 </div>
                             </td>
                         </tr>
@@ -103,4 +106,9 @@
         @endif
         </div>
     </div>
+@endsection
+
+@section('script')
+@parent
+@include('admin.inc.sweetalert-delete')
 @endsection

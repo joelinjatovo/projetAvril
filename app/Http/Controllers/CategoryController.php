@@ -175,15 +175,40 @@ class CategoryController extends Controller
     * Delete Category
     *
     * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Models\Category $category
     * @return \Illuminate\Http\Response
     */
-    public function delete(Request $request,Category $category)
+    public function action(Request $request)
     {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        // Validate request
+        $this->validate($request, [
+            'action' => 'required|max:10',
+            'data_id'   => 'required|numeric'
+        ]);
+        
+        $category = Category::findOrFail($request->data_id);
+        
         if($category->id<5){
+            if($request->ajax()){
+                return response()->json([
+                    'status'=>0,
+                    'message' => "Cette action ne peut pas etre réalisée."
+                ]);
+            }
             return back()->with('error',"Cette action ne peut pas etre réalisée.");
         }
+        
         $category->delete();
+        
+        if($request->ajax()){
+            return response()->json([
+                'status'=>1,
+                'message' => "La categorie a été supprimée avec succés"
+            ]);
+        }
+        
         return redirect()->route('admin.dashboard')
             ->with('success',"La categorie a été supprimée avec succés");
     }

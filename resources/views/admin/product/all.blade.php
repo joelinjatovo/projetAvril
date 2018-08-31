@@ -77,9 +77,8 @@
 <script src="{{asset('lte/plugins/sweetalert/sweetalert.min.js')}}"></script>
 <script>
   $(function () {
-      
       $('.btn-delete').click(function(e){
-        e.preventDefault;
+        e.preventDefault();
         var $this = $(this);
         swal({
           title: "@lang('alert.are_you_sure')",
@@ -96,7 +95,7 @@
       })
       
       $('.btn-status').click(function(e){
-        e.preventDefault;
+        e.preventDefault();
         var $this = $(this);
           
         var action = $this.attr('data-action');

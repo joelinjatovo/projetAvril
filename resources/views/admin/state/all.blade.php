@@ -72,13 +72,16 @@
                         </thead>
                         <tbody>
                           @foreach($items as $item) 
-                            <tr>
+                            <tr class="data-item-{{$item->id}} item">
                                 <td>{{$item->content}}</td>
                                 <td>{{$item->created_at->diffForHumans()}}</td>
                                 <td>
                                 <div class="btn-group pull-right">
                                     <a href="{{route('admin.state.edit', $item)}}" class="btn btn-small btn-default btn-update">@lang('app.btn.edit')</a>
-                                    <a href="{{route('admin.state.delete', $item)}}" class="btn btn-small btn-danger btn-delete"><i class="fa fa-trash-o"></i></a>
+                                    <a href="#" class="btn btn-small btn-danger btn-delete"
+                                      data-action="delete" 
+                                      data-id="{{$item->id}}" 
+                                      data-href="{{route('admin.state.list')}}"><i class="fa fa-trash-o"></i></a>
                                 </div>
                                 </td>
                             </tr>
@@ -103,4 +106,9 @@
         @endif
         </div>
     </div>
+@endsection
+
+@section('script')
+@parent
+@include('admin.inc.sweetalert-delete')
 @endsection

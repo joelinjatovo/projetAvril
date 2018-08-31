@@ -321,26 +321,24 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
     
     // Category Controller Groups
     Route::get('categories/{type}/{filter?}', 'CategoryController@allAdmin')->name('admin.category.list');
+    Route::post('categories/{type}/{filter?}', 'CategoryController@action');
     Route::prefix('category')->group(function(){
         Route::get('/{type}', 'CategoryController@create')->name('admin.category.create');
         Route::post('/{type}', 'CategoryController@store')->name('admin.category.store');
         Route::get('show/{category}', 'CategoryController@show')->name('admin.category.show');
         Route::get('update/{category}', 'CategoryController@edit')->name('admin.category.edit');
         Route::post('update/{category}', 'CategoryController@update')->name('admin.category.update');
-        
-        Route::get('delete/{category}', 'CategoryController@delete')->name('admin.category.delete');
     });
 
     // Plan Controller Groups
     Route::get('plans/{filter?}', 'PlanController@all')->name('admin.plan.list');
+    Route::post('plans/{filter?}', 'PlanController@action');
     Route::prefix('plan')->group(function(){
         Route::get('/', 'PlanController@create')->name('admin.plan.create');
         Route::post('/', 'PlanController@store')->name('admin.plan.store');
         Route::get('show/{plan}', 'PlanController@show')->name('admin.plan.show');
         Route::get('update/{plan}', 'PlanController@edit')->name('admin.plan.edit');
         Route::post('update/{plan}', 'PlanController@update')->name('admin.plan.update');
-        
-        Route::get('delete/{plan}', 'PlanController@delete')->name('admin.plan.delete');
     });
 
     // Page Controller Groups
@@ -374,36 +372,32 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
 
     // Bad Words Controller Groups
     Route::get('badwords', 'BadWordController@all')->name('admin.badword.list');
+    Route::post('badwords', 'BadWordController@action');
     Route::prefix('badword')->group(function(){
         Route::get('/', 'BadWordController@create')->name('admin.badword.create');
         Route::post('/', 'BadWordController@store')->name('admin.badword.store');
         Route::get('update/{badword}', 'BadWordController@edit')->name('admin.badword.edit');
         Route::post('update/{badword}', 'BadWordController@update')->name('admin.badword.update');
-        
-        Route::get('delete/{badword}', 'BadWordController@delete')->name('admin.badword.delete');
     });
 
     // Code Postal Controller Groups
     Route::get('postal-codes', 'PostalCodeController@all')->name('admin.postalcode.list');
+    Route::post('postal-codes', 'PostalCodeController@action');
     Route::prefix('postal-code')->group(function(){
         Route::get('/', 'PostalCodeController@create')->name('admin.postalcode.create');
         Route::post('/', 'PostalCodeController@store')->name('admin.postalcode.store');
         Route::get('update/{postalcode}', 'PostalCodeController@edit')->name('admin.postalcode.edit');
         Route::post('update/{postalcode}', 'PostalCodeController@update')->name('admin.postalcode.update');
-        
-        Route::get('delete/{postalcode}', 'PostalCodeController@delete')->name('admin.postalcode.delete');
     });
 
     // State Controller Groups
     Route::get('states', 'StateController@all')->name('admin.state.list');
+    Route::post('states', 'StateController@action');
     Route::prefix('state')->group(function(){
         Route::get('/', 'StateController@create')->name('admin.state.create');
         Route::post('/', 'StateController@store')->name('admin.state.store');
         Route::get('update/{state}', 'StateController@edit')->name('admin.state.edit');
         Route::post('update/{state}', 'StateController@update')->name('admin.state.update');
-        
-        
-        Route::get('delete/{state}', 'StateController@delete')->name('admin.state.delete');
     });
 
     // Chat Controller Groups

@@ -120,15 +120,29 @@ class BadWordController extends Controller
     * Delete Bad Word
     *
     * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Models\BadWord $word
     * @return \Illuminate\Http\Response
     */
-    public function delete(Request $request, BadWord $badword)
+    public function action(Request $request)
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
         
+        // Validate request
+        $this->validate($request, [
+            'action' => 'required|max:10',
+            'data_id'   => 'required|numeric'
+        ]);
+        
+        $badword = BadWord::findOrFail($request->data_id);
+        
         $badword->delete();
+        
+        if($request->ajax()){
+            return response()->json([
+                'status'=>1,
+                'message' => "Le mot a été supprimé avec succés"
+            ]);
+        }
         
         return redirect()->route('admin.dashboard')
             ->with('success',"Le mot a été supprimé avec succés");

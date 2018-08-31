@@ -123,18 +123,32 @@ class StateController extends Controller
     * Delete state
     *
     * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Models\State $state
     * @return \Illuminate\Http\Response
     */
-    public function delete(Request $request, State $state)
+    public function action(Request $request)
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
         
+        // Validate request
+        $this->validate($request, [
+            'action' => 'required|max:10',
+            'data_id'   => 'required|numeric'
+        ]);
+        
+        $state = State::findOrFail($request->data_id);
+        
         $state->delete();
         
+        if($request->ajax()){
+            return response()->json([
+                'status'=>1,
+                'message' => "L'Etat australien a été supprimé avec succés"
+            ]);
+        }
+        
         return redirect()->route('admin.dashboard')
-            ->with('success',"L'Etat a été supprimé avec succés");
+            ->with('success',"L'Etat australien a été supprimé avec succés");
     }
 
     /**
