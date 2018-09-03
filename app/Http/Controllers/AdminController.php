@@ -8,6 +8,7 @@ use Auth;
 use Validator;
 
 use App\Models\Product;
+use App\Models\Order;
 use App\Models\User;
 use App\Models\Mail;
 use App\Models\MailUser;
@@ -51,39 +52,49 @@ class AdminController extends Controller
         $count['sales'] = Product::ofStatus('paid')->count();
         
         $data = [];
-        $data['products'] = \DB::table('products')
-          ->select(\DB::raw('DATE(created_at) as date'), \DB::raw('count(*) as count'))
+        $data['orders'] = \DB::table('products')
+          ->select(
+            \DB::raw('DATE(created_at) as date'), 
+            \DB::raw("COUNT(
+                        CASE 
+                            WHEN `status` LIKE 'paid' THEN 1 
+                        END) as count_1"),
+            \DB::raw("COUNT(
+                        CASE 
+                            WHEN `status` LIKE 'ordered' THEN 1 
+                            WHEN `status` LIKE 'paid' THEN 1 
+                        END
+                        ) as count_2")
+          )
           ->groupBy('date')
-          ->get();
-        $data['users'] = \DB::table('users')
-          ->select(\DB::raw('DATE(created_at) as date'), \DB::raw('count(*) as count'))
-          ->groupBy('date')
-          ->get();
+          ->get()
+          ->toArray();
+        
+        $data['users'] = \DB::table('countries')
+            ->join('users', 'users.country_id', '=' , 'countries.id')
+            ->select(
+                "code",
+                \DB::raw('COUNT(users.id) as count')
+             )
+            ->groupBy('code')
+             ->pluck('count','code');
         
         $recent = [];
         $recent['users'] = User::orderBy('created_at', 'desc')
-            ->take($this->recentSize)
+            ->take(8)
             ->get();
         $recent['products'] = Product::orderBy('created_at', 'desc')
             ->ofStatus('published')
-            ->take($this->recentSize)
+            ->take(8)
             ->get();
-        $recent['sales'] = Product::orderBy('created_at', 'desc')
-            ->ofStatus('paid')
-            ->take($this->recentSize)
-            ->get();
-        $recent['orders'] = Product::orderBy('created_at', 'desc')
-            ->ofStatus('ordered')
-            ->take($this->recentSize)
-            ->get();
-        $recent['mails'] = Mail::orderBy('created_at', 'desc')
-            ->take($this->recentSize)
+        $recent['orders'] = Order::orderBy('created_at', 'desc')
+            ->take(8)
             ->get();
         
         return view('admin.dashboard.index')
             ->with('recent', $recent)
             ->with('count', $count)
-            ->with('data', json_encode($data));
+            ->with('data', $data);
     }
 
     /**

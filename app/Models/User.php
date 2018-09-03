@@ -204,6 +204,16 @@ class User extends Authenticatable
     }
     
     /**
+     * 
+     */
+    public function getIconStatus()
+    {
+        if($this->status=='active')    return 'success';
+        if($this->status=='pinged')    return 'warning';
+        if($this->status=='disabled')  return 'danger';
+    }
+    
+    /**
      * Is user active
      *
      * @return Boolean

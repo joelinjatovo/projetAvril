@@ -81,6 +81,16 @@ class Product extends BaseModel
     }
     
     /**
+     * Get price label with currency
+     *
+     * @return String
+     */
+    public function getPrice()
+    {
+        return '$'.$this->price;
+    }
+    
+    /**
      * Get Url of Attached Image OR Default Image
      *
      * @param Boolean $thumb

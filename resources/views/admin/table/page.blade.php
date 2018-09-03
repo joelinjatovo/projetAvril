@@ -31,7 +31,7 @@
                     <a href="#" class="btn btn-small btn-danger btn-delete"
                       data-action="delete" 
                       data-id="{{$page->id}}" 
-                      data-href="{{route('admin.page.list', ['type'=>$type])}}"><i class="fa fa-trash-o"></i></a>
+                      data-href="{{route('admin.page.list', ['type'=>$page->type])}}"><i class="fa fa-trash-o"></i></a>
                 </div>
             </td>
         </tr>

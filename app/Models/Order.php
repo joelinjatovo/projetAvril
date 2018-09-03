@@ -114,6 +114,16 @@ class Order extends BaseModel
     {
         return !empty($this->apl_paid_at);
     }
+    
+    /**
+     * 
+     */
+    public function getIconStatus()
+    {
+        if($this->status=='paid')    return 'success';
+        if($this->status=='ordered') return 'info';
+        if($this->status=='pinged')  return 'warning';
+    }
 
 	/**
 	* Ajouter le produit dans le panier

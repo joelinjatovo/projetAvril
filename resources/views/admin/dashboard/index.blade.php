@@ -5,15 +5,15 @@
 <div class="row">
     <div class="col-lg-3 col-xs-6">
       <!-- small box -->
-      <div class="small-box bg-aqua">
+      <div class="small-box bg-yellow">
         <div class="inner">
-          <h3>{{$count['orders']}}</h3>
-          <p>Commandes</p>
+          <h3>{{$count['users']}}</h3>
+          <p>Utilisateurs inscrits</p>
         </div>
         <div class="icon">
-          <i class="ion ion-bag"></i>
+          <i class="ion ion-person-add"></i>
         </div>
-        <a href="#" class="small-box-footer">Savoir plus <i class="fa fa-arrow-circle-right"></i></a>
+        <a href="{{route('admin.user.list')}}" class="small-box-footer">Savoir plus <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
     <!-- ./col -->
@@ -27,21 +27,21 @@
         <div class="icon">
           <i class="ion ion-stats-bars"></i>
         </div>
-        <a href="#" class="small-box-footer">Savoir plus <i class="fa fa-arrow-circle-right"></i></a>
+        <a href="{{route('admin.product.list')}}" class="small-box-footer">Savoir plus <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
     <!-- ./col -->
     <div class="col-lg-3 col-xs-6">
       <!-- small box -->
-      <div class="small-box bg-yellow">
+      <div class="small-box bg-aqua">
         <div class="inner">
-          <h3>{{$count['users']}}</h3>
-          <p>Utilisateurs inscrits</p>
+          <h3>{{$count['orders']}}</h3>
+          <p>Commandes</p>
         </div>
         <div class="icon">
-          <i class="ion ion-person-add"></i>
+          <i class="ion ion-bag"></i>
         </div>
-        <a href="#" class="small-box-footer">Savoir plus <i class="fa fa-arrow-circle-right"></i></a>
+        <a href="{{route('admin.product.list', 'ordered')}}" class="small-box-footer">Savoir plus <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
     <!-- ./col -->
@@ -55,7 +55,7 @@
         <div class="icon">
           <i class="ion ion-pie-graph"></i>
         </div>
-        <a href="#" class="small-box-footer">Savoir plus <i class="fa fa-arrow-circle-right"></i></a>
+        <a href="{{route('admin.product.list', 'paid')}}" class="small-box-footer">Savoir plus <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
     <!-- ./col -->
@@ -198,66 +198,16 @@
                 <th>Order ID</th>
                 <th>Item</th>
                 <th>Status</th>
-                <th>Popularity</th>
               </tr>
               </thead>
               <tbody>
+              @foreach($recent['orders'] as $order)
               <tr>
-                <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                <td>Call of Duty IV</td>
-                <td><span class="label label-success">Shipped</span></td>
-                <td>
-                  <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                </td>
+                <td><a href="pages/examples/invoice.html">{{'ORD'.$order->id}}</a></td>
+                <td>{{$order->product?$order->product->title:''}}</td>
+                <td><span class="label label-{{$order->getIconStatus()}}">{{$order->status}}</span></td>
               </tr>
-              <tr>
-                <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                <td>Samsung Smart TV</td>
-                <td><span class="label label-warning">Pending</span></td>
-                <td>
-                  <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                </td>
-              </tr>
-              <tr>
-                <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                <td>iPhone 6 Plus</td>
-                <td><span class="label label-danger">Delivered</span></td>
-                <td>
-                  <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                </td>
-              </tr>
-              <tr>
-                <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                <td>Samsung Smart TV</td>
-                <td><span class="label label-info">Processing</span></td>
-                <td>
-                  <div class="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
-                </td>
-              </tr>
-              <tr>
-                <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                <td>Samsung Smart TV</td>
-                <td><span class="label label-warning">Pending</span></td>
-                <td>
-                  <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                </td>
-              </tr>
-              <tr>
-                <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                <td>iPhone 6 Plus</td>
-                <td><span class="label label-danger">Delivered</span></td>
-                <td>
-                  <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                </td>
-              </tr>
-              <tr>
-                <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                <td>Call of Duty IV</td>
-                <td><span class="label label-success">Shipped</span></td>
-                <td>
-                  <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                </td>
-              </tr>
+              @endforeach
               </tbody>
             </table>
           </div>
@@ -265,8 +215,7 @@
         </div>
         <!-- /.box-body -->
         <div class="box-footer clearfix">
-          <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
-          <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
+          <a href="{{route('admin.order.list')}}" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
         </div>
         <!-- /.box-footer -->
       </div>
@@ -277,72 +226,6 @@
     
     <!-- right col (We are only adding the ID to make the widgets sortable)-->
     <section class="col-lg-4 connectedSortable">
-      <!-- USERS LIST -->
-      <div class="box box-danger">
-        <div class="box-header with-border">
-          <h3 class="box-title">Latest Members</h3>
-
-          <div class="box-tools pull-right">
-            <span class="label label-danger">8 New Members</span>
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
-            </button>
-          </div>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body no-padding">
-          <ul class="users-list clearfix">
-            <li>
-              <img src="/lte/img/user1-128x128.jpg" alt="User Image">
-              <a class="users-list-name" href="#">Alexander Pierce</a>
-              <span class="users-list-date">Today</span>
-            </li>
-            <li>
-              <img src="/lte/img/user8-128x128.jpg" alt="User Image">
-              <a class="users-list-name" href="#">Norman</a>
-              <span class="users-list-date">Yesterday</span>
-            </li>
-            <li>
-              <img src="/lte/img/user7-128x128.jpg" alt="User Image">
-              <a class="users-list-name" href="#">Jane</a>
-              <span class="users-list-date">12 Jan</span>
-            </li>
-            <li>
-              <img src="/lte/img/user6-128x128.jpg" alt="User Image">
-              <a class="users-list-name" href="#">John</a>
-              <span class="users-list-date">12 Jan</span>
-            </li>
-            <li>
-              <img src="/lte/img/user2-160x160.jpg" alt="User Image">
-              <a class="users-list-name" href="#">Alexander</a>
-              <span class="users-list-date">13 Jan</span>
-            </li>
-            <li>
-              <img src="/lte/img/user5-128x128.jpg" alt="User Image">
-              <a class="users-list-name" href="#">Sarah</a>
-              <span class="users-list-date">14 Jan</span>
-            </li>
-            <li>
-              <img src="/lte/img/user4-128x128.jpg" alt="User Image">
-              <a class="users-list-name" href="#">Nora</a>
-              <span class="users-list-date">15 Jan</span>
-            </li>
-            <li>
-              <img src="/lte/img/user3-128x128.jpg" alt="User Image">
-              <a class="users-list-name" href="#">Nadia</a>
-              <span class="users-list-date">15 Jan</span>
-            </li>
-          </ul>
-          <!-- /.users-list -->
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer text-center">
-          <a href="javascript:void(0)" class="uppercase">View All Users</a>
-        </div>
-        <!-- /.box-footer -->
-      </div>
-      <!--/.box -->
       
       <!-- Info Boxes Style 2 -->
       <div class="info-box bg-yellow">
@@ -413,6 +296,40 @@
         <!-- /.info-box-content -->
       </div>
       <!-- /.info-box -->
+      
+      <!-- USERS LIST -->
+      <div class="box box-danger">
+        <div class="box-header with-border">
+          <h3 class="box-title">Latest Members</h3>
+
+          <div class="box-tools pull-right">
+            <span class="label label-danger">8 New Members</span>
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding">
+          <ul class="users-list clearfix">
+            @foreach($recent['users'] as $user)
+            <li>
+              <img src="{{$user->imageUrl()}}" alt="{{$user->fullname()}}">
+              <a class="users-list-name" href="#">{{$user->fullname()}}</a>
+              <span class="users-list-date">{{$user->created_at->diffForHumans()}}</span>
+            </li>
+            @endforeach
+          </ul>
+          <!-- /.users-list -->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer text-center">
+          <a href="{{route('admin.user.list')}}" class="uppercase">View All Users</a>
+        </div>
+        <!-- /.box-footer -->
+      </div>
+      <!--/.box -->
 
       <!-- PRODUCT LIST -->
       <div class="box box-primary">
@@ -428,63 +345,24 @@
         <!-- /.box-header -->
         <div class="box-body">
           <ul class="products-list product-list-in-box">
+            @foreach($recent['products'] as $product)
             <li class="item">
               <div class="product-img">
-                <img src="/lte/img/default-50x50.gif" alt="Product Image">
+                <img src="{{$product->imageUrl(true)}}" alt="Product Image">
               </div>
               <div class="product-info">
-                <a href="javascript:void(0)" class="product-title">Samsung TV
-                  <span class="label label-warning pull-right">$1800</span></a>
-                <span class="product-description">
-                      Samsung 32" 1080p 60Hz LED Smart HDTV.
-                    </span>
+                <a href="{{route('admin.product.show', $product)}}" class="product-title">{{$product->title}}
+                  <span class="label label-warning pull-right">{{$product->getPrice()}}</span></a>
+                <span class="product-description">{{$product->excerpt()}}</span>
               </div>
             </li>
             <!-- /.item -->
-            <li class="item">
-              <div class="product-img">
-                <img src="/lte/img/default-50x50.gif" alt="Product Image">
-              </div>
-              <div class="product-info">
-                <a href="javascript:void(0)" class="product-title">Bicycle
-                  <span class="label label-info pull-right">$700</span></a>
-                <span class="product-description">
-                      26" Mongoose Dolomite Men's 7-speed, Navy Blue.
-                    </span>
-              </div>
-            </li>
-            <!-- /.item -->
-            <li class="item">
-              <div class="product-img">
-                <img src="/lte/img/default-50x50.gif" alt="Product Image">
-              </div>
-              <div class="product-info">
-                <a href="javascript:void(0)" class="product-title">Xbox One <span
-                    class="label label-danger pull-right">$350</span></a>
-                <span class="product-description">
-                      Xbox One Console Bundle with Halo Master Chief Collection.
-                    </span>
-              </div>
-            </li>
-            <!-- /.item -->
-            <li class="item">
-              <div class="product-img">
-                <img src="/lte/img/default-50x50.gif" alt="Product Image">
-              </div>
-              <div class="product-info">
-                <a href="javascript:void(0)" class="product-title">PlayStation 4
-                  <span class="label label-success pull-right">$399</span></a>
-                <span class="product-description">
-                      PlayStation 4 500GB Console (PS4)
-                    </span>
-              </div>
-            </li>
-            <!-- /.item -->
+            @endforeach
           </ul>
         </div>
         <!-- /.box-body -->
         <div class="box-footer text-center">
-          <a href="javascript:void(0)" class="uppercase">View All Products</a>
+          <a href="{{route('admin.product.list')}}" class="uppercase">View All Products</a>
         </div>
         <!-- /.box-footer -->
       </div>
@@ -494,4 +372,92 @@
     <!-- right col -->
 </div>
 <!-- /.row (main row) -->
+@endsection
+
+@section('script')
+@parent
+<script>
+  // World map by jvectormap
+  $('#world-map').vectorMap({
+    map              : 'world_mill_en',
+    backgroundColor  : 'transparent',
+    regionStyle      : {
+      initial: {
+        fill            : '#e4e4e4',
+        'fill-opacity'  : 1,
+        stroke          : 'none',
+        'stroke-width'  : 0,
+        'stroke-opacity': 1
+      }
+    },
+    series           : {
+      regions: [
+        {
+          values           : {!!json_encode($data['users'])!!},
+          scale            : ['#92c1dc', '#ebf4f9'],
+          normalizeFunction: 'polynomial'
+        }
+      ]
+    },
+    onRegionLabelShow: function (e, el, code) {
+      if (typeof visitorsData[code] != 'undefined')
+        el.html(el.html() + ': ' + visitorsData[code] + ' new visitors');
+    }
+  });
+    
+  // Sales chart
+  var area = new Morris.Line({
+    element   : 'revenue-chart',
+    resize    : true,
+    data      : {!!json_encode($data['orders'])!!},
+    xkey      : 'date',
+    ykeys     : ['count_1', 'count_2'],
+    labels    : ['Vente', 'Vente+Commande'],
+    lineColors: ['#00a65a', '#3c8dbc'],
+    hideHover : 'auto'
+  });
+
+  // Donut Chart
+  var donut = new Morris.Donut({
+    element  : 'sales-chart',
+    resize   : true,
+    colors   : ['#3c8dbc', '#f56954', '#00a65a'],
+    data     : [
+      { label: 'Download Sales', value: 12 },
+      { label: 'In-Store Sales', value: 30 },
+      { label: 'Mail-Order Sales', value: 20 }
+    ],
+    hideHover: 'auto'
+  });
+    
+  var line = new Morris.Line({
+    element          : 'line-chart',
+    resize           : true,
+    data             : [
+      { y: '2011 Q1RT', item1: 2666 },
+      { y: '2011 Q2', item1: 2778 },
+      { y: '2011 Q3', item1: 4912 },
+      { y: '2011 Q4', item1: 3767 },
+      { y: '2012 Q1', item1: 6810 },
+      { y: '2012 Q2', item1: 5670 },
+      { y: '2012 Q3', item1: 4820 },
+      { y: '2012 Q4', item1: 15073 },
+      { y: '2013 Q1', item1: 10687 },
+      { y: '2013 Q2', item1: 8432 }
+    ],
+    xkey             : 'y',
+    ykeys            : ['item1'],
+    labels           : ['Item 1'],
+    lineColors       : ['#efefef'],
+    lineWidth        : 2,
+    hideHover        : 'auto',
+    gridTextColor    : '#fff',
+    gridStrokeWidth  : 0.4,
+    pointSize        : 4,
+    pointStrokeColors: ['#efefef'],
+    gridLineColor    : '#efefef',
+    gridTextFamily   : 'Open Sans',
+    gridTextSize     : 10
+  });
+</script>
 @endsection
