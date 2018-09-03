@@ -11,21 +11,16 @@ class CountriesTableSeeder extends Seeder
      */
     public function run()
     {
-        $items1 = $this->getPaysFromCsv();
-        $items2 = $this->getTelsFromCsv();
-        $items = array_merge($items1, $items2);
-        foreach($items as $code => $item){
-            $content = isset($items1[$code]['content'])?$items1[$code]['content']:'';
-            $prefixPhone = isset($items2[$code]['prefixPhone'])?$items2[$code]['prefixPhone']:'';
-            if(!empty($content)&&!empty($prefixPhone))
-            {
-                DB::table('countries')->insert([
-                    'code' => $code,
-                    'content' => $content,
-                    'prefixPhone' => $prefixPhone,
-                    'created_at' => date("Y-m-d H:i:s"),
-                ]);
-            }
+        $items = $this->getPaysFromCsv();
+        foreach($items as $item){
+            DB::table('countries')->insert([
+                'code_2' => $item[0],
+                'code_3' => $item[1],
+                'title' => utf8_encode($item[2]),
+                'content' => utf8_encode($item[3]),
+                'prefixPhone' => $item[4],
+                'created_at' => date("Y-m-d H:i:s"),
+            ]);
         }
     }
     
@@ -35,39 +30,21 @@ class CountriesTableSeeder extends Seeder
     */
     private function getPaysFromCsv(){
         $ligne = 1;
-        $fic = fopen(storage_path()."/csv/country-code-fr.csv", "a+");
+        $fic = fopen(storage_path()."/csv/pays.csv", "r");
         $listePays = [];
         while($tab=fgetcsv($fic,1024))
         {
             $champs = count($tab);
-            $ligne ++;
-            for($i=0; $i<$champs; $i ++)
+            for($i=0; $i<$champs; $i++)
             {
                 $pays = explode(";", $tab[$i]);
-                $listePays[$pays[0]] = ['content'=>$pays[1]];
+                if(isset($pays[3])){
+                    $listePays[] = $pays;
+                }else{
+                    $this->command->info('Ligne ='.$tab[$i]);
+                }
             }
         }
         return $listePays;
-    }
-
-    /*
-    * Load tel code from csv file
-    *
-    */
-    private function getTelsFromCsv(){
-        $ligne = 1;
-        $fic = fopen(storage_path()."/csv/tel-code-fr.csv" , "a+");
-        $listeContact = array();
-        while($tab=fgetcsv($fic,1024))
-        {
-            $champs = count($tab);
-            $ligne ++;
-            for($i=0; $i<$champs; $i ++)
-            {
-                $contact = explode(";", $tab[$i]);
-                $listeContact[$contact[0]] = ['prefixPhone'=>$contact[1]];
-            }
-        }
-        return $listeContact;
     }
 }
