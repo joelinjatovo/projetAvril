@@ -25,6 +25,8 @@ return [
     
     'shop'    => 'Shop',
     'login'    => 'Connexion',
+    'avatar'    => 'Modification de la photo de profil',
+    'password'    => 'Modification du mot de passe',
     
     'no_notification' => "Aucune notification",
     

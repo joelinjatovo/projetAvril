@@ -112,14 +112,6 @@
                         </div>
                     </div>
                     
-                    <!-- title / content -->
-                    <div class="row">
-                        <div class="col-md-6">
-                        </div>
-                        <div class="col-md-6">
-                        </div>
-                    </div>
-                    
                     <!-- path input -->
                     <div class="form-group common">
                       <label>@lang('app.admin.page_order')</label>
@@ -147,6 +139,7 @@
                     
                 </div>
                 <!-- /.box-body -->
+                
                 <div class="box-footer">
                   <div class="pull-right">
                       <button type="submit" class="btn btn-info" name="method" value="draft"><i class="fa fa-database"></i> @lang('app.btn.save')</button>

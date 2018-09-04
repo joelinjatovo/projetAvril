@@ -1,86 +1,86 @@
-@extends('layouts.admin')
+@extends('layouts.lte')
 
 @section('content')
-<div id="main-content" class="main-content container-fluid">
+<div class="row">
     <form class="form-horizontal" role="form" method="post" action="{{route('location.edit')}}">
-        <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-        @include('includes.alerts')
-        <input type="hidden" name="formatted" id="formatted">
-        <fieldset>
-            <legend>Modification Localisation</legend>
-            <div class="row">
-                <div class="col-sm-12">
-                     <div id="map"></div>
-                </div>
-            </div>
+        {{csrf_field()}}
+        <input type="hidden" id="formatted" name="formatted">
+        <div class="row">
             <div class="col-sm-12">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                      <label for="latitude">@lang('app.latitude')</label>
-                      <input type="text" name="latitude" class="form-control" id="latitude" placeholder="Latitude" value="{{old('latitude')?old('latitude'):$location?$location->latitude:''}}">
-                   </div>
-                </div>
-                <div class="col-sm-6">
-                   <div class="form-group">
-                      <label for="longitude">@lang('app.longitude')</label>
-                      <input type="text" name="longitude" class="form-control" id="longitude" placeholder="Longitude" value="{{old('longitude')?old('longitude'):$location?$location->longitude:''}}">
-                   </div>
-                </div>
+                 <div id="map" style="height: 400px;"></div>
             </div>
-            <div class="col-sm-12">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                      <label for="country">@lang('app.country')</label>
-                      <input type="text" name="country" class="form-control" id="country" placeholder="country" value="{{old('country')?old('country'):$location?$location->country:''}}">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                      <label for="state">@lang('app.area_level_1')</label>
-                      <input type="text" name="area_level_1" class="form-control" id="area_level_1" placeholder="state" value="{{old('state')?old('state'):$location?$location->state:''}}">
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                      <label for="region">@lang('app.area_level_2')</label>
-                      <input type="text" name="area_level_2" class="form-control" id="area_level_2" placeholder="@lang('app.region')" value="{{old('region')?old('region'):$location?$location->region:''}}">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                      <label for="locality">@lang('app.locality')</label>
-                      <input type="text" name="locality" class="form-control" id="locality" placeholder="@lang('app.locality')" value="{{old('locality')?old('locality'):$location?$location->locality:''}}">
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                      <label for="route">@lang('app.route')</label>
-                      <input type="text" name="route" class="form-control" id="route" placeholder="@lang('app.route')" value="{{old('route')?old('route'):$location?$location->route:''}}">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                      <label for="postalCode">@lang('app.postalCode')</label>
-                      <input type="text" name="postalCode" class="form-control" id="postalCode" placeholder="@lang('app.postalCode')" value="{{old('postalCode')?old('postalCode'):$location?$location->postalCode:''}}">
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12">
+        </div>
+        <div class="col-sm-12">
+            <div class="col-sm-6">
                 <div class="form-group">
-                    <div class="col-sm-12">
-                        <button type="submit" class="btn btn-primary">@lang('app.btn.save')</button>
-                    </div>
+                  <label for="latitude">@lang('app.latitude')</label>
+                  <input type="text" name="latitude" class="form-control" id="latitude" placeholder="Latitude" value="{{old('latitude')?old('latitude'):$location?$location->latitude:''}}">
+               </div>
+            </div>
+            <div class="col-sm-6">
+               <div class="form-group">
+                  <label for="longitude">@lang('app.longitude')</label>
+                  <input type="text" name="longitude" class="form-control" id="longitude" placeholder="Longitude" value="{{old('longitude')?old('longitude'):$location?$location->longitude:''}}">
+               </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="country">@lang('app.country')</label>
+                  <input type="text" name="country" class="form-control" id="country" placeholder="country" value="{{old('country')?old('country'):$location?$location->country:''}}">
                 </div>
             </div>
-        </fieldset>
+            <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="state">@lang('app.area_level_1')</label>
+                  <input type="text" name="area_level_1" class="form-control" id="area_level_1" placeholder="state" value="{{old('state')?old('state'):$location?$location->state:''}}">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="region">@lang('app.area_level_2')</label>
+                  <input type="text" name="area_level_2" class="form-control" id="area_level_2" placeholder="@lang('app.region')" value="{{old('region')?old('region'):$location?$location->region:''}}">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="locality">@lang('app.locality')</label>
+                  <input type="text" name="locality" class="form-control" id="locality" placeholder="@lang('app.locality')" value="{{old('locality')?old('locality'):$location?$location->locality:''}}">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="route">@lang('app.route')</label>
+                  <input type="text" name="route" class="form-control" id="route" placeholder="@lang('app.route')" value="{{old('route')?old('route'):$location?$location->route:''}}">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="postalCode">@lang('app.postalCode')</label>
+                  <input type="text" name="postalCode" class="form-control" id="postalCode" placeholder="@lang('app.postalCode')" value="{{old('postalCode')?old('postalCode'):$location?$location->postalCode:''}}">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group">
+                <div class="col-sm-12">
+                  <div class="pull-right">
+                      <button type="submit" class="btn btn-info" name="method" value="draft"><i class="fa fa-database"></i> @lang('app.btn.save')</button>
+                  </div>
+                </div>
+            </div>
+        </div>
     </form>
 </div>
 @endsection
+
 @section('script')
+@parent
 <script>
     var _map;
     var _geocoder;
@@ -116,17 +116,17 @@
              var lat = _latInput.value = event.latLng.lat();
              var lng = _longInput.value = event.latLng.lng();
              placeMarkerAndPanTo(event.latLng);
-             loadGeocode(event.latLng);
+             //loadGeocode(event.latLng);
         });
 
         _marker.addListener('dragend', function() {
              var lat = _latInput.value = _marker.getPosition().lat();
              var lng = _longInput.value = _marker.getPosition().lng();
-             loadGeocode(_marker.getPosition());
+             //loadGeocode(_marker.getPosition());
         });
         
         _geocoder = new google.maps.Geocoder();
-        loadGeocode({lat: _lat, lng: _long});
+        //loadGeocode({lat: _lat, lng: _long});
     }
 
     function placeMarkerAndPanTo(latLng) {
@@ -185,6 +185,6 @@
         });
     }
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtRuDbjjrHacZ6EqZySofNueLBLkrNxwI&callback=initMap"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXJRoVA2VTBXx5Vidrdop_1pqKKguDPrY&callback=initMap"></script>
 @endsection
 

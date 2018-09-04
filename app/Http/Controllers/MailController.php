@@ -234,11 +234,6 @@ class MailController extends Controller
     }
 
     public function basic_email(){
-        $content = 'adala be ty za ti wa za';
-        $badword = 'za';
-        echo str_ireplace($badword, '*****', $content).'<br>';
-        exit;
-        
         $data = array('name'=>"Virat Gandhi");
         \Mail::send(['text'=>'mail'], $data, function($message) {
             $message->to('joelinjatovo@gmail.com', 'Tutorials Point')

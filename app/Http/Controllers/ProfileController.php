@@ -96,8 +96,8 @@ class ProfileController extends Controller
         }
         
         $default = [
-            'name'     => 'required|unique:users,name|max:100',
-            'email'    => 'required|unique:users,email|max:100',
+            'name'     => 'required|max:100|unique:users,name,'.$user->id.',id',
+            'email'    => 'required|max:100|unique:users,email,'.$user->id.',id',
             'language' => 'required|max:100',
             'image'    => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
@@ -176,7 +176,8 @@ class ProfileController extends Controller
                 break;
             case 'admin':
                 $rules = [
-                    'email'    => 'required|unique:users,email|max:100',
+                    'name'     => 'max:100|unique:users,name,'.$user->id.',id',
+                    'email'    => 'required|max:100|unique:users,email,'.$user->id.',id',
                     'language'   => 'required|max:100',
                     'first_name' => 'required|max:100',
                     'last_name'  => 'required|max:100',

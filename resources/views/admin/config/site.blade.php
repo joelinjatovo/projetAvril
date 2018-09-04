@@ -89,14 +89,14 @@
                     <div class="col-md-6">
                         <div class="form-group">
                           <label>@lang('app.latitude')</label>
-                          <input name="latitude" type="text" class="form-control" value="{{old('latitude',$item->meta('latitude', ''))}}">
+                          <input id="latitude" name="latitude" type="text" class="form-control" value="{{old('latitude',$item->meta('latitude', ''))}}">
                         </div>
                     </div>
                     <!-- longitude input -->
                     <div class="col-md-6">
                         <div class="form-group">
                           <label>@lang('app.longitude')</label>
-                          <input name="longitude" type="text" class="form-control" value="{{old('longitude',$item->meta('longitude', ''))}}">
+                          <input id="longitude" name="longitude" type="text" class="form-control" value="{{old('longitude',$item->meta('longitude', ''))}}">
                         </div>
                     </div>
                    <div class="col-md-12">
@@ -118,7 +118,52 @@
     </div>
 </form>
 @endsection
+
 @section('script')
 @parent
+<script>
+    var _map;
+    var _marker;
+    var _lat = -25.647467468105795;
+    var _long = 146.89921517372136;
+    var _longInput = document.getElementById("longitude");
+    var _latInput = document.getElementById("latitude");
+    
+    
+    function initMap() {
+        _map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: _lat, lng:  _long},
+            zoom: 2
+        });
+        
+        _marker = new google.maps.Marker({
+          position: {lat: _lat, lng: _long},
+          draggable:true,
+          map: _map
+        });
 
+        google.maps.event.addListener(_map, 'click', function(event) {
+             var lat = _latInput.value = event.latLng.lat();
+             var lng = _longInput.value = event.latLng.lng();
+             placeMarkerAndPanTo(event.latLng);
+        });
+
+        _marker.addListener('dragend', function() {
+             var lat = _latInput.value = _marker.getPosition().lat();
+             var lng = _longInput.value = _marker.getPosition().lng();
+        });
+        
+    }
+
+    function placeMarkerAndPanTo(latLng) {
+        _marker.setMap(null);
+        _marker = new google.maps.Marker({
+            position: latLng,
+            draggable:true,
+            map: _map
+        });
+        _map.panTo(latLng);
+    }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXJRoVA2VTBXx5Vidrdop_1pqKKguDPrY&callback=initMap"></script>
 @endsection
