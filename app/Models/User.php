@@ -191,7 +191,7 @@ class User extends Authenticatable
      */
     public function fullname()
     {
-        if($this->isPerson()){
+        if($this->isAdmin()||$this->isPerson()){
             $first_name = $this->meta('first_name');
             $last_name  = $this->meta('last_name');
             $name = strtoupper($first_name).' '.ucfirst($last_name);

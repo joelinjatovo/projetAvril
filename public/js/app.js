@@ -11980,23 +11980,29 @@ $(document).ready(function () {
 
 function addNotifications(newNotifications, target) {
     notifications = _.concat(notifications, newNotifications);
-    // show only last 5 notifications
-    notifications.slice(0, 5);
     showNotifications(notifications, target);
 }
 
 function showNotifications(notifications, target) {
     if (notifications.length) {
+        // Show notification count
+        var len = notifications.length;
+        if (len < 10) {
+            $(target + "-count").html(len);
+        } else {
+            $(target + "-count").html("9+");
+        }
+
+        // show only last 5 notifications
+        notifications.slice(0, 10);
+
         var htmlElements = notifications.map(function (notification) {
             return makeNotification(notification);
         });
-        $(target + 'Menu').html(htmlElements.join(''));
-        $(target).addClass('has-notifications');
-        $(target + 'Count').removeClass('hidden');
+        $(target).html(htmlElements.join(''));
     } else {
-        $(target + 'Menu').html('<li class="dropdown-header">No notifications</li>');
-        $(target).removeClass('has-notifications');
-        $(target + 'Count').addClass('hidden');
+        $(target + "-count").html(0);
+        $(target).html('<li><a href="#">0 notification non lue</a></li>');
     }
 }
 
@@ -12004,7 +12010,7 @@ function showNotifications(notifications, target) {
 function makeNotification(notification) {
     var to = routeNotification(notification);
     var notificationText = makeNotificationText(notification);
-    return '<li><a href="' + to + '">' + notificationText + '</a></li>';
+    return '<li><a href="' + to + '"><i class="fa fa-users text-aqua"></i> ' + notificationText + '</a></li>';
 }
 
 // get the notification route based on it's type
