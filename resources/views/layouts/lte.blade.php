@@ -26,7 +26,7 @@
   <!-- Morris chart -->
   <link rel="stylesheet" href="{{asset('lte/plugins/morris.js/morris.css')}}">
   <!-- jvectormap -->
-  <link rel="stylesheet" href="{{asset('lte/plugins/jvectormap/jquery-jvectormap.css')}}">
+  <link rel="stylesheet" href="{{asset('lte/plugins/jvectormap/jquery-jvectormap-2.0.3.css')}}">
   <!-- Date Picker -->
   <link rel="stylesheet" href="{{asset('lte/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
   <!-- Daterange picker -->
@@ -732,7 +732,7 @@
 <!-- Sparkline -->
 <script src="{{asset('lte/plugins/jquery-sparkline/dist/jquery.sparkline.min.js')}}"></script>
 <!-- jvectormap -->
-<script src="{{asset('lte/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js')}}"></script>
+<script src="{{asset('lte/plugins/jvectormap/jquery-jvectormap-2.0.3.min.js')}}"></script>
 <script src="{{asset('lte/plugins/jvectormap/jquery-jvectormap-world-mill-en.js')}}"></script>
 <!-- jQuery Knob Chart -->
 <script src="{{asset('lte/plugins/jquery-knob/dist/jquery.knob.min.js')}}"></script>

@@ -64,81 +64,36 @@
 
 <!-- Main row -->
 <div class="row">
-    <div class="col-md-12">
-        <div class="box">
-            <div class="box-body">
-              <div class="row">
-                <div class="col-sm-3 col-xs-6">
-                  <div class="description-block border-right">
-                    <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 17%</span>
-                    <h5 class="description-header">$35,210.43</h5>
-                    <span class="description-text">TOTAL REVENUE</span>
-                  </div>
-                  <!-- /.description-block -->
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-3 col-xs-6">
-                  <div class="description-block border-right">
-                    <span class="description-percentage text-yellow"><i class="fa fa-caret-left"></i> 0%</span>
-                    <h5 class="description-header">$10,390.90</h5>
-                    <span class="description-text">TOTAL COST</span>
-                  </div>
-                  <!-- /.description-block -->
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-3 col-xs-6">
-                  <div class="description-block border-right">
-                    <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 20%</span>
-                    <h5 class="description-header">$24,813.53</h5>
-                    <span class="description-text">TOTAL PROFIT</span>
-                  </div>
-                  <!-- /.description-block -->
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-3 col-xs-6">
-                  <div class="description-block">
-                    <span class="description-percentage text-red"><i class="fa fa-caret-down"></i> 18%</span>
-                    <h5 class="description-header">1200</h5>
-                    <span class="description-text">GOAL COMPLETIONS</span>
-                  </div>
-                  <!-- /.description-block -->
-                </div>
-              </div>
-              <!-- /.row -->
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /.row (main row) -->
-
-<!-- Main row -->
-<div class="row">
     <!-- Left col -->
     <section class="col-lg-8 connectedSortable">
       <!-- Custom tabs (Charts with tabs)-->
-      <div class="nav-tabs-custom">
-        <!-- Tabs within a box -->
-        <ul class="nav nav-tabs pull-right">
-          <li class="active"><a href="#revenue-chart" data-toggle="tab">Area</a></li>
-          <li><a href="#sales-chart" data-toggle="tab">Donut</a></li>
-          <li class="pull-left header"><i class="fa fa-inbox"></i> Sales</li>
-        </ul>
-        <div class="tab-content no-padding">
-          <!-- Morris chart - Sales -->
-          <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;"></div>
-          <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
+      <div class="box box-solid">
+        <div class="box-header">
+          <!-- tools box -->
+          <div class="pull-right box-tools">
+            <button type="button" class="btn btn-sm pull-right" data-widget="collapse"
+                    data-toggle="tooltip" title="Collapse" style="margin-right: 5px;">
+              <i class="fa fa-minus"></i></button>
+          </div>
+          <!-- /. tools -->
+
+          <i class="fa fa-inbox"></i>
+
+          <h3 class="box-title">
+            Rapport de ventes et commandes
+          </h3>
         </div>
+        <div class="box-body">
+          <div id="revenue-chart" style="height: 250px; width: 100%;"></div>
+        </div>
+        <!-- /.box-body-->
       </div>
-      <!-- /.nav-tabs-custom -->
       
       <!-- Map box -->
       <div class="box box-solid bg-light-blue-gradient">
         <div class="box-header">
           <!-- tools box -->
           <div class="pull-right box-tools">
-            <button type="button" class="btn btn-primary btn-sm daterange pull-right" data-toggle="tooltip"
-                    title="Date range">
-              <i class="fa fa-calendar"></i></button>
             <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
                     data-toggle="tooltip" title="Collapse" style="margin-right: 5px;">
               <i class="fa fa-minus"></i></button>
@@ -148,33 +103,13 @@
           <i class="fa fa-map-marker"></i>
 
           <h3 class="box-title">
-            Visitors
+            Inscriptions
           </h3>
         </div>
         <div class="box-body">
           <div id="world-map" style="height: 250px; width: 100%;"></div>
         </div>
         <!-- /.box-body-->
-        <div class="box-footer no-border">
-          <div class="row">
-            <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-              <div id="sparkline-1"></div>
-              <div class="knob-label">Visitors</div>
-            </div>
-            <!-- ./col -->
-            <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-              <div id="sparkline-2"></div>
-              <div class="knob-label">Online</div>
-            </div>
-            <!-- ./col -->
-            <div class="col-xs-4 text-center">
-              <div id="sparkline-3"></div>
-              <div class="knob-label">Exists</div>
-            </div>
-            <!-- ./col -->
-          </div>
-          <!-- /.row -->
-        </div>
       </div>
       <!-- /.box -->
 
@@ -226,76 +161,6 @@
     
     <!-- right col (We are only adding the ID to make the widgets sortable)-->
     <section class="col-lg-4 connectedSortable">
-      
-      <!-- Info Boxes Style 2 -->
-      <div class="info-box bg-yellow">
-        <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
-
-        <div class="info-box-content">
-          <span class="info-box-text">Inventory</span>
-          <span class="info-box-number">5,200</span>
-
-          <div class="progress">
-            <div class="progress-bar" style="width: 50%"></div>
-          </div>
-          <span class="progress-description">
-                50% Increase in 30 Days
-              </span>
-        </div>
-        <!-- /.info-box-content -->
-      </div>
-      <!-- /.info-box -->
-      <div class="info-box bg-green">
-        <span class="info-box-icon"><i class="ion ion-ios-heart-outline"></i></span>
-
-        <div class="info-box-content">
-          <span class="info-box-text">Mentions</span>
-          <span class="info-box-number">92,050</span>
-
-          <div class="progress">
-            <div class="progress-bar" style="width: 20%"></div>
-          </div>
-          <span class="progress-description">
-                20% Increase in 30 Days
-              </span>
-        </div>
-        <!-- /.info-box-content -->
-      </div>
-      <!-- /.info-box -->
-      <div class="info-box bg-red">
-        <span class="info-box-icon"><i class="ion ion-ios-cloud-download-outline"></i></span>
-
-        <div class="info-box-content">
-          <span class="info-box-text">Downloads</span>
-          <span class="info-box-number">114,381</span>
-
-          <div class="progress">
-            <div class="progress-bar" style="width: 70%"></div>
-          </div>
-          <span class="progress-description">
-                70% Increase in 30 Days
-              </span>
-        </div>
-        <!-- /.info-box-content -->
-      </div>
-      <!-- /.info-box -->
-      <div class="info-box bg-aqua">
-        <span class="info-box-icon"><i class="ion-ios-chatbubble-outline"></i></span>
-
-        <div class="info-box-content">
-          <span class="info-box-text">Direct Messages</span>
-          <span class="info-box-number">163,921</span>
-
-          <div class="progress">
-            <div class="progress-bar" style="width: 40%"></div>
-          </div>
-          <span class="progress-description">
-                40% Increase in 30 Days
-              </span>
-        </div>
-        <!-- /.info-box-content -->
-      </div>
-      <!-- /.info-box -->
       
       <!-- USERS LIST -->
       <div class="box box-danger">
@@ -377,6 +242,7 @@
 @section('script')
 @parent
 <script>
+    var visitorsData = {!!json_encode($data['users'])!!};
   // World map by jvectormap
   $('#world-map').vectorMap({
     map              : 'world_mill_en',
@@ -393,15 +259,15 @@
     series           : {
       regions: [
         {
-          values           : {!!json_encode($data['users'])!!},
+          values           : visitorsData,
           scale            : ['#92c1dc', '#ebf4f9'],
           normalizeFunction: 'polynomial'
         }
       ]
     },
-    onRegionLabelShow: function (e, el, code) {
+    onRegionTipShow: function (e, el, code) {
       if (typeof visitorsData[code] != 'undefined')
-        el.html(el.html() + ': ' + visitorsData[code] + ' new visitors');
+        el.html(el.html() + ': ' + visitorsData[code] + ' utilisateurs inscrits');
     }
   });
     

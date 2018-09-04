@@ -73,11 +73,11 @@ class AdminController extends Controller
         $data['users'] = \DB::table('countries')
             ->join('users', 'users.country_id', '=' , 'countries.id')
             ->select(
-                "code",
+                "code_2",
                 \DB::raw('COUNT(users.id) as count')
              )
-            ->groupBy('code')
-             ->pluck('count','code');
+            ->groupBy('code_2')
+             ->pluck('count','code_2');
         
         $recent = [];
         $recent['users'] = User::orderBy('created_at', 'desc')
