@@ -138,10 +138,10 @@
             dataType: 'json',
             data: {data_id: id, action: action},
             beforeSend: function( xhr ) {
-                $('#mute').addClass('on');
+                $('.preloader').fadeIn();
             }
         }).done(function(data){
-            $('#mute').removeClass('on');
+            $('.preloader').fadeOut();
             if(data.status==1){
                 swal(data.message, {
                   icon: "success",
@@ -165,7 +165,7 @@
                 });
             }
         }).fail(function(error) {
-            $('#mute').removeClass('on');
+            $('.preloader').fadeOut();
             swal("@lang('alert.error')",{ icon: "error", dangerMode: true, });
         });
       }

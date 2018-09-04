@@ -62,13 +62,13 @@
                 dataType: 'json',
                 data: {parent_id: parent_id, order: articleorder},
                 beforeSend: function( xhr ) {
-                    $('#mute').addClass('on');
+                    $('.preloader').fadeIn();
                 }
             }).done(function(data){
                 console.log(data);
-                $('#mute').removeClass('on');
+                $('.preloader').fadeOut();
             }).fail(function() {
-                $('#mute').removeClass('on');
+                $('.preloader').fadeOut();
             }); 
         }
     })

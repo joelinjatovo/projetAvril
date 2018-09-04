@@ -39,6 +39,8 @@ $(document).ready(function() {
                 addNotifications([notification], '#notifications');
             });
     }
+    
+    $(".preloader").fadeOut()
 });
 
 function addNotifications(newNotifications, target) {
@@ -96,6 +98,5 @@ function makeNotificationText(notification) {
     }
     return text;
 }
-
 
   
