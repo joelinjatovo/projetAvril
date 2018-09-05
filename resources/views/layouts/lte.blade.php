@@ -95,6 +95,7 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-envelope-o"></i>
               <span class="label label-success">{{$unreadMail}}</span>
+              <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
             </a>
             <ul class="dropdown-menu">
               <li class="header">You have {{$unreadMail}} messages</li>
@@ -310,6 +311,12 @@
           </a>
         </li>
         <li class="header">SYSTEMS</li>
+        <li class="{{Request::is('admin/mails*')?'active':''}}">
+          <a href="{{route('admin.mail.list', ['type'=>'inbox'])}}">
+            <i class="fa fa-envelope"></i> <span>@lang('app.admin.mails')</span>
+            <div class="notify" style="margin-right: 10px;"> <span class="heartbit"></span> <span class="point"></span> </div>
+          </a>
+        </li>
         <li class="{{Request::is('admin/badword*')?'active':''}}">
           <a href="{{route('admin.badword.list')}}">
             <i class="fa fa-leaf"></i> <span>@lang('app.admin.badwords')</span>
@@ -601,6 +608,7 @@
 <!-- jvectormap -->
 <script src="{{asset('lte/plugins/jvectormap/jquery-jvectormap-2.0.3.min.js')}}"></script>
 <script src="{{asset('lte/plugins/jvectormap/jquery-jvectormap-world-mill-en.js')}}"></script>
+<script src="{{asset('lte/plugins/jvectormap/jquery-jvectormap-au-mill.js')}}"></script>
 <!-- jQuery Knob Chart -->
 <script src="{{asset('lte/plugins/jquery-knob/dist/jquery.knob.min.js')}}"></script>
 <!-- daterangepicker -->

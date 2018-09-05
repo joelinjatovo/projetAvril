@@ -12,20 +12,48 @@ class StatesTableSeeder extends Seeder
     public function run()
     {
         $items = [
-            'Australian Capital Territory',
-            'New South Wales',
-            'Norfolk Island',
-            'Northern Territory',
-            'Queensland',
-            'South Australia',
-            'Tasmania',
-            'Victoria',
-            'Western Australia'
+            [
+                'AU-ACT',
+                'Australian Capital Territory',
+            ],
+            [
+                'AU-NSW',
+                'New South Wales',
+            ],
+            [
+                '',
+                'Norfolk Island',
+            ],
+            [
+                'AU-NT',
+                'Northern Territory',
+            ],
+            [
+                'AU-QLD',
+                'Queensland',
+            ],
+            [
+                'AU-SA',
+                'South Australia',
+            ],
+            [
+                'AU-TAS',
+                'Tasmania',
+            ],
+            [
+                'AU-VIC',
+                'Victoria',
+            ],
+            [
+                'AU-WA',
+                'Western Australia'
+            ],
         ];
         foreach($items as $item){
             DB::table('states')->insert([
-                'content' => $item,
-                'country' => "aus",
+                'code' => $item[0],
+                'content' => $item[1],
+                'country' => "AU",
                 'created_at' => date("Y-m-d H:i:s"),
             ]);
         }

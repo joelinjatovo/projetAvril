@@ -79,6 +79,15 @@ class AdminController extends Controller
             ->groupBy('code_2')
              ->pluck('count','code_2');
         
+        $data['products'] = \DB::table('states')
+            ->join('products', 'products.state_id', '=' , 'states.id')
+            ->select(
+                "code",
+                \DB::raw('COUNT(products.id) as count')
+             )
+            ->groupBy('code')
+             ->pluck('count','code');
+        
         $recent = [];
         $recent['users'] = User::orderBy('created_at', 'desc')
             ->take(8)

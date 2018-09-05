@@ -112,7 +112,7 @@
         <!-- /.box-body-->
       </div>
       <!-- /.box -->
-
+      
       <!-- TABLE: LATEST ORDERS -->
       <div class="box box-info">
         <div class="box-header with-border">
@@ -161,6 +161,28 @@
     
     <!-- right col (We are only adding the ID to make the widgets sortable)-->
     <section class="col-lg-4 connectedSortable">
+     
+      <!-- Produits box -->
+      <div class="box">
+        <div class="box-header">
+          <!-- tools box -->
+          <div class="pull-right box-tools">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+          </div>
+          <!-- /. tools -->
+
+          <i class="fa fa-map-marker"></i>
+
+          <h3 class="box-title">
+            Produits
+          </h3>
+        </div>
+        <div class="box-body">
+         <div id="australia-map" style="height: 250px;"></div>
+        </div>
+        <!-- /.box-body-->
+      </div>
+      <!-- /.box -->
       
       <!-- USERS LIST -->
       <div class="box box-danger">
@@ -242,7 +264,7 @@
 @section('script')
 @parent
 <script>
-    var visitorsData = {!!json_encode($data['users'])!!};
+  var visitorsData = {!!json_encode($data['users'])!!};
   // World map by jvectormap
   $('#world-map').vectorMap({
     map              : 'world_mill_en',
@@ -268,6 +290,31 @@
     onRegionTipShow: function (e, el, code) {
       if (typeof visitorsData[code] != 'undefined')
         el.html(el.html() + ': ' + visitorsData[code] + ' utilisateurs inscrits');
+    }
+  });
+    
+  var australiaData = {!!json_encode($data['products'])!!};
+  $('#australia-map').vectorMap({
+    map : 'au_mill',
+    backgroundColor : 'transparent',
+    zoomOnScroll: false,
+    regionStyle : {
+        initial : {
+            fill : '#333333'
+        }
+    },
+    series           : {
+      regions: [
+        {
+          values           : australiaData,
+          scale            : ['#333333', '#000000'],
+          normalizeFunction: 'polynomial'
+        }
+      ]
+    },
+    onRegionTipShow: function (e, el, code) {
+      if (typeof australiaData[code] != 'undefined')
+        el.html(el.html() + ': ' + australiaData[code] + ' produits');
     }
   });
     
