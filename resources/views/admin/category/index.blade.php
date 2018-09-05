@@ -32,33 +32,50 @@
       </div>
     </div>
     <div class="col-md-8">
-      <div class="nav-tabs-custom">
-        <ul class="nav nav-tabs">
-          <li class="active"><a href="#products" data-toggle="tab">@lang('app.products')</a></li>
-          <li><a href="#blogs" data-toggle="tab">@lang('app.blogs')</a></li>
-        </ul>
-        <div class="tab-content">
-          <div class="active tab-pane" id="products">
-            @include('admin.table.product',[
-                'products'=>$item->products
-            ])
-          </div>
-          <!-- /.tab-pane -->
-          
-          <div class="tab-pane" id="blogs">
-            @include('admin.table.blog',[
-                'blogs'=>$item->blogs
-            ])
-          </div>
-          <!-- /.tab-pane -->
+       
+        @if($item->type=='blog')
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">@lang('app.blogs')</h3>
+            </div>
+            <div class="box-body">
+                @include('admin.table.blog',[
+                    'blogs'=>$item->blogs
+                ])
+            </div>
         </div>
-        <!-- /.tab-content -->
-      </div>
-      <!-- /.nav-tabs-custom -->
+        @endif
+        
+        @if($item->type=='product')
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">@lang('app.products')</h3>
+            </div>
+            <div class="box-body">
+                @include('admin.table.product',[
+                    'products'=>$item->products
+                ])
+            </div>
+        </div>
+        @endif
+         
     </div>
     <!-- /.col -->
   </div>
   <!-- /.row -->
+@endsection
+
+@section('script')
+@parent
+
+@if($item->type=='blog')
+@include('admin.inc.sweetalert-blog')
+@endif
+
+@if($item->type=='product')
+@include('admin.inc.sweetalert-product')
+@endif
+
 @endsection
 
 

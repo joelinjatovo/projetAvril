@@ -42,8 +42,8 @@
             </td>
             <td>{{$blog->created_at->diffForHumans()}}</td>
             <td>
-               
                 <div class="btn-group pull-right">
+                  <a href="{{route('admin.blog.edit', $blog)}}" class="btn btn-small btn-default btn-update">@lang('app.btn.edit')</a>
                   <a class="btn btn-default btn-status"
                       data-action="{{$blog->status=='published'?'archive':'publish'}}" 
                       data-id="{{$blog->id}}" 

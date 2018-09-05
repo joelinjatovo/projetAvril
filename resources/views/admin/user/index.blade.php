@@ -181,3 +181,15 @@
   <!-- /.row -->
 @endsection
 
+@section('script')
+@parent
+
+@if($item->hasRole('seller')||$item->hasRole('afa')||$item->hasRole('member'))
+@include('admin.inc.sweetalert-product')
+@endif
+
+@if($item->hasRole('apl'))
+@include('admin.inc.sweetalert-user')
+@endif
+
+@endsection

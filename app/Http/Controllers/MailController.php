@@ -232,6 +232,48 @@ class MailController extends Controller
             ->with('receiver', $receiver)
             ->with('breadcrumbs', $title);
     }
+    
+    /**
+    * Delete Mail
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  String $type
+    * @return \Illuminate\Http\Response
+    */
+    public function action(Request $request)
+    {
+        $this->middleware('auth');
+        
+        // Validate request
+        $this->validate($request, [
+            'action' => 'required|max:10',
+            'data_id'   => 'required|numeric'
+        ]);
+        
+        $mail = Mail::findOrFail($request->data_id);
+        
+        if(!\Auth::user()->isAdmin() || (Auth::user()->id != $mail->sender_id)){
+            if($request->ajax()){
+                return response()->json([
+                    'status'=>0,
+                    'message' => "Vous n'êtes pas authorisée à effectuer cette action."
+                ]);
+            }
+            return back()->with('error',"Vous n'êtes pas authorisée à effectuer cette action.");
+        }
+        
+        $mail->delete();
+        
+        if($request->ajax()){
+            return response()->json([
+                'status'=>1,
+                'message' => "L'email a été supprimé avec succés"
+            ]);
+        }
+        
+        return redirect()->route('admin.dashboard')
+            ->with('success',"L'email a été supprimé avec succés");
+    }
 
     public function basic_email(){
         $data = array('name'=>"Virat Gandhi");

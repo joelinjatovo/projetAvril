@@ -415,6 +415,7 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
 
     // Mail Controller Groups
     Route::get('mails/{filter?}', 'MailController@all')->name('admin.mail.list');
+    Route::post('mails/{filter?}', 'MailController@action');
     Route::prefix('mail')->group(function(){
         Route::get('compose/{mail?}' , 'AdminController@compose')->name('admin.mail.compose');
         Route::post('compose/{mail?}', 'AdminController@sendMail');

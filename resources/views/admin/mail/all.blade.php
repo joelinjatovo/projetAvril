@@ -40,7 +40,7 @@
         <table class="table table-hover table-striped items-list">
           <tbody>
           @foreach($items as $item) 
-          <tr class="item">
+          <tr class="data-item-{{$item->id}} item">
             <td><input type="checkbox"></td>
             <td>
              @if($item->sender)
@@ -71,7 +71,10 @@
                <div class="btn-group">
                 <a href="{{route('admin.mail.index', $item)}}"  class="btn btn-default"><i class="fa fa-eye"></i> @lang('app.btn.view')</a>
                 <a href="{{route('admin.mail.compose', $item)}}"  class="btn btn-default"><i class="fa fa-send"></i> @lang('app.btn.resend')</a>
-                <a href="{{route('admin.mail.delete', $item)}}" class="btn btn-small btn-danger btn-delete"><i class="fa fa-trash-o"></i></a>
+                <a href="#" class="btn btn-small btn-danger btn-delete"
+                      data-action="delete" 
+                      data-id="{{$item->id}}" 
+                      data-href="{{route('admin.mail.list')}}"><i class="fa fa-trash-o"></i></a>
                </div>
             </td>
           </tr>
@@ -108,4 +111,9 @@
     </div>
   </div>
   <!-- /. box -->
+@endsection
+
+@section('script')
+@parent
+@include('admin.inc.sweetalert-delete')
 @endsection

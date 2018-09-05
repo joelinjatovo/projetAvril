@@ -1,6 +1,6 @@
 <div class="box box-primary">
     <div class="box-body box-profile">
-      <img class="profile-user-img img-responsive img-circle" src="/lte/img/user4-128x128.jpg" alt="User profile picture">
+      <img class="profile-user-img img-responsive img-circle" src="{{$user->imageUrl()}}" alt="User profile picture">
       <h3 class="profile-username text-center">{{$user->fullname()}}</h3>
       <p class="text-muted text-center">{{ucfirst($user->role)}}{{$user->created_at?' - '.$user->created_at->diffForHumans():''}}</p>
       
