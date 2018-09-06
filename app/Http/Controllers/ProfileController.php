@@ -30,11 +30,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->isAdmin()){
-            $view = view('admin.user.profile');
-        }else{
-            $view = view('backend.user.profile');
-        }
+        $view = view('backend.user.profile');
         
         return $view->with('title', __('app.profile'))
             ->with('item', Auth::user())

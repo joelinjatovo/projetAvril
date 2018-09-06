@@ -193,7 +193,7 @@ class MailController extends Controller
             $view->with('users', User::all());
             
         }else{
-            $view = view('backend.mail.all');
+            $view = view('admin.mail.all');
             
             switch(Auth::user()->role){
                 case 'apl':

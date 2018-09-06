@@ -517,12 +517,15 @@ class ShopController extends Controller
         $this->middleware('auth');
         $this->middleware('role:member');
         
-        $count = Order::where('author_id', \AUth::user()->id)
+        $count = Order::where('author_id', \Auth::user()->id)
             ->where('status', 'pinged')
             ->count();
         
         $order = Session::has('order')?Session::get('order'):false;
-        return view('shop.order')->with(['item' => $order])
+        
+        return view('member.cart.last')->with(['item' => $order])
+            ->with('title', __('member.order'))
+            ->with('item', $order)
             ->with('count', $count);
     }
     

@@ -1,26 +1,21 @@
-@extends('layouts.backend')
+@extends('layouts.lte')
 
-@section('subcontent')
-<section>
-    <div class="page-header">
-        <h3>{{$title}}</h3>
-    </div>
-    <div class="row-fluid">
-        <div class="col-md-12">
-            @if(count($items)>0)
-                @include('backend.table.product', ['products'=>$items])
-            @else
-            <div class="panel panel-default">
-                <div class="panel-body">
-                  <ul class="list-group">
-                      <li class="list-group-item clearfix">
-                          <h4>@lang('member.empty')</h4>
-                      </li>
-                    </ul>
-                </div>
+@section('content')
+<div class="row">
+    <div class="col-md-12">
+        @if(count($items)>0)
+            @include('backend.table.product', ['products'=>$items])
+        @else
+        <div class="panel panel-default">
+            <div class="panel-body">
+              <ul class="list-group">
+                  <li class="list-group-item clearfix">
+                      <h4>@lang('member.empty')</h4>
+                  </li>
+                </ul>
             </div>
-            @endif
         </div>
+        @endif
     </div>
-</section>
+</div>
 @endsection

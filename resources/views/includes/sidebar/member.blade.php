@@ -3,8 +3,8 @@
   <!-- sidebar menu: : style can be found in sidebar.less -->
   <ul class="sidebar-menu" data-widget="tree">
     <li class="header">MAIN NAVIGATION</li>
-    <li class="{{Request::is('admin')?'active':''}}">
-        <a href="{{route('admin.dashboard')}}"><i class="fa fa-dashboard"></i> <span>@lang('app.dashboard')</span></a>
+    <li class="{{Request::is('member')?'active':''}}">
+        <a href="{{url('member')}}"><i class="fa fa-dashboard"></i> <span>@lang('app.dashboard')</span></a>
     </li>
     <li class="header">PERSONNAL</li>
     <li class="{{Request::is('member/searches')?'active':''}}">
@@ -26,8 +26,8 @@
       </a>
     </li>
     <li class="header text-aqua">MAILBOX</li>
-    <li class="{{Request::is('admin/mails*')?'active':''}}">
-      <a href="{{route('admin.mail.list', ['type'=>'inbox'])}}">
+    <li class="{{Request::is('member/mails*')?'active':''}}">
+      <a href="{{route('member.mail.list', ['type'=>'inbox'])}}">
         <i class="fa fa-envelope"></i> <span>@lang('app.admin.mails')</span>
       </a>
     </li>
