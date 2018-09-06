@@ -263,7 +263,7 @@ img.zoom-img {
   padding: 150px 0;
   position: relative;
   max-height: 400px;
-  margin-bottom: 70px;
+  margin-bottom: 20px;
 }
 #site-banner:after {
   content: " ";
@@ -495,7 +495,6 @@ input[type="email"] {
   background: #333;
   font-size: 12px;
   color: #919191;
-  margin-bottom: 24px;
 }
 #site-header-top p {
   font-size: inherit;
@@ -536,7 +535,7 @@ input[type="email"] {
   background: none;
   border: none;
   font-family: 'Montserrat', sans-serif;
-  margin-top: 5px;
+  margin-top: 15px;
 }
 #site-nav li {
   list-style: none;

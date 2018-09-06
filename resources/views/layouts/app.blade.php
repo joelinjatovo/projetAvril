@@ -36,15 +36,11 @@
 <link rel="stylesheet" href="{{asset('css/icheck.min_all.css')}}">
 <link rel="stylesheet" href="{{asset('css/price-range.css')}}">
 <link href="{{asset('css/multirange.css')}}" rel="stylesheet">
-<link href="{{asset('css/owl.carousel.css')}}" rel="stylesheet">
-<link href="{{asset('css/owl.transitions.css')}}" rel="stylesheet">
-<link href="{{asset('css/owl.theme.css')}}" rel="stylesheet">
 <link href="{{asset('plugins/wow/animate.css')}}" rel="stylesheet">
 
 
 <!-- Styles -->
 <link href="{{asset('css/theme.css')}}" rel="stylesheet">
-<link href="{{asset('css/head.css')}}" rel="stylesheet">
 <link href="{{asset('css/style.css')}}" rel="stylesheet">
 <link href="{{asset('css/responsive.css')}}" rel="stylesheet">
     
@@ -80,59 +76,131 @@
 </head>
 <body>
 <div id="mute"></div>
+
+@php $socialConfig = \App\Models\Config::social(); @endphp
+<header class="main-header">
+    <!-- Logo -->
+    <a href="{{route('home')}}" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini">{{config("app.short_name")}}</span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg">{{app_name()}}</span>
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+      @if(auth()->check())
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <!-- Messages: style can be found in dropdown.less-->
+          <?php
+            $mailQuery = auth()->user()->mails()->wherePivot('read', 0);
+            $unreadMail = $mailQuery->count();
+            $mails = $mailQuery->take(10)->get();
+          ?>
+          <li class="dropdown messages-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-envelope-o"></i>
+              <span class="label label-success">{{$unreadMail}}</span>
+              <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="header">You have {{$unreadMail}} messages</li>
+              <li>
+                <!-- inner menu: contains the actual data -->
+                <ul class="menu">
+                 @foreach($mails as $mail)
+                  <li><!-- start message -->
+                    <a href="{{route('admin.mail.index', $mail)}}">
+                      <div class="pull-left">
+                        <img src="{{$mail->sender->imageUrl()}}" class="img-circle" alt="User Image">
+                      </div>
+                      <h4>
+                        {{$mail->subject}}
+                        <small><i class="fa fa-clock-o"></i> {{$mail->created_at->diffForHumans()}}</small>
+                      </h4>
+                      <p>{{$mail->content}}</p>
+                    </a>
+                  </li>
+                  <!-- end message -->
+                  @endforeach
+                </ul>
+              </li>
+              <li class="footer"><a href="{{route('admin.mail.list',['filter'=>'inbox'])}}">See All Messages</a></li>
+            </ul>
+          </li>
+          
+          <!-- Notifications: style can be found in dropdown.less -->
+          <li class="dropdown notifications-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-bell-o"></i>
+              <span class="label label-warning" id="notifications-count">{{auth()->user()->unreadNotifications()->count()}}</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <!-- inner menu: contains the actual data -->
+                <ul class="menu" id="notifications">
+                  @foreach (auth()->user()->unreadNotifications as $notification)
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                    </a>
+                  </li>
+                  @endforeach
+                </ul>
+              </li>
+              <li class="footer"><a href="#">View all notifications</a></li>
+            </ul>
+          </li>
+          
+          <!-- User Account: style can be found in dropdown.less -->
+          <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="{{auth()->user()->imageUrl()}}" class="user-image" alt="User Image">
+              <span class="hidden-xs">{{auth()->user()->fullname()}}</span>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="user-header">
+                <img src="{{Auth::user()->imageUrl()}}" class="img-circle" alt="User Image">
+
+                <p>
+                  {{auth()->user()->fullname()}} - {{auth()->user()->role}}
+                  <small>{{auth()->user()->created_at->diffForHumans()}}</small>
+                </p>
+              </li>
+              <!-- Menu Body -->
+              <li class="user-body">
+                <div class="row">
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Followers</a>
+                  </div>
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Sales</a>
+                  </div>
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Friends</a>
+                  </div>
+                </div>
+                <!-- /.row -->
+              </li>
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                <div class="pull-left">
+                  <a href="{{route('profile')}}" class="btn btn-default btn-flat">Profile</a>
+                </div>
+                <div class="pull-right">
+                  <a href="{{route('logout')}}" class="btn btn-default btn-flat">Sign out</a>
+                </div>
+              </li>
+            </ul>
+        </ul>
+      </div>
+      @endif
+    </nav>
+</header>
+    
 <header id="head">
-    <div id="site-header-top" class="barreNoir">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="clearfix">
-                        <p class="contanct">@lang('app.contact_us_phone', ['phone'=>option('site.admin_phone', '+61 33 333 33')])</p>
-                    </div>
-                </div>
-                <div class="col-md-9">
-                    <div class="clearfix">
-                        @php $socialConfig = \App\Models\Config::social(); @endphp
-                        @foreach(\App\Models\Config::socialRules() as $key => $value)
-                            @if($metaConfig = $socialConfig->get_meta($key))
-                            <div class="language-in-header">
-                                <a href="{{$metaConfig->value}}"><i class="{{'fa fa-'.$key}}"></i></a>
-                            </div>
-                            @endif
-                        @endforeach
-                        <div class="language-in-header">
-                            <i class="fa fa-globe"></i>
-                            <label for="language-dropdown">@lang('app.language') :</label>
-                            <select name="currency" id="language-dropdown" onChange="location.href=''+this.options[this.selectedIndex].value;">
-                                <option value="{{route('localization', ['locale'=>'fr'])}}" @if(App::isLocale('fr')) selected @endif>Fr</option>
-                                <option value="{{route('localization', ['locale'=>'en'])}}" @if(App::isLocale('en')) selected @endif>Eng</option>
-                            </select>
-                        </div>
-                        @if(!Auth::check())
-                        <div class="currency-in-header">
-                            <i class="fa fa-sign-in"></i>
-                            <label for="currency-dropdown"> S'inscrire: </label>
-                            <select id="currency-dropdown" onChange="location.href=''+this.options[this.selectedIndex].value;">
-                                <option value="#">@lang('app.as')</option>
-                                <option value="{{route('register', ['role'=>'member'])}}">@lang('app.member')</option>
-                                <option value="{{route('register', ['role'=>'seller'])}}">@lang('app.seller')</option>
-                                <option value="{{route('register', ['role'=>'afa'])}}">@lang('app.afa')</option>
-                                <option value="{{route('register', ['role'=>'apl'])}}">@lang('app.apl')</option>
-                            </select>
-                        </div>
-                        <div class="currency-in-header">
-                            <a href="{{route('login')}}"><i class="fa fa-mouse-pointer"></i> @lang('app.connexion')</a>
-                        </div>
-                        @else
-                        <div class="currency-in-header">
-                            <i class="fa fa-user"></i><a href="{{url(Auth::user()->role)}}">{{Auth::user()->name}}</a>
-                        </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container top-menu" >
+    <div class="container top-menu">
         <div class="row">
             <div class="col-md-3" >
                 <figure id="site-logo" class="logo">
@@ -141,7 +209,7 @@
                     </a>
                 </figure>
             </div>
-            <div class="col-md-6 col-sm-7 ">
+            <div class="col-md-9 col-sm-12">
                 <nav id="site-nav" class="nav navbar-default menuBtn">
                     <ul class="nav navbar-nav ">
                         <li><a href="#">@lang('app.immobilier')</a>
@@ -158,49 +226,11 @@
                         </li>
                         <li><a href="{{route('services')}}">@lang('app.services')</a></li>
                         <li><a href="{{route('blog.all')}}">@lang('app.blog')</a></li>
-                        @if(Auth::check())
-                        <li>
-                            <a href="{{route('profile')}}">@lang('app.account')</a>
-                            <ul>
-                                <li>
-                                    <a href="{{url(Auth::user()->role)}}">@lang('app.dashboard')</a>
-                                </li>
-                                <li>
-                                    <a href="{{route('profile')}}">@lang('app.profile')</a>
-                                </li>
-                                <li>
-                                    <a href="{{route('logout')}}">@lang('app.logout')</a>
-                                </li>
-                            </ul>
-                        </li>
-                        
-                        <!-- // add this dropdown // -->
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                <span class="fa fa-user"></span>
-                                <span id="notificationsCount" class="badge badge-info hidden" style="margin-left:-5px; margin-top:-10px; background-color: red;">&nbsp;</span>
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="notificationsMenu" id="notificationsMenu">
-                                <li class="dropdown-header">@lang('app.no_notification')</li>
-                            </ul>
-                        </li>
-                        @endif
                     </ul>
                 </nav>
             </div>
-            <div class="col-md-3 col-sm-4 hidden-sm hidden-xs">
-                <form method="get" class="navbar-form form-search searchMenu" role="search" action="{{route('shop.index')}}">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search" name="q" value="{{isset($q)?$q:''}}">
-                        <div class="input-group-btn">
-                            <button class="btn search-btn" type="submit"><i class="fa fa-search"></i></button>
-                        </div>
-                    </div>
-                </form>
-            </div>
         </div>
     </div>
-    <!-- </nav> -->
 </header>
 
 <!-- content -->
@@ -268,15 +298,7 @@
 </footer>
 <a href="#top" id="scroll-top"><i class="fa fa-angle-up"></i></a>
 
-@if(!request()->is('login'))
 <script src="{{ asset('js/app.js') }}"></script>
-@endif
-
-<!-- javascript search-bar -->
-<script src="{{asset('js/jquery-1.10.2.min.js')}}"></script>
-<script src="{{asset('js/bootstrap.min.js')}}"></script>
-<!--
--->
     
 <script src="{{asset('plugins/slick-nav/jquery.slicknav.min.js')}}"></script>
 <script src="{{asset('plugins/slick/slick.min.js')}}"></script>
@@ -301,26 +323,6 @@
 <script src="{{asset('js/theme.js')}}"></script>
 <script src="{{asset('js/head.js')}}"></script>
 
-<!-- Slider Range -->
-<script type='text/javascript'>
-    $(document).ready(function () {
-        $("#ex2").slider({
-            formatter: function (value) {
-                return 'Current value: ' + value;
-            }
-        });
-        $("#ex3").slider({
-            formatter: function (value) {
-                return 'Current value: ' + value;
-            }
-        });
-        $("#ex4").slider({
-            formatter: function (value) {
-                return 'Current value: ' + value;
-            }
-        });
-    });
-</script>
 <script>
 $('.btn-select-apl').on('click', function(e){
     $('#modal-select-apl').modal('show');

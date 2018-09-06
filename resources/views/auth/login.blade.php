@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div id="contact-page" class="contact-page-var-two" style="margin-top: 160px;">
+<div id="contact-page" class="contact-page-var-two" style="margin-top: 20px;">
     <div class="container">
         <h3 class="entry-title">{{$title}}</h3>
         <div class="row">

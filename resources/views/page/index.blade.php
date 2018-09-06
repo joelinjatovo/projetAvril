@@ -6,7 +6,7 @@
     @include('includes.slider')
 @else
     @component('includes.breadcrumb')
-        {{$item->title()}}
+        {{$item->getTitle()}}
     @endcomponent
 @endif
 
