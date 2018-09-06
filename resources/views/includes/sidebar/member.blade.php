@@ -10,7 +10,7 @@
     <li class="{{Request::is('member/searches')?'active':''}}">
       <a href="{{route('shop.cart')}}">
         <i class="fa fa-shopping-cart"></i> <span>@lang('member.cart')</span>
-        @if(session()->has('cart'))
+        @if(session()->has('order'))
         <div class="notify" style="margin-right: 10px;"> <span class="heartbit"></span> <span class="point"></span> </div>
         @endif
       </a>
