@@ -1,6 +1,7 @@
-@extends('layouts.backend')
+@extends('layouts.lte')
 
-@section('style-stripe')
+@section('stripe')
+@parent()
 <style>
 #session-messages {
     font-size: 12px !important;
@@ -78,7 +79,7 @@ SUCCESS PAGE
 </style>
 @endsection
 
-@section('subcontent')
+@section('content')
 <div class="col-md-12">
     <div class="panel panel-default">
       <div class="panel-heading">@lang('afa.pay.cpc')</div>
@@ -104,7 +105,8 @@ SUCCESS PAGE
 </div>
 @endsection
 
-@section('stripe')
+@section('script')
+@parent()
 <script src="https://js.stripe.com/v3/"></script>
 <script>
 (function() {

@@ -294,7 +294,7 @@ class ShopController extends Controller
             }
         }
         
-        return view('shop.checkout')->with(['item' => $order]);
+        return view('member.checkout')->with(['item' => $order]);
     }
 
     public function postCheckout(Request $request){
@@ -452,10 +452,10 @@ class ShopController extends Controller
         $display = $request->display?$request->display:(Session::has('display')?Session::get('display'):'map');
         if($display == 'list'){
             Session::put('display', 'list');
-            $view = view('backend.afa.select_list');
+            $view = view('member.afa.select_list');
         }else{
             Session::put('display', 'map');
-            $view = view('backend.afa.select_map');
+            $view = view('member.afa.select_map');
         }
         
         $action = route('shop.select.afa', $product);
@@ -501,6 +501,8 @@ class ShopController extends Controller
         }
         
         $order->setAfa($afa);
+        
+        Session::forget('order');
         
         return redirect()
                ->route('member.orders')
