@@ -4,59 +4,43 @@
 <!-- Small boxes (Stat box) -->
 <div class="row">
     <div class="col-lg-3 col-xs-6">
-      <!-- small box -->
-      <div class="small-box bg-yellow">
-        <div class="inner">
-          <h3>{{$count['users']}}</h3>
-          <p>Utilisateurs inscrits</p>
-        </div>
-        <div class="icon">
-          <i class="ion ion-person-add"></i>
-        </div>
-        <a href="{{route('admin.user.list')}}" class="small-box-footer">Savoir plus <i class="fa fa-arrow-circle-right"></i></a>
-      </div>
+       @include('components.small-box', [
+          'class' =>'bg-yellow',
+          'count' =>$count['users'],
+          'title' =>'Utilisateurs inscrits',
+          'icon'  =>'ion ion-person-add',
+          'link'  =>route('admin.user.list'),
+       ])
     </div>
     <!-- ./col -->
     <div class="col-lg-3 col-xs-6">
-      <!-- small box -->
-      <div class="small-box bg-green">
-        <div class="inner">
-          <h3>{{$count['products']}}</h3>
-          <p>Produits enregistrés</p>
-        </div>
-        <div class="icon">
-          <i class="ion ion-stats-bars"></i>
-        </div>
-        <a href="{{route('admin.product.list')}}" class="small-box-footer">Savoir plus <i class="fa fa-arrow-circle-right"></i></a>
-      </div>
+       @include('components.small-box', [
+          'class' =>'bg-green',
+          'count' =>$count['products'],
+          'title' =>'Produits enregistrés',
+          'icon'  =>'ion ion-stats-bars',
+          'link'  =>route('admin.product.list'),
+       ])
     </div>
     <!-- ./col -->
     <div class="col-lg-3 col-xs-6">
-      <!-- small box -->
-      <div class="small-box bg-aqua">
-        <div class="inner">
-          <h3>{{$count['orders']}}</h3>
-          <p>Commandes</p>
-        </div>
-        <div class="icon">
-          <i class="ion ion-bag"></i>
-        </div>
-        <a href="{{route('admin.product.list', 'ordered')}}" class="small-box-footer">Savoir plus <i class="fa fa-arrow-circle-right"></i></a>
-      </div>
+       @include('components.small-box', [
+          'class' =>'bg-aqua',
+          'count' =>$count['orders'],
+          'title' =>'Commandes',
+          'icon'  =>'ion ion-bag',
+          'link'  =>route('admin.product.list', 'ordered'),
+       ])
     </div>
     <!-- ./col -->
     <div class="col-lg-3 col-xs-6">
-      <!-- small box -->
-      <div class="small-box bg-red">
-        <div class="inner">
-          <h3>{{$count['sales']}}</h3>
-          <p>Ventes éffectuées</p>
-        </div>
-        <div class="icon">
-          <i class="ion ion-pie-graph"></i>
-        </div>
-        <a href="{{route('admin.product.list', 'paid')}}" class="small-box-footer">Savoir plus <i class="fa fa-arrow-circle-right"></i></a>
-      </div>
+       @include('components.small-box', [
+          'class' =>'bg-red',
+          'count' =>$count['sales'],
+          'title' =>'Ventes éffectuées',
+          'icon'  =>'ion ion-pie-graph',
+          'link'  =>route('admin.product.list', 'paid'),
+       ])
     </div>
     <!-- ./col -->
 </div>
@@ -67,65 +51,29 @@
     <!-- Left col -->
     <section class="col-lg-8 connectedSortable">
       <!-- Custom tabs (Charts with tabs)-->
-      <div class="box box-solid">
-        <div class="box-header">
-          <!-- tools box -->
-          <div class="pull-right box-tools">
-            <button type="button" class="btn btn-sm pull-right" data-widget="collapse"
-                    data-toggle="tooltip" title="Collapse" style="margin-right: 5px;">
-              <i class="fa fa-minus"></i></button>
-          </div>
-          <!-- /. tools -->
-
-          <i class="fa fa-inbox"></i>
-
-          <h3 class="box-title">
-            Rapport de ventes et commandes
-          </h3>
-        </div>
-        <div class="box-body">
+      @component('components.box', ['button'=>true, 'class'=>'box-solid'])
+          @slot('title')
+              <i class="fa fa-inbox"></i> Rapport de ventes et commandes
+          @endslot
+          
           <div id="revenue-chart" style="height: 250px; width: 100%;"></div>
-        </div>
-        <!-- /.box-body-->
-      </div>
+      @endcomponent
       
       <!-- Map box -->
-      <div class="box box-solid bg-light-blue-gradient">
-        <div class="box-header">
-          <!-- tools box -->
-          <div class="pull-right box-tools">
-            <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
-                    data-toggle="tooltip" title="Collapse" style="margin-right: 5px;">
-              <i class="fa fa-minus"></i></button>
-          </div>
-          <!-- /. tools -->
-
-          <i class="fa fa-map-marker"></i>
-
-          <h3 class="box-title">
-            Inscriptions
-          </h3>
-        </div>
-        <div class="box-body">
+      @component('components.box', ['button'=>true, 'class'=>'box-solid bg-light-blue-gradient'])
+          @slot('title')
+              <i class="fa fa-map-marker"></i> Inscriptions
+          @endslot
+          
           <div id="world-map" style="height: 250px; width: 100%;"></div>
-        </div>
-        <!-- /.box-body-->
-      </div>
-      <!-- /.box -->
+      @endcomponent
       
       <!-- TABLE: LATEST ORDERS -->
-      <div class="box box-info">
-        <div class="box-header with-border">
-          <h3 class="box-title">Latest Orders</h3>
-
-          <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-          </div>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body">
+      @component('components.box', ['button'=>true, 'class'=>'box-info'])
+          @slot('title')
+              Latest Orders
+          @endslot
+          
           <div class="table-responsive">
             <table class="table no-margin">
               <thead>
@@ -147,14 +95,11 @@
             </table>
           </div>
           <!-- /.table-responsive -->
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer clearfix">
-          <a href="{{route('admin.order.list')}}" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
-        </div>
-        <!-- /.box-footer -->
-      </div>
-      <!-- /.box -->
+          
+          @slot('footer')
+              <a href="{{route('admin.order.list')}}" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
+          @endslot
+      @endcomponent
       
     </section>
     <!-- /.Left col -->
@@ -162,98 +107,45 @@
     <!-- right col (We are only adding the ID to make the widgets sortable)-->
     <section class="col-lg-4 connectedSortable">
      
-      <!-- Produits box -->
-      <div class="box">
-        <div class="box-header">
-          <!-- tools box -->
-          <div class="pull-right box-tools">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-          </div>
-          <!-- /. tools -->
-
-          <i class="fa fa-map-marker"></i>
-
-          <h3 class="box-title">
-            Produits
-          </h3>
-        </div>
-        <div class="box-body">
-         <div id="australia-map" style="height: 250px;"></div>
-        </div>
-        <!-- /.box-body-->
-      </div>
-      <!-- /.box -->
+      <!-- Map box -->
+      @component('components.box', ['button'=>true, 'class'=>''])
+          @slot('title')
+              <i class="fa fa-map-marker"></i> Produits
+          @endslot
+          
+          <div id="australia-map" style="height: 250px;"></div>
+      @endcomponent
       
       <!-- USERS LIST -->
-      <div class="box box-danger">
-        <div class="box-header with-border">
-          <h3 class="box-title">Latest Members</h3>
-
-          <div class="box-tools pull-right">
-            <span class="label label-danger">8 New Members</span>
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
-            </button>
-          </div>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body no-padding">
+      @component('components.box', ['button'=>true, 'class'=>'box-danger'])
+          @slot('title')
+              Latest Members
+          @endslot
+          
           <ul class="users-list clearfix">
-            @foreach($recent['users'] as $user)
-            <li>
-              <img src="{{$user->imageUrl()}}" alt="{{$user->fullname()}}">
-              <a class="users-list-name" href="#">{{$user->fullname()}}</a>
-              <span class="users-list-date">{{$user->created_at->diffForHumans()}}</span>
-            </li>
-            @endforeach
+            @each('components.list.user', $recent['users'], 'user')
           </ul>
           <!-- /.users-list -->
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer text-center">
-          <a href="{{route('admin.user.list')}}" class="uppercase">View All Users</a>
-        </div>
-        <!-- /.box-footer -->
-      </div>
-      <!--/.box -->
+          
+          @slot('footer')
+              <a href="{{route('admin.user.list')}}" class="uppercase">View All Users</a>
+          @endslot
+      @endcomponent
 
       <!-- PRODUCT LIST -->
-      <div class="box box-primary">
-        <div class="box-header with-border">
-          <h3 class="box-title">Recently Added Products</h3>
-
-          <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-          </div>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body">
+      @component('components.box', ['button'=>true, 'class'=>'box-primary'])
+          @slot('title')
+              Recently Added Products
+          @endslot
+          
           <ul class="products-list product-list-in-box">
-            @foreach($recent['products'] as $product)
-            <li class="item">
-              <div class="product-img">
-                <img src="{{$product->imageUrl(true)}}" alt="Product Image">
-              </div>
-              <div class="product-info">
-                <a href="{{route('admin.product.show', $product)}}" class="product-title">{{$product->title}}
-                  <span class="label label-warning pull-right">{{$product->getPrice()}}</span></a>
-                <span class="product-description">{{$product->excerpt()}}</span>
-              </div>
-            </li>
-            <!-- /.item -->
-            @endforeach
+            @each('components.list.product', $recent['products'], 'product')
           </ul>
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer text-center">
-          <a href="{{route('admin.product.list')}}" class="uppercase">View All Products</a>
-        </div>
-        <!-- /.box-footer -->
-      </div>
-      <!-- /.box -->
+          
+          @slot('footer')
+              <a href="{{route('admin.product.list')}}" class="uppercase">View All Products</a>
+          @endslot
+      @endcomponent
       
     </section>
     <!-- right col -->
@@ -330,47 +222,5 @@
     hideHover : 'auto'
   });
 
-  // Donut Chart
-  var donut = new Morris.Donut({
-    element  : 'sales-chart',
-    resize   : true,
-    colors   : ['#3c8dbc', '#f56954', '#00a65a'],
-    data     : [
-      { label: 'Download Sales', value: 12 },
-      { label: 'In-Store Sales', value: 30 },
-      { label: 'Mail-Order Sales', value: 20 }
-    ],
-    hideHover: 'auto'
-  });
-    
-  var line = new Morris.Line({
-    element          : 'line-chart',
-    resize           : true,
-    data             : [
-      { y: '2011 Q1RT', item1: 2666 },
-      { y: '2011 Q2', item1: 2778 },
-      { y: '2011 Q3', item1: 4912 },
-      { y: '2011 Q4', item1: 3767 },
-      { y: '2012 Q1', item1: 6810 },
-      { y: '2012 Q2', item1: 5670 },
-      { y: '2012 Q3', item1: 4820 },
-      { y: '2012 Q4', item1: 15073 },
-      { y: '2013 Q1', item1: 10687 },
-      { y: '2013 Q2', item1: 8432 }
-    ],
-    xkey             : 'y',
-    ykeys            : ['item1'],
-    labels           : ['Item 1'],
-    lineColors       : ['#efefef'],
-    lineWidth        : 2,
-    hideHover        : 'auto',
-    gridTextColor    : '#fff',
-    gridStrokeWidth  : 0.4,
-    pointSize        : 4,
-    pointStrokeColors: ['#efefef'],
-    gridLineColor    : '#efefef',
-    gridTextFamily   : 'Open Sans',
-    gridTextSize     : 10
-  });
 </script>
 @endsection

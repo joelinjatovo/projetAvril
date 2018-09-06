@@ -142,5 +142,5 @@
     }
 
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtRuDbjjrHacZ6EqZySofNueLBLkrNxwI&callback=initMap"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXJRoVA2VTBXx5Vidrdop_1pqKKguDPrY&callback=initMap"></script>
 @endsection

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row">
-    <form method="post" action="{{route('config.social.update')}}">
+    <form method="post" action="{{route('config.payment.update')}}">
         {{csrf_field()}}
         <div class="col-md-6">
             <div class="box box-primary">
@@ -73,6 +73,19 @@
                                   {{old('disable_payed_inscription', $item->meta('disable_payed_inscription', false))?'checked':''}}>
                             @lang('app.placeholder.disable_payed_inscription')
                         </span>
+                    </div>
+                    <div class="form-group">
+                        <label>@lang('app.valeur_mio_maj')</label>
+                        <div class="input-group">
+                              <input id="valeur_mio_maj" name="valeur_mio_maj" 
+                                   class="form-control" 
+                                   type="number"
+                                   min="1"
+                                   placeholder="@lang('app.percent.desc')"
+                                   value="{{old($field, $item->meta('valeur_mio_maj', 0))}}">
+                            <span class="input-group-addon">€</span>
+                        </div>
+                        <span class="help-box">@lang('app.placeholder.valeur_mio_maj')</span>
                     </div>
                 </div>
                 <!-- /.box-body -->

@@ -20,7 +20,6 @@
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     
 <!-- Bootstrap -->
-<link href="{{asset('css/bootstrap.css')}}" rel="stylesheet">
 <link href="{{asset('css/bootstrap-slider.min.css')}}" rel="stylesheet" />
 <link rel="stylesheet" href="{{asset('css/bootstrap-select.min.css')}}">
 
