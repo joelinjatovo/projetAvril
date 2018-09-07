@@ -8,6 +8,7 @@ use Validator;
 
 use App\Models\User;
 use App\Models\Mail;
+use App\Models\MailUser;
 use App\Notifications\NewMail;
 
 class MailController extends Controller
@@ -22,7 +23,11 @@ class MailController extends Controller
         //
     }
 
+    /**
+    * Contact form in the front
+    */
     public function contact(Request $request){
+        
         if($request->isMethod('post')){
             // Validate request
             $datas = $request->all();
@@ -30,7 +35,8 @@ class MailController extends Controller
                 'email'   => 'required|email|max:100',
                 'name'    => 'required|max:100',
                 'subject' => 'required|max:100',
-                'content' => 'required|max:1000'
+                'content' => 'required|max:1000',
+                //'files.*' => 'mimes:jpeg,jpg,png,gif,svg|max:2048',
             ]);
             
             if ($validator->fails()) {
@@ -38,26 +44,26 @@ class MailController extends Controller
                             ->withInput();
             }
             
+            $files = $request->file('files');
+            if(!$files){
+                $files = [];
+            }
+
+            $args = [
+                'subject'=>$request->subject,
+                'content'=>$request->content,
+                'email'=>$request->email,
+                'name'=>$request->name,
+            ];
+            
+            $to = option('site.admin_email', env('ADMIN_MAIL'));
+            $to_name = option('site.admin_name', 'admin');
+            
             try{
-                $to = option('site.admin_email', env('ADMIN_MAIL'));
-                $to_name = option('site.admin_name', 'admin');
-                $name = $request->name;
-                $email = $request->email;
-                $subject = $request->subject;
-                $content = $request->content;
-
-                $data = array(
-                    'name'    => "admin",
-                    'content' => $content,
-                );
-                
-                \Mail::send('mail', $data, function($message) use($subject, $email, $name, $to, $to_name) {
-                    $message->to($to, $to_name)
-                            ->subject($subject)
-                            ->from($email, $name);
-                });
-
+                \Mail::to($to, $to_name)->send(new \App\Mail\Contact($args, $files));
             }catch(\Exception $e){
+                dd($e);
+                exit;
                 return back()->with('error', 'Message non envoyé. ' .$e->getMessage());
             }
             return back()->with('success', 'Message envoyé avec succes.');
@@ -81,12 +87,12 @@ class MailController extends Controller
         $mailuser->save();
         
         $path = storage_path('app/public/logo.png');
-        if (!File::exists($path)) {
+        if (!\File::exists($path)) {
             abort(404);
         }
-        $file = File::get($path);
-        $type = File::mimeType($path);
-        $response = Response::make($file, 200);
+        $file = \File::get($path);
+        $type = \File::mimeType($path);
+        $response = \Response::make($file, 200);
         $response->header("Content-Type", $type);
         return $response;
     }
@@ -188,12 +194,12 @@ class MailController extends Controller
         
         
         if($user->isAdmin()){
-            $view = view('admin.mail.all');
+            $view = view('backend.mail.all');
             
             $view->with('users', User::all());
             
         }else{
-            $view = view('admin.mail.all');
+            $view = view('backend.mail.all');
             
             switch(Auth::user()->role){
                 case 'apl':

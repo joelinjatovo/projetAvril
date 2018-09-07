@@ -1,6 +1,6 @@
-@extends('layouts.lte')
+@extends('layouts.admin-mail')
 
-@section('content')
+@section('mailbox')
 <div class="row">
     <div class="col-md-12">
         <form action="{{$action}}" method="post" id="commentform" class="contact-form" >

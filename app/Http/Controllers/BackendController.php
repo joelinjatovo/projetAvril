@@ -13,6 +13,8 @@ use App\Models\Mail;
 use App\Models\MailUser;
 use App\Models\User;
 
+use App\Notifications\NewMail;
+
 class BackendController extends Controller
 {
     /**
@@ -189,7 +191,7 @@ class BackendController extends Controller
     }
     
     /*
-    *
+    * Contact specified user
     *
     */
     public function contact(Request $request, User $user)
@@ -202,7 +204,7 @@ class BackendController extends Controller
         if($value = $request->old('subject'))    $mail->subject = $value;
         if($value = $request->old('content'))    $mail->content = $value;
         
-        return view('backend.user.contact')
+        return view('backend.mail.compose')
             ->with('title', __('app.contact_user', ['name'=>$user->name, "email"=>$user->email]))
             ->with('action', route(Auth::user()->role.'.user.contact', $user))
             ->with('item', $user)
@@ -258,13 +260,16 @@ class BackendController extends Controller
         $mailItem->read    = 0;
         $mailItem->save();
         
+        try{
+            $user->notify(new NewMail($item));
+        }catch(\Exception $e){}
+        
         $files = $request->file('files');
         if(!$files){
             $files = [];
         }
         
-        //$to = $user->email;
-        $to = 'joelinjatovo@gmail.com';
+        $to = $user->email;
         $toName = $user->name;
         
         try{

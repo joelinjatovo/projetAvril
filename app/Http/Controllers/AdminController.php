@@ -164,15 +164,13 @@ class AdminController extends Controller
         $this->middleware('auth');
         $this->middleware('auth:admin');
         
-        //echo var_dump($request->request);
-        //exit;
-            
         // Validate request
         $datas = $request->all();
         $validator = Validator::make($datas,[
             'method' => 'required',
             'subject' => 'required|max:100',
             'content' => 'required|max:1000'
+            //'files.*' => 'mimes:jpeg,jpg,png,gif,svg|max:2048',
         ]);
 
         if ($validator->fails()) {
@@ -209,6 +207,10 @@ class AdminController extends Controller
             break;
         }
         
+        $files = $request->file('files');
+        if(!$files){
+            $files = [];
+        }
 
         $receiverIds = [];
         if($request->has('role')){
@@ -232,12 +234,8 @@ class AdminController extends Controller
                 
                 $sent = true;
                 try{
-                    $data = array('name'=>"Virat Gandhi");
-                    \Mail::send('mail', $data, function($message) use($mailItem, $user, $item) {
-                        $message->to($user->email, $user->name)
-                                ->subject($item->subject)
-                                ->from($user->email, $user->name);
-                    });
+                    \Mail::to($user->email, $user->email)
+                        ->send(new \App\Mail\Email($item, $mailItem, $files));
                 }catch(\Exception $e){
                     $mailItem->is_sent = 0;
                     $mailItem->save();
@@ -266,12 +264,8 @@ class AdminController extends Controller
                 $mailItem->save();
                 
                 try{
-                    $data = array('name'=>"Virat Gandhi");
-                    \Mail::send('mail', $data, function($message) use($mailItem, $user, $item) {
-                        $message->to($user->email, $user->name)
-                                ->subject($item->subject)
-                                ->from($user->email, $user->name);
-                    });
+                    \Mail::to($user->email, $user->email)
+                        ->send(new \App\Mail\Email($item, $mailItem, $files));
                 }catch(\Exception $e){
                     $mailItem->is_sent = 0;
                     $mailItem->save();

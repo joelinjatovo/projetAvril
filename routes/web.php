@@ -21,7 +21,7 @@ Auth::routes();
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
 //Open Mail
-Route::get('mail/read/{mailuser}', 'MailController@read');
+Route::get('mail/read/{mailuser}', 'MailController@read')->name('mail.read');
 
 // Localisation
 Route::get('localization/{locale}', 'LocalizationController@index')->name('localization');

@@ -15,6 +15,11 @@
         @endif
       </a>
     </li>
+    <li class="{{Request::is('member/carts')?'active':''}}">
+      <a href="{{route('member.carts')}}">
+        <i class="fa fa-shopping-cart"></i> <span>@lang('member.carts')</span>
+      </a>
+    </li>
     <li class="{{Request::is('member/orders')?'active':''}}">
       <a href="{{route('member.orders')}}">
         <i class="fa fa-shopping-basket"></i> <span>@lang('member.orders')</span>
@@ -25,18 +30,17 @@
         <i class="fa fa-shopping-bag"></i> <span>@lang('member.purchases')</span>
       </a>
     </li>
-    <li class="header text-aqua">MAILBOX</li>
-    <li class="{{Request::is('member/mails*')?'active':''}}">
-      <a href="{{route('member.mail.list', ['type'=>'inbox'])}}">
-        <i class="fa fa-envelope"></i> <span>@lang('app.admin.mails')</span>
-      </a>
-    </li>
     <li class="{{Request::is('member/contact')?'active':''}}">
       <a href="{{route('member.contact', ['role'=>'apl'])}}">
         <i class="fa fa-send"></i> <span>@lang('member.contact_apl')</span>
       </a>
     </li>
     <li class="header text-red">SYSTEMS</li>
+    <li class="{{Request::is('member/mails*')?'active':''}}">
+      <a href="{{route('member.mail.list', ['type'=>'inbox'])}}">
+        <i class="fa fa-envelope"></i> <span>@lang('app.admin.mails')</span>
+      </a>
+    </li>
     <li class="{{Request::is('member/searches')?'active':''}}">
       <a href="{{url('member/searches')}}">
         <i class="fa fa-search"></i> <span>@lang('app.saved_searches')</span>

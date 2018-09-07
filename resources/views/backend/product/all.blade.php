@@ -3,19 +3,29 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        @if(count($items)>0)
-            @include('backend.table.product', ['products'=>$items])
-        @else
-        <div class="panel panel-default">
-            <div class="panel-body">
-              <ul class="list-group">
-                  <li class="list-group-item clearfix">
-                      <h4>@lang('member.empty')</h4>
-                  </li>
-                </ul>
-            </div>
-        </div>
-        @endif
+      @component('components.box', ['button'=>true, 'class'=>'box-primary'])
+          <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th colspan="2">Produits</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if(count($items)>0)
+                    @each('backend.table.product-tr', $items, 'product')
+                @else
+                    @include('backend.table.tr-empty', ['col'=>4])
+                @endif
+            </tbody>
+          </table>
+          
+          @slot('footer')
+              {{$items->links()}}
+          @endslot
+          
+      @endcomponent
     </div>
 </div>
 @endsection

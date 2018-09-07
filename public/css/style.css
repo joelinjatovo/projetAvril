@@ -3231,13 +3231,19 @@ padding: 10px;
   font-weight: 300;
   overflow: hidden;
 }
-.main-header .logo .logo-lg {
+.main-header .contact-info {
+  -webkit-transition: width 0.3s ease-in-out;
+  -o-transition: width 0.3s ease-in-out;
+  transition: width 0.3s ease-in-out;
   display: block;
-}
-.main-header .logo .logo-mini {
-  display: none;
-}
-.main-header .navbar-brand {
+  float: left;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding: 14px;
+  margin: 0;
+  font-weight: 300;
   color: #fff;
 }
 .content-header {

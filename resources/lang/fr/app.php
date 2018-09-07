@@ -24,7 +24,9 @@ return [
     'no' =>  'non',
     
     'shop'    => 'Shop',
-    'login'    => 'Connexion',
+    'login'    => 'Se connecter',
+    'register'    => "S'inscrire",
+    'register_as'    => "S'inscrire en tant que",
     'avatar'    => 'Modification de la photo de profil',
     'password'    => 'Modification du mot de passe',
     

@@ -75,6 +75,9 @@ class MemberController extends Controller
             ->with('items', $items);
     }
 
+    /**
+    * Contact APL
+    */
     public function contact(Request $request){
         $action = route('member.contact');
         
@@ -134,8 +137,7 @@ class MemberController extends Controller
             $files = [];
         }
         
-        //$to = $receiver->email;
-        $to = 'joelinjatovo@gmail.com';
+        $to = $receiver->email;
         $toName = $receiver->name;
         
         try{

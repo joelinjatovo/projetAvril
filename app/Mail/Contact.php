@@ -7,12 +7,11 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class Email extends Mailable
+class Contact extends Mailable
 {
     use Queueable, SerializesModels;
     
-    private $email;
-    private $line;
+    private $args;
     private $files;
 
     /**
@@ -20,10 +19,9 @@ class Email extends Mailable
      *
      * @return void
      */
-    public function __construct(\App\Models\Mail $email, \App\Models\MailUser $line, $files = [])
+    public function __construct($args = [], $files = [])
     {
-        $this->email = $email;
-        $this->line = $line;
+        $this->args = $args;
         $this->files = $files;
     }
 
@@ -34,19 +32,26 @@ class Email extends Mailable
      */
     public function build()
     {
+        $args = $this->args;
+        $files = $this->files;
+        
         /*
         * Create markdown message
         */
-        $message = $this->markdown('email.markdown');
-        $message = $message->with('item', $this->email);
-        $message = $message->with('line', $this->line);
-        $message = $message->with('url', route('home'));
-        foreach($this->files as $file){
+        $message = $this->markdown('email.contact');
+        $message = $message->with('args', $args);
+        
+        foreach($files as $file){
             $message = $message->attach($file->getRealPath());
         }
         
-        $message->from($this->email->sender->email);
-        $message->subject($this->email->subject);
+        if(isset($args['email']) && isset($args['name'])){
+            $message->from($args['email'], $args['name']);
+        }
+        
+        if(isset($args['subject'])){
+            $message->subject($args['subject']);
+        }
         
         return $message;
     }
