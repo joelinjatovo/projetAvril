@@ -40,18 +40,18 @@
       </a>
     </li>
     <li class="header text-red">SYSTEMS</li>
-    <li class="{{Request::is('apl/mails*')?'active':''}}">
-      <a href="{{route('apl.mail.list', ['type'=>'inbox'])}}">
+    <li class="{{Request::is('afa/mails*')?'active':''}}">
+      <a href="{{route('afa.mail.list', ['type'=>'inbox'])}}">
         <i class="fa fa-envelope"></i> <span>@lang('app.admin.mails')</span>
       </a>
     </li>
-    <li class="{{Request::is('apl/searches')?'active':''}}">
-      <a href="{{url('apl/searches')}}">
+    <li class="{{Request::is('afa/searches')?'active':''}}">
+      <a href="{{url('afa/searches')}}">
         <i class="fa fa-search"></i> <span>@lang('app.saved_searches')</span>
       </a>
     </li>
-    <li class="{{Request::is('apl/favorites')?'active':''}}">
-      <a href="{{url('apl/favorites')}}">
+    <li class="{{Request::is('afa/favorites')?'active':''}}">
+      <a href="{{url('afa/favorites')}}">
         <i class="fa fa-heart"></i> <span>@lang('app.favorites')</span>
       </a>
     </li>

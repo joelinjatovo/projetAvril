@@ -127,6 +127,8 @@ class MailController extends Controller
      */
     public function all(Request $request, $filter='all')
     {
+        $this->middleware('auth');
+        
         $user = Auth::user();
         
         $title = __('app.admin.mail.list');
