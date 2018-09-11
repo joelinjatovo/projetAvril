@@ -50,16 +50,9 @@
           <li>
             <!-- inner menu: contains the actual data -->
             <ul class="menu" id="notifications">
-              @foreach (auth()->user()->unreadNotifications as $notification)
-              <li>
-                <a href="#">
-                  <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                </a>
-              </li>
-              @endforeach
             </ul>
           </li>
-          <li class="footer"><a href="#">View all notifications</a></li>
+          <li class="footer"><a href="{{route('notification.list', 'unread')}}">View all notifications</a></li>
         </ul>
       </li>
 
@@ -93,6 +86,9 @@
               </div>
             </div>
             <!-- /.row -->
+          </li>
+          <li class="user-link">
+            <a href="{{url(auth()->user()->role)}}">@lang('app.dashboard')</a>
           </li>
           <!-- Menu Footer-->
           <li class="user-footer">

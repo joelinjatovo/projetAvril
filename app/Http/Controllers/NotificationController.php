@@ -22,30 +22,41 @@ class NotificationController extends Controller
      * @param  Request $request
      * @return Response
      */
-    public function all(Request $request, $filter='all')
+    public function all(Request $request, $filter='unread')
     {
         $user = \Auth::user();
         
-        return $user->unreadNotifications()
-            ->limit(5)
-            ->get()
-            ->toArray();
-        
+        if($request->ajax()){
+            switch($filter){
+                case 'unread':
+                    $items = $user->unreadNotifications()
+                        ->limit(5)
+                        ->get()
+                        ->toArray();
+                    break;
+                default:
+                case 'all':
+                    $items = $user->notifications()
+                        ->get()
+                        ->toArray();
+                    break;
+            }
+            return $items;
+        }
         switch($filter){
             case 'unread':
                 $items = $user->unreadNotifications()
-                    ->limit(5)
-                    ->get()
-                    ->toArray();
-                break;
+                    ->paginate($this->pageSize);
+            break;
             default:
             case 'all':
                 $items = $user->notifications()
-                    ->get()
-                    ->toArray();
-                break;
-        }
-        return $items;
+                    ->paginate($this->pageSize);
+            break;
+        }     
+
+        return view('backend.notification.all')
+            ->with('items', $items);
     }
 
     /**

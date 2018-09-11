@@ -3549,6 +3549,11 @@ padding: 10px;
   border-bottom: 1px solid #f4f4f4;
   border-top: 1px solid #dddddd;
 }
+.navbar-nav > .user-menu > .dropdown-menu > .user-link > a {
+  padding: 15px;
+  border-bottom: 1px solid #f4f4f4;
+  border-top: 1px solid #dddddd;
+}
 .navbar-nav > .user-menu > .dropdown-menu > .user-body:before,
 .navbar-nav > .user-menu > .dropdown-menu > .user-body:after {
   content: " ";
