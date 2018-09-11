@@ -10,14 +10,15 @@
                     <th colspan="2">Produits</th>
                     <th>Prix</th>
                     <th>Reservation</th>
-                    <th>@lang('app.afa')</th>
+                    <th>Commission sur vente</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @if(count($items)>0)
-                    @each('member.cart.tr', $items, 'cart')
+                    @each('seller.cart.tr', $items, 'cart')
                 @else
-                    @include('member.tr-empty', ['col'=>5])
+                    @include('seller.tr-empty', ['col'=>6])
                 @endif
             </tbody>
           </table>
@@ -29,13 +30,4 @@
       @endcomponent
     </div>
 </div>
-@endsection
-
-@section('script')
-@parent()
-<form action="{{route('shop.cart')}}" method="post">
-{{csrf_field()}}
-<input type="hidden" name="action" value="all">
-<button type="submit" class="btn btn-default pull-right">@lang('member.cancel_orders')</button>
-</form>
 @endsection

@@ -29,7 +29,7 @@ class AplController extends Controller
             ->where('status', 'ordered')
             ->paginate($this->pageSize);
         
-        return view('backend.order.all')
+        return view('apl.cart.all')
             ->with('title', __('apl.orders'))
             ->with('items', $items);
     }
@@ -45,7 +45,7 @@ class AplController extends Controller
             ->where('status', 'paid')
             ->paginate($this->pageSize);
         
-        return view('backend.order.all')
+        return view('apl.cart.all')
             ->with('title', __('apl.sales'))
             ->with('items', $items);
     }
@@ -60,7 +60,7 @@ class AplController extends Controller
         $items = Auth::user()->customers()
             ->paginate($this->pageSize);
         
-        return view('backend.user.all')
+        return view('apl.user.all')
             ->with('title', __('app.customers'))
             ->with('items', $items);
     }
@@ -94,7 +94,7 @@ class AplController extends Controller
         
         $items = $items->paginate($this->pageSize);
         
-        return view('backend.order.all')
+        return view('apl.cart.all')
             ->with('title', $title)
             ->with('items', $items);
     }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>504</title>
+<title>403</title>
 <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
  <style>
      html, body {
@@ -34,7 +34,7 @@
  <body>
  <div class="container">
      <div class="content">
-        <div class="title">504 Error</div>
+        <div class="title">403 Forbidden</div>
      </div>
  </div>
  </body>

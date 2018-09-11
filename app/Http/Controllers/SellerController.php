@@ -30,7 +30,7 @@ class SellerController extends Controller
         $items = Auth::user()->products()
             ->paginate($this->pageSize);
         
-        return view('backend.product.all')
+        return view('seller.product.all')
             ->with('title', __('seller.products'))
             ->with('items', $items);
     }
@@ -48,7 +48,7 @@ class SellerController extends Controller
             ->whereNull('confirmed_at')
             ->paginate($this->pageSize);
         
-        return view('backend.order.all')
+        return view('seller.cart.all')
             ->with('title', __('seller.orders.to-confirm'))
             ->with('items', $items);
     }
@@ -84,7 +84,7 @@ class SellerController extends Controller
         
         $items = $items->paginate($this->pageSize);
         
-        return view('backend.order.all')
+        return view('seller.cart.all')
             ->with('title', $title)
             ->with('items', $items);
     }
@@ -100,7 +100,7 @@ class SellerController extends Controller
             ->where('products.status', 'ordered')
             ->paginate($this->pageSize);
         
-        return view('backend.product.all')
+        return view('seller.product.all')
             ->with('title', __('seller.orders'))
             ->with('items', $items);
     }
@@ -116,7 +116,7 @@ class SellerController extends Controller
             ->where('products.status', 'paid')
             ->paginate($this->pageSize);
         
-        return view('backend.product.all')
+        return view('seller.product.all')
             ->with('title', __('seller.sales'))
             ->with('items', $items);
     }
