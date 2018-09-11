@@ -343,6 +343,16 @@ class User extends Authenticatable
     }
     
     /**
+     * A user can have many invoices
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function invoices()
+    {
+      return $this->hasMany(Invoice::class, 'to_id', 'id');
+    }
+    
+    /**
      * A user can have many session
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
