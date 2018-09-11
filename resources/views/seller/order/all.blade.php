@@ -9,15 +9,16 @@
                 <tr>
                     <th colspan="2">Produits</th>
                     <th>Prix</th>
-                    <th>Commission PC</th>
+                    <th>Reservation</th>
+                    <th>Commission sur vente</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @if(count($items)>0)
-                    @each('afa.cart.tr', $items, 'cart')
+                    @each('seller.order.tr', $items, 'order')
                 @else
-                    @include('afa.tr-empty', ['col'=>7])
+                    @include('seller.tr-empty', ['col'=>6])
                 @endif
             </tbody>
           </table>

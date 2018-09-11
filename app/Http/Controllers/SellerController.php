@@ -48,7 +48,7 @@ class SellerController extends Controller
             ->whereNull('confirmed_at')
             ->paginate($this->pageSize);
         
-        return view('seller.cart.all')
+        return view('seller.order.all')
             ->with('title', __('seller.orders.to-confirm'))
             ->with('items', $items);
     }
@@ -84,7 +84,7 @@ class SellerController extends Controller
         
         $items = $items->paginate($this->pageSize);
         
-        return view('seller.cart.all')
+        return view('seller.order.all')
             ->with('title', $title)
             ->with('items', $items);
     }

@@ -1,6 +1,12 @@
-@extends('layouts.admin')
+@extends('layouts.lte')
 
 @section('content')
+    @include('admin.invoice.component', [
+        'title'=>app_name(),
+        'date'=>$item->created_at,
+        'cart'=>$item,
+    ])
+
 <div id="main-content" class="main-content container-fluid">
     <!-- // page head -->
     <div id="page-content" class="page-content tab-content overflow-y">

@@ -38,7 +38,7 @@ class MemberController extends Controller
             ->where('status', 'pinged')
             ->paginate($this->pageSize);
         
-        return view('member.cart.all')
+        return view('member.order.all')
             ->with('title', __('member.carts'))
             ->with('items', $items);
     }
@@ -54,7 +54,7 @@ class MemberController extends Controller
             ->where('status', 'ordered')
             ->paginate($this->pageSize);
         
-        return view('member.cart.all')
+        return view('member.order.all')
             ->with('title', __('member.orders'))
             ->with('items', $items);
     }
@@ -70,7 +70,7 @@ class MemberController extends Controller
             ->where('status', 'paid')
             ->paginate($this->pageSize);
         
-        return view('member.cart.all')
+        return view('member.order.all')
             ->with('title', __('member.purchases'))
             ->with('items', $items);
     }

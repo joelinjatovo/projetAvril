@@ -15,6 +15,7 @@ use App\Models\Category;
 use App\Models\Page;
 use App\Models\Pub;
 use App\Models\User;
+use App\Models\Invoice;
 
 class InvoiceController extends Controller
 {

@@ -15,7 +15,7 @@
             </thead>
             <tbody>
                 @if(count($items)>0)
-                    @each('member.cart.tr', $items, 'cart')
+                    @each('member.order.tr', $items, 'order')
                 @else
                     @include('member.tr-empty', ['col'=>5])
                 @endif
@@ -33,7 +33,7 @@
 
 @section('script')
 @parent()
-<form action="{{route('shop.cart')}}" method="post">
+<form action="{{route('shop.order')}}" method="post">
 {{csrf_field()}}
 <input type="hidden" name="action" value="all">
 <button type="submit" class="btn btn-default pull-right">@lang('member.cancel_orders')</button>
