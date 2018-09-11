@@ -7,17 +7,20 @@
           <table class="table table-striped table-hover">
             <thead>
                 <tr>
-                    <th colspan="2">Produits</th>
+                    <th>Factures</th>
                     <th>Prix</th>
-                    <th>Reservation</th>
-                    <th>@lang('app.afa')</th>
+                    <th>Type</th>
+                    <th>Order ID</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th class="pull-right">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @if(count($items)>0)
-                    @each('member.order.tr', $items, 'order')
+                    @each('admin.invoice.tr', $items, 'invoice')
                 @else
-                    @include('member.tr-empty', ['col'=>5])
+                    @include('admin.tr-empty', ['col'=>6])
                 @endif
             </tbody>
           </table>
@@ -29,4 +32,9 @@
       @endcomponent
     </div>
 </div>
+@endsection
+
+@section('script')
+@parent
+@include('admin.inc.sweetalert-product')
 @endsection

@@ -271,10 +271,10 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
     });
     
     // Invoice Controller
-    Route::get('invoices/user/{user}', 'InvoiceController@all')->name('admin.invoice.list');
+    Route::get('invoices/{type}', 'InvoiceController@all')->name('admin.invoice.list');
     Route::prefix('invoice')->group(function(){
-        Route::get('{order}', 'InvoiceController@show')->name('admin.invoice.show');
-        Route::post('{order}', 'InvoiceController@postAction');
+        Route::get('{invoice}', 'InvoiceController@show')->name('admin.invoice.show');
+        Route::post('{invoice}', 'InvoiceController@postAction');
     });
 
     // Blog Controller Groups

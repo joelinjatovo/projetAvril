@@ -98,6 +98,20 @@
         <li><a class="{{Request::is('admin/orders/cancelled')?'active':''}}" href="{{route('admin.order.list', ['filter'=>'cancelled'])}}"><i class="fa fa-circle-o"></i>@lang('app.admin.order.cancelled')</a></li>
       </ul>
     </li>
+    <li class="{{Request::is('admin/invoices*')?'active':''}} treeview">
+      <a href="#">
+        <i class="fa fa-shopping-cart"></i> <span>@lang('app.invoices')</span>
+        <span class="pull-right-container">
+          <i class="fa fa-angle-left pull-right"></i>
+        </span>
+      </a>
+      <ul class="treeview-menu">
+        <li><a class="{{Request::is('admin/invoices/reservation')?'active':''}}" href="{{route('admin.invoice.list', ['filter'=>'reservation'])}}"><i class="fa fa-circle-o"></i>@lang('app.admin.invoices.reservation')</a></li>
+        <li><a class="{{Request::is('admin/invoices/tma')?'active':''}}" href="{{route('admin.invoice.list', ['filter'=>'tma'])}}"><i class="fa fa-circle-o"></i>@lang('app.admin.invoices.tma')</a></li>
+        <li><a class="{{Request::is('admin/invoices/mio')?'active':''}}" href="{{route('admin.invoice.list', ['filter'=>'mio'])}}"><i class="fa fa-circle-o"></i>@lang('app.admin.invoices.mio')</a></li>
+        <li><a class="{{Request::is('admin/invoices/cpc')?'active':''}}" href="{{route('admin.invoice.list', ['filter'=>'cpc'])}}"><i class="fa fa-circle-o"></i>@lang('app.admin.invoices.cpc')</a></li>
+      </ul>
+    </li>
     <li class="header">LOCALISATIONS</li>
     <li class="{{Request::is('admin/postalcode*')?'active':''}}">
       <a href="{{route('admin.postalcode.list')}}">

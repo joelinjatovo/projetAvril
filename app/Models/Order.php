@@ -150,6 +150,7 @@ class Order extends BaseModel
     
     /**
      * Set status as ordered
+     * when customers have done the reservation
      *
      */
     public function setAsOrdered()
@@ -167,6 +168,22 @@ class Order extends BaseModel
         
         $notification = new ShopNewOrder($this);
         $this->notify($notification);
+        
+        /**
+        * Reservation
+        * Paid by MEMBER
+        * to ADMIN
+        */
+        $invoice = new Invoice();
+        $invoice->title = $this->product->title;
+        $invoice->content = $this->product->content;
+        $invoice->amount = $this->reservation;
+        $invoice->currency = $this->currency;
+        $invoice->type = 'reservation';
+        $invoice->order_id = $this->id;
+        $invoice->from_id = $this->author_id;
+        $invoice->to_id = option('site.admin', 1);
+        $invoice->save();
     }
     
     /**
@@ -223,6 +240,22 @@ class Order extends BaseModel
         $this->notify($notification);
         
         $this->setAsPaid();
+        
+        /**
+        * Taux de mise en avant
+        * Paid by SELLER
+        * to AFA
+        */
+        $invoice = new Invoice();
+        $invoice->title = $this->product->title;
+        $invoice->content = $this->product->content;
+        $invoice->amount = $this->tma;
+        $invoice->currency = $this->currency;
+        $invoice->type = 'tma';
+        $invoice->order_id = $this->id;
+        $invoice->from_id = $this->product->seller_id;
+        $invoice->to_id = $this->afa_id;
+        $invoice->save();
     }
     
     /**
@@ -238,6 +271,22 @@ class Order extends BaseModel
         $this->notify($notification);
         
         $this->setAsPaid();
+        
+        /**
+        * Commission Presentation Clientèle
+        * Paid by AFA
+        * to ADMIN
+        */
+        $invoice = new Invoice();
+        $invoice->title = $this->product->title;
+        $invoice->content = $this->product->content;
+        $invoice->amount = $this->afa_amount;
+        $invoice->currency = $this->currency;
+        $invoice->type = 'cpc';
+        $invoice->order_id = $this->id;
+        $invoice->from_id = $this->afa_id;
+        $invoice->to_id = option('site.admin', 1);
+        $invoice->save();
     }
     
     /**
@@ -253,6 +302,21 @@ class Order extends BaseModel
         $this->notify($notification);
         
         $this->setAsPaid();
+        /**
+        * Commission MIO
+        * Paid by ADMIN
+        * to APL
+        */
+        $invoice = new Invoice();
+        $invoice->title = $this->product->title;
+        $invoice->content = $this->product->content;
+        $invoice->amount = $this->apl_amount;
+        $invoice->currency = $this->currency;
+        $invoice->type = 'mio';
+        $invoice->order_id = $this->id;
+        $invoice->from_id = option('site.admin', 1);
+        $invoice->to_id = $this->apl_id;
+        $invoice->save();
     }
     
     /**

@@ -20,23 +20,20 @@ use App\Models\Invoice;
 class InvoiceController extends Controller
 {
     /**
-     * Show the list of product.
+     * Show the list of invoice by $type
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  String $category
+     * @param  String $type
      * @return \Illuminate\Http\Response
      */
-    public function all(Request $request, User $user)
+    public function all(Request $request, $type)
     {
         $this->middleware('auth');
         $this->middleware('role:admin');
         
         $title = __('app.invoice.list');
         
-        $items = $user->orders()->where(function($query){
-                    return $query->where('status', 'ordered')
-                        ->orWhere('status', 'paid');
-                });
+        $items = Invoice::where('type', $type);
         
         $record = $request->get('record');
         if(!$record) $record = $this->pageSize;
@@ -50,7 +47,7 @@ class InvoiceController extends Controller
         }
         $items = $items->paginate($record);
         
-        return view('admin.order.all')
+        return view('admin.invoice.all')
             ->with('q', $q) 
             ->with('record', $record) 
             ->with('title', $title)
@@ -62,54 +59,56 @@ class InvoiceController extends Controller
     *  Show cart item
     *
     * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Models\Order $order
+    * @param  \App\Models\Invoice $invoice
     * @return \Illuminate\Http\Response
     */
-    public function show(Request $request, Order $order)
+    public function show(Request $request, Invoice $invoice)
     {
         $this->middleware('auth');
         
+        $order = $invoice->order;
         switch(\Auth::user()->role){
             case 'afa':
                 if(!$order->afa||$order->afa->id!=\Auth::user()->id){
-                    abort(404);
+                    abort(403);
                 }else{
                     $view = view('backend.invoice.index');
                 }
-                break;
+            break;
             case 'apl':
                 if(!$order->apl||$order->apl->id!=\Auth::user()->id){
-                    abort(404);
+                    abort(403);
                 }else{
                     $view = view('backend.invoice.index');
                 }
-                break;
+            break;
             case 'member':
                 if(!$order->author||$order->author->id!=\Auth::user()->id){
-                    abort(404);
+                    abort(403);
                 }else{
                     $view = view('backend.invoice.index');
                 }
-                break;
+            break;
             case 'seller':
                 if(!$order->product||!$order->product->seller||$order->product->seller->id!=\Auth::user()->id){
-                    abort(404);
+                    abort(403);
                 }else{
                     $view = view('backend.invoice.index');
                 }
-                break;
+            break;
             case 'admin':
-                $view = view('admin.invoice.index');
-                break;
+                    $view = view('admin.invoice.index');    
+            break;
             default:
                 abort(404);
-                break;
+            break;
         }
         
-        $title = __('app.invoice.index');
+        $title = __('app.invoice');
         
         return $view->with('title', $title)
-            ->with('item', $order)
+            ->with('subtitle', $invoice->type)
+            ->with('item', $invoice)
             ->with('breadcrumbs', $title);
     }
 }

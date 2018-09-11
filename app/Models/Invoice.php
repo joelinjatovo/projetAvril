@@ -7,6 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends BaseModel
 {
     /**
+    * Type of invoice
+    */
+    public static $TYPE_RESERVATION = 'reservation';
+    public static $TYPE_TMA = 'tma';
+    public static $TYPE_MIO = 'mio';
+    public static $TYPE_CPC = 'cpc';
+    
+    /**
      * The table associated with the model.
      *
      * @var string
@@ -28,6 +36,16 @@ class Invoice extends BaseModel
     public function __construct()
     {
         //
+    }
+    
+    /**
+     * Get price label with currency
+     *
+     * @return String
+     */
+    public function getPrice()
+    {
+        return '$'.$this->amount;
     }
     
     /**

@@ -1,128 +1,123 @@
 @extends('layouts.lte')
 
 @section('content')
-    @include('admin.invoice.component', [
-        'title'=>app_name(),
-        'date'=>$item->created_at,
-        'cart'=>$item,
-    ])
+    <div class="invoice" style="margin:0;">
+          <!-- title row -->
+          <div class="row">
+            <div class="col-xs-12">
+              <h2 class="page-header">
+                <i class="fa fa-globe"></i> {{app_name()}}
+                <small class="pull-right">Date: {{$item->created_at->format('d/m/Y')}}</small>
+              </h2>
+            </div>
+            <!-- /.col -->
+          </div>
 
-<div id="main-content" class="main-content container-fluid">
-    <!-- // page head -->
-    <div id="page-content" class="page-content tab-content overflow-y">
-        <div class="tab-pane padding-bottom30 active fade in">
-            @include('includes.alerts')
-            <div class="page-header">
-                <h3>Facture client</h3>
+          <!-- info row -->
+          <div class="row invoice-info">
+            <div class="col-sm-4 invoice-col">
+              From
+              @if($item->from)
+              <address>
+                <strong>{{$item->from->fullname()}}</strong><br>
+                @if($location=$item->from->location)
+                    {{$location->toString()}}<br>
+                @endif
+                Phone: {{$item->from->meta('phone')}}<br>
+                Email: {{$item->from->email}}
+              </address>
+              @endif
             </div>
-            <div class="row-fluid">
-                <div class="grider">
-                    <div class="widget widget-simple">
-                        <div class="widget-content">
-                            <div class="widget-body">
-                                @if($product = $item->product)
-                                <div class="col-md-3">
-                                    <img src="{{$item->product->imageUrl(true)}}" style="width:100%;">
-                                </div>
-                                <div class="col-md-9">
-                                    <p><strong>Nom du produit: </strong>{{$product->title}}</p>
-                                    <p><strong>Prix du produit: </strong>{{$product->price}}</p>
-                                    <p><strong>Montant de reservation: </strong>{{$item->reservation}}</p>
-                                    <p><strong>Paiement de la reservation: </strong>{!!$item->reserved_at?$item->reserved_at->diffForHumans():'<span class="label label-warning">Pas encore effectué</span>'!!}</p>
-                                    <p><strong>Status de la commande: </strong>{{$item->status=='ordered'?'En cours':$item->status=='paid'?'Payé':'-'}}</p>
-                                </div>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <!-- /.col -->
+            <div class="col-sm-4 invoice-col">
+              To
+              @if($item->to)
+              <address>
+                <strong>{{$item->to->fullname()}}</strong><br>
+                @if($location=$item->to->location)
+                    {{$location->toString()}}<br>
+                @endif
+                Phone: {{$item->to->meta('phone')}}<br>
+                Email: {{$item->to->email}}
+              </address>
+              @endif
             </div>
-        </div>
-        
-        <div class="tab-pane padding-bottom30 active fade in">
-            <div class="page-header">
-                <h3>Facture Vendeur</h3>
+            <!-- /.col -->
+            <div class="col-sm-4 invoice-col">
+              <b>Invoice #{{$item->id}}</b><br>
+              <br>
+              <b>Order ID:</b> #{{$item->order_id}}<br>
+              <b>Payment Due:</b> {{$item->created_at->format('Y-m-d')}}
             </div>
-            <div class="row-fluid">
-                <div class="grider">
-                    <div class="widget widget-simple">
-                        <div class="widget-content">
-                            <div class="widget-body">
-                                @if($product)
-                                <div class="col-md-3">
-                                    <img src="{{$product->imageUrl(true)}}" style="width:100%;">
-                                </div>
-                                <div class="col-md-9">
-                                    <p><strong>Nom du produit: </strong>{{$product->title}}</p>
-                                    <p><strong>Prix du produit: </strong>{{$product->price}}</p>
-                                    <p><strong>Montant de la commission sur vente: </strong>{{$item->tma}}</p>
-                                    <p><strong>Paiement de la commission sur vente: </strong>{!!$item->tma_paid_at?$item->tma_paid_at->diffForHumans():'<span class="label label-warning">Pas encore effectué</span>'!!}</p>
-                                    <p><strong>Status de la commande: </strong>{{$item->status=='ordered'?'En cours':$item->status=='paid'?'Payé':'-'}}</p>
-                                </div>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+
+          <!-- Table row -->
+          <div class="row">
+            <div class="col-xs-12 table-responsive">
+              <table class="table table-striped">
+                <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Description</th>
+                  <th>Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                @if($item->order && ($product = $item->order->product))
+                <tr>
+                  <td>{{$product->title}}</td>
+                  <td>{{$product->excerpt(80)}}</td>
+                  <td>{{$product->getPrice()}}</td>
+                </tr>
+                @endif
+                </tbody>
+              </table>
             </div>
-        </div>
-        
-        <div class="tab-pane padding-bottom30 active fade in">
-            <div class="page-header">
-                <h3>Facture Agence Francophone Australienne</h3>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+
+          <div class="row">
+            <!-- accepted payments column -->
+            <div class="col-xs-6">
+              <p class="lead">Payment Methods:</p>
+              <img src="/lte/img/credit/visa.png" alt="Visa">
+              <img src="/lte/img/credit/mastercard.png" alt="Mastercard">
+              <img src="/lte/img/credit/american-express.png" alt="American Express">
+              <img src="/lte/img/credit/paypal2.png" alt="Paypal">
             </div>
-            <div class="row-fluid">
-                <div class="grider">
-                    <div class="widget widget-simple">
-                        <div class="widget-content">
-                            <div class="widget-body">
-                                @if($product)
-                                <div class="col-md-3">
-                                    <img src="{{$product->imageUrl(true)}}" style="width:100%;">
-                                </div>
-                                <div class="col-md-9">
-                                    <p><strong>Nom du produit: </strong>{{$product->title}}</p>
-                                    <p><strong>Prix du produit: </strong>{{$product->price}}</p>
-                                    <p><strong>Montant de la commission sur presentation de la clientelle: </strong>{{$item->afa_amount}}</p>
-                                    <p><strong>Paiement de la commission sur presentation de la clientelle: </strong>{!!$item->afa_paid_at?$item->afa_paid_at->diffForHumans():'<span class="label label-warning">Pas encore effectué</span>'!!}</p>
-                                    <p><strong>Status de la commande: </strong>{{$item->status=='ordered'?'En cours':$item->status=='paid'?'Payé':'-'}}</p>
-                                </div>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <!-- /.col -->
+
+            <div class="col-xs-6">
+              <p class="lead">Amount Due {{$item->created_at->format('Y-m-d')}}</p>
+
+              <div class="table-responsive">
+                <table class="table">
+                  <tbody>
+                      <tr>
+                        <th>Total:</th>
+                        <td>{{$item->getPrice()}}</td>
+                      </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
-        </div>
-        
-        <div class="tab-pane padding-bottom30 active fade in">
-            <div class="page-header">
-                <h3>Facture Agence Partenaire Locale</h3>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+
+          <!-- this row will not appear when printing -->
+          <div class="row no-print">
+            <div class="col-xs-12">
+              <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
+              <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment
+              </button>
+              <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">
+                <i class="fa fa-download"></i> Generate PDF
+              </button>
             </div>
-            <div class="row-fluid">
-                <div class="grider">
-                    <div class="widget widget-simple">
-                        <div class="widget-content">
-                            <div class="widget-body">
-                                @if($product)
-                                <div class="col-md-3">
-                                    <img src="{{$product->imageUrl(true)}}" style="width:100%;">
-                                </div>
-                                <div class="col-md-9">
-                                    <p><strong>Nom du produit: </strong>{{$product->title}}</p>
-                                    <p><strong>Prix du produit: </strong>{{$product->price}}</p>
-                                    <p><strong>Montant de la commission MIO: </strong>{{$item->apl_amount}}</p>
-                                    <p><strong>Paiement de la commission MIO: </strong>{!!$item->apl_paid_at?$item->apl_paid_at->diffForHumans():'<span class="label label-warning">Pas encore effectué</span>'!!}</p>
-                                    <p><strong>Status de la commande: </strong>{{$item->status=='ordered'?'En cours':$item->status=='paid'?'Payé':'-'}}</p>
-                                </div>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
+          </div>
     </div>
-</div>
 @endsection
