@@ -510,7 +510,19 @@ class User extends Authenticatable
      */
     public function mails()
     {
-      return $this->belongsToMany(Mail::class, 'mails_users', 'user_id', 'mail_id');
+      return $this->belongsToMany(Mail::class, 'mails_users', 'user_id', 'mail_id')
+          ->withPivot('is_spam', 'read', 'starred', 'is_sent', 'reader');
+    }
+    
+    /**
+     * An user can have many mails with mails_users pivot table
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\ManyToMany
+     */
+    public function outMails()
+    {
+      return $this->hasMany(Mail::class, 'sender_id', 'id')
+          ->orderBy('created_at', 'desc');
     }
     
     /*

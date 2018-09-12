@@ -154,13 +154,11 @@ class MailController extends Controller
                     ->wherePivot('read', 0);
                 break;
             case "outbox":
-                $items = Mail::orderBy('created_at', 'desc');
-                $items = $items->where('sender_id', $user->id);
+                $items = $user->outMails();
                 break;
             case "draft":
             case "model":
-                $items = Mail::orderBy('created_at', 'desc');
-                $items = $items->where('status', $filter);
+                $items = $user->outMails()->where('status', $filter);
                 break;
             case "all":
                 $items = Mail::orderBy('created_at', 'desc');
@@ -260,7 +258,7 @@ class MailController extends Controller
         
         $mail = Mail::findOrFail($request->data_id);
         
-        if(!\Auth::user()->isAdmin() || (Auth::user()->id != $mail->sender_id)){
+        if(!\Auth::user()->isAdmin() && (Auth::user()->id != $mail->sender_id)){
             if($request->ajax()){
                 return response()->json([
                     'status'=>0,
@@ -270,17 +268,44 @@ class MailController extends Controller
             return back()->with('error',"Vous n'êtes pas authorisée à effectuer cette action.");
         }
         
-        $mail->delete();
+        $action = $request->action;
+        $starred = 0;
+        switch($action){
+            case 'delete':
+                $mail->delete();
+                $msg = "L'email a été supprimé avec succés";
+            break;
+            case 'star':
+                $mailuser = MailUser::where('mail_id', $mail->id)
+                    ->where('user_id', Auth::user()->id)
+                    ->first();
+                if($mailuser){
+                    if($mailuser->starred){
+                        $mailuser->starred = 0;
+                        $starred = 0;
+                        $msg = "L'email a été supprimé des favoris avec succès.";
+                    }else{
+                        $mailuser->starred = 1;
+                        $starred = 1;
+                        $msg = "L'email a été ajouté aux favoris avec succès.";
+                    }
+                    $mailuser->save();
+                }else{
+                    $msg = "L'email n'a pas été ajouté aux favoris.";
+                }
+            break;
+        }
         
         if($request->ajax()){
             return response()->json([
                 'status'=>1,
-                'message' => "L'email a été supprimé avec succés"
+                'starred'=>$starred,
+                'message' => $msg
             ]);
         }
         
         return redirect()->route('admin.dashboard')
-            ->with('success',"L'email a été supprimé avec succés");
+            ->with('success', $msg);
     }
 
     public function basic_email(){

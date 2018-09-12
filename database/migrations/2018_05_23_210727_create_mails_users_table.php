@@ -20,6 +20,7 @@ class CreateMailsUsersTable extends Migration
             $table->string('role')->nullable();
             $table->integer('is_spam')->default(0);
             $table->integer('is_sent')->default(0);
+            $table->integer('starred')->default(0);
             $table->integer('read')->default(0);
             $table->text('reader')->nullable();
             $table->timestamps();

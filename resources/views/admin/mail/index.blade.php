@@ -18,7 +18,7 @@
     <!-- /.box-header -->
     
     <div class="box-body">
-        @include('admin.table.user',['users'=>$item->users])
+        @include('admin.user.table',['users'=>$item->users])
     </div>
     <!-- /.box-body -->
 </div>

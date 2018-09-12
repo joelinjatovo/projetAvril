@@ -15,33 +15,11 @@
     </div>
     <!-- /.box-header -->
     <div class="box-body no-padding">
-      <div class="mailbox-controls">
-        <!-- Check all button -->
-        <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
-        </button>
-        <div class="btn-group">
-          <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
-          <button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
-          <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
-        </div>
-        <!-- /.btn-group -->
-        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
-        <div class="pull-right">
-          1-50/200
-          <div class="btn-group">
-            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
-            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
-          </div>
-          <!-- /.btn-group -->
-        </div>
-        <!-- /.pull-right -->
-      </div>
       <div class="table-responsive mailbox-messages">
         <table class="table table-hover table-striped items-list">
           <tbody>
-          @foreach($items as $item) 
+          @foreach($items as $item)
           <tr class="data-item-{{$item->id}} item">
-            <td><input type="checkbox"></td>
             <td>
              @if($item->sender)
                  <a  href="{{route('admin.user.show', $item->sender)}}">
@@ -62,8 +40,11 @@
                  </a>
              @endif
             </td>
-            <td class="mailbox-star"><a href="#"><i class="fa fa-star text-yellow"></i></a></td>
-            <td class="mailbox-subject"><b>{{$item->subject}}</b> - {{$item->excerpt(20)}}
+            <td class="mailbox-star"><a href="#" class="btn-star"
+                      data-action="star" 
+                      data-id="{{$item->id}}" 
+                      data-href="{{route(Auth::user()->role.'.mail.list')}}"><i class="fa {{$item->pivot&&$item->pivot->starred?'fa-star':'fa-star-o'}} text-yellow"></i></a></td>
+            <td class="mailbox-subject"><b>{{$item->subject}}</b> <br> {{$item->excerpt(20)}}
             </td>
             <td class="mailbox-attachment"><i class="fa fa-paperclip"></i></td>
             <td class="mailbox-date">{{$item->created_at->diffForHumans()}}</td>
@@ -92,33 +73,12 @@
     </div>
     <!-- /.box-body -->
     <div class="box-footer no-padding">
-      <div class="mailbox-controls">
-        <!-- Check all button -->
-        <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
-        </button>
-        <div class="btn-group">
-          <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
-          <button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
-          <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
-        </div>
-        <!-- /.btn-group -->
-        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
-        <div class="pull-right">
-          1-50/200
-          <div class="btn-group">
-            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
-            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
-          </div>
-          <!-- /.btn-group -->
-        </div>
-        <!-- /.pull-right -->
-      </div>
     </div>
   </div>
   <!-- /. box -->
 @endsection
 
 @section('script')
-@parent
-@include('admin.inc.sweetalert-delete')
+@parent()
+@include('admin.inc.sweetalert-mail')
 @endsection
