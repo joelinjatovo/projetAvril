@@ -76,21 +76,21 @@
           
           @if($item->hasRole('member'))
           <div class="tab-pane" id="orders">
-            @include('admin.table.order',[
+            @include('admin.order.table',[
                 'orders'=>$item->orders()->where('status', 'ordered')->get()
             ])
           </div>
           <!-- /.tab-pane -->
           
           <div class="tab-pane" id="purchases">
-            @include('admin.table.order',[
+            @include('admin.order.table',[
                 'orders'=>$item->orders()->where('status', 'paid')->get()
             ])
           </div>
           <!-- /.tab-pane -->
           
           <div class="tab-pane" id="favorites">
-            @include('admin.table.product',[
+            @include('admin.product.table',[
                 'products'=>$item->favorites
             ])
           </div>
@@ -118,14 +118,14 @@
           <!-- /.tab-pane -->
 
           <div class="tab-pane" id="orders">
-            @include('admin.table.order',[
+            @include('admin.order.table',[
                 'orders'=>$item->orders()->where('status', 'ordered')->get()
             ])
           </div>
           <!-- /.tab-pane -->
           
           <div class="tab-pane" id="sales">
-            @include('admin.table.order',[
+            @include('admin.order.table',[
                 'orders'=>$item->orders()->where('status', 'paid')->get()
             ])
           </div>
@@ -134,21 +134,21 @@
           
          @if($item->hasRole('seller'))
           <div class="tab-pane" id="products">
-            @include('admin.table.product',[
+            @include('admin.product.table',[
                 'products'=>$item->products
             ])
           </div>
           <!-- /.tab-pane -->
 
           <div class="tab-pane" id="orders">
-            @include('admin.table.product',[
+            @include('admin.product.table',[
                 'products'=>$item->products()->where('products.status', 'ordered')->get()
             ])
           </div>
           <!-- /.tab-pane -->
           
           <div class="tab-pane" id="sales">
-            @include('admin.table.product',[
+            @include('admin.product.table',[
                 'products'=>$item->products()->where('products.status', 'paid')->get()
             ])
           </div>
@@ -157,14 +157,14 @@
           
          @if($item->hasRole('afa'))
           <div class="tab-pane" id="orders">
-            @include('admin.table.order',[
+            @include('admin.order.table',[
                 'orders'=>$item->orders()->where('status', 'ordered')->get()
             ])
           </div>
           <!-- /.tab-pane -->
           
           <div class="tab-pane" id="sales">
-            @include('admin.table.order',[
+            @include('admin.order.table',[
                 'orders'=>$item->orders()->where('status', 'paid')->get()
             ])
           </div>

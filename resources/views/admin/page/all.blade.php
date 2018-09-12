@@ -1,11 +1,10 @@
 @extends('layouts.lte')
 
 @section('content')
-    @if(count($items)>0)
-    <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
+<div class="row">
+    <div class="col-md-12">
+      @component('components.box', ['button'=>true, 'class'=>'box-primary'])
+          @slot('header')
               <div class="row">
                   <div class="col-md-12 pull-right">
                     <form method="get" action="">
@@ -23,28 +22,36 @@
                     </form>
                   </div>
               </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body no-padding">
-              @include('admin.table.page', ['pages'=>$items])
-            </div>
-            <!-- /.box-body -->
-            <div class="box-footer clearfix">
+          @endslot
+          
+          <table class="table table-striped table-hover items-list">
+            <thead>
+                <tr>
+                    <th scope="col">Titre/Contenu (FR)<span class="column-sorter"></span></th>
+                    <th scope="col">Titre/Contenu (EN)<span class="column-sorter"></span></th>
+                    <th scope="col">Parent<span class="column-sorter"></span></th>
+                    <th scope="col">Ordre<span class="column-sorter"></span></th>
+                    <th scope="col">Auteur<span class="column-sorter"></span></th>
+                    <th scope="col">Date<span class="column-sorter"></span></th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if(count($items)>0)
+                    @each('admin.page.tr', $items, 'page')
+                @else
+                    @include('admin.tr-empty', ['col'=>7])
+                @endif
+            </tbody>
+          </table>
+          
+          @slot('footer')
               {{$items->links()}}
-            </div>
-          </div>
-          <!-- /.box -->
-        </div>
+          @endslot
+          
+      @endcomponent
     </div>
-    @else
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="callout callout-info">
-              <h4>@lang('app.empty')</h4>
-            </div>
-        </div>
-    </div>
-    @endif
+</div>
 @endsection
 
 @section('script')

@@ -41,6 +41,11 @@
         <i class="fa fa-th"></i> <span>@lang('app.admin.categories')</span>
       </a>
     </li>
+    <li class="{{Request::is('admin/images')?'active':''}}">
+      <a href="{{route('admin.image.list')}}">
+        <i class="fa fa-th"></i> <span>@lang('app.admin.images')</span>
+      </a>
+    </li>
     <li class="header text-aqua">SHOP</li>
     <li class="{{Request::is('admin/user*')?'active':''}} treeview">
       <a href="#">

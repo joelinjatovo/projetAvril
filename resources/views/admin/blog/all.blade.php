@@ -1,11 +1,10 @@
 @extends('layouts.lte')
 
 @section('content')
-    @if(count($items)>0)
-    <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
+<div class="row">
+    <div class="col-md-12">
+      @component('components.box', ['button'=>true, 'class'=>'box-primary'])
+          @slot('header')
               <div class="row">
                   <div class="col-md-12 pull-right">
                     <form method="get" action="">
@@ -23,28 +22,36 @@
                     </form>
                   </div>
               </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body no-padding">
-              @include('admin.table.blog', ['blogs'=>$items])
-            </div>
-            <!-- /.box-body -->
-            <div class="box-footer clearfix">
+          @endslot
+          
+          <table class="table table-striped table-hover items-list">
+            <thead>
+                <tr>
+                    <th scope="col">@lang('app.table.blogs') <span class="column-sorter"></span></th>
+                    <th scope="col">@lang('app.table.comment') <span class="column-sorter"></span></th>
+                    <th scope="col">@lang('app.table.meta_tag') <span class="column-sorter"></span></th>
+                    <th scope="col">@lang('app.table.meta_desc') <span class="column-sorter"></span></th>
+                    <th scope="col">@lang('app.table.status') <span class="column-sorter"></span></th>
+                    <th scope="col">@lang('app.table.date') <span class="column-sorter"></span></th>
+                    <th scope="col" width="200px" class="text-right">@lang('app.table.actions')</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if(count($items)>0)
+                    @each('admin.blog.tr', $items, 'blog')
+                @else
+                    @include('admin.tr-empty', ['col'=>7])
+                @endif
+            </tbody>
+          </table>
+          
+          @slot('footer')
               {{$items->links()}}
-            </div>
-          </div>
-          <!-- /.box -->
-        </div>
+          @endslot
+          
+      @endcomponent
     </div>
-    @else
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="callout callout-info">
-              <h4>@lang('app.empty')</h4>
-            </div>
-        </div>
-    </div>
-    @endif
+</div>
 @endsection
 
 @section('script')

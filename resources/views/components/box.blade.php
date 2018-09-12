@@ -1,6 +1,9 @@
 <div class="box {{isset($class)?$class:''}}">
-   
-    @if(isset($title))
+    @if(isset($header))
+    <div class="box-header with-border">
+        {{$header}}
+    </div>
+    @elseif(isset($title))
     <div class="box-header with-border">
       <h3 class="box-title">{{$title}}</h3>
 

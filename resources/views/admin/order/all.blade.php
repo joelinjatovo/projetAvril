@@ -1,11 +1,10 @@
 @extends('layouts.lte')
 
 @section('content')
-    @if(count($items)>0)
-    <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
+<div class="row">
+    <div class="col-md-12">
+      @component('components.box', ['button'=>true, 'class'=>'box-primary'])
+          @slot('header')
               <div class="row">
                   <div class="col-md-12 pull-right">
                     <form method="get" action="">
@@ -23,26 +22,15 @@
                     </form>
                   </div>
               </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body no-padding">
-              @include('admin.table.order', ['orders'=>$items])
-            </div>
-            <!-- /.box-body -->
-            <div class="box-footer clearfix">
+          @endslot
+          
+          @include('admin.order.table', ['orders'=>$items])
+          
+          @slot('footer')
               {{$items->links()}}
-            </div>
-          </div>
-          <!-- /.box -->
-        </div>
+          @endslot
+          
+      @endcomponent
     </div>
-    @else
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="callout callout-info">
-              <h4>@lang('app.empty')</h4>
-            </div>
-        </div>
-    </div>
-    @endif
+</div>
 @endsection

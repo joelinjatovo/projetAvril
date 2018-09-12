@@ -276,6 +276,7 @@ return [
     'config.payment'   => 'Paiement',
     'config.static_page'   => 'Page Statique',
     
+    
     'admin.plan'  => 'Plan',
     'admin.plans'  => 'Plans',
     'admin.plan.list'  => 'Liste des plans',
@@ -287,6 +288,7 @@ return [
     
     'admin.search.list'      => 'Liste des recherches',
     
+    'admin.images'  => 'Images',
     'image.list'      => 'Liste des images',
     'image.update'    => 'Modification des images',
     
