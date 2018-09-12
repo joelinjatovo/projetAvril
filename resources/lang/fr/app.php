@@ -288,6 +288,8 @@ return [
     
     'admin.search.list'      => 'Liste des recherches',
     
+    'admin.searches'  => 'Recherches',
+    
     'admin.images'  => 'Images',
     'image.list'      => 'Liste des images',
     'image.update'    => 'Modification des images',

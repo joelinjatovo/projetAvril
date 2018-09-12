@@ -41,11 +41,6 @@
         <i class="fa fa-th"></i> <span>@lang('app.admin.categories')</span>
       </a>
     </li>
-    <li class="{{Request::is('admin/images')?'active':''}}">
-      <a href="{{route('admin.image.list')}}">
-        <i class="fa fa-th"></i> <span>@lang('app.admin.images')</span>
-      </a>
-    </li>
     <li class="header text-aqua">SHOP</li>
     <li class="{{Request::is('admin/user*')?'active':''}} treeview">
       <a href="#">
@@ -126,6 +121,17 @@
     <li class="{{Request::is('admin/state*')?'active':''}}">
       <a href="{{route('admin.state.list')}}">
         <i class="fa fa-map-signs"></i> <span>@lang('app.admin.states')</span>
+      </a>
+    </li>
+    <li class="header">AUTRES</li>
+    <li class="{{Request::is('admin/images')?'active':''}}">
+      <a href="{{route('admin.image.list')}}">
+        <i class="fa fa-list"></i> <span>@lang('app.admin.images')</span>
+      </a>
+    </li>
+    <li class="{{Request::is('admin/searches')?'active':''}}">
+      <a href="{{route('admin.search.list')}}">
+        <i class="fa fa-search"></i> <span>@lang('app.admin.searches')</span>
       </a>
     </li>
     <li class="header">SYSTEMS</li>
