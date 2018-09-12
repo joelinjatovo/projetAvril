@@ -52,7 +52,7 @@ class AdminController extends Controller
         $count['sales'] = Product::ofStatus('paid')->count();
         
         $data = [];
-        $data['orders'] = \DB::table('products')
+        $data['orders'] = \DB::table('orders')
           ->select(
             \DB::raw('DATE(created_at) as date'), 
             \DB::raw("COUNT(

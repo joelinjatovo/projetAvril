@@ -52,6 +52,18 @@ class Order extends BaseModel
     }
     
     /**
+     * Scope a query to only include products of a given $status.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param mixed $status
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfStatus($query, $status)
+    {
+        return $query->where('status', $status);
+    }
+    
+    /**
      * Get the product record associated with the cart item.
      */
     public function product()
