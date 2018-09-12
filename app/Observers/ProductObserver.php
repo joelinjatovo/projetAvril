@@ -3,6 +3,8 @@
 namespace App\Observers;
 
 use App\Models\Product;
+use App\Models\Order;
+use App\Models\Label;
 
 class ProductObserver
 {
@@ -25,6 +27,10 @@ class ProductObserver
      */
     public function deleting(Product $product)
     {
-        //
+        // Delete orders data
+        Order::where('product_id', $product->id)->delete();
+        
+        // Delete Label data
+        Label::where('product_id', $product->id)->delete();
     }
 }
