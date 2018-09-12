@@ -51,6 +51,7 @@ class CreateOrdersTable extends Migration
             $table->bigInteger('author_id')->default(0)->index();
             
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

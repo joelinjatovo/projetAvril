@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
 
 // Eloquent Model to manage Blog
 class Blog extends BaseModel
 {
+    use SoftDeletes;
+    
    /**
      * The table associated with the model.
      *

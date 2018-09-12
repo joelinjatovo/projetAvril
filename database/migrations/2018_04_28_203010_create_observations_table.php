@@ -19,6 +19,7 @@ class CreateObservationsTable extends Migration
             $table->bigInteger('user_id')->default(0)->index();
             $table->bigInteger('author_id')->default(0)->index();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

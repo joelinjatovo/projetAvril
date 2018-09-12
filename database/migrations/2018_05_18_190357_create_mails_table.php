@@ -21,6 +21,7 @@ class CreateMailsTable extends Migration
             $table->string('status', 20);
             $table->bigInteger('sender_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

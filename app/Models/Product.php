@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use AstritZeqiri\Metadata\Traits\HasManyMetaDataTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Auth;
 
 // Eloquent\Model to manage Product and Service to sell
 class Product extends BaseModel
 {
+    use SoftDeletes;
     use HasManyMetaDataTrait;
     
    /**

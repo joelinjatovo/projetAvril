@@ -33,6 +33,7 @@ class CreatePagesTable extends Migration
             $table->bigInteger('parent_id')->default(0);
             $table->bigInteger('author_id')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

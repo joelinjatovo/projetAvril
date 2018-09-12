@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notification;
 
@@ -19,6 +20,8 @@ use App\Notifications\ShopOrderCancelled;
 // Eloquent\Model to manage Product and Service to sell
 class Order extends BaseModel
 {
+    use SoftDeletes;
+    
    /**
      * The table associated with the model.
      *

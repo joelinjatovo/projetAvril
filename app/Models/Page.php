@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use AstritZeqiri\Metadata\Traits\HasManyMetaDataTrait;
 use Auth;
@@ -10,6 +11,7 @@ use App;
 // Eloquent Model to manage Page list
 class Page extends BaseModel
 {
+    use SoftDeletes;
     use HasManyMetaDataTrait;
     
    /**

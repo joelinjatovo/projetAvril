@@ -26,6 +26,7 @@ class CreateInvoicesTable extends Migration
             $table->bigInteger('from_id')->default(0)->index();
             $table->bigInteger('to_id')->default(0)->index();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

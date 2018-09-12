@@ -64,6 +64,7 @@ class CreateProductsTable extends Migration
             
             $table->bigInteger('image_id')->default('0')->index();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

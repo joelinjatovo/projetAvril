@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Auth;
 
 class Mail extends BaseModel
 {
+    use SoftDeletes;
+    
    /**
      * The table associated with the model.
      *

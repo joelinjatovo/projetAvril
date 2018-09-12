@@ -21,6 +21,7 @@ class CreateSearchesTable extends Migration
             $table->bigInteger('author_id')->default(0)->index();
             $table->dateTime('saved_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
