@@ -149,6 +149,7 @@ class Order extends BaseModel
         
         $line = new Order();
         $line->apl_id      = $apl->id;
+        $line->seller_id   = $product->seller_id;
         $line->product_id  = $product->id;
 		$line->price       = $product->price;
 		$line->reservation = $product->price*($reservation/100); // raisin admin / aloan client

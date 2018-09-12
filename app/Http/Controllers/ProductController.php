@@ -96,9 +96,21 @@ class ProductController extends Controller
      */
     public function show(Request $request, Product $product)
     {
-        return view('admin.product.index')
-            ->with('item', $product)
-            ->with('breadcrumbs', __('app.product'));
+        $this->middleware('auth');
+        if(\Auth::user()->hasRole('admin')){
+            return view('admin.product.index')
+                ->with('item', $product)
+                ->with('breadcrumbs', __('app.product'));
+        }
+        
+        if(\Auth::user()->hasRole('seller') && ($product->seller_id == \Auth::user()->id)){
+            return view('seller.product.index')
+                ->with('item', $product)
+                ->with('breadcrumbs', __('app.product'));
+        }
+        
+        abort(403);
+        
     }
     
     /**
@@ -188,42 +200,6 @@ class ProductController extends Controller
     }
     
     /**
-    * Restore trashed product
-    *
-    * @param  \Illuminate\Http\Request  $request
-     * @param  App\Models\Product  $product
-    * @return \Illuminate\Http\Response
-    */
-    public function restore(Request $request,Product  $product)
-    {
-        $this->middleware('auth');
-        $this->middleware('role:admin');
-        
-        $product->status = 'pinged';
-        $product->save();
-        
-        return back()->with('success',"Le produit a été restoré avec succés");
-    }
-    
-    /**
-    * Trash product
-    *
-    * @param  \Illuminate\Http\Request  $request
-     * @param  App\Models\Product  $product
-    * @return \Illuminate\Http\Response
-    */
-    public function trash(Request $request,Product  $product)
-    {
-        $this->middleware('auth');
-        $this->middleware('role:admin');
-        
-        $product->status = 'trashed';
-        $product->save();
-        
-        return back()->with('success',"Le produit a été ajouté au corbeille avec succés");
-    }
-    
-    /**
     * Handle action Produt
     *
     * @param  \Illuminate\Http\Request  $request
@@ -232,7 +208,6 @@ class ProductController extends Controller
     public function action(Request $request)
     {
         $this->middleware('auth');
-        $this->middleware('role:admin');
         
         // Validate request
         $this->validate($request, [
@@ -242,7 +217,37 @@ class ProductController extends Controller
         
         $product = Product::findOrFail($request->data_id);
         
+        if(!\Auth::user()->hasRole('admin') && ($product->seller_id != \Auth::user()->id)){
+            abort(403);
+        }
+        
+        switch($product->status){
+            case 'ordered':
+                $msg = "Ce produit est en cours de vente.";
+                if($request->ajax()){
+                    return response()->json([
+                        'status'  => 0,
+                        'message' => $msg
+                    ]);
+                }
+                return redirect()->route('admin.dashboard')
+                    ->with('success',$msg);
+            break;
+            case 'paid':
+                $msg = "Ce produit est déjà vendu.";
+                if($request->ajax()){
+                    return response()->json([
+                        'status'  => 0,
+                        'message' => $msg
+                    ]);
+                }
+                return redirect()->route('admin.dashboard')
+                    ->with('success',$msg);
+            break;
+        }
+        
         $action = $request->action;
+        
         switch($action){
             case 'archive':
                 $product->status = 'archived';

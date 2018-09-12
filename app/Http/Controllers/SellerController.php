@@ -36,6 +36,38 @@ class SellerController extends Controller
     }
     
     /**
+     * Listes des produits en cours de vente
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function orders()
+    {
+        $items = Auth::user()->products()
+            ->where('products.status', 'ordered')
+            ->paginate($this->pageSize);
+        
+        return view('seller.product.all')
+            ->with('title', __('seller.orders'))
+            ->with('items', $items);
+    }
+    
+    /**
+     * Listes des produits vendus
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function sales()
+    {
+        $items = Auth::user()->products()
+            ->where('products.status', 'paid')
+            ->paginate($this->pageSize);
+        
+        return view('seller.product.all')
+            ->with('title', __('seller.sales'))
+            ->with('items', $items);
+    }
+    
+    /**
      * Listes des produits confirmer
      *
      * @return \Illuminate\Http\Response
@@ -86,38 +118,6 @@ class SellerController extends Controller
         
         return view('seller.order.all')
             ->with('title', $title)
-            ->with('items', $items);
-    }
-    
-    /**
-     * Listes des produits en cours de vente
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function orders()
-    {
-        $items = Auth::user()->products()
-            ->where('products.status', 'ordered')
-            ->paginate($this->pageSize);
-        
-        return view('seller.product.all')
-            ->with('title', __('seller.orders'))
-            ->with('items', $items);
-    }
-    
-    /**
-     * Listes des produits vendus
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function sales()
-    {
-        $items = Auth::user()->products()
-            ->where('products.status', 'paid')
-            ->paginate($this->pageSize);
-        
-        return view('seller.product.all')
-            ->with('title', __('seller.sales'))
             ->with('items', $items);
     }
     

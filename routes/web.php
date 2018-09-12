@@ -217,6 +217,11 @@ Route::prefix('seller')->middleware(["auth","role:seller"])->group(function(){
     Route::get('searches', 'BackendController@searches');
     
     Route::get('products', 'SellerController@products')->name('seller.products');
+    Route::post('products', 'ProductController@action');
+    Route::prefix('product')->group(function(){
+        Route::get('show/{product}', 'ProductController@show')->name('seller.product.show');
+    });
+    
     Route::get('sales', 'SellerController@sales')->name('seller.sales');
     Route::get('orders', 'SellerController@orders')->name('seller.orders');
     Route::get('confirms', 'SellerController@toConfirm')->name('seller.orders.to-confirm');
