@@ -2,27 +2,31 @@
 
 @section('content')
 <div class="row">
-    <header class="section-header">
-        <div class="col-md-12">
-            <h3 class="pull-left">@lang('member.select_afa')</h3>
-            <div class="pull-right">
-                <div class="property-sorting pull-left">
-                    <label for="distance"> @lang('app.form.filterBy') : </label>
-                    <select name="distance" id="distance" onchange="document.getElementById('filter-form').submit();"> 
-                        @foreach($distances as $dist)
-                        <option value="{{$dist}}" {{$distance===$dist?'selected':''}}>{{$dist}}</option> 
-                        @endforeach
-                    </select>
-                </div>
-                <p class="pull-left display-view"> Affichage: 
-                    <a href="{{route('shop.select.afa', ['display'=>'map'])}}"><i class="fa fa-map"></i></a>
-                    <a href="{{route('shop.select.afa', ['display'=>'list'])}}"><i class="fa fa-list-ul"></i></a>
-                </p>
-            </div>
-        </div>
-    </header>
     <div class="col-md-12">
-        @include('backend.table.afa', ['users'=>$items])
+       @component('components.box', ['button'=>true, 'class'=>'box-primary'])
+          @slot('header')
+            <h3 class="box-title">Selectionner une agence partenaire locale près de chez vous.</h3>
+            <div class="box-tools pull-right">
+                 <div class="btn-group">
+                  <button type="button" class="btn btn-default btn-flat">@lang('app.form.filter')</button>
+                  <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    @foreach($distances as $dist)
+                        <li><a href="?distance={{$dist}}">{{$dist}} km</a></li>
+                    @endforeach
+                  </ul>
+                </div>
+                <a href="{{route('shop.select.afa', ['display'=>'map'])}}" class="btn btn-default btn-flat"><i class="fa fa-map"></i></a>
+                <a href="{{route('shop.select.afa', ['display'=>'list'])}}" class="btn btn-default btn-flat"><i class="fa fa-list-ul"></i></a>
+            </div>
+          @endslot
+          
+          @include('member.afa.table', ['users'=>$items])
+          
+       @endcomponent
     </div>
 </div>
 

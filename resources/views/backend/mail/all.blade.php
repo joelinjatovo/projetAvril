@@ -18,7 +18,7 @@
       <div class="table-responsive mailbox-messages">
         <table class="table table-hover table-striped items-list">
           <tbody>
-          @foreach($items as $item)
+          @forelse($items as $item)
           <tr class="data-item-{{$item->id}} item">
             <td>
              @if($item->sender)
@@ -64,7 +64,9 @@
                </div>
             </td>
           </tr>
-          @endforeach
+          @empty
+              @include('backend.table.tr-empty', ['col'=>6])
+          @endforelse
           </tbody>
         </table>
         <!-- /.table -->

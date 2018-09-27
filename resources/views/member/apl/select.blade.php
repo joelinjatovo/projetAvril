@@ -1,35 +1,29 @@
-@extends('layouts.backend')
+@extends('layouts.lte')
 
-@section('subcontent')
+@section('content')
 <div class="row">
-        <fieldset>
-            <legend>@lang('app.select_apl')</legend>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="property-sorting">        
-                                <form id="filter-form" method="get" action="">
-                                    <div  class="pull-left">
-                                        <label for="distance"> @lang('app.form.filterBy'):   </label>  
-                                        <select name="distance" id="distance" onchange="document.getElementById('filter-form').submit();"> 
-                                            @foreach($distances as $dist)
-                                            <option value="{{$dist}}" {{$distance===$dist?'selected':''}}>{{$dist}}</option> 
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </form>
-                            </div>           
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div id="map"></div>
-                        </div>
-                    </div>
+    <div class="col-md-12">
+       @component('components.box', ['button'=>true, 'class'=>'box-primary'])
+          @slot('header')
+            <h3 class="box-title">Selectionner une agence partenaire locale près de chez vous.</h3>
+            <div class="box-tools pull-right">
+                 <div class="btn-group">
+                  <button type="button" class="btn btn-default btn-flat">@lang('app.form.filter')</button>
+                  <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    @foreach($distances as $dist)
+                        <li><a href="?distance={{$dist}}">{{$dist}} km</a></li>
+                    @endforeach
+                  </ul>
                 </div>
             </div>
-        </fieldset>
+          @endslot
+          <div id="map" style="height: 400px;"></div>
+       @endcomponent
+    </div>
 </div>
 
 <!-- Modal -->
@@ -61,7 +55,7 @@
 @endsection
 
 @section('script')
-@parent
+@parent()
 <script>
     $('#apl-form-modal').submit(function(event){
         if(!$('#check-confirm-modal').is(":checked"))

@@ -172,7 +172,7 @@ class ShopController extends Controller
         }
         
         $action = route('shop.select.apl', $product);
-    	return view('backend.apl.select')
+    	return view('member.apl.select')
             ->with('action', $action)
             ->with('location', Auth::user()->location)
             ->with('items', $apls)
@@ -525,7 +525,7 @@ class ShopController extends Controller
         
         $order = Session::has('order')?Session::get('order'):false;
         
-        return view('member.cart.last')->with(['item' => $order])
+        return view('member.order.last')->with(['item' => $order])
             ->with('title', __('member.order'))
             ->with('item', $order)
             ->with('count', $count);

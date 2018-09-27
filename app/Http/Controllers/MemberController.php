@@ -91,6 +91,9 @@ class MemberController extends Controller
             ->with('title', __('app.contact_apl'));
     }
 
+    /**
+    * Sending an email tothe selected apl
+    */
     public function sendMail(Request $request)
     {
         if(!Auth::user()->apl){
@@ -151,7 +154,7 @@ class MemberController extends Controller
     
     
     /**
-     * Add product in cart
+     * Select APL
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Product
@@ -196,7 +199,7 @@ class MemberController extends Controller
         }
         
         $action = route('member.select.apl');
-    	return view('backend.apl.select')
+    	return view('member.apl.select')
             ->with('location', Auth::user()->location)
             ->with('action', $action)
             ->with('items', $apls)
