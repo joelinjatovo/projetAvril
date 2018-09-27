@@ -49,7 +49,6 @@
                     </ol>
                 </div>
             </div>
-            
             <div class="row">
                 <div class="col-md-12">
                     <div class="property-sorting">        
@@ -91,7 +90,6 @@
         </div>
     </div>
 </div>
-
 
 @if(isset($q)&&$q)
 <!-- Modal -->

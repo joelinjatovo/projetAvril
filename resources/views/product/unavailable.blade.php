@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<section id="home-property-listing" style="margin-top: 160px;">
+<section id="home-property-listing">
     <header class="section-header home-section-header text-center">
         <div class="container">
             <h2 class="wow slideInRight">@lang('app.unavailable.title')</h2>
