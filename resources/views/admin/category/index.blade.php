@@ -39,9 +39,26 @@
                 <h3 class="box-title">@lang('app.blogs')</h3>
             </div>
             <div class="box-body">
-                @include('admin.table.blog',[
-                    'blogs'=>$item->blogs
-                ])
+              <table class="table table-striped table-hover items-list">
+                <thead>
+                    <tr>
+                        <th scope="col">@lang('app.table.blogs') <span class="column-sorter"></span></th>
+                        <th scope="col">@lang('app.table.comment') <span class="column-sorter"></span></th>
+                        <th scope="col">@lang('app.table.meta_tag') <span class="column-sorter"></span></th>
+                        <th scope="col">@lang('app.table.meta_desc') <span class="column-sorter"></span></th>
+                        <th scope="col">@lang('app.table.status') <span class="column-sorter"></span></th>
+                        <th scope="col">@lang('app.table.date') <span class="column-sorter"></span></th>
+                        <th scope="col" width="200px" class="text-right">@lang('app.table.actions')</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if(count($item->blogs)>0)
+                        @each('admin.blog.tr', $item->blogs, 'blog')
+                    @else
+                        @include('admin.tr-empty', ['col'=>6])
+                    @endif
+                </tbody>
+              </table>
             </div>
         </div>
         @endif
@@ -52,9 +69,25 @@
                 <h3 class="box-title">@lang('app.products')</h3>
             </div>
             <div class="box-body">
-                @include('admin.table.product',[
-                    'products'=>$item->products
-                ])
+               <table class="table table-striped table-hover items-list">
+                    <thead>
+                        <tr>
+                             <th scope="col">@lang('app.table.products') <span class="column-sorter"></span></th>
+                             <th scope="col">@lang('app.table.date') <span class="column-sorter"></span></th>
+                             <th scope="col">@lang('app.table.status') <span class="column-sorter"></span></th>
+                             <th scope="col">@lang('app.table.seller') <span class="column-sorter"></span></th>
+                             <th scope="col">@lang('app.table.author') <span class="column-sorter"></span></th>
+                             <th scope="col" class="pull-right text-right" width="150px">@lang('app.table.actions') </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if(count($item->products)>0)
+                            @each('admin.product.tr', $item->products, 'product')
+                        @else
+                            @include('admin.tr-empty', ['col'=>6])
+                        @endif
+                    </tbody>
+                </table>
             </div>
         </div>
         @endif

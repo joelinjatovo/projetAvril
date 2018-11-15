@@ -36,9 +36,26 @@
         </ul>
         <div class="tab-content">
           <div class="active tab-pane" id="childs">
-            @include('admin.table.page',[
-                'pages'=>$item->childs
-            ])
+              <table class="table table-striped table-hover items-list">
+                <thead>
+                    <tr>
+                        <th scope="col">Titre/Contenu (FR)<span class="column-sorter"></span></th>
+                        <th scope="col">Titre/Contenu (EN)<span class="column-sorter"></span></th>
+                        <th scope="col">Parent<span class="column-sorter"></span></th>
+                        <th scope="col">Ordre<span class="column-sorter"></span></th>
+                        <th scope="col">Auteur<span class="column-sorter"></span></th>
+                        <th scope="col">Date<span class="column-sorter"></span></th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if(count($item->childs)>0)
+                        @each('admin.page.tr', $item->childs, 'page')
+                    @else
+                        @include('admin.tr-empty', ['col'=>7])
+                    @endif
+                </tbody>
+              </table>
           </div>
           <!-- /.tab-pane -->
           
