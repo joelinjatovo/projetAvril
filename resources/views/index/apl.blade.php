@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="content corps" style="margin-top: 160px;">
+<div class="content corps">
     <div class="container">
         <div class="row">
             @include('includes.alerts')
@@ -79,12 +79,10 @@
       }
     };
     
-    
     var datas = {!!$data!!};
     var markers = [];
     
     function initMap() {
-        
         _map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: _lat, lng:  _long},
             zoom: 2

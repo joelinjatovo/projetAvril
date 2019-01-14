@@ -20,6 +20,15 @@
           <tbody>
           @forelse($items as $item)
           <tr class="data-item-{{$item->id}} item">
+            <td class="mailbox-subject">
+                <b>{{$item->subject}}</b> <br> {{$item->excerpt(20)}}
+            </td>
+            <td class="mailbox-star"><a href="#" class="btn-star"
+                      data-action="star" 
+                      data-id="{{$item->id}}" 
+                      data-href="{{route(Auth::user()->role.'.mail.list')}}"><i class="fa {{$item->pivot&&$item->pivot->starred?'fa-star':'fa-star-o'}} text-yellow"></i></a></td>
+            <td class="mailbox-attachment"><i class="fa fa-paperclip"></i></td>
+            <td class="mailbox-date">{{$item->created_at->diffForHumans()}}</td>
             <td>
              @if($item->sender)
                  <a  href="{{route('admin.user.show', $item->sender)}}">
@@ -40,14 +49,6 @@
                  </a>
              @endif
             </td>
-            <td class="mailbox-star"><a href="#" class="btn-star"
-                      data-action="star" 
-                      data-id="{{$item->id}}" 
-                      data-href="{{route(Auth::user()->role.'.mail.list')}}"><i class="fa {{$item->pivot&&$item->pivot->starred?'fa-star':'fa-star-o'}} text-yellow"></i></a></td>
-            <td class="mailbox-subject"><b>{{$item->subject}}</b> <br> {{$item->excerpt(20)}}
-            </td>
-            <td class="mailbox-attachment"><i class="fa fa-paperclip"></i></td>
-            <td class="mailbox-date">{{$item->created_at->diffForHumans()}}</td>
             <td>
                <div class="btn-group">
                 <a href="{{route(Auth::user()->role.'.mail.index', $item)}}"  class="btn btn-default"><i class="fa fa-eye"></i> @lang('app.btn.view')</a>

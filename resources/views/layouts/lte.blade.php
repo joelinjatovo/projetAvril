@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Admin{{isset($title)?' - '.$title:''}} - {{app_name()}}</title>
+  <title>{{auth()->check()&&auth()->user()?ucfirst(auth()->user()->role):''}}{{isset($title)?' - '.$title:''}} - {{app_name()}}</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -119,7 +119,7 @@
                   @endforeach
                 </ul>
               </li>
-              <li class="footer"><a href="{{route('admin.mail.list',['filter'=>'inbox'])}}">See All Messages</a></li>
+              <li class="footer"><a href="{{route(auth()->user()->role.'.mail.list',['filter'=>'inbox'])}}">See All Messages</a></li>
             </ul>
           </li>
           
@@ -177,10 +177,10 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="{{route('profile')}}" class="btn btn-default btn-flat">Profile</a>
+                  <a href="{{route('profile')}}" class="btn btn-default btn-flat">@lang('app.profile')</a>
                 </div>
                 <div class="pull-right">
-                  <a href="{{route('logout')}}" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="{{route('logout')}}" class="btn btn-default btn-flat">@lang('app.logout')</a>
                 </div>
               </li>
             </ul>

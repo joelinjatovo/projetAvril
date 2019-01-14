@@ -11,12 +11,15 @@
 |
 */
 
+/**
+* Testing route
+*/
 Route::get('admin-lte','AdminController@index');
-
 Route::get('mail/basic','MailController@basic_email');
 Route::get('mail/html','MailController@html_email');
 Route::get('mail/attachment','MailController@attachment_email');
 
+// Authentification
 Auth::routes();
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
@@ -45,9 +48,11 @@ Route::post('comments', 'CommentController@store');
 Route::post('comments/{comment}/{action}', 'CommentController@update');
 
 // Shop and Product
-Route::post('shop/{category?}', 'SearchController@index')->name('search');
 Route::get('shop/{category?}', 'ShopController@index')->name('shop.index');// List product by Category OR no
 Route::get('product/{product}', 'ProductController@index')->name('product.index');// View Product
+
+// Searching product
+Route::post('shop/{category?}', 'SearchController@index')->name('search');
 
 // Baintree
 Route::post('braintree/webhook', 'WebhookController@handleWebhook');

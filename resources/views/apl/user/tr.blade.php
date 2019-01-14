@@ -20,7 +20,7 @@
      <td>{{$user->apl_ends_at?ucfirst($user->apl_ends_at->diffForHumans()):''}}</td>
      <td>
         <div class="btn-group pull-right">
-          <a type="button" class="btn btn-default" href="{{route('admin.user.contact', $user)}}">@lang('app.btn.contact')</a>
+          <a type="button" class="btn btn-default" href="{{route('apl.user.contact', $user)}}">@lang('app.btn.contact')</a>
         </div>
      </td>
 </tr>
