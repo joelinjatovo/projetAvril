@@ -53,7 +53,6 @@ class CreateProductsTable extends Migration
             $table->bigInteger('type_id')->default('0')->index(); // apartment, individual house, town house, ground
             $table->bigInteger('location_type_id')->default('0')->index();  // in urban area, extra-urban, in campaign
             
-            $table->bigInteger('category_id')->default('0')->index();
             $table->bigInteger('buyer_id')->default('0')->index();
             $table->bigInteger('seller_id')->default('0')->index();
             $table->bigInteger('author_id')->default('0')->index();

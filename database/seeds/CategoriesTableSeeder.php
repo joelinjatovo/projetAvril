@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\Product;
+use App\Models\Blog;
 
 class CategoriesTableSeeder extends Seeder
 {
@@ -60,5 +62,46 @@ class CategoriesTableSeeder extends Seeder
             'created_at' => date("Y-m-d H:i:s"),
             'author_id' => 1,
         ]);
+        DB::table('categories')->insert([
+            'id'         => "8",
+            'slug'       => "actualites",
+            'title'      => "Actualites",
+            'type'       => "blog",
+            'created_at' => date("Y-m-d H:i:s"),
+            'author_id'  => 1,
+        ]);
+        
+        $cats = [
+            1 => [1, 2],
+            2 => [3, 4],
+            3 => [5, 6],
+            4 => [7, 8],
+        ];
+        foreach($cats as $category => $objects){
+            foreach($objects as $object){
+                DB::table('objects_categories')->insert([
+                    'category_id' => $category,
+                    'object_id'   => $object,
+                    'object_type' => Product::class,
+                    'created_at'  => date("Y-m-d H:i:s"),
+                    'author_id'   => 1,
+                ]);
+            }
+        }
+        
+        $cats = [
+            8 => [1, 2, 3, 4, 5],
+        ];
+        foreach($cats as $category => $objects){
+            foreach($objects as $object){
+                DB::table('objects_categories')->insert([
+                    'category_id' => $category,
+                    'object_id'   => $object,
+                    'object_type' => Blog::class,
+                    'created_at'  => date("Y-m-d H:i:s"),
+                    'author_id'   => 1,
+                ]);
+            }
+        }
     }
 }

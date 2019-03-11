@@ -70,25 +70,45 @@
               </div>
           @endslot
           
-          <table class="table table-striped table-hover items-list">
-            <thead>
-                <tr>
-                    <th scope="col">Titre <span class="column-sorter"></span></th>
-                    <th scope="col">Date de publication <span class="column-sorter"></span></th>
-                    <th scope="col">Produits/SubProduits<span class="column-sorter"></span></th>
-                    <th scope="col">Blogs<span class="column-sorter"></span></th>
-                    <th scope="col">Auteur<span class="column-sorter"></span></th>
-                    <th scope="col" class="pull-right">Actions<span class="column-sorter"></span></th>
-                </tr>
-            </thead>
-            <tbody>
-                @if(count($items)>0)
-                    @each('admin.category.tr', $items, 'category')
-                @else
-                    @include('admin.tr-empty', ['col'=>6])
-                @endif
-            </tbody>
-          </table>
+          @if($type=='blog')
+              <table class="table table-striped table-hover items-list">
+                <thead>
+                    <tr>
+                        <th scope="col">Titre <span class="column-sorter"></span></th>
+                        <th scope="col">Date de publication <span class="column-sorter"></span></th>
+                        <th scope="col">Blogs<span class="column-sorter"></span></th>
+                        <th scope="col">Auteur<span class="column-sorter"></span></th>
+                        <th scope="col" class="pull-right">Actions<span class="column-sorter"></span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if(count($items)>0)
+                        @each('admin.category.tr-blog', $items, 'category')
+                    @else
+                        @include('admin.tr-empty', ['col'=>6])
+                    @endif
+                </tbody>
+              </table>
+          @else
+              <table class="table table-striped table-hover items-list">
+                <thead>
+                    <tr>
+                        <th scope="col">Titre <span class="column-sorter"></span></th>
+                        <th scope="col">Date de publication <span class="column-sorter"></span></th>
+                        <th scope="col">Produits<span class="column-sorter"></span></th>
+                        <th scope="col">Auteur<span class="column-sorter"></span></th>
+                        <th scope="col" class="pull-right">Actions<span class="column-sorter"></span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if(count($items)>0)
+                        @each('admin.category.tr-product', $items, 'category')
+                    @else
+                        @include('admin.tr-empty', ['col'=>6])
+                    @endif
+                </tbody>
+              </table>
+          @endif
           
           @slot('footer')
               {{$items->links()}}

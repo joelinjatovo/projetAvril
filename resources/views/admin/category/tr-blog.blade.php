@@ -1,7 +1,6 @@
 <tr class="data-item-{{$category->id}} item">
     <td><a href="{{route('admin.category.show', $category)}}">{{$category->title}}</a></td>
     <td>{{$category->created_at->diffForHumans()}}</td>
-    <td>{{count($category->products)}} / {{count($category->subProducts)}}</td>
     <td>{{count($category->blogs)}}</td>
     <td><a href="{{route('admin.user.show', $category->author)}}">{{$category->author->name}}</a></td>
     <td>

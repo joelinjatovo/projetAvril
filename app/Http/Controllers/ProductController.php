@@ -112,6 +112,71 @@ class ProductController extends Controller
         abort(403);
         
     }
+
+    /**
+     * Render form to create a product
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @return Illuminate\Http\Response
+     */
+    public function create(Request $request)
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+
+        $product = new Product();
+        if($value = $request->old('title'))             $product->title = $value;
+        if($value = $request->old('content'))           $product->content = $value;
+        if($value = $request->old('is_new'))            $product->is_new = $value;
+        if($value = $request->old('display_address'))   $product->is_new = $value;
+        if($value = $request->old('year_built'))        $product->year_built = $value;
+        if($value = $request->old('price'))             $product->price = $value;
+        if($value = $request->old('currency'))          $product->currency = $value;
+        if($value = $request->old('tma'))               $product->tma = $value;
+        if($value = $request->old('type_id'))           $product->type_id = $value;
+        if($value = $request->old('location_type_id'))  $product->location_type_id = $value;
+        if($value = $request->old('postalCode'))        $product->postalCode = $value;
+        if($value = $request->old('state_id'))          $product->state_id = $value;
+        if($value = $request->old('location_id'))       $product->location_id = $value;
+        
+        if($value = $request->old('area'))              $product->area = $value;
+        if($value = $request->old('carport_spaces'))    $product->carport_spaces = $value;
+        if($value = $request->old('garage_spaces'))     $product->garage_spaces = $value;
+        if($value = $request->old('off_street_spaces')) $product->off_street_spaces = $value;
+        if($value = $request->old('bathrooms'))         $product->bathrooms = $value;
+        if($value = $request->old('bedrooms'))          $product->bedrooms = $value;
+        if($value = $request->old('ensuite'))           $product->ensuite = $value;
+        if($value = $request->old('toillet'))           $product->toillet = $value;
+        if($value = $request->old('land_area'))         $product->land_area = $value;
+        if($value = $request->old('floor_area'))        $product->floor_area = $value;
+        if($value = $request->old('number_of_floors'))  $product->number_of_floors = $value;
+        if($value = $request->old('new_construction'))  $product->new_construction = $value;
+
+        $action = route('admin.product.store');
+        
+        return view('admin.product.update')
+            ->with('title', __('app.product.create'))
+            ->with('item', $product)
+            ->with('action', $action)
+            ->with('states', State::get())
+            ->with('types', Type::where("object_type", "type")->get())
+            ->with('location_types', Type::where("object_type", "location")->get())
+            ->with('breadcrumbs', __('app.product.create'));
+    }
+
+    /**
+     * Store a product
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @return Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $this->middleware('auth');
+        $this->middleware('role:admin');
+        
+        return back()->with('success',"L'article a été bien enregistré.");
+    }
     
     /**
      * Show the list of product.

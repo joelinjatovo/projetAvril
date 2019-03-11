@@ -66,6 +66,7 @@
         </span>
       </a>
       <ul class="treeview-menu">
+        <li><a class="{{Request::is('admin/product')?'active':''}}" href="{{route('admin.product.create')}}"><i class="fa fa-plus"></i>@lang('app.admin.product.add')</a></li>
         <li><a class="{{Request::is('admin/products')?'active':''}}" href="{{route('admin.product.list')}}"><i class="fa fa-circle-o"></i>@lang('app.admin.product.list')</a></li>
         <li><a class="{{Request::is('admin/products/pinged')?'active':''}}" href="{{route('admin.product.list', ['filter'=>'pinged'])}}"><i class="fa fa-circle-o"></i>@lang('app.admin.product.ping')</a></li>
         <li><a class="{{Request::is('admin/products/published')?'active':''}}" href="{{route('admin.product.list', ['filter'=>'published'])}}"><i class="fa fa-circle-o"></i>@lang('app.admin.product.publish')</a></li>

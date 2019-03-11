@@ -270,6 +270,10 @@ Route::prefix('admin')->middleware(["auth","role:admin"])->group(function(){
     Route::get('products/{filter?}', 'ProductController@all')->name('admin.product.list');
     Route::post('products/{filter?}', 'ProductController@action');
     Route::prefix('product')->group(function(){
+        Route::get('/', 'ProductController@create')->name('admin.product.create');
+        Route::post('/', 'ProductController@store')->name('admin.product.store');
+        Route::get('update/{blog}', 'ProductController@edit')->name('admin.product.edit');
+        Route::post('update/{blog}', 'ProductController@update')->name('admin.product.update');
         Route::get('show/{product}', 'ProductController@show')->name('admin.product.show');
     });
     

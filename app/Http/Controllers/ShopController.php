@@ -29,11 +29,13 @@ class ShopController extends Controller
      */
     public function index(Request $request, Category $category = null)
     {
-        $items = Product::ofStatus('published')
-                ->where('quantity', '>', 0);
-        
         if($category&&$category->id>0){
-            $items = $items->where("category_id", $category->id);
+            $items = $category->products()
+                ->ofStatus('published')
+                ->where('quantity', '>', 0);;
+        }else{
+            $items = Product::ofStatus('published')
+                ->where('quantity', '>', 0);
         }
         
         $search = new Search();
