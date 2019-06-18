@@ -129,7 +129,7 @@
                     <!-- parent input -->
                     <div class="form-group common">
                       <label>@lang('app.select_one')</label>
-                      <select name="parent_id" class="form-control" >
+                      <select name="parent_id" class="form-control select2" >
                             <option value="0">@lang('app.select_one')</option>
                             @foreach($pages as $page)
                                 <option value="{{$page->id}}" {{$page->id==$item->parent_id?'selected':''}}>{{$page->title}} ({{$page->path}})</option>

@@ -34,7 +34,7 @@
                             <!-- year_built -->
                             <div class="form-group">
                                 <label>@lang('app.admin.year_built')</label>
-                                <select name="currency" class="form-control">
+                                <select name="currency" class="form-control select2">
                                     @for($year=1990; $year<=date('Y'); $year++)
                                     <option {{$item->year_built==$year?'selected':''}} value="{{$year}}">{{$year}}</option>
                                    @endfor
@@ -78,7 +78,7 @@
                             <!-- currency -->
                             <div class="form-group">
                                 <label>@lang('app.admin.currency')</label>
-                                <select name="currency" class="form-control">
+                                <select name="currency" class="form-control select2">
                                     <option {{$item->currency=='eur'?'selected':''}} value="eur">EUR</option>
                                     <option {{$item->currency=='usd'?'selected':''}} value="usd">USD</option>
                                 </select>
@@ -103,7 +103,7 @@
                             <!-- state_id -->
                             <div class="form-group">
                                 <label>@lang('app.admin.state')</label>
-                                <select name="state_id" class="form-control">
+                                <select name="state_id" class="form-control select2">
                                     @foreach($states as $state)
                                     <option {{$item->state_id==$state->id?'selected':''}} value="{{$state->id}}">{{$state->content}}</option>
                                     @endforeach
@@ -116,7 +116,7 @@
                             <!-- type_id -->
                             <div class="form-group">
                                 <label>@lang('app.admin.type')</label>
-                                <select name="type_id" class="form-control">
+                                <select name="type_id" class="form-control select2">
                                     @foreach($types as $type)
                                     <option {{$item->type_id==$type->id?'selected':''}} value="{{$type->id}}">{{$type->title}}</option>
                                     @endforeach
@@ -125,7 +125,7 @@
                             <!-- location_type_id -->
                             <div class="form-group">
                                 <label>@lang('app.admin.location_type')</label>
-                                <select name="location_type_id" class="form-control">
+                                <select name="location_type_id" class="form-control select2">
                                     @foreach($location_types as $type)
                                     <option {{$item->location_type_id==$type->id?'selected':''}} value="{{$type->id}}">{{$type->title}}</option>
                                     @endforeach

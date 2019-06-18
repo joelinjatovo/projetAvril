@@ -19,8 +19,6 @@
   <link rel="stylesheet" href="{{asset('lte/plugins/font-awesome/css/font-awesome.min.css')}}">
   <!-- Ionicons -->
   <link rel="stylesheet" href="{{asset('lte/plugins/Ionicons/css/ionicons.min.css')}}">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{{asset('lte/css/styles.css')}}">
   <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="{{asset('lte/css/skins/_all-skins.min.css')}}">
   <!-- Morris chart -->
@@ -33,6 +31,15 @@
   <link rel="stylesheet" href="{{asset('lte/plugins/bootstrap-daterangepicker/daterangepicker.css')}}">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="{{asset('lte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="{{asset('lte/plugins/select2/dist/css/select2.min.css')}}">
+@show
+    
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{asset('lte/css/styles.css')}}">
+ 
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -40,11 +47,6 @@
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
-
-@show
- 
-  <!-- Google Font -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
   <!-- Scripts -->
   <script>
@@ -472,6 +474,8 @@
 <script src="{{asset('lte/plugins/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
 <!-- FastClick -->
 <script src="{{asset('lte/plugins/fastclick/lib/fastclick.js')}}"></script>
+<!-- Select2 -->
+<script src="{{asset('lte/plugins/select2/dist/js/select2.full.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('lte/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
@@ -480,6 +484,12 @@
 <script src="{{asset('lte/js/demo.js')}}"></script>
 <!-- Script -->
 <script src="{{asset('lte/js/script.js')}}"></script>
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2();
+  })
+</script>
 @show
 </body>
 </html>

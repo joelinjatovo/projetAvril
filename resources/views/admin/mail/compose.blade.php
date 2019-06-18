@@ -8,7 +8,7 @@
           Compose New Message
         @endslot
         <div class="form-group">
-            <select id="role" name="role" class="form-control">
+            <select id="role" name="role" class="form-control select2">
                 <option {{old('role')&&old('role')=='0'?'selected':''}} value="0">@lang('app.select_role')</option>
                 <option {{old('role')&&old('role')=='admin'?'selected':''}} value="admin">Admin</option>
                 <option {{old('role')&&old('role')=='apl'?'selected':''}} value="apl">APL</option>
@@ -18,7 +18,7 @@
             </select>
         </div>
         <div class="form-group">
-            <select id="users" name="users[]" class="form-control" multiple>
+            <select id="users" name="users[]" class="form-control select2" multiple>
                 <option value="0">@lang('app.select_user')</option>
                 @foreach($users as $user)
                     <option value="{{$user->id}}">{{$user->name}}</option>
