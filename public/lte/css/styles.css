@@ -5201,6 +5201,7 @@ table.text-center th {
 }
 div.box {
   margin: auto;
+  margin-bottom: 20px;
   padding: 0px;
 }
 #img-column {

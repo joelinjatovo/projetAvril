@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.admin-mail')
 
 @section('content')
 <div id="main-content" class="main-content container-fluid">

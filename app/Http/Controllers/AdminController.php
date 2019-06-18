@@ -101,6 +101,7 @@ class AdminController extends Controller
             ->get();
         
         return view('admin.dashboard.index')
+            ->with('title', __('admin.dashboard'))
             ->with('recent', $recent)
             ->with('count', $count)
             ->with('data', $data);

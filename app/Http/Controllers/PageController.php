@@ -102,6 +102,7 @@ class PageController extends Controller
         $action = route('admin.page.store');
         $pages = Page::where('parent_id', 0)->get();
         return view('admin.page.update', ['item'=>$item, 'action'=>$action])
+            ->with('title', __('admin.page.create'))
             ->with('pages', $pages);
     }
     

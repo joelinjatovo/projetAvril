@@ -58,10 +58,12 @@ class CreateProductsTable extends Migration
             $table->bigInteger('author_id')->default('0')->index();
             
             $table->string('postalCode')->nullable();
+            $table->bigInteger('postal_code_id')->default('0')->index();
             $table->bigInteger('state_id')->default('0')->index();
             $table->bigInteger('location_id')->default('0')->index();
             
             $table->bigInteger('image_id')->default('0')->index();
+            
             $table->timestamps();
             $table->softDeletes();
         });

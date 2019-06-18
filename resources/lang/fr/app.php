@@ -4,42 +4,35 @@
 return [
 
     'app_name'            => 'Investir en Australie',
-    
     'footer_description'  => 'Investir en Australie est un e-marketplace.',
     'copyright'           => '© Copyright :year : ":app" - Tout droit réservé',
-    
     'last_update'         => 'Dernière Modification, :date',
     'contact_user'        => 'Contacter: :name (:email)',
     'contact_us_phone'    => 'Contactez-nous: :phone',
     'list_apl'    => 'Listes des agences <br> partenaires locales',
     'read_more'    => 'Continuer de lire',
-    
     'trial_end'    => 'Vous devez mettre à jour votre inscription. Choisissez un plan.',
-    
     "empty" => "Aucun élément trouvé.",
     'num.area' => ':num m2',
     'num.bed' =>  ':num chambres',
     'num.bath' =>  ':num douches',
     'yes' =>  'oui',
     'no' =>  'non',
-    
     'shop'    => 'Shop',
     'login'    => 'Se connecter',
     'register'    => "S'inscrire",
     'register_as'    => "S'inscrire en tant que",
     'avatar'    => 'Modification de la photo de profil',
     'password'    => 'Modification du mot de passe',
-    
     'no_notification' => "Aucune notification",
-    
     'send_mail'     => 'Envoyer Mail',
     'login_info'    => 'Login Information',
     'user_info'     => 'Information personnelle',
     'orga_info'     => 'Information sur l\'organisation',
-    'contact_info' => 'Contact',
+    'contact_info'  => 'Contact',
     'location_info' => 'Localisation',
-    'observation' => 'Observation',
-    'observations' => 'Observations',
+    'observation'   => 'Observation',
+    'observations'  => 'Observations',
     
     'crm.name'     => 'Nom du CRM',
     'crm.email'    => 'Email du CRM',

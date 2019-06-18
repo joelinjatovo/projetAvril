@@ -155,7 +155,7 @@ class ProductController extends Controller
         $action = route('admin.product.store');
         
         return view('admin.product.update')
-            ->with('title', __('app.product.create'))
+            ->with('title', __('admin.product.create'))
             ->with('item', $product)
             ->with('action', $action)
             ->with('states', State::get())
