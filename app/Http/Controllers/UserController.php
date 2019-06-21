@@ -98,7 +98,7 @@ class UserController extends Controller
         $mailItem->save();
         
         try{
-            $data = array('name'=>"Virat Gandhi");
+            $data = array('name'=>"Virat Gandhi", 'line'=>$mailItem);
             \Mail::send('mail', $data, function($message) use($mailItem, $user, $item) {
                 $message->to($user->email, $user->name)
                         ->subject($item->subject)

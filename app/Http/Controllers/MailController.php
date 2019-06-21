@@ -110,6 +110,10 @@ class MailController extends Controller
         
         $mail->load('sender')->load('receiver');
         
+        MailUser::where('user_id', \Auth::user()->id)
+            ->where('mail_id', $mail->id)
+            ->update(['read'=> 1]);
+        
         if(\Auth::user()->isAdmin()){
             return view('admin.mail.index')
                 ->with('item', $mail); 
