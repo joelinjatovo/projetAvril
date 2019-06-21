@@ -1,5 +1,41 @@
 @extends('layouts.lte')
 
+@section('style')
+@parent
+<!-- Nous chargeons les fichiers CDN de Leaflet. Le CSS AVANT le JS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+    crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
+    crossorigin=""></script>
+<script type="text/javascript">
+    // On initialise la latitude et la longitude de Paris (centre de la carte)
+    var lat = {{old('latitude',$item->meta('latitude', '-25.69'))}};
+    var lon = {{old('longitude',$item->meta('longitude', '132.00'))}};
+    var macarte = null;
+    // Fonction d'initialisation de la carte
+    function initMap() {
+        // Créer l'objet "macarte" et l'insèrer dans l'élément HTML qui a l'ID "map"
+        macarte = L.map('map').setView([lat, lon], 4);
+        // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
+        L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+            // Il est toujours bien de laisser le lien vers la source des données
+            attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
+            minZoom: 1,
+            maxZoom: 50
+        }).addTo(macarte);
+    }
+    window.onload = function(){
+        // Fonction d'initialisation qui s'exécute lorsque le DOM est chargé
+        initMap(); 
+    };
+</script>
+<style type="text/css">
+    #map{ /* la carte DOIT avoir une hauteur sinon elle n'apparaît pas */
+        height:400px;
+    }
+</style>
+@endsection
+
 @section('content')
 <form method="post" action="{{route('config.site.update')}}">
     {{csrf_field()}}
@@ -89,14 +125,14 @@
                     <div class="col-md-6">
                         <div class="form-group">
                           <label>@lang('app.latitude')</label>
-                          <input id="latitude" name="latitude" type="text" class="form-control" value="{{old('latitude',$item->meta('latitude', ''))}}">
+                          <input id="latitude" name="latitude" type="text" class="form-control" value="{{old('latitude',$item->meta('latitude', '-25.69'))}}">
                         </div>
                     </div>
                     <!-- longitude input -->
                     <div class="col-md-6">
                         <div class="form-group">
                           <label>@lang('app.longitude')</label>
-                          <input id="longitude" name="longitude" type="text" class="form-control" value="{{old('longitude',$item->meta('longitude', ''))}}">
+                          <input id="longitude" name="longitude" type="text" class="form-control" value="{{old('longitude',$item->meta('longitude', '132.00'))}}">
                         </div>
                     </div>
                    <div class="col-md-12">
@@ -117,53 +153,4 @@
         </div>
     </div>
 </form>
-@endsection
-
-@section('script')
-@parent
-<script>
-    var _map;
-    var _marker;
-    var _lat = -25.647467468105795;
-    var _long = 146.89921517372136;
-    var _longInput = document.getElementById("longitude");
-    var _latInput = document.getElementById("latitude");
-    
-    
-    function initMap() {
-        _map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: _lat, lng:  _long},
-            zoom: 2
-        });
-        
-        _marker = new google.maps.Marker({
-          position: {lat: _lat, lng: _long},
-          draggable:true,
-          map: _map
-        });
-
-        google.maps.event.addListener(_map, 'click', function(event) {
-             var lat = _latInput.value = event.latLng.lat();
-             var lng = _longInput.value = event.latLng.lng();
-             placeMarkerAndPanTo(event.latLng);
-        });
-
-        _marker.addListener('dragend', function() {
-             var lat = _latInput.value = _marker.getPosition().lat();
-             var lng = _longInput.value = _marker.getPosition().lng();
-        });
-        
-    }
-
-    function placeMarkerAndPanTo(latLng) {
-        _marker.setMap(null);
-        _marker = new google.maps.Marker({
-            position: latLng,
-            draggable:true,
-            map: _map
-        });
-        _map.panTo(latLng);
-    }
-</script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXJRoVA2VTBXx5Vidrdop_1pqKKguDPrY&callback=initMap"></script>
 @endsection
