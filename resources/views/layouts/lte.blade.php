@@ -12,7 +12,7 @@
   
 @section('style')
   <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="{{asset('lte/plugins/bootstrap/dist/css/bootstrap.min.css')}}">
+  <link rel="stylesheet" href="{{asset('lte/plugins/bootstrap/css/bootstrap.min.css')}}">
   <!-- Bootstrap FileUpload -->
   <link rel="stylesheet" href="{{asset('lte/plugins/bootstrap-fileupload/css/bootstrap-fileupload.css')}}">
   <!-- Font Awesome -->
@@ -26,13 +26,13 @@
   <!-- jvectormap -->
   <link rel="stylesheet" href="{{asset('lte/plugins/jvectormap/jquery-jvectormap-2.0.3.css')}}">
   <!-- Date Picker -->
-  <link rel="stylesheet" href="{{asset('lte/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
+  <link rel="stylesheet" href="{{asset('lte/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}">
   <!-- Daterange picker -->
-  <link rel="stylesheet" href="{{asset('lte/plugins/bootstrap-daterangepicker/daterangepicker.css')}}">
+  <link rel="stylesheet" href="{{asset('lte/plugins/bootstrap-daterangepicker/css/daterangepicker.css')}}">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="{{asset('lte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
   <!-- Select2 -->
-  <link rel="stylesheet" href="{{asset('lte/plugins/select2/dist/css/select2.min.css')}}">
+  <link rel="stylesheet" href="{{asset('lte/plugins/select2/css/select2.min.css')}}">
 @show
     
   <!-- Theme style -->
@@ -456,26 +456,26 @@
 <script src="{{asset('lte/plugins/raphael/raphael.min.js')}}"></script>
 <script src="{{asset('lte/plugins/morris.js/morris.min.js')}}"></script>
 <!-- Sparkline -->
-<script src="{{asset('lte/plugins/jquery-sparkline/dist/jquery.sparkline.min.js')}}"></script>
+<script src="{{asset('lte/plugins/jquery-sparkline/jquery.sparkline.min.js')}}"></script>
 <!-- jvectormap -->
 <script src="{{asset('lte/plugins/jvectormap/jquery-jvectormap-2.0.3.min.js')}}"></script>
 <script src="{{asset('lte/plugins/jvectormap/jquery-jvectormap-world-mill-en.js')}}"></script>
 <script src="{{asset('lte/plugins/jvectormap/jquery-jvectormap-au-mill.js')}}"></script>
 <!-- jQuery Knob Chart -->
-<script src="{{asset('lte/plugins/jquery-knob/dist/jquery.knob.min.js')}}"></script>
+<script src="{{asset('lte/plugins/jquery-knob/jquery.knob.min.js')}}"></script>
 <!-- daterangepicker -->
-<script src="{{asset('lte/plugins/moment/min/moment.min.js')}}"></script>
-<script src="{{asset('lte/plugins/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+<script src="{{asset('lte/plugins/moment/moment.min.js')}}"></script>
+<script src="{{asset('lte/plugins/bootstrap-daterangepicker/js/daterangepicker.js')}}"></script>
 <!-- datepicker -->
-<script src="{{asset('lte/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
+<script src="{{asset('lte/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
 <!-- Bootstrap WYSIHTML5 -->
 <script src="{{asset('lte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js')}}"></script>
 <!-- Slimscroll -->
 <script src="{{asset('lte/plugins/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
 <!-- FastClick -->
-<script src="{{asset('lte/plugins/fastclick/lib/fastclick.js')}}"></script>
+<script src="{{asset('lte/plugins/fastclick/fastclick.js')}}"></script>
 <!-- Select2 -->
-<script src="{{asset('lte/plugins/select2/dist/js/select2.full.min.js')}}"></script>
+<script src="{{asset('lte/plugins/select2/js/select2.full.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('lte/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
